@@ -149,7 +149,7 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
   __shared__ double shB0[375];
   __shared__ double shB1[375];
   __shared__ double shJ0[375];
-  __shared__ double Jtmp_shd[(IDX_LOCAL_XLEN / 32)];
+  __shared__ double Jtmp_shd[IDX_LOCAL_XLEN];
   {
     long l1;
 

@@ -1,0 +1,39 @@
+include RUNTIME_SPEC.mk
+LCNAME    := $(shell echo $(RUNTIME) | tr '[A-Z]' '[a-z]')
+
+AR        := ar
+ARFLAG    := rcs
+
+KERNEL_SOURCES  := $(wildcard *.kernel.$(D_FILEEXT))
+RUNTIME_SOURCES := $(wildcard *.kernel_runtime.$(FILEEXT))
+ifeq ($(RUNTIME),$(filter $(RUNTIME), CUDA OpenCL HIP SYCL COI))
+	KERNEL_OBJS =
+else
+	KERNEL_OBJS = $(patsubst %.$(D_FILEEXT),%.o,$(KERNEL_SOURCES))
+endif
+RUNTIME_OBJS    = $(patsubst %.$(FILEEXT),%.o,$(RUNTIME_SOURCES))
+OBJS            = $(KERNEL_OBJS) $(RUNTIME_OBJS) $(PREFIX)pscmc.o
+SOURCES_H       = $(RUNTIME_OBJS:.o=.h) $(PREFIX)pscmc.h
+
+all: ../$(PREFIX)yeefdtd.a ../$(PREFIX)yeefdtd.h
+
+../$(PREFIX)yeefdtd.a: $(OBJS)
+	$(AR) $(ARFLAG) ../$(PREFIX)yeefdtd.a $^
+../$(PREFIX)yeefdtd.h: $(SOURCES_H)
+	cat $(SOURCES_H) > ../$(PREFIX)yeefdtd.h
+
+%.kernel.o: %.kernel.$(D_FILEEXT)
+	$(D_CC) $(D_CFLAGS) $<
+
+%.kernel_runtime.o: %.kernel_runtime.$(FILEEXT) $(PREFIX)pscmc_inc.h local_header.h
+	$(H_CC) $(H_CFLAGS) $<
+
+$(PREFIX)pscmc.o: $(PREFIX)pscmc.c $(PREFIX)pscmc_inc.h local_header.h
+	$(H_CC) $(H_CFLAGS) $(PREFIX)pscmc.c -o $(PREFIX)pscmc.o
+
+.PHONY: all clean cleanall
+
+clean:
+	-rm -f *.o
+
+cleanall: clean

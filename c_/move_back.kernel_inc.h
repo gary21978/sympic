@@ -1,0 +1,86 @@
+typedef struct {
+  double *inoutput;
+
+  int *xyzw;
+
+  double *cu_cache;
+
+  int *cu_xyzw;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  long *grid_cache_len;
+
+  long *cu_cache_length;
+
+  long inoutput_len;
+
+  long xyzw_len;
+
+  long cu_cache_len;
+
+  long cu_xyzw_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long grid_cache_len_len;
+
+  long cu_cache_length_len;
+
+} c_move_back_kernel_8_struct;
+void c_move_back_kernel_8_scmc_kernel(double *inoutput, int *xyzw,
+                                      double *cu_cache, int *cu_xyzw, long XLEN,
+                                      long YLEN, long ZLEN, long grid_cache_len,
+                                      long cu_cache_length, long yid_kernel,
+                                      long __ylen_kernel);
+typedef struct {
+  double *inoutput;
+
+  int *xyzw;
+
+  double *cu_cache;
+
+  int *cu_xyzw;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  long *grid_cache_len;
+
+  long *cu_cache_length;
+
+  long inoutput_len;
+
+  long xyzw_len;
+
+  long cu_cache_len;
+
+  long cu_xyzw_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long grid_cache_len_len;
+
+  long cu_cache_length_len;
+
+} c_move_back_kernel_6_struct;
+void c_move_back_kernel_6_scmc_kernel(double *inoutput, int *xyzw,
+                                      double *cu_cache, int *cu_xyzw, long XLEN,
+                                      long YLEN, long ZLEN, long grid_cache_len,
+                                      long cu_cache_length, long yid_kernel,
+                                      long __ylen_kernel);

@@ -1,0 +1,1722 @@
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  double *b;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long b_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpby_enlarge_struct;
+void c_blas_axpby_enlarge_scmc_kernel(double *y, double *x, double a, double b,
+                                      long y_cpu_core, long numvec, long XLEN,
+                                      long YLEN, long ZLEN, int ovlp,
+                                      long xblock, long yblock, long zblock,
+                                      int num_ele, long yid_kernel,
+                                      long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  double *b;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long b_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpby_shrink_struct;
+void c_blas_axpby_shrink_scmc_kernel(double *y, double *x, double a, double b,
+                                     long y_cpu_core, long numvec, long XLEN,
+                                     long YLEN, long ZLEN, int ovlp,
+                                     long xblock, long yblock, long zblock,
+                                     int num_ele, long yid_kernel,
+                                     long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpy_enlarge_struct;
+void c_blas_axpy_enlarge_scmc_kernel(double *y, double *x, double a,
+                                     long y_cpu_core, long numvec, long XLEN,
+                                     long YLEN, long ZLEN, int ovlp,
+                                     long xblock, long yblock, long zblock,
+                                     int num_ele, long yid_kernel,
+                                     long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpy_shrink_struct;
+void c_blas_axpy_shrink_scmc_kernel(double *y, double *x, double a,
+                                    long y_cpu_core, long numvec, long XLEN,
+                                    long YLEN, long ZLEN, int ovlp, long xblock,
+                                    long yblock, long zblock, int num_ele,
+                                    long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisax_enlarge_struct;
+void c_blas_yisax_enlarge_scmc_kernel(double *y, double *x, double a,
+                                      long y_cpu_core, long numvec, long XLEN,
+                                      long YLEN, long ZLEN, int ovlp,
+                                      long xblock, long yblock, long zblock,
+                                      int num_ele, long yid_kernel,
+                                      long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisax_shrink_struct;
+void c_blas_yisax_shrink_scmc_kernel(double *y, double *x, double a,
+                                     long y_cpu_core, long numvec, long XLEN,
+                                     long YLEN, long ZLEN, int ovlp,
+                                     long xblock, long yblock, long zblock,
+                                     int num_ele, long yid_kernel,
+                                     long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *rdcd_sum;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long rdcd_sum_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_sum_full_block_struct;
+void c_blas_sum_full_block_scmc_kernel(double *y, double *rdcd_sum,
+                                       long y_cpu_core, long numvec, long XLEN,
+                                       long YLEN, long ZLEN, int ovlp,
+                                       long xblock, long yblock, long zblock,
+                                       int num_ele, long yid_kernel,
+                                       long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *rdcd_sum;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long rdcd_sum_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_sum_struct;
+void c_blas_sum_scmc_kernel(double *y, double *rdcd_sum, long y_cpu_core,
+                            long numvec, long XLEN, long YLEN, long ZLEN,
+                            int ovlp, long xblock, long yblock, long zblock,
+                            int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *rdcd_sum;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long rdcd_sum_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_dot_full_block_struct;
+void c_blas_dot_full_block_scmc_kernel(double *y, double *x, double *rdcd_sum,
+                                       long y_cpu_core, long numvec, long XLEN,
+                                       long YLEN, long ZLEN, int ovlp,
+                                       long xblock, long yblock, long zblock,
+                                       int num_ele, long yid_kernel,
+                                       long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *rdcd_sum;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long rdcd_sum_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_dot_struct;
+void c_blas_dot_scmc_kernel(double *y, double *x, double *rdcd_sum,
+                            long y_cpu_core, long numvec, long XLEN, long YLEN,
+                            long ZLEN, int ovlp, long xblock, long yblock,
+                            long zblock, int num_ele, long yid_kernel,
+                            long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *rdcd_max;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long rdcd_max_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_findmax_full_block_struct;
+void c_blas_findmax_full_block_scmc_kernel(double *y, double *rdcd_max,
+                                           long y_cpu_core, long numvec,
+                                           long XLEN, long YLEN, long ZLEN,
+                                           int ovlp, long xblock, long yblock,
+                                           long zblock, int num_ele,
+                                           long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *rdcd_max;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long rdcd_max_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_findmax_struct;
+void c_blas_findmax_scmc_kernel(double *y, double *rdcd_max, long y_cpu_core,
+                                long numvec, long XLEN, long YLEN, long ZLEN,
+                                int ovlp, long xblock, long yblock, long zblock,
+                                int num_ele, long yid_kernel,
+                                long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_mulxy_full_block_struct;
+void c_blas_mulxy_full_block_scmc_kernel(double *y, double *x, long y_cpu_core,
+                                         long numvec, long XLEN, long YLEN,
+                                         long ZLEN, int ovlp, long xblock,
+                                         long yblock, long zblock, int num_ele,
+                                         long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_mulxy_struct;
+void c_blas_mulxy_scmc_kernel(double *y, double *x, long y_cpu_core,
+                              long numvec, long XLEN, long YLEN, long ZLEN,
+                              int ovlp, long xblock, long yblock, long zblock,
+                              int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  double *b;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long b_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpby_full_block_struct;
+void c_blas_axpby_full_block_scmc_kernel(double *y, double *x, double a,
+                                         double b, long y_cpu_core, long numvec,
+                                         long XLEN, long YLEN, long ZLEN,
+                                         int ovlp, long xblock, long yblock,
+                                         long zblock, int num_ele,
+                                         long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  double *b;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long b_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpby_struct;
+void c_blas_axpby_scmc_kernel(double *y, double *x, double a, double b,
+                              long y_cpu_core, long numvec, long XLEN,
+                              long YLEN, long ZLEN, int ovlp, long xblock,
+                              long yblock, long zblock, int num_ele,
+                              long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpy_full_block_struct;
+void c_blas_axpy_full_block_scmc_kernel(double *y, double *x, double a,
+                                        long y_cpu_core, long numvec, long XLEN,
+                                        long YLEN, long ZLEN, int ovlp,
+                                        long xblock, long yblock, long zblock,
+                                        int num_ele, long yid_kernel,
+                                        long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_axpy_struct;
+void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core,
+                             long numvec, long XLEN, long YLEN, long ZLEN,
+                             int ovlp, long xblock, long yblock, long zblock,
+                             int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisax_full_block_struct;
+void c_blas_yisax_full_block_scmc_kernel(double *y, double *x, double a,
+                                         long y_cpu_core, long numvec,
+                                         long XLEN, long YLEN, long ZLEN,
+                                         int ovlp, long xblock, long yblock,
+                                         long zblock, int num_ele,
+                                         long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisax_struct;
+void c_blas_yisax_scmc_kernel(double *y, double *x, double a, long y_cpu_core,
+                              long numvec, long XLEN, long YLEN, long ZLEN,
+                              int ovlp, long xblock, long yblock, long zblock,
+                              int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_invy_full_block_struct;
+void c_blas_invy_full_block_scmc_kernel(double *y, long y_cpu_core, long numvec,
+                                        long XLEN, long YLEN, long ZLEN,
+                                        int ovlp, long xblock, long yblock,
+                                        long zblock, int num_ele,
+                                        long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_invy_struct;
+void c_blas_invy_scmc_kernel(double *y, long y_cpu_core, long numvec, long XLEN,
+                             long YLEN, long ZLEN, int ovlp, long xblock,
+                             long yblock, long zblock, int num_ele,
+                             long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *u;
+
+  double *minus_over_q_e;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long u_len;
+
+  long minus_over_q_e_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_get_ITG_Potential_full_block_struct;
+void c_blas_get_ITG_Potential_full_block_scmc_kernel(
+    double *y, double *x, double *u, double minus_over_q_e, long y_cpu_core,
+    long numvec, long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
+    long yblock, long zblock, int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  double *u;
+
+  double *minus_over_q_e;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long u_len;
+
+  long minus_over_q_e_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_get_ITG_Potential_struct;
+void c_blas_get_ITG_Potential_scmc_kernel(
+    double *y, double *x, double *u, double minus_over_q_e, long y_cpu_core,
+    long numvec, long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
+    long yblock, long zblock, int num_ele, long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisconst_full_block_struct;
+void c_blas_yisconst_full_block_scmc_kernel(
+    double *y, double a, long y_cpu_core, long numvec, long XLEN, long YLEN,
+    long ZLEN, int ovlp, long xblock, long yblock, long zblock, int num_ele,
+    long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *a;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long a_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yisconst_struct;
+void c_blas_yisconst_scmc_kernel(double *y, double a, long y_cpu_core,
+                                 long numvec, long XLEN, long YLEN, long ZLEN,
+                                 int ovlp, long xblock, long yblock,
+                                 long zblock, int num_ele, long yid_kernel,
+                                 long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yiszero_full_block_struct;
+void c_blas_yiszero_full_block_scmc_kernel(double *y, long y_cpu_core,
+                                           long numvec, long XLEN, long YLEN,
+                                           long ZLEN, int ovlp, long xblock,
+                                           long yblock, long zblock,
+                                           int num_ele, long yid_kernel,
+                                           long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yiszero_struct;
+void c_blas_yiszero_scmc_kernel(double *y, long y_cpu_core, long numvec,
+                                long XLEN, long YLEN, long ZLEN, int ovlp,
+                                long xblock, long yblock, long zblock,
+                                int num_ele, long yid_kernel,
+                                long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  double *x;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long x_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_mulxy_numele3_struct;
+void c_blas_mulxy_numele3_scmc_kernel(double *y, double *x, long y_cpu_core,
+                                      long numvec, long XLEN, long YLEN,
+                                      long ZLEN, int ovlp, long xblock,
+                                      long yblock, long zblock, int num_ele,
+                                      long yid_kernel, long __ylen_kernel);
+typedef struct {
+  double *y;
+
+  long *y_cpu_core;
+
+  long *numvec;
+
+  long *XLEN;
+
+  long *YLEN;
+
+  long *ZLEN;
+
+  int *ovlp;
+
+  long *xblock;
+
+  long *yblock;
+
+  long *zblock;
+
+  int *num_ele;
+
+  long y_len;
+
+  long y_cpu_core_len;
+
+  long numvec_len;
+
+  long XLEN_len;
+
+  long YLEN_len;
+
+  long ZLEN_len;
+
+  long ovlp_len;
+
+  long xblock_len;
+
+  long yblock_len;
+
+  long zblock_len;
+
+  long num_ele_len;
+
+} c_blas_yiszero_synced_struct;
+void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec,
+                                       long XLEN, long YLEN, long ZLEN,
+                                       int ovlp, long xblock, long yblock,
+                                       long zblock, int num_ele,
+                                       long yid_kernel, long __ylen_kernel);

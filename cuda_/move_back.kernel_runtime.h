@@ -1,56 +1,41 @@
 #include "pubdefs.h"
 
-int cuda_move_back_kernel_8_init(cuda_pscmc_env *pe,
-                                 cuda_move_back_kernel_8_struct *kerstr);
-void cuda_move_back_kernel_8_get_struct_len(size_t *len);
-int cuda_move_back_kernel_8_get_xlen();
-int cuda_move_back_kernel_8_get_num_compute_units(
-    cuda_move_back_kernel_8_struct *kerstr);
-int cuda_move_back_kernel_8_exec(cuda_move_back_kernel_8_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_move_back_kernel_8_scmc_set_parameter_inoutput(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_xyzw(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_cu_cache(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_cu_xyzw(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_XLEN(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_YLEN(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_ZLEN(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_grid_cache_len(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_8_scmc_set_parameter_cu_cache_length(
-    cuda_move_back_kernel_8_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_init(cuda_pscmc_env *pe,
-                                 cuda_move_back_kernel_6_struct *kerstr);
-void cuda_move_back_kernel_6_get_struct_len(size_t *len);
-int cuda_move_back_kernel_6_get_xlen();
-int cuda_move_back_kernel_6_get_num_compute_units(
-    cuda_move_back_kernel_6_struct *kerstr);
-int cuda_move_back_kernel_6_exec(cuda_move_back_kernel_6_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_move_back_kernel_6_scmc_set_parameter_inoutput(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_xyzw(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_cu_cache(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_cu_xyzw(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_XLEN(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_YLEN(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_ZLEN(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_grid_cache_len(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_move_back_kernel_6_scmc_set_parameter_cu_cache_length(
-    cuda_move_back_kernel_6_struct *kerstr, cuda_pscmc_mem *pm);
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define DECL_CUDA_MOVE_BACK_KERNEL_8_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inoutput)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xyzw)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_cache)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_xyzw)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, grid_cache_len)                                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_cache_length)
+
+#define DECL_CUDA_MOVE_BACK_KERNEL_6_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inoutput)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xyzw)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_cache)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_xyzw)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, grid_cache_len)                                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, cu_cache_length)
+
+DECL_CUDA_MOVE_BACK_KERNEL_8_KERNEL(cuda_move_back_kernel_8)
+DECL_CUDA_MOVE_BACK_KERNEL_6_KERNEL(cuda_move_back_kernel_6)
+
+#undef DECL_CUDA_MOVE_BACK_KERNEL_8_KERNEL
+#undef DECL_CUDA_MOVE_BACK_KERNEL_6_KERNEL

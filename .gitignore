@@ -1,7 +1,6 @@
-*.swp
-# 忽略所有 Nsight Systems 产生的性能分析报告文件
-*.sqlite
-*.nsys-rep
-prof_out/
-
-
+build/
+.vscode/
+.cache/
+.venv/
+__pycache__
+scripts/

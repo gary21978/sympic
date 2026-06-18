@@ -10,395 +10,98 @@
 
 #include "stencil.kernel.cu"
 
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define CUDA_YEE_FDTD_W04_2_ARGS                                                                                       \
+  ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data), (((long *)kerstr->y_cpu_core->h_data))[0],      \
+      (((long *)kerstr->numvec->h_data))[0], (((long *)kerstr->XLEN->h_data))[0], (((long *)kerstr->YLEN->h_data))[0], \
+      (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0], (((long *)kerstr->xblock->h_data))[0],  \
+      (((long *)kerstr->yblock->h_data))[0], (((long *)kerstr->zblock->h_data))[0],                                    \
+      (((int *)kerstr->num_ele->h_data))[0], (((double *)kerstr->DT->h_data))[0]
+
+#define DEFINE_CUDA_YEE_FDTD_W04_2_KERNEL(P)                                                                           \
+  PSCMC_DEFINE_KERNEL_INIT(P)                                                                                          \
+  PSCMC_DEFINE_KERNEL_GET_STRUCT_LEN(P)                                                                                \
+  PSCMC_DEFINE_KERNEL_GET_XLEN(P, IDX_OPT_MAX)                                                                         \
+  PSCMC_DEFINE_KERNEL_GET_NUM_COMPUTE_UNITS(P, 64)                                                                     \
+  PSCMC_DEFINE_KERNEL_EXEC(P, CUDA_YEE_FDTD_W04_2_ARGS)                                                                \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, outEB)                                                                              \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, inEB)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, y_cpu_core)                                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, numvec)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, XLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, YLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ZLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ovlp)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, xblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, yblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, zblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, num_ele)                                                                            \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DT)
+
+#define CUDA_YEE_FDTD_W04_1_ARGS                                                                                       \
+  ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data), (((long *)kerstr->y_cpu_core->h_data))[0],      \
+      (((long *)kerstr->numvec->h_data))[0], (((long *)kerstr->XLEN->h_data))[0], (((long *)kerstr->YLEN->h_data))[0], \
+      (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0], (((long *)kerstr->xblock->h_data))[0],  \
+      (((long *)kerstr->yblock->h_data))[0], (((long *)kerstr->zblock->h_data))[0],                                    \
+      (((int *)kerstr->num_ele->h_data))[0], (((double *)kerstr->DT->h_data))[0]
+
+#define DEFINE_CUDA_YEE_FDTD_W04_1_KERNEL(P)                                                                           \
+  PSCMC_DEFINE_KERNEL_INIT(P)                                                                                          \
+  PSCMC_DEFINE_KERNEL_GET_STRUCT_LEN(P)                                                                                \
+  PSCMC_DEFINE_KERNEL_GET_XLEN(P, IDX_OPT_MAX)                                                                         \
+  PSCMC_DEFINE_KERNEL_GET_NUM_COMPUTE_UNITS(P, 64)                                                                     \
+  PSCMC_DEFINE_KERNEL_EXEC(P, CUDA_YEE_FDTD_W04_1_ARGS)                                                                \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, outEB)                                                                              \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, inEB)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, y_cpu_core)                                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, numvec)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, XLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, YLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ZLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ovlp)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, xblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, yblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, zblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, num_ele)                                                                            \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DT)
+
+#define CUDA_YEE_FDTD_W04_0_ARGS                                                                                       \
+  ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data), (((long *)kerstr->y_cpu_core->h_data))[0],      \
+      (((long *)kerstr->numvec->h_data))[0], (((long *)kerstr->XLEN->h_data))[0], (((long *)kerstr->YLEN->h_data))[0], \
+      (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0], (((long *)kerstr->xblock->h_data))[0],  \
+      (((long *)kerstr->yblock->h_data))[0], (((long *)kerstr->zblock->h_data))[0],                                    \
+      (((int *)kerstr->num_ele->h_data))[0], (((double *)kerstr->DT->h_data))[0]
+
+#define DEFINE_CUDA_YEE_FDTD_W04_0_KERNEL(P)                                                                           \
+  PSCMC_DEFINE_KERNEL_INIT(P)                                                                                          \
+  PSCMC_DEFINE_KERNEL_GET_STRUCT_LEN(P)                                                                                \
+  PSCMC_DEFINE_KERNEL_GET_XLEN(P, IDX_OPT_MAX)                                                                         \
+  PSCMC_DEFINE_KERNEL_GET_NUM_COMPUTE_UNITS(P, 64)                                                                     \
+  PSCMC_DEFINE_KERNEL_EXEC(P, CUDA_YEE_FDTD_W04_0_ARGS)                                                                \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, outEB)                                                                              \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, inEB)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, y_cpu_core)                                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, numvec)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, XLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, YLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ZLEN)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ovlp)                                                                               \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, xblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, yblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, zblock)                                                                             \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, num_ele)                                                                            \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DT)
+
 extern "C" {
-int cuda_Yee_FDTD_W04_2_init(cuda_pscmc_env *pe,
-                             cuda_Yee_FDTD_W04_2_struct *kerstr) {
-  ((kerstr)->pe = pe);
-  return 0;
+DEFINE_CUDA_YEE_FDTD_W04_2_KERNEL(cuda_Yee_FDTD_W04_2)
+DEFINE_CUDA_YEE_FDTD_W04_1_KERNEL(cuda_Yee_FDTD_W04_1)
+DEFINE_CUDA_YEE_FDTD_W04_0_KERNEL(cuda_Yee_FDTD_W04_0)
 }
-void cuda_Yee_FDTD_W04_2_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(cuda_Yee_FDTD_W04_2_struct));
-}
-int cuda_Yee_FDTD_W04_2_get_xlen() { return IDX_OPT_MAX; }
-int cuda_Yee_FDTD_W04_2_get_num_compute_units(
-    cuda_Yee_FDTD_W04_2_struct *kerstr) {
-  return 64;
-}
-int cuda_Yee_FDTD_W04_2_exec(cuda_Yee_FDTD_W04_2_struct *kerstr,
-                             long scmc_internal_g_xlen,
-                             long scmc_internal_g_ylen) {
-  cudaSetDevice((kerstr->pe)->device_id);
-  if (scmc_internal_g_ylen < 65536) {
-    cuda_Yee_FDTD_W04_2<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
 
-  } else {
-    dim3 multiylen = 1;
-
-    (multiylen.x = 64);
-    (multiylen.y = (scmc_internal_g_ylen / 64));
-    int rest = (scmc_internal_g_ylen % 64);
-
-    if (rest != 0) {
-      fprintf(stderr,
-              "Warning: if __ylen>=65536 then __ylen must be divisible by 64, "
-              "__ylen=%ld\n",
-              scmc_internal_g_ylen);
-
-    }
-
-    cuda_Yee_FDTD_W04_2<<<multiylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
-  }
-
-  cudaError_t err = cudaGetLastError();
-
-  ERROPT(err, "Error in execcuda_Yee_FDTD_W04_2");
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->outEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->inEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->y_cpu_core = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->numvec = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->XLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->YLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ZLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ovlp = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->xblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->yblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->zblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->num_ele = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_2_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_W04_2_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->DT = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_init(cuda_pscmc_env *pe,
-                             cuda_Yee_FDTD_W04_1_struct *kerstr) {
-  ((kerstr)->pe = pe);
-  return 0;
-}
-void cuda_Yee_FDTD_W04_1_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(cuda_Yee_FDTD_W04_1_struct));
-}
-int cuda_Yee_FDTD_W04_1_get_xlen() { return IDX_OPT_MAX; }
-int cuda_Yee_FDTD_W04_1_get_num_compute_units(
-    cuda_Yee_FDTD_W04_1_struct *kerstr) {
-  return 64;
-}
-int cuda_Yee_FDTD_W04_1_exec(cuda_Yee_FDTD_W04_1_struct *kerstr,
-                             long scmc_internal_g_xlen,
-                             long scmc_internal_g_ylen) {
-  cudaSetDevice((kerstr->pe)->device_id);
-  if (scmc_internal_g_ylen < 65536) {
-    cuda_Yee_FDTD_W04_1<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
-
-  } else {
-    dim3 multiylen = 1;
-
-    (multiylen.x = 64);
-    (multiylen.y = (scmc_internal_g_ylen / 64));
-    int rest = (scmc_internal_g_ylen % 64);
-
-    if (rest != 0) {
-      fprintf(stderr,
-              "Warning: if __ylen>=65536 then __ylen must be divisible by 64, "
-              "__ylen=%ld\n",
-              scmc_internal_g_ylen);
-
-    }
-
-    cuda_Yee_FDTD_W04_1<<<multiylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
-  }
-
-  cudaError_t err = cudaGetLastError();
-
-  ERROPT(err, "Error in execcuda_Yee_FDTD_W04_1");
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->outEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->inEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->y_cpu_core = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->numvec = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->XLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->YLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ZLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ovlp = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->xblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->yblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->zblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->num_ele = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_1_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_W04_1_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->DT = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_init(cuda_pscmc_env *pe,
-                             cuda_Yee_FDTD_W04_0_struct *kerstr) {
-  ((kerstr)->pe = pe);
-  return 0;
-}
-void cuda_Yee_FDTD_W04_0_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(cuda_Yee_FDTD_W04_0_struct));
-}
-int cuda_Yee_FDTD_W04_0_get_xlen() { return IDX_OPT_MAX; }
-int cuda_Yee_FDTD_W04_0_get_num_compute_units(
-    cuda_Yee_FDTD_W04_0_struct *kerstr) {
-  return 64;
-}
-int cuda_Yee_FDTD_W04_0_exec(cuda_Yee_FDTD_W04_0_struct *kerstr,
-                             long scmc_internal_g_xlen,
-                             long scmc_internal_g_ylen) {
-  cudaSetDevice((kerstr->pe)->device_id);
-  if (scmc_internal_g_ylen < 65536) {
-    cuda_Yee_FDTD_W04_0<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
-
-  } else {
-    dim3 multiylen = 1;
-
-    (multiylen.x = 64);
-    (multiylen.y = (scmc_internal_g_ylen / 64));
-    int rest = (scmc_internal_g_ylen % 64);
-
-    if (rest != 0) {
-      fprintf(stderr,
-              "Warning: if __ylen>=65536 then __ylen must be divisible by 64, "
-              "__ylen=%ld\n",
-              scmc_internal_g_ylen);
-
-    }
-
-    cuda_Yee_FDTD_W04_0<<<multiylen, scmc_internal_g_xlen>>>(
-        ((double *)kerstr->outEB->d_data), ((double *)kerstr->inEB->d_data),
-        (((long *)kerstr->y_cpu_core->h_data))[0],
-        (((long *)kerstr->numvec->h_data))[0],
-        (((long *)kerstr->XLEN->h_data))[0],
-        (((long *)kerstr->YLEN->h_data))[0],
-        (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-        (((long *)kerstr->xblock->h_data))[0],
-        (((long *)kerstr->yblock->h_data))[0],
-        (((long *)kerstr->zblock->h_data))[0],
-        (((int *)kerstr->num_ele->h_data))[0],
-        (((double *)kerstr->DT->h_data))[0]);
-  }
-
-  cudaError_t err = cudaGetLastError();
-
-  ERROPT(err, "Error in execcuda_Yee_FDTD_W04_0");
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->outEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->inEB = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->y_cpu_core = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->numvec = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->XLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->YLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ZLEN = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->ovlp = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->xblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->yblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->zblock = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->num_ele = pm);
-  return 0;
-}
-int cuda_Yee_FDTD_W04_0_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_W04_0_struct *kerstr, cuda_pscmc_mem *pm) {
-  (kerstr->DT = pm);
-  return 0;
-}
-}
+#undef DEFINE_CUDA_YEE_FDTD_W04_2_KERNEL
+#undef CUDA_YEE_FDTD_W04_2_ARGS
+#undef DEFINE_CUDA_YEE_FDTD_W04_1_KERNEL
+#undef CUDA_YEE_FDTD_W04_1_ARGS
+#undef DEFINE_CUDA_YEE_FDTD_W04_0_KERNEL
+#undef CUDA_YEE_FDTD_W04_0_ARGS

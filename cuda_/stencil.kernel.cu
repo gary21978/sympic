@@ -3,10 +3,8 @@
 #include <math.h>
 #include <stdio.h>
 #define IDX_OPT_MAX 32
-__global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
-                                    long y_cpu_core, long numvec, long XLEN,
-                                    long YLEN, long ZLEN, int ovlp, long xblock,
-                                    long yblock, long zblock, int num_ele,
+__global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB, long y_cpu_core, long numvec, long XLEN, long YLEN,
+                                    long ZLEN, int ovlp, long xblock, long yblock, long zblock, int num_ele,
                                     double DT) {
 
 
@@ -15,7 +13,6 @@ __global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
   const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
 
   const long __xlen = (blockDim.x * blockDim.y);
-
 
 
   long i = 0;
@@ -36,7 +33,6 @@ __global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   for ((i = local_ymin); (i < local_ymax); i++) {
@@ -56,9 +52,7 @@ __global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
                 long blk_offset_t1 = (blk_all_len * i);
 
                 long blk_offset =
-                    ((blk_all_len * i) +
-                     (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                    (yb * (xyzz + ovlp))))))));
+                    ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
 
                 {
                   long g = 0;
@@ -75,217 +69,150 @@ __global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
                          ((1.08333333333333326e+00 *
                            ((1.08333333333333326e+00 *
                              ((1.08333333333333326e+00 *
-                               ((inEB + blk_offset_t1))[(
-                                   l + (num_ele *
-                                        (((0 + xidx) + ovlp) +
-                                         (xblock * (((0 + xyzy) + ovlp) +
-                                                    (yblock * ((0 + xyzz) +
-                                                               ovlp)))))))]) +
+                               ((inEB +
+                                 blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                  (xblock * (((0 + xyzy) + ovlp) +
+                                                                             (yblock * ((0 + xyzz) + ovlp)))))))]) +
                               ((-4.16666666666666644e-02 *
-                                ((inEB + blk_offset_t1))[(
-                                    l + (num_ele *
-                                         (((0 + xidx) + ovlp) +
-                                          (xblock * (((0 + xyzy) + ovlp) +
-                                                     (yblock * ((1 + xyzz) +
-                                                                ovlp)))))))]) +
+                                ((inEB +
+                                  blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                   (xblock * (((0 + xyzy) + ovlp) +
+                                                                              (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                (-4.16666666666666644e-02 *
                                 ((inEB + blk_offset_t1))[(
-                                    l +
-                                    (num_ele *
-                                     (((0 + xidx) + ovlp) +
-                                      (xblock * (((0 + xyzy) + ovlp) +
-                                                 (yblock * ((-1 + xyzz) +
-                                                            ovlp)))))))])))) +
+                                    l + (num_ele *
+                                         (((0 + xidx) + ovlp) +
+                                          (xblock * (((0 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                             ((-4.16666666666666644e-02 *
                               ((1.08333333333333326e+00 *
-                                ((inEB + blk_offset_t1))[(
-                                    l + (num_ele *
-                                         (((0 + xidx) + ovlp) +
-                                          (xblock * (((1 + xyzy) + ovlp) +
-                                                     (yblock * ((0 + xyzz) +
-                                                                ovlp)))))))]) +
+                                ((inEB +
+                                  blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                   (xblock * (((1 + xyzy) + ovlp) +
+                                                                              (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                ((-4.16666666666666644e-02 *
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                    (xblock * (((1 + xyzy) + ovlp) +
+                                                                               (yblock * ((1 + xyzz) + ovlp)))))))]) +
+                                (-4.16666666666666644e-02 *
                                  ((inEB + blk_offset_t1))[(
                                      l + (num_ele *
                                           (((0 + xidx) + ovlp) +
-                                           (xblock * (((1 + xyzy) + ovlp) +
-                                                      (yblock * ((1 + xyzz) +
-                                                                 ovlp)))))))]) +
-                                (-4.16666666666666644e-02 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l +
-                                     (num_ele *
-                                      (((0 + xidx) + ovlp) +
-                                       (xblock * (((1 + xyzy) + ovlp) +
-                                                  (yblock * ((-1 + xyzz) +
-                                                             ovlp)))))))])))) +
+                                           (xblock * (((1 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                              (-4.16666666666666644e-02 *
                               ((1.08333333333333326e+00 *
-                                ((inEB + blk_offset_t1))[(
-                                    l + (num_ele *
-                                         (((0 + xidx) + ovlp) +
-                                          (xblock * (((-1 + xyzy) + ovlp) +
-                                                     (yblock * ((0 + xyzz) +
-                                                                ovlp)))))))]) +
+                                ((inEB +
+                                  blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                   (xblock * (((-1 + xyzy) + ovlp) +
+                                                                              (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                ((-4.16666666666666644e-02 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((0 + xidx) + ovlp) +
-                                           (xblock * (((-1 + xyzy) + ovlp) +
-                                                      (yblock * ((1 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                    (xblock * (((-1 + xyzy) + ovlp) +
+                                                                               (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                 (-4.16666666666666644e-02 *
                                  ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((0 + xidx) + ovlp) +
-                                           (xblock *
-                                            (((-1 + xyzy) + ovlp) +
-                                             (yblock * ((-1 + xyzz) +
-                                                        ovlp)))))))]))))))) +
+                                     l + (num_ele * (((0 + xidx) + ovlp) +
+                                                     (xblock * (((-1 + xyzy) + ovlp) +
+                                                                (yblock * ((-1 + xyzz) + ovlp)))))))]))))))) +
                           ((-4.16666666666666644e-02 *
                             ((1.08333333333333326e+00 *
                               ((1.08333333333333326e+00 *
-                                ((inEB + blk_offset_t1))[(
-                                    l + (num_ele *
-                                         (((1 + xidx) + ovlp) +
-                                          (xblock * (((0 + xyzy) + ovlp) +
-                                                     (yblock * ((0 + xyzz) +
-                                                                ovlp)))))))]) +
+                                ((inEB +
+                                  blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                   (xblock * (((0 + xyzy) + ovlp) +
+                                                                              (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                ((-4.16666666666666644e-02 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((1 + xidx) + ovlp) +
-                                           (xblock * (((0 + xyzy) + ovlp) +
-                                                      (yblock * ((1 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                    (xblock * (((0 + xyzy) + ovlp) +
+                                                                               (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                 (-4.16666666666666644e-02 *
                                  ((inEB + blk_offset_t1))[(
-                                     l +
-                                     (num_ele *
-                                      (((1 + xidx) + ovlp) +
-                                       (xblock * (((0 + xyzy) + ovlp) +
-                                                  (yblock * ((-1 + xyzz) +
-                                                             ovlp)))))))])))) +
+                                     l + (num_ele *
+                                          (((1 + xidx) + ovlp) +
+                                           (xblock * (((0 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                              ((-4.16666666666666644e-02 *
                                ((1.08333333333333326e+00 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((1 + xidx) + ovlp) +
-                                           (xblock * (((1 + xyzy) + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                    (xblock * (((1 + xyzy) + ovlp) +
+                                                                               (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                 ((-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((1 + xidx) + ovlp) +
-                                        (xblock * (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
-                                 (-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((1 + xidx) + ovlp) +
-                                        (xblock * (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((-1 + xyzz) +
-                                                              ovlp)))))))])))) +
-                              (-4.16666666666666644e-02 *
-                               ((1.08333333333333326e+00 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((1 + xidx) + ovlp) +
-                                           (xblock * (((-1 + xyzy) + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
-                                ((-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((1 + xidx) + ovlp) +
-                                        (xblock * (((-1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
+                                  ((inEB +
+                                    blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                     (xblock * (((1 + xyzy) + ovlp) +
+                                                                                (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                  (-4.16666666666666644e-02 *
                                   ((inEB + blk_offset_t1))[(
                                       l + (num_ele *
                                            (((1 + xidx) + ovlp) +
-                                            (xblock *
-                                             (((-1 + xyzy) + ovlp) +
-                                              (yblock * ((-1 + xyzz) +
-                                                         ovlp)))))))]))))))) +
+                                            (xblock * (((1 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
+                              (-4.16666666666666644e-02 *
+                               ((1.08333333333333326e+00 *
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                    (xblock * (((-1 + xyzy) + ovlp) +
+                                                                               (yblock * ((0 + xyzz) + ovlp)))))))]) +
+                                ((-4.16666666666666644e-02 *
+                                  ((inEB +
+                                    blk_offset_t1))[(l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                     (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                (yblock * ((1 + xyzz) + ovlp)))))))]) +
+                                 (-4.16666666666666644e-02 *
+                                  ((inEB + blk_offset_t1))[(
+                                      l + (num_ele * (((1 + xidx) + ovlp) +
+                                                      (xblock * (((-1 + xyzy) + ovlp) +
+                                                                 (yblock * ((-1 + xyzz) + ovlp)))))))]))))))) +
                            (-4.16666666666666644e-02 *
                             ((1.08333333333333326e+00 *
                               ((1.08333333333333326e+00 *
-                                ((inEB + blk_offset_t1))[(
-                                    l + (num_ele *
-                                         (((-1 + xidx) + ovlp) +
-                                          (xblock * (((0 + xyzy) + ovlp) +
-                                                     (yblock * ((0 + xyzz) +
-                                                                ovlp)))))))]) +
+                                ((inEB +
+                                  blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                   (xblock * (((0 + xyzy) + ovlp) +
+                                                                              (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                ((-4.16666666666666644e-02 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((-1 + xidx) + ovlp) +
-                                           (xblock * (((0 + xyzy) + ovlp) +
-                                                      (yblock * ((1 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                    (xblock * (((0 + xyzy) + ovlp) +
+                                                                               (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                 (-4.16666666666666644e-02 *
                                  ((inEB + blk_offset_t1))[(
-                                     l +
-                                     (num_ele *
-                                      (((-1 + xidx) + ovlp) +
-                                       (xblock * (((0 + xyzy) + ovlp) +
-                                                  (yblock * ((-1 + xyzz) +
-                                                             ovlp)))))))])))) +
+                                     l + (num_ele *
+                                          (((-1 + xidx) + ovlp) +
+                                           (xblock * (((0 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                              ((-4.16666666666666644e-02 *
                                ((1.08333333333333326e+00 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((-1 + xidx) + ovlp) +
-                                           (xblock * (((1 + xyzy) + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                    (xblock * (((1 + xyzy) + ovlp) +
+                                                                               (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                 ((-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((-1 + xidx) + ovlp) +
-                                        (xblock * (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
-                                 (-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((-1 + xidx) + ovlp) +
-                                        (xblock * (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((-1 + xyzz) +
-                                                              ovlp)))))))])))) +
-                              (-4.16666666666666644e-02 *
-                               ((1.08333333333333326e+00 *
-                                 ((inEB + blk_offset_t1))[(
-                                     l + (num_ele *
-                                          (((-1 + xidx) + ovlp) +
-                                           (xblock * (((-1 + xyzy) + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
-                                ((-4.16666666666666644e-02 *
-                                  ((inEB + blk_offset_t1))[(
-                                      l +
-                                      (num_ele *
-                                       (((-1 + xidx) + ovlp) +
-                                        (xblock * (((-1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
+                                  ((inEB +
+                                    blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                     (xblock * (((1 + xyzy) + ovlp) +
+                                                                                (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                  (-4.16666666666666644e-02 *
                                   ((inEB + blk_offset_t1))[(
                                       l + (num_ele *
                                            (((-1 + xidx) + ovlp) +
-                                            (xblock *
-                                             (((-1 + xyzy) + ovlp) +
-                                              (yblock * ((-1 + xyzz) +
-                                                         ovlp)))))))]))))))))));
+                                            (xblock * (((1 + xyzy) + ovlp) + (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
+                              (-4.16666666666666644e-02 *
+                               ((1.08333333333333326e+00 *
+                                 ((inEB +
+                                   blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                    (xblock * (((-1 + xyzy) + ovlp) +
+                                                                               (yblock * ((0 + xyzz) + ovlp)))))))]) +
+                                ((-4.16666666666666644e-02 *
+                                  ((inEB +
+                                    blk_offset_t1))[(l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                     (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                (yblock * ((1 + xyzz) + ovlp)))))))]) +
+                                 (-4.16666666666666644e-02 *
+                                  ((inEB + blk_offset_t1))[(
+                                      l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                      (xblock * (((-1 + xyzy) + ovlp) +
+                                                                 (yblock * ((-1 + xyzz) + ovlp)))))))]))))))))));
                   }
                 }
               }
@@ -296,10 +223,8 @@ __global__ void cuda_Yee_FDTD_W04_0(double *outEB, double *inEB,
     }
   }
 }
-__global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
-                                    long y_cpu_core, long numvec, long XLEN,
-                                    long YLEN, long ZLEN, int ovlp, long xblock,
-                                    long yblock, long zblock, int num_ele,
+__global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB, long y_cpu_core, long numvec, long XLEN, long YLEN,
+                                    long ZLEN, int ovlp, long xblock, long yblock, long zblock, int num_ele,
                                     double DT) {
 
 
@@ -308,7 +233,6 @@ __global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
   const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
 
   const long __xlen = (blockDim.x * blockDim.y);
-
 
 
   long i = 0;
@@ -329,7 +253,6 @@ __global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   for ((i = local_ymin); (i < local_ymax); i++) {
@@ -349,9 +272,7 @@ __global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
                 long blk_offset_t1 = (blk_all_len * i);
 
                 long blk_offset =
-                    ((blk_all_len * i) +
-                     (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                    (yb * (xyzz + ovlp))))))));
+                    ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
 
                 {
                   long g = 0;
@@ -369,279 +290,153 @@ __global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
                               ? (((1.08333333333333326e+00 *
                                    ((1.08333333333333326e+00 *
                                      ((inEB + blk_offset_t1))[(
-                                         l +
-                                         (num_ele *
-                                          ((xidx + ovlp) +
-                                           (xblock * (((0 + xyzy) + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                         l + (num_ele *
+                                              ((xidx + ovlp) +
+                                               (xblock * (((0 + xyzy) + ovlp) + (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                     ((-4.16666666666666644e-02 *
                                       ((inEB + blk_offset_t1))[(
                                           l + (num_ele *
                                                ((xidx + ovlp) +
-                                                (xblock *
-                                                 (((0 + xyzy) + ovlp) +
-                                                  (yblock *
-                                                   ((1 + xyzz) + ovlp)))))))]) +
+                                                (xblock * (((0 + xyzy) + ovlp) + (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                      (-4.16666666666666644e-02 *
                                       ((inEB + blk_offset_t1))[(
                                           l + (num_ele *
-                                               ((xidx + ovlp) +
-                                                (xblock *
-                                                 (((0 + xyzy) + ovlp) +
-                                                  (yblock * ((-1 + xyzz) +
-                                                             ovlp)))))))])))) +
+                                               ((xidx + ovlp) + (xblock * (((0 + xyzy) + ovlp) +
+                                                                           (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                                   ((-4.16666666666666644e-02 *
                                     ((1.08333333333333326e+00 *
                                       ((inEB + blk_offset_t1))[(
                                           l + (num_ele *
                                                ((xidx + ovlp) +
-                                                (xblock *
-                                                 (((1 + xyzy) + ovlp) +
-                                                  (yblock *
-                                                   ((0 + xyzz) + ovlp)))))))]) +
+                                                (xblock * (((1 + xyzy) + ovlp) + (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                      ((-4.16666666666666644e-02 *
                                        ((inEB + blk_offset_t1))[(
                                            l + (num_ele *
-                                                ((xidx + ovlp) +
-                                                 (xblock *
-                                                  (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
+                                                ((xidx + ovlp) + (xblock * (((1 + xyzy) + ovlp) +
+                                                                            (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                       (-4.16666666666666644e-02 *
                                        ((inEB + blk_offset_t1))[(
                                            l + (num_ele *
-                                                ((xidx + ovlp) +
-                                                 (xblock *
-                                                  (((1 + xyzy) + ovlp) +
-                                                   (yblock * ((-1 + xyzz) +
-                                                              ovlp)))))))])))) +
+                                                ((xidx + ovlp) + (xblock * (((1 + xyzy) + ovlp) +
+                                                                            (yblock * ((-1 + xyzz) + ovlp)))))))])))) +
                                    (-4.16666666666666644e-02 *
                                     ((1.08333333333333326e+00 *
                                       ((inEB + blk_offset_t1))[(
-                                          l + (num_ele *
-                                               ((xidx + ovlp) +
-                                                (xblock *
-                                                 (((-1 + xyzy) + ovlp) +
-                                                  (yblock *
-                                                   ((0 + xyzz) + ovlp)))))))]) +
+                                          l +
+                                          (num_ele * ((xidx + ovlp) + (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                 (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                      ((-4.16666666666666644e-02 *
                                        ((inEB + blk_offset_t1))[(
                                            l + (num_ele *
-                                                ((xidx + ovlp) +
-                                                 (xblock *
-                                                  (((-1 + xyzy) + ovlp) +
-                                                   (yblock * ((1 + xyzz) +
-                                                              ovlp)))))))]) +
+                                                ((xidx + ovlp) + (xblock * (((-1 + xyzy) + ovlp) +
+                                                                            (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                       (-4.16666666666666644e-02 *
                                        ((inEB + blk_offset_t1))[(
-                                           l +
-                                           (num_ele *
-                                            ((xidx + ovlp) +
-                                             (xblock *
-                                              (((-1 + xyzy) + ovlp) +
-                                               (yblock * ((-1 + xyzz) +
-                                                          ovlp)))))))])))))))
+                                           l + (num_ele *
+                                                ((xidx + ovlp) + (xblock * (((-1 + xyzy) + ovlp) +
+                                                                            (yblock * ((-1 + xyzz) + ovlp)))))))])))))))
                               : ((((l == 1))
                                       ? (((1.08333333333333326e+00 *
                                            ((1.08333333333333326e+00 *
                                              ((inEB + blk_offset_t1))[(
-                                                 l +
-                                                 (num_ele *
-                                                  (((0 + xidx) + ovlp) +
-                                                   (xblock *
-                                                    ((xyzy + ovlp) +
-                                                     (yblock * ((0 + xyzz) +
-                                                                ovlp)))))))]) +
+                                                 l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                 (xblock * ((xyzy + ovlp) +
+                                                                            (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                             ((-4.16666666666666644e-02 *
                                               ((inEB + blk_offset_t1))[(
-                                                  l +
-                                                  (num_ele *
-                                                   (((1 + xidx) + ovlp) +
-                                                    (xblock *
-                                                     ((xyzy + ovlp) +
-                                                      (yblock * ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                                  l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                  (xblock * ((xyzy + ovlp) +
+                                                                             (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                              (-4.16666666666666644e-02 *
                                               ((inEB + blk_offset_t1))[(
-                                                  l + (num_ele *
-                                                       (((-1 + xidx) + ovlp) +
-                                                        (xblock *
-                                                         ((xyzy + ovlp) +
-                                                          (yblock *
-                                                           ((0 + xyzz) +
-                                                            ovlp)))))))])))) +
+                                                  l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                  (xblock * ((xyzy + ovlp) +
+                                                                             (yblock * ((0 + xyzz) + ovlp)))))))])))) +
                                           ((-4.16666666666666644e-02 *
                                             ((1.08333333333333326e+00 *
                                               ((inEB + blk_offset_t1))[(
-                                                  l +
-                                                  (num_ele *
-                                                   (((0 + xidx) + ovlp) +
-                                                    (xblock *
-                                                     ((xyzy + ovlp) +
-                                                      (yblock * ((1 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                                  l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                  (xblock * ((xyzy + ovlp) +
+                                                                             (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                              ((-4.16666666666666644e-02 *
                                                ((inEB + blk_offset_t1))[(
-                                                   l + (num_ele *
-                                                        (((1 + xidx) + ovlp) +
-                                                         (xblock *
-                                                          ((xyzy + ovlp) +
-                                                           (yblock *
-                                                            ((1 + xyzz) +
-                                                             ovlp)))))))]) +
+                                                   l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                   (xblock * ((xyzy + ovlp) +
+                                                                              (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                               (-4.16666666666666644e-02 *
                                                ((inEB + blk_offset_t1))[(
-                                                   l + (num_ele *
-                                                        (((-1 + xidx) + ovlp) +
-                                                         (xblock *
-                                                          ((xyzy + ovlp) +
-                                                           (yblock *
-                                                            ((1 + xyzz) +
-                                                             ovlp)))))))])))) +
+                                                   l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                   (xblock * ((xyzy + ovlp) +
+                                                                              (yblock * ((1 + xyzz) + ovlp)))))))])))) +
                                            (-4.16666666666666644e-02 *
                                             ((1.08333333333333326e+00 *
                                               ((inEB + blk_offset_t1))[(
-                                                  l +
-                                                  (num_ele *
-                                                   (((0 + xidx) + ovlp) +
-                                                    (xblock *
-                                                     ((xyzy + ovlp) +
-                                                      (yblock * ((-1 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                                  l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                  (xblock * ((xyzy + ovlp) +
+                                                                             (yblock * ((-1 + xyzz) + ovlp)))))))]) +
                                              ((-4.16666666666666644e-02 *
                                                ((inEB + blk_offset_t1))[(
-                                                   l + (num_ele *
-                                                        (((1 + xidx) + ovlp) +
-                                                         (xblock *
-                                                          ((xyzy + ovlp) +
-                                                           (yblock *
-                                                            ((-1 + xyzz) +
-                                                             ovlp)))))))]) +
+                                                   l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                   (xblock * ((xyzy + ovlp) +
+                                                                              (yblock * ((-1 + xyzz) + ovlp)))))))]) +
                                               (-4.16666666666666644e-02 *
                                                ((inEB + blk_offset_t1))[(
-                                                   l + (num_ele *
-                                                        (((-1 + xidx) + ovlp) +
-                                                         (xblock *
-                                                          ((xyzy + ovlp) +
-                                                           (yblock *
-                                                            ((-1 + xyzz) +
-                                                             ovlp)))))))])))))))
+                                                   l +
+                                                   (num_ele * (((-1 + xidx) + ovlp) +
+                                                               (xblock * ((xyzy + ovlp) +
+                                                                          (yblock * ((-1 + xyzz) + ovlp)))))))])))))))
                                       : ((((l == 2))
                                               ? (((1.08333333333333326e+00 *
                                                    ((1.08333333333333326e+00 *
                                                      ((inEB + blk_offset_t1))[(
-                                                         l +
-                                                         (num_ele *
-                                                          (((0 + xidx) + ovlp) +
-                                                           (xblock *
-                                                            (((0 + xyzy) +
-                                                              ovlp) +
-                                                             (yblock *
-                                                              (xyzz +
-                                                               ovlp)))))))]) +
+                                                         l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                         (xblock * (((0 + xyzy) + ovlp) +
+                                                                                    (yblock * (xyzz + ovlp)))))))]) +
                                                     ((-4.16666666666666644e-02 *
                                                       ((inEB + blk_offset_t1))[(
-                                                          l +
-                                                          (num_ele *
-                                                           (((0 + xidx) +
-                                                             ovlp) +
-                                                            (xblock *
-                                                             (((1 + xyzy) +
-                                                               ovlp) +
-                                                              (yblock *
-                                                               (xyzz +
-                                                                ovlp)))))))]) +
+                                                          l + (num_ele * (((0 + xidx) + ovlp) +
+                                                                          (xblock * (((1 + xyzy) + ovlp) +
+                                                                                     (yblock * (xyzz + ovlp)))))))]) +
                                                      (-4.16666666666666644e-02 *
                                                       ((inEB + blk_offset_t1))[(
                                                           l +
-                                                          (num_ele *
-                                                           (((0 + xidx) +
-                                                             ovlp) +
-                                                            (xblock *
-                                                             (((-1 + xyzy) +
-                                                               ovlp) +
-                                                              (yblock *
-                                                               (xyzz +
-                                                                ovlp)))))))])))) +
+                                                          (num_ele * (((0 + xidx) + ovlp) +
+                                                                      (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                 (yblock * (xyzz + ovlp)))))))])))) +
                                                   ((-4.16666666666666644e-02 *
                                                     ((1.08333333333333326e+00 *
                                                       ((inEB + blk_offset_t1))[(
-                                                          l +
-                                                          (num_ele *
-                                                           (((1 + xidx) +
-                                                             ovlp) +
-                                                            (xblock *
-                                                             (((0 + xyzy) +
-                                                               ovlp) +
-                                                              (yblock *
-                                                               (xyzz +
-                                                                ovlp)))))))]) +
+                                                          l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                          (xblock * (((0 + xyzy) + ovlp) +
+                                                                                     (yblock * (xyzz + ovlp)))))))]) +
                                                      ((-4.16666666666666644e-02 *
-                                                       ((inEB +
-                                                         blk_offset_t1))[(
-                                                           l +
-                                                           (num_ele *
-                                                            (((1 + xidx) +
-                                                              ovlp) +
-                                                             (xblock *
-                                                              (((1 + xyzy) +
-                                                                ovlp) +
-                                                               (yblock *
-                                                                (xyzz +
-                                                                 ovlp)))))))]) +
+                                                       ((inEB + blk_offset_t1))[(
+                                                           l + (num_ele * (((1 + xidx) + ovlp) +
+                                                                           (xblock * (((1 + xyzy) + ovlp) +
+                                                                                      (yblock * (xyzz + ovlp)))))))]) +
                                                       (-4.16666666666666644e-02 *
-                                                       ((inEB +
-                                                         blk_offset_t1))[(
+                                                       ((inEB + blk_offset_t1))[(
                                                            l +
-                                                           (num_ele *
-                                                            (((1 + xidx) +
-                                                              ovlp) +
-                                                             (xblock *
-                                                              (((-1 + xyzy) +
-                                                                ovlp) +
-                                                               (yblock *
-                                                                (xyzz +
-                                                                 ovlp)))))))])))) +
+                                                           (num_ele * (((1 + xidx) + ovlp) +
+                                                                       (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                  (yblock * (xyzz + ovlp)))))))])))) +
                                                    (-4.16666666666666644e-02 *
                                                     ((1.08333333333333326e+00 *
                                                       ((inEB + blk_offset_t1))[(
-                                                          l +
-                                                          (num_ele *
-                                                           (((-1 + xidx) +
-                                                             ovlp) +
-                                                            (xblock *
-                                                             (((0 + xyzy) +
-                                                               ovlp) +
-                                                              (yblock *
-                                                               (xyzz +
-                                                                ovlp)))))))]) +
+                                                          l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                          (xblock * (((0 + xyzy) + ovlp) +
+                                                                                     (yblock * (xyzz + ovlp)))))))]) +
                                                      ((-4.16666666666666644e-02 *
-                                                       ((inEB +
-                                                         blk_offset_t1))[(
-                                                           l +
-                                                           (num_ele *
-                                                            (((-1 + xidx) +
-                                                              ovlp) +
-                                                             (xblock *
-                                                              (((1 + xyzy) +
-                                                                ovlp) +
-                                                               (yblock *
-                                                                (xyzz +
-                                                                 ovlp)))))))]) +
+                                                       ((inEB + blk_offset_t1))[(
+                                                           l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                                           (xblock * (((1 + xyzy) + ovlp) +
+                                                                                      (yblock * (xyzz + ovlp)))))))]) +
                                                       (-4.16666666666666644e-02 *
-                                                       ((inEB +
-                                                         blk_offset_t1))[(
+                                                       ((inEB + blk_offset_t1))[(
                                                            l +
-                                                           (num_ele *
-                                                            (((-1 + xidx) +
-                                                              ovlp) +
-                                                             (xblock *
-                                                              (((-1 + xyzy) +
-                                                                ovlp) +
-                                                               (yblock *
-                                                                (xyzz +
-                                                                 ovlp)))))))])))))))
+                                                           (num_ele * (((-1 + xidx) + ovlp) +
+                                                                       (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                  (yblock * (xyzz + ovlp)))))))])))))))
                                               : (0)))))));
                   }
                 }
@@ -653,10 +448,8 @@ __global__ void cuda_Yee_FDTD_W04_1(double *outEB, double *inEB,
     }
   }
 }
-__global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB,
-                                    long y_cpu_core, long numvec, long XLEN,
-                                    long YLEN, long ZLEN, int ovlp, long xblock,
-                                    long yblock, long zblock, int num_ele,
+__global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB, long y_cpu_core, long numvec, long XLEN, long YLEN,
+                                    long ZLEN, int ovlp, long xblock, long yblock, long zblock, int num_ele,
                                     double DT) {
 
 
@@ -665,7 +458,6 @@ __global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB,
   const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
 
   const long __xlen = (blockDim.x * blockDim.y);
-
 
 
   long i = 0;
@@ -686,7 +478,6 @@ __global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   for ((i = local_ymin); (i < local_ymax); i++) {
@@ -706,9 +497,7 @@ __global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB,
                 long blk_offset_t1 = (blk_all_len * i);
 
                 long blk_offset =
-                    ((blk_all_len * i) +
-                     (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                    (yb * (xyzz + ovlp))))))));
+                    ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
 
                 {
                   long g = 0;
@@ -725,83 +514,51 @@ __global__ void cuda_Yee_FDTD_W04_2(double *outEB, double *inEB,
                          (((l == 0))
                               ? (((1.08333333333333326e+00 *
                                    ((inEB + blk_offset_t1))[(
-                                       l + (num_ele *
-                                            (((0 + xidx) + ovlp) +
-                                             (xblock *
-                                              ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))]) +
+                                       l + (num_ele * (((0 + xidx) + ovlp) +
+                                                       (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))]) +
                                   ((-4.16666666666666644e-02 *
                                     ((inEB + blk_offset_t1))[(
-                                        l +
-                                        (num_ele *
-                                         (((1 + xidx) + ovlp) +
-                                          (xblock *
-                                           ((xyzy + ovlp) +
-                                            (yblock * (xyzz + ovlp)))))))]) +
+                                        l + (num_ele * (((1 + xidx) + ovlp) +
+                                                        (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))]) +
                                    (-4.16666666666666644e-02 *
                                     ((inEB + blk_offset_t1))[(
-                                        l +
-                                        (num_ele *
-                                         (((-1 + xidx) + ovlp) +
-                                          (xblock *
-                                           ((xyzy + ovlp) +
-                                            (yblock * (xyzz + ovlp)))))))]))))
+                                        l + (num_ele * (((-1 + xidx) + ovlp) +
+                                                        (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))]))))
                               : ((((l == 1))
                                       ? (((1.08333333333333326e+00 *
                                            ((inEB + blk_offset_t1))[(
                                                l + (num_ele *
                                                     ((xidx + ovlp) +
-                                                     (xblock *
-                                                      (((0 + xyzy) + ovlp) +
-                                                       (yblock *
-                                                        (xyzz + ovlp)))))))]) +
+                                                     (xblock * (((0 + xyzy) + ovlp) + (yblock * (xyzz + ovlp)))))))]) +
                                           ((-4.16666666666666644e-02 *
                                             ((inEB + blk_offset_t1))[(
                                                 l + (num_ele *
                                                      ((xidx + ovlp) +
-                                                      (xblock *
-                                                       (((1 + xyzy) + ovlp) +
-                                                        (yblock *
-                                                         (xyzz + ovlp)))))))]) +
+                                                      (xblock * (((1 + xyzy) + ovlp) + (yblock * (xyzz + ovlp)))))))]) +
                                            (-4.16666666666666644e-02 *
                                             ((inEB + blk_offset_t1))[(
-                                                l +
-                                                (num_ele *
-                                                 ((xidx + ovlp) +
-                                                  (xblock *
-                                                   (((-1 + xyzy) + ovlp) +
-                                                    (yblock *
-                                                     (xyzz + ovlp)))))))]))))
+                                                l + (num_ele *
+                                                     ((xidx + ovlp) + (xblock * (((-1 + xyzy) + ovlp) +
+                                                                                 (yblock * (xyzz + ovlp)))))))]))))
                                       : ((((l == 2))
                                               ? (((1.08333333333333326e+00 *
                                                    ((inEB + blk_offset_t1))[(
-                                                       l + (num_ele *
-                                                            ((xidx + ovlp) +
-                                                             (xblock *
-                                                              ((xyzy + ovlp) +
-                                                               (yblock *
-                                                                ((0 + xyzz) +
-                                                                 ovlp)))))))]) +
+                                                       l +
+                                                       (num_ele * ((xidx + ovlp) +
+                                                                   (xblock * ((xyzy + ovlp) +
+                                                                              (yblock * ((0 + xyzz) + ovlp)))))))]) +
                                                   ((-4.16666666666666644e-02 *
                                                     ((inEB + blk_offset_t1))[(
                                                         l +
-                                                        (num_ele *
-                                                         ((xidx + ovlp) +
-                                                          (xblock *
-                                                           ((xyzy + ovlp) +
-                                                            (yblock *
-                                                             ((1 + xyzz) +
-                                                              ovlp)))))))]) +
+                                                        (num_ele * ((xidx + ovlp) +
+                                                                    (xblock * ((xyzy + ovlp) +
+                                                                               (yblock * ((1 + xyzz) + ovlp)))))))]) +
                                                    (-4.16666666666666644e-02 *
                                                     ((inEB + blk_offset_t1))[(
                                                         l +
-                                                        (num_ele *
-                                                         ((xidx + ovlp) +
-                                                          (xblock *
-                                                           ((xyzy + ovlp) +
-                                                            (yblock *
-                                                             ((-1 + xyzz) +
-                                                              ovlp)))))))]))))
+                                                        (num_ele * ((xidx + ovlp) +
+                                                                    (xblock * ((xyzy + ovlp) +
+                                                                               (yblock * ((-1 + xyzz) + ovlp)))))))]))))
                                               : (0)))))));
                   }
                 }

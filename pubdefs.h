@@ -1,41 +1,8 @@
 #ifndef NCSPIC_SEQ_FIELD
-#include <mpi.h>
-
-#define PS_MPI_CHAR MPI_CHAR
-
-#define PS_MPI_INT MPI_INT
-
-#define PS_MPI_DOUBLE MPI_DOUBLE
-
-#define PS_MPI_FLOAT MPI_FLOAT
-
-#define PS_MPI_LONG MPI_LONG
-
-#define PS_MPI_LONG_LONG MPI_LONG_LONG
-
-#define PS_MPI_COMM_WORLD MPI_COMM_WORLD
-
-typedef MPI_Comm PS_MPI_Comm;
-
-typedef MPI_Datatype PS_MPI_Datatype;
-
-typedef MPI_Request PS_MPI_Request;
-
-typedef MPI_Status PS_MPI_Status;
-#include "libsmallmpi.h"
+#include "smallmpi/small_mpi.h"
 
 #define NCSPIC_SEQ_FIELD
 typedef double NUMBER_REAL;
-typedef enum {
-  CD_C,
-  CD_OpenMP,
-  CD_OpenCL,
-  CD_CUDA,
-  CD_COI,
-  CD_HIP,
-  CD_SYCL
-} SEQ_FIELD_TYPES;
-
 #define NUM_SYNC_LAYER 27
 
 #define NUM_SYNC_KERNEL 12
@@ -74,13 +41,9 @@ typedef struct {
   void *swap_layer_pscmc[NUM_SYNC_LAYER];
   void *sync_kernels[NUM_SYNC_KERNEL];
   void *fdtd_kernels[NUM_FDTD_KERNEL];
-  void *dm_kernels[3];
-  void *dmbihamt_kernels[7];
-  void *dm8x8_kernels[4];
   void *geo_yeefdtd_kernels[2];
   void *geo_yeefdtd_rect_kernels[1];
   void *yeefdtd_stencil_kernels[3];
-  void *hydroA_kernels[8];
   void *rdcd;
 
   double *rdcd_host;
@@ -198,13 +161,7 @@ typedef struct {
   Field3D_Seq *pFoutEN;
 
   void *sort_kernel[24];
-  void *geo_rel_1st_kernel[9];
-  void *implicit_kernel[2];
-  void *rel_1st_kernel[2];
-  void *krook_collision_test_kernel[2];
-  void *nonrel_test_kernel[28];
-  void *geo_rel_slab_nr_2nd_kernel[12];
-  void *boris_yee_kernel[1];
+  void *nonrel_test_kernel[1];
   void *cu_swap_l_6_kernel;
 
   void *cu_swap_r_6_kernel;
@@ -227,67 +184,7 @@ typedef struct {
 
   long cu_cache_length;
 
-  void *split_pass_x_kernel;
-
-  void *split_pass_y_kernel;
-
-  void *split_pass_z_kernel;
-
-  void *split_pass_x_nopush_kernel;
-
-  void *split_pass_y_nopush_kernel;
-
-  void *split_pass_z_nopush_kernel;
-
-  void *split_pass_x_small_grids_kernel;
-
-  void *split_pass_y_small_grids_kernel;
-
-  void *split_pass_z_small_grids_kernel;
-
-  void *split_pass_x_sg2_small_grids_kernel;
-
-  void *split_pass_y_sg2_small_grids_kernel;
-
-  void *split_pass_z_sg2_small_grids_kernel;
-
-  void *split_pass_E_particle_kernel;
-
-  void *split_pass_x_vlo_kernel;
-
-  void *split_pass_y_vlo_kernel;
-
-  void *split_pass_z_vlo_kernel;
-
-  void *split_pass_x_vlo_nopush_kernel;
-
-  void *split_pass_y_vlo_nopush_kernel;
-
-  void *split_pass_z_vlo_nopush_kernel;
-
-  void *split_pass_x_vlo_small_grids_kernel;
-
-  void *split_pass_y_vlo_small_grids_kernel;
-
-  void *split_pass_z_vlo_small_grids_kernel;
-
-  void *split_pass_x_vlo_sg2_small_grids_kernel;
-
-  void *split_pass_y_vlo_sg2_small_grids_kernel;
-
-  void *split_pass_z_vlo_sg2_small_grids_kernel;
-
-  void *split_pass_x_vlo_sg2_nopush_small_grids_kernel;
-
-  void *split_pass_y_vlo_sg2_nopush_small_grids_kernel;
-
-  void *split_pass_z_vlo_sg2_nopush_small_grids_kernel;
-
-  void *split_pass_E_particle_vlo_kernel;
-
   void *dump_ene_num_kernel;
-
-  void *calculate_rho_kernel;
 
   void *inoutput;
 
@@ -300,12 +197,6 @@ typedef struct {
   void *adjoint_vec_pids;
 
 } One_Particle_Collection;
-typedef struct {
-  Field3D_Seq *car;
-
-  void *cdr;
-
-} Field3D_Seq_PAIR;
 typedef struct {
   Field3D_Seq *data;
 
@@ -417,71 +308,6 @@ typedef struct {
   void *pusher_fun;
 
 } Particle_in_Cell_MPI;
-
-#ifndef LINEAR_OPERATOR_PICUS_001
-
-#define LINEAR_OPERATOR_PICUS_001
-typedef int (*linear_operator_mpi)(Field3D_MPI *, Field3D_MPI *, void *);
-
-#else
-
-#endif
-
-typedef struct {
-  Field3D_MPI *r1;
-
-  Field3D_MPI *ti;
-
-  Field3D_MPI *si1;
-
-  Field3D_MPI *si;
-
-  Field3D_MPI *vi1;
-
-  Field3D_MPI *pi;
-
-  Field3D_MPI *pi1;
-
-  Field3D_MPI *ri1;
-
-  Field3D_MPI *ri;
-
-  Field3D_MPI *r0h;
-
-  linear_operator_mpi A;
-
-  void *fv;
-
-  int zmax;
-
-  double solve_err;
-
-} bicg_space;
-typedef struct {
-  bicg_space bs;
-
-  linear_operator_mpi oscc;
-
-  Field3D_MPI *x0;
-
-  Field3D_MPI *oscc_x0;
-
-  Field3D_MPI *res_tmp;
-
-  void *fv;
-
-  void *p_vfv[5];
-  int newton_zmax;
-
-  int zmax;
-
-  double solve_err;
-
-  double newton_solve_err;
-
-  double epsl;
-
-} jfnk_newton_space;
 
 #else
 

@@ -1,879 +1,544 @@
 #include "pubdefs.h"
 
-int cuda_kgm_eqn_core_init(cuda_pscmc_env *pe,
-                           cuda_kgm_eqn_core_struct *kerstr);
-void cuda_kgm_eqn_core_get_struct_len(size_t *len);
-int cuda_kgm_eqn_core_get_xlen();
-int cuda_kgm_eqn_core_get_num_compute_units(cuda_kgm_eqn_core_struct *kerstr);
-int cuda_kgm_eqn_core_exec(cuda_kgm_eqn_core_struct *kerstr,
-                           long scmc_internal_g_xlen,
-                           long scmc_internal_g_ylen);
-int cuda_kgm_eqn_core_scmc_set_parameter_outEB(cuda_kgm_eqn_core_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_inEB(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_extA0(cuda_kgm_eqn_core_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_extA1(cuda_kgm_eqn_core_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_xoffset(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_yoffset(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_zoffset(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_y_cpu_core(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_numvec(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_XLEN(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_YLEN(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_ZLEN(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_ovlp(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_xblock(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_yblock(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_zblock(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_num_ele(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_DT(cuda_kgm_eqn_core_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_M(cuda_kgm_eqn_core_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_Q(cuda_kgm_eqn_core_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_DX(cuda_kgm_eqn_core_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_GEXT(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_rfz0(cuda_kgm_eqn_core_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_g_beg(cuda_kgm_eqn_core_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_eqn_core_scmc_set_parameter_swap_input(
-    cuda_kgm_eqn_core_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_init(cuda_pscmc_env *pe,
-                           cuda_kgm_calc_rho_struct *kerstr);
-void cuda_kgm_calc_rho_get_struct_len(size_t *len);
-int cuda_kgm_calc_rho_get_xlen();
-int cuda_kgm_calc_rho_get_num_compute_units(cuda_kgm_calc_rho_struct *kerstr);
-int cuda_kgm_calc_rho_exec(cuda_kgm_calc_rho_struct *kerstr,
-                           long scmc_internal_g_xlen,
-                           long scmc_internal_g_ylen);
-int cuda_kgm_calc_rho_scmc_set_parameter_outEB(cuda_kgm_calc_rho_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_inEB(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_xoffset(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_yoffset(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_zoffset(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_y_cpu_core(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_numvec(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_XLEN(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_YLEN(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_ZLEN(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_ovlp(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_xblock(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_yblock(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_zblock(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_num_ele(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_DT(cuda_kgm_calc_rho_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_M(cuda_kgm_calc_rho_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_Q(cuda_kgm_calc_rho_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_DX(cuda_kgm_calc_rho_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_refz0(cuda_kgm_calc_rho_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_q(cuda_kgm_calc_rho_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_dtodx(cuda_kgm_calc_rho_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_mode(cuda_kgm_calc_rho_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_kgm_calc_rho_scmc_set_parameter_swap_input(
-    cuda_kgm_calc_rho_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_init(cuda_pscmc_env *pe,
-                                cuda_PML_FDTD_CURL_BWD_struct *kerstr);
-void cuda_PML_FDTD_CURL_BWD_get_struct_len(size_t *len);
-int cuda_PML_FDTD_CURL_BWD_get_xlen();
-int cuda_PML_FDTD_CURL_BWD_get_num_compute_units(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr);
-int cuda_PML_FDTD_CURL_BWD_exec(cuda_PML_FDTD_CURL_BWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_outEB(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_inEB(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_outPMLEB(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_inPMLEB(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_xoffset(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_yoffset(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_zoffset(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_y_cpu_core(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_numvec(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_XLEN(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_YLEN(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_ZLEN(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_ovlp(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_xblock(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_yblock(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_zblock(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_num_ele(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_DT(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_M(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_Q(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_DX(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_DY(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_DZ(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_abc_dir(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_level(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_pml_m(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_max_sigma(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_allxmax(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_allymax(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_BWD_scmc_set_parameter_allzmax(
-    cuda_PML_FDTD_CURL_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_init(cuda_pscmc_env *pe,
-                                cuda_PML_FDTD_CURL_FWD_struct *kerstr);
-void cuda_PML_FDTD_CURL_FWD_get_struct_len(size_t *len);
-int cuda_PML_FDTD_CURL_FWD_get_xlen();
-int cuda_PML_FDTD_CURL_FWD_get_num_compute_units(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr);
-int cuda_PML_FDTD_CURL_FWD_exec(cuda_PML_FDTD_CURL_FWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_outEB(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_inEB(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_outPMLEB(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_inPMLEB(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_xoffset(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_yoffset(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_zoffset(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_y_cpu_core(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_numvec(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_XLEN(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_YLEN(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_ZLEN(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_ovlp(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_xblock(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_yblock(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_zblock(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_num_ele(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_DT(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_M(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_Q(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_DX(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_DY(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_DZ(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_abc_dir(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_level(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_pml_m(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_max_sigma(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_allxmax(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_allymax(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_PML_FDTD_CURL_FWD_scmc_set_parameter_allzmax(
-    cuda_PML_FDTD_CURL_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_init(cuda_pscmc_env *pe,
-                            cuda_merge_current_struct *kerstr);
-void cuda_merge_current_get_struct_len(size_t *len);
-int cuda_merge_current_get_xlen();
-int cuda_merge_current_get_num_compute_units(cuda_merge_current_struct *kerstr);
-int cuda_merge_current_exec(cuda_merge_current_struct *kerstr,
-                            long scmc_internal_g_xlen,
-                            long scmc_internal_g_ylen);
-int cuda_merge_current_scmc_set_parameter_outEB(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_inEB(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_y_cpu_core(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_numvec(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_XLEN(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_YLEN(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_ZLEN(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_ovlp(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_xblock(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_yblock(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_zblock(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_scmc_set_parameter_num_ele(
-    cuda_merge_current_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_init(cuda_pscmc_env *pe,
-                              cuda_merge_current_2_struct *kerstr);
-void cuda_merge_current_2_get_struct_len(size_t *len);
-int cuda_merge_current_2_get_xlen();
-int cuda_merge_current_2_get_num_compute_units(
-    cuda_merge_current_2_struct *kerstr);
-int cuda_merge_current_2_exec(cuda_merge_current_2_struct *kerstr,
-                              long scmc_internal_g_xlen,
-                              long scmc_internal_g_ylen);
-int cuda_merge_current_2_scmc_set_parameter_outEB(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_inEB(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_y_cpu_core(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_numvec(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_XLEN(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_YLEN(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_ZLEN(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_ovlp(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_xblock(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_yblock(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_zblock(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_current_2_scmc_set_parameter_num_ele(
-    cuda_merge_current_2_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_init(cuda_pscmc_env *pe,
-                                   cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Div_FWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Div_FWD_4th_get_xlen();
-int cuda_Yee_FDTD_Div_FWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Div_FWD_4th_exec(cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr,
-                                   long scmc_internal_g_xlen,
-                                   long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Div_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_init(cuda_pscmc_env *pe,
-                               cuda_Yee_FDTD_Div_FWD_struct *kerstr);
-void cuda_Yee_FDTD_Div_FWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Div_FWD_get_xlen();
-int cuda_Yee_FDTD_Div_FWD_get_num_compute_units(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr);
-int cuda_Yee_FDTD_Div_FWD_exec(cuda_Yee_FDTD_Div_FWD_struct *kerstr,
-                               long scmc_internal_g_xlen,
-                               long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_FWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Div_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_init(cuda_pscmc_env *pe,
-                                   cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Div_BWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Div_BWD_4th_get_xlen();
-int cuda_Yee_FDTD_Div_BWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Div_BWD_4th_exec(cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr,
-                                   long scmc_internal_g_xlen,
-                                   long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Div_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_init(cuda_pscmc_env *pe,
-                               cuda_Yee_FDTD_Div_BWD_struct *kerstr);
-void cuda_Yee_FDTD_Div_BWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Div_BWD_get_xlen();
-int cuda_Yee_FDTD_Div_BWD_get_num_compute_units(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr);
-int cuda_Yee_FDTD_Div_BWD_exec(cuda_Yee_FDTD_Div_BWD_struct *kerstr,
-                               long scmc_internal_g_xlen,
-                               long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Div_BWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Div_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_init(cuda_pscmc_env *pe,
-                                    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Curl_FWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_FWD_4th_get_xlen();
-int cuda_Yee_FDTD_Curl_FWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Curl_FWD_4th_exec(cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_init(cuda_pscmc_env *pe,
-                                cuda_Yee_FDTD_Curl_FWD_struct *kerstr);
-void cuda_Yee_FDTD_Curl_FWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_FWD_get_xlen();
-int cuda_Yee_FDTD_Curl_FWD_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr);
-int cuda_Yee_FDTD_Curl_FWD_exec(cuda_Yee_FDTD_Curl_FWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_FWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_init(cuda_pscmc_env *pe,
-                                    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Curl_BWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_BWD_4th_get_xlen();
-int cuda_Yee_FDTD_Curl_BWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Curl_BWD_4th_exec(cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_init(cuda_pscmc_env *pe,
-                                cuda_Yee_FDTD_Curl_BWD_struct *kerstr);
-void cuda_Yee_FDTD_Curl_BWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_BWD_get_xlen();
-int cuda_Yee_FDTD_Curl_BWD_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr);
-int cuda_Yee_FDTD_Curl_BWD_exec(cuda_Yee_FDTD_Curl_BWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_BWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_init(cuda_pscmc_env *pe,
-                                    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Grad_FWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Grad_FWD_4th_get_xlen();
-int cuda_Yee_FDTD_Grad_FWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Grad_FWD_4th_exec(cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Grad_FWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_init(cuda_pscmc_env *pe,
-                                cuda_Yee_FDTD_Grad_FWD_struct *kerstr);
-void cuda_Yee_FDTD_Grad_FWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Grad_FWD_get_xlen();
-int cuda_Yee_FDTD_Grad_FWD_get_num_compute_units(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr);
-int cuda_Yee_FDTD_Grad_FWD_exec(cuda_Yee_FDTD_Grad_FWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_FWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Grad_FWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_init(cuda_pscmc_env *pe,
-                                    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr);
-void cuda_Yee_FDTD_Grad_BWD_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Grad_BWD_4th_get_xlen();
-int cuda_Yee_FDTD_Grad_BWD_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr);
-int cuda_Yee_FDTD_Grad_BWD_4th_exec(cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Grad_BWD_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_init(cuda_pscmc_env *pe,
-                                cuda_Yee_FDTD_Grad_BWD_struct *kerstr);
-void cuda_Yee_FDTD_Grad_BWD_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Grad_BWD_get_xlen();
-int cuda_Yee_FDTD_Grad_BWD_get_num_compute_units(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr);
-int cuda_Yee_FDTD_Grad_BWD_exec(cuda_Yee_FDTD_Grad_BWD_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Grad_BWD_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Grad_BWD_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_init(cuda_pscmc_env *pe,
-                                  cuda_Yee_FDTD_Curl_B_4th_struct *kerstr);
-void cuda_Yee_FDTD_Curl_B_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_B_4th_get_xlen();
-int cuda_Yee_FDTD_Curl_B_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr);
-int cuda_Yee_FDTD_Curl_B_4th_exec(cuda_Yee_FDTD_Curl_B_4th_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_B_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_init(cuda_pscmc_env *pe,
-                              cuda_Yee_FDTD_Curl_B_struct *kerstr);
-void cuda_Yee_FDTD_Curl_B_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_B_get_xlen();
-int cuda_Yee_FDTD_Curl_B_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr);
-int cuda_Yee_FDTD_Curl_B_exec(cuda_Yee_FDTD_Curl_B_struct *kerstr,
-                              long scmc_internal_g_xlen,
-                              long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_B_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_B_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_init(cuda_pscmc_env *pe,
-                                  cuda_Yee_FDTD_Curl_E_4th_struct *kerstr);
-void cuda_Yee_FDTD_Curl_E_4th_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_E_4th_get_xlen();
-int cuda_Yee_FDTD_Curl_E_4th_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr);
-int cuda_Yee_FDTD_Curl_E_4th_exec(cuda_Yee_FDTD_Curl_E_4th_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_4th_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_E_4th_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_init(cuda_pscmc_env *pe,
-                              cuda_Yee_FDTD_Curl_E_struct *kerstr);
-void cuda_Yee_FDTD_Curl_E_get_struct_len(size_t *len);
-int cuda_Yee_FDTD_Curl_E_get_xlen();
-int cuda_Yee_FDTD_Curl_E_get_num_compute_units(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr);
-int cuda_Yee_FDTD_Curl_E_exec(cuda_Yee_FDTD_Curl_E_struct *kerstr,
-                              long scmc_internal_g_xlen,
-                              long scmc_internal_g_ylen);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_outEB(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_inEB(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_y_cpu_core(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_numvec(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_XLEN(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_YLEN(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_ZLEN(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_ovlp(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_xblock(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_yblock(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_zblock(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_num_ele(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_Yee_FDTD_Curl_E_scmc_set_parameter_DT(
-    cuda_Yee_FDTD_Curl_E_struct *kerstr, cuda_pscmc_mem *pm);
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define DECL_CUDA_KGM_EQN_CORE_KERNEL(P)                                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, extA0)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, extA1)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, M)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, Q)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DX)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, GEXT)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rfz0)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, g_beg)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, swap_input)
+
+#define DECL_CUDA_KGM_CALC_RHO_KERNEL(P)                                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, M)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, Q)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DX)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, refz0)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, q)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, dtodx)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, mode)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, swap_input)
+
+#define DECL_CUDA_PML_FDTD_CURL_BWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outPMLEB)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inPMLEB)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, M)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, Q)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DX)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DY)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DZ)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, abc_dir)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, level)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, pml_m)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, max_sigma)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allxmax)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allymax)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allzmax)
+
+#define DECL_CUDA_PML_FDTD_CURL_FWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outPMLEB)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inPMLEB)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, M)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, Q)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DX)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DY)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DZ)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, abc_dir)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, level)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, pml_m)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, max_sigma)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allxmax)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allymax)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, allzmax)
+
+#define DECL_CUDA_MERGE_CURRENT_KERNEL(P)                                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_MERGE_CURRENT_2_KERNEL(P)                                                                            \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_YEE_FDTD_DIV_FWD_4TH_KERNEL(P)                                                                       \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_DIV_FWD_KERNEL(P)                                                                           \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_DIV_BWD_4TH_KERNEL(P)                                                                       \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_DIV_BWD_KERNEL(P)                                                                           \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_FWD_4TH_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_FWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_BWD_4TH_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_BWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_GRAD_FWD_4TH_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_GRAD_FWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_GRAD_BWD_4TH_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_GRAD_BWD_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_B_4TH_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_B_KERNEL(P)                                                                            \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_E_4TH_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+#define DECL_CUDA_YEE_FDTD_CURL_E_KERNEL(P)                                                                            \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, outEB)                                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inEB)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)
+
+DECL_CUDA_KGM_EQN_CORE_KERNEL(cuda_kgm_eqn_core)
+DECL_CUDA_KGM_CALC_RHO_KERNEL(cuda_kgm_calc_rho)
+DECL_CUDA_PML_FDTD_CURL_BWD_KERNEL(cuda_PML_FDTD_CURL_BWD)
+DECL_CUDA_PML_FDTD_CURL_FWD_KERNEL(cuda_PML_FDTD_CURL_FWD)
+DECL_CUDA_MERGE_CURRENT_KERNEL(cuda_merge_current)
+DECL_CUDA_MERGE_CURRENT_2_KERNEL(cuda_merge_current_2)
+DECL_CUDA_YEE_FDTD_DIV_FWD_4TH_KERNEL(cuda_Yee_FDTD_Div_FWD_4th)
+DECL_CUDA_YEE_FDTD_DIV_FWD_KERNEL(cuda_Yee_FDTD_Div_FWD)
+DECL_CUDA_YEE_FDTD_DIV_BWD_4TH_KERNEL(cuda_Yee_FDTD_Div_BWD_4th)
+DECL_CUDA_YEE_FDTD_DIV_BWD_KERNEL(cuda_Yee_FDTD_Div_BWD)
+DECL_CUDA_YEE_FDTD_CURL_FWD_4TH_KERNEL(cuda_Yee_FDTD_Curl_FWD_4th)
+DECL_CUDA_YEE_FDTD_CURL_FWD_KERNEL(cuda_Yee_FDTD_Curl_FWD)
+DECL_CUDA_YEE_FDTD_CURL_BWD_4TH_KERNEL(cuda_Yee_FDTD_Curl_BWD_4th)
+DECL_CUDA_YEE_FDTD_CURL_BWD_KERNEL(cuda_Yee_FDTD_Curl_BWD)
+DECL_CUDA_YEE_FDTD_GRAD_FWD_4TH_KERNEL(cuda_Yee_FDTD_Grad_FWD_4th)
+DECL_CUDA_YEE_FDTD_GRAD_FWD_KERNEL(cuda_Yee_FDTD_Grad_FWD)
+DECL_CUDA_YEE_FDTD_GRAD_BWD_4TH_KERNEL(cuda_Yee_FDTD_Grad_BWD_4th)
+DECL_CUDA_YEE_FDTD_GRAD_BWD_KERNEL(cuda_Yee_FDTD_Grad_BWD)
+DECL_CUDA_YEE_FDTD_CURL_B_4TH_KERNEL(cuda_Yee_FDTD_Curl_B_4th)
+DECL_CUDA_YEE_FDTD_CURL_B_KERNEL(cuda_Yee_FDTD_Curl_B)
+DECL_CUDA_YEE_FDTD_CURL_E_4TH_KERNEL(cuda_Yee_FDTD_Curl_E_4th)
+DECL_CUDA_YEE_FDTD_CURL_E_KERNEL(cuda_Yee_FDTD_Curl_E)
+
+#undef DECL_CUDA_KGM_EQN_CORE_KERNEL
+#undef DECL_CUDA_KGM_CALC_RHO_KERNEL
+#undef DECL_CUDA_PML_FDTD_CURL_BWD_KERNEL
+#undef DECL_CUDA_PML_FDTD_CURL_FWD_KERNEL
+#undef DECL_CUDA_MERGE_CURRENT_KERNEL
+#undef DECL_CUDA_MERGE_CURRENT_2_KERNEL
+#undef DECL_CUDA_YEE_FDTD_DIV_FWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_DIV_FWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_DIV_BWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_DIV_BWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_FWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_FWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_BWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_BWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_GRAD_FWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_GRAD_FWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_GRAD_BWD_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_GRAD_BWD_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_B_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_B_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_E_4TH_KERNEL
+#undef DECL_CUDA_YEE_FDTD_CURL_E_KERNEL

@@ -9,121 +9,15 @@
 #ifdef IDX_LOCAL_XLEN
 #undef IDX_LOCAL_XLEN
 #endif
-#define IDX_LOCAL_XLEN 32
-__global__ void
-cuda_ngeo_gc(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw,
-             int *xoffset, int *yoffset, int *zoffset, double *fieldE,
-             double *fieldB, double *fieldB1, double *FoutJ, long XLEN,
-             long YLEN, long ZLEN, int ovlp, long numvec, int num_ele,
-             long grid_cache_len, long cu_cache_length, double DELTA_X,
-             double DELTA_Y, double DELTA_Z, double Mass0, double Charge0,
-             double Deltat, double Tori_X0, double r0, double MIN_R0, double Q0,
-             double b0, double zmid) {
-  printf("FATAL: cuda_ngeo_gc() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
-#define IDX_LOCAL_XLEN 32
-__global__ void
-cuda_geo_nr(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw,
-            int *xoffset, int *yoffset, int *zoffset, double *fieldE,
-            double *fieldB, double *fieldB1, double *FoutJ, long XLEN,
-            long YLEN, long ZLEN, int ovlp, long numvec, int num_ele,
-            long grid_cache_len, long cu_cache_length, double DELTA_X,
-            double DELTA_Y, double DELTA_Z, double Mass0, double Charge0,
-            double Deltat, double Tori_X0, double r0, double MIN_R0, double Q0,
-            double b0, double zmid) {
-  printf("FATAL: cuda_geo_nr() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
-#define IDX_LOCAL_XLEN 32
-__global__ void
-cuda_geo_nr_vlo(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw,
-                int *xoffset, int *yoffset, int *zoffset, double *fieldE,
-                double *fieldB, double *fieldB1, double *FoutJ, long XLEN,
-                long YLEN, long ZLEN, int ovlp, long numvec, int num_ele,
-                long grid_cache_len, long cu_cache_length, double DELTA_X,
-                double DELTA_Y, double DELTA_Z, double Mass0, double Charge0,
-                double Deltat, double Tori_X0, double r0, double MIN_R0,
-                double Q0, double b0, double zmid) {
-  printf("FATAL: cuda_geo_nr_vlo() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
-#define IDX_LOCAL_XLEN 32
-__global__ void
-cuda_geo_nr_Bfield(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw,
-                   int *xoffset, int *yoffset, int *zoffset, double *fieldE,
-                   double *fieldB, double *fieldB1, double *FoutJ, long XLEN,
-                   long YLEN, long ZLEN, int ovlp, long numvec, int num_ele,
-                   long grid_cache_len, long cu_cache_length, double DELTA_X,
-                   double DELTA_Y, double DELTA_Z, double Mass0, double Charge0,
-                   double Deltat, double Tori_X0, double r0, double MIN_R0,
-                   double Q0, double b0, double zmid) {
-  printf("FATAL: cuda_geo_nr_Bfield() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-
-#define IDX_LOCAL_XLEN 32
-__global__ void cuda_geo_nr_Bfield_pushJ(
-    double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw, int *xoffset,
-    int *yoffset, int *zoffset, double *fieldE, double *fieldB, double *fieldB1,
-    double *FoutJ, long XLEN, long YLEN, long ZLEN, int ovlp, long numvec,
-    int num_ele, long grid_cache_len, long cu_cache_length, double DELTA_X,
-    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat,
-    double Tori_X0, double r0, double MIN_R0, double Q0, double b0,
-    double zmid) {
-  printf("FATAL: cuda_geo_nr_Bfield_pushJ() was called. Exiting now.\n");
-  __trap();
-  return;
-
-
-}
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
-#define IDX_LOCAL_XLEN 32
-__global__ void cuda_geo_nr_Bfield_pushJ_nopush_par(
-    double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw, int *xoffset,
-    int *yoffset, int *zoffset, double *fieldE, double *fieldB, double *fieldB1,
-    double *FoutJ, long XLEN, long YLEN, long ZLEN, int ovlp, long numvec,
-    int num_ele, long grid_cache_len, long cu_cache_length, double DELTA_X,
-    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat,
-    double Tori_X0, double r0, double MIN_R0, double Q0, double b0,
-    double zmid) {
-  printf("FATAL: cuda_geo_nr_Bfield_pushJ_nopush_par() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
 #include "pushJ_vlo_split.cuh"
 #define IDX_LOCAL_XLEN 32
-__global__ void cuda_geo_nr_Bfield_pushJ_vlo(
-    double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw, int *xoffset,
-    int *yoffset, int *zoffset, double *fieldE, double *fieldB, double *fieldB1,
-    double *FoutJ, long XLEN, long YLEN, long ZLEN, int ovlp, long numvec,
-    int num_ele, long grid_cache_len, long cu_cache_length, double DELTA_X,
-    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat,
-    double Tori_X0, double r0, double MIN_R0, double Q0, double b0,
-    double zmid) {
+__global__ void cuda_geo_nr_Bfield_pushJ_vlo(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw, int *xoffset,
+                                             int *yoffset, int *zoffset, double *fieldE, double *fieldB,
+                                             double *fieldB1, double *FoutJ, long XLEN, long YLEN, long ZLEN, int ovlp,
+                                             long numvec, int num_ele, long grid_cache_len, long cu_cache_length,
+                                             double DELTA_X, double DELTA_Y, double DELTA_Z, double Mass0,
+                                             double Charge0, double Deltat, double Tori_X0, double r0, double MIN_R0,
+                                             double Q0, double b0, double zmid) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -168,22 +62,16 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         double ZO = (zoffset)[i_idy];
 
         double Midx =
-            ((use_local_particle_position)
-                 ? (floor(((cu_cache +
-                            ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]))
-                 : (mdx));
+            ((use_local_particle_position) ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]))
+                                           : (mdx));
 
         double Midy =
-            ((use_local_particle_position)
-                 ? (floor(((cu_cache +
-                            ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]))
-                 : (mdy));
+            ((use_local_particle_position) ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]))
+                                           : (mdy));
 
         double Midz =
-            ((use_local_particle_position)
-                 ? (floor(((cu_cache +
-                            ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]))
-                 : (mdz));
+            ((use_local_particle_position) ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]))
+                                           : (mdz));
 
         if (Midx < 0) {
           (Midx = 0);
@@ -222,35 +110,26 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         double grid_geo_y = (DELTA_Y / (DELTA_Z * DELTA_X));
 
         double grid_geo_z = (DELTA_Z / (DELTA_X * DELTA_Y));
-        double *particle_buf =
-            (cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)));
-        pushJ_vlo_K1_load_shared_5x5x5(shE0, shB0, shB1, shJ0, fieldE, fieldB,
-                                       fieldB1, FoutJ, __idy, __idx, __xlen,
-                                       bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN,
-                                       ovlp, num_ele);
+        double *particle_buf = (cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)));
+        pushJ_vlo_K1_load_shared_5x5x5(shE0, shB0, shB1, shJ0, fieldE, fieldB, fieldB1, FoutJ, __idy, __idx, __xlen,
+                                       bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp, num_ele);
         __syncthreads();
         {
           int g_inner;
 
-          for ((g_inner = 0); (g_inner < load0);
-               (g_inner = (g_inner + __xlen))) {
+          for ((g_inner = 0); (g_inner < load0); (g_inner = (g_inner + __xlen))) {
             pushJ_vlo_state_t st;
-            pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, __idx, __xlen,
-                                            g_inner, load0, Midx, Midy, Midz,
-                                            Deltat);
-            pushJ_vlo_K2_push_weights_x2x3(
-                &st, shE0, shB0, shB1, DELTA_X, DELTA_Y, DELTA_Z, Deltat,
-                Tori_X0, QE_MASS, XO, YO, ZO, zmid, Midx, Midy, Midz);
-            pushJ_vlo_K3_deposit_writeback_particle(
-                &st, shJ0, Jtmp_shd, particle_buf, Deltat, __idx, __xlen,
-                g_inner, load0, Charge0, Tori_X0, grid_geo_x, grid_geo_y,
-                grid_geo_z, XO, YO, ZO, zmid, bBidx, bBidy, bBidz);
+            pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, __idx, __xlen, g_inner, load0, Midx, Midy, Midz, Deltat);
+            pushJ_vlo_K2_push_weights_x2x3(&st, shE0, shB0, shB1, DELTA_X, DELTA_Y, DELTA_Z, Deltat, Tori_X0, QE_MASS,
+                                           XO, YO, ZO, zmid, Midx, Midy, Midz);
+            pushJ_vlo_K3_deposit_writeback_particle(&st, shJ0, Jtmp_shd, particle_buf, Deltat, __idx, __xlen, g_inner,
+                                                    load0, Charge0, Tori_X0, grid_geo_x, grid_geo_y, grid_geo_z, XO, YO,
+                                                    ZO, zmid, bBidx, bBidy, bBidz);
           }
         }
         __syncthreads();
-        pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen,
-                                             bBidx, bBidy, bBidz, XLEN, YLEN,
-                                             ZLEN, ovlp, num_ele);
+        pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN,
+                                             ovlp, num_ele);
         __syncthreads();
       }
     }
@@ -281,23 +160,17 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
 
         double ZO = (zoffset)[i_idy];
 
-        double Midx =
-            ((use_local_particle_position)
-                 ? (floor(((inoutput + (grid_base_offset +
-                                        (6 * (allgid * grid_cache_len)))))[0]))
-                 : (mdx));
+        double Midx = ((use_local_particle_position)
+                           ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[0]))
+                           : (mdx));
 
-        double Midy =
-            ((use_local_particle_position)
-                 ? (floor(((inoutput + (grid_base_offset +
-                                        (6 * (allgid * grid_cache_len)))))[1]))
-                 : (mdy));
+        double Midy = ((use_local_particle_position)
+                           ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[1]))
+                           : (mdy));
 
-        double Midz =
-            ((use_local_particle_position)
-                 ? (floor(((inoutput + (grid_base_offset +
-                                        (6 * (allgid * grid_cache_len)))))[2]))
-                 : (mdz));
+        double Midz = ((use_local_particle_position)
+                           ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[2]))
+                           : (mdz));
 
         if (Midx < 0) {
           (Midx = 0);
@@ -336,35 +209,26 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         double grid_geo_y = (DELTA_Y / (DELTA_Z * DELTA_X));
 
         double grid_geo_z = (DELTA_Z / (DELTA_X * DELTA_Y));
-        double *particle_buf =
-            (inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))));
-        pushJ_vlo_K1_load_shared_5x5x5(shE0, shB0, shB1, shJ0, fieldE, fieldB,
-                                       fieldB1, FoutJ, __idy, __idx, __xlen,
-                                       bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN,
-                                       ovlp, num_ele);
+        double *particle_buf = (inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))));
+        pushJ_vlo_K1_load_shared_5x5x5(shE0, shB0, shB1, shJ0, fieldE, fieldB, fieldB1, FoutJ, __idy, __idx, __xlen,
+                                       bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp, num_ele);
         __syncthreads();
         {
           int g_inner;
 
-          for ((g_inner = 0); (g_inner < load0);
-               (g_inner = (g_inner + __xlen))) {
+          for ((g_inner = 0); (g_inner < load0); (g_inner = (g_inner + __xlen))) {
             pushJ_vlo_state_t st;
-            pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, __idx, __xlen,
-                                            g_inner, load0, Midx, Midy, Midz,
-                                            Deltat);
-            pushJ_vlo_K2_push_weights_x2x3(
-                &st, shE0, shB0, shB1, DELTA_X, DELTA_Y, DELTA_Z, Deltat,
-                Tori_X0, QE_MASS, XO, YO, ZO, zmid, Midx, Midy, Midz);
-            pushJ_vlo_K3_deposit_writeback_particle(
-                &st, shJ0, Jtmp_shd, particle_buf, Deltat, __idx, __xlen,
-                g_inner, load0, Charge0, Tori_X0, grid_geo_x, grid_geo_y,
-                grid_geo_z, XO, YO, ZO, zmid, bBidx, bBidy, bBidz);
+            pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, __idx, __xlen, g_inner, load0, Midx, Midy, Midz, Deltat);
+            pushJ_vlo_K2_push_weights_x2x3(&st, shE0, shB0, shB1, DELTA_X, DELTA_Y, DELTA_Z, Deltat, Tori_X0, QE_MASS,
+                                           XO, YO, ZO, zmid, Midx, Midy, Midz);
+            pushJ_vlo_K3_deposit_writeback_particle(&st, shJ0, Jtmp_shd, particle_buf, Deltat, __idx, __xlen, g_inner,
+                                                    load0, Charge0, Tori_X0, grid_geo_x, grid_geo_y, grid_geo_z, XO, YO,
+                                                    ZO, zmid, bBidx, bBidy, bBidz);
           }
         }
         __syncthreads();
-        pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen,
-                                             bBidx, bBidy, bBidz, XLEN, YLEN,
-                                             ZLEN, ovlp, num_ele);
+        pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN,
+                                             ovlp, num_ele);
         __syncthreads();
       }
 
@@ -374,21 +238,3 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
     }
   }
 }
-
-#ifdef IDX_LOCAL_XLEN
-#undef IDX_LOCAL_XLEN
-#endif
-#define IDX_LOCAL_XLEN 32
-__global__ void cuda_geo_nr_Bfield_pushJ_nopush_par_vlo(
-    double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw, int *xoffset,
-    int *yoffset, int *zoffset, double *fieldE, double *fieldB, double *fieldB1,
-    double *FoutJ, long XLEN, long YLEN, long ZLEN, int ovlp, long numvec,
-    int num_ele, long grid_cache_len, long cu_cache_length, double DELTA_X,
-    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat,
-    double Tori_X0, double r0, double MIN_R0, double Q0, double b0,
-    double zmid) {
-  printf("FATAL: cuda_geo_nr_Bfield_pushJ_nopush_par_vlo() was called. Exiting now.\n");
-  __trap();
-  return;
-}
-

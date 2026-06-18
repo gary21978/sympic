@@ -1,49 +1,33 @@
 #include "pubdefs.h"
 
-int cuda_RECT_YEE_CURL_L_init(cuda_pscmc_env *pe,
-                              cuda_RECT_YEE_CURL_L_struct *kerstr);
-void cuda_RECT_YEE_CURL_L_get_struct_len(size_t *len);
-int cuda_RECT_YEE_CURL_L_get_xlen();
-int cuda_RECT_YEE_CURL_L_get_num_compute_units(
-    cuda_RECT_YEE_CURL_L_struct *kerstr);
-int cuda_RECT_YEE_CURL_L_exec(cuda_RECT_YEE_CURL_L_struct *kerstr,
-                              long scmc_internal_g_xlen,
-                              long scmc_internal_g_ylen);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_inoutE1(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_inB0(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_xoffset(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_yoffset(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_zoffset(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_y_cpu_core(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_numvec(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_XLEN(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_YLEN(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_ZLEN(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_ovlp(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_xblock(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_yblock(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_zblock(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_num_ele(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_DT(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_DELTA_X(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_DELTA_Y(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_RECT_YEE_CURL_L_scmc_set_parameter_DELTA_Z(
-    cuda_RECT_YEE_CURL_L_struct *kerstr, cuda_pscmc_mem *pm);
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define DECL_CUDA_RECT_YEE_CURL_L_KERNEL(P)                                                                            \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inoutE1)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, inB0)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zoffset)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DT)                                                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DELTA_X)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DELTA_Y)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, DELTA_Z)
+
+DECL_CUDA_RECT_YEE_CURL_L_KERNEL(cuda_RECT_YEE_CURL_L)
+
+#undef DECL_CUDA_RECT_YEE_CURL_L_KERNEL

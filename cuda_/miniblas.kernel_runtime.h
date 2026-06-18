@@ -1,1002 +1,652 @@
 #include "pubdefs.h"
 
-int cuda_blas_axpby_enlarge_init(cuda_pscmc_env *pe,
-                                 cuda_blas_axpby_enlarge_struct *kerstr);
-void cuda_blas_axpby_enlarge_get_struct_len(size_t *len);
-int cuda_blas_axpby_enlarge_get_xlen();
-int cuda_blas_axpby_enlarge_get_num_compute_units(
-    cuda_blas_axpby_enlarge_struct *kerstr);
-int cuda_blas_axpby_enlarge_exec(cuda_blas_axpby_enlarge_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_y(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_x(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_a(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_b(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_numvec(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_XLEN(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_YLEN(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_ZLEN(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_ovlp(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_xblock(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_yblock(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_zblock(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_enlarge_scmc_set_parameter_num_ele(
-    cuda_blas_axpby_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_init(cuda_pscmc_env *pe,
-                                cuda_blas_axpby_shrink_struct *kerstr);
-void cuda_blas_axpby_shrink_get_struct_len(size_t *len);
-int cuda_blas_axpby_shrink_get_xlen();
-int cuda_blas_axpby_shrink_get_num_compute_units(
-    cuda_blas_axpby_shrink_struct *kerstr);
-int cuda_blas_axpby_shrink_exec(cuda_blas_axpby_shrink_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_blas_axpby_shrink_scmc_set_parameter_y(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_x(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_a(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_b(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_numvec(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_XLEN(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_YLEN(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_ZLEN(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_ovlp(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_xblock(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_yblock(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_zblock(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_shrink_scmc_set_parameter_num_ele(
-    cuda_blas_axpby_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_init(cuda_pscmc_env *pe,
-                                cuda_blas_axpy_enlarge_struct *kerstr);
-void cuda_blas_axpy_enlarge_get_struct_len(size_t *len);
-int cuda_blas_axpy_enlarge_get_xlen();
-int cuda_blas_axpy_enlarge_get_num_compute_units(
-    cuda_blas_axpy_enlarge_struct *kerstr);
-int cuda_blas_axpy_enlarge_exec(cuda_blas_axpy_enlarge_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_y(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_x(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_a(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_numvec(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_XLEN(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_YLEN(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_ZLEN(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_ovlp(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_xblock(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_yblock(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_zblock(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_enlarge_scmc_set_parameter_num_ele(
-    cuda_blas_axpy_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_init(cuda_pscmc_env *pe,
-                               cuda_blas_axpy_shrink_struct *kerstr);
-void cuda_blas_axpy_shrink_get_struct_len(size_t *len);
-int cuda_blas_axpy_shrink_get_xlen();
-int cuda_blas_axpy_shrink_get_num_compute_units(
-    cuda_blas_axpy_shrink_struct *kerstr);
-int cuda_blas_axpy_shrink_exec(cuda_blas_axpy_shrink_struct *kerstr,
-                               long scmc_internal_g_xlen,
-                               long scmc_internal_g_ylen);
-int cuda_blas_axpy_shrink_scmc_set_parameter_y(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_x(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_a(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_numvec(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_XLEN(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_YLEN(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_ZLEN(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_ovlp(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_xblock(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_yblock(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_zblock(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_shrink_scmc_set_parameter_num_ele(
-    cuda_blas_axpy_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_init(cuda_pscmc_env *pe,
-                                 cuda_blas_yisax_enlarge_struct *kerstr);
-void cuda_blas_yisax_enlarge_get_struct_len(size_t *len);
-int cuda_blas_yisax_enlarge_get_xlen();
-int cuda_blas_yisax_enlarge_get_num_compute_units(
-    cuda_blas_yisax_enlarge_struct *kerstr);
-int cuda_blas_yisax_enlarge_exec(cuda_blas_yisax_enlarge_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_y(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_x(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_a(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_numvec(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_XLEN(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_YLEN(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_ZLEN(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_ovlp(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_xblock(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_yblock(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_zblock(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_enlarge_scmc_set_parameter_num_ele(
-    cuda_blas_yisax_enlarge_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_init(cuda_pscmc_env *pe,
-                                cuda_blas_yisax_shrink_struct *kerstr);
-void cuda_blas_yisax_shrink_get_struct_len(size_t *len);
-int cuda_blas_yisax_shrink_get_xlen();
-int cuda_blas_yisax_shrink_get_num_compute_units(
-    cuda_blas_yisax_shrink_struct *kerstr);
-int cuda_blas_yisax_shrink_exec(cuda_blas_yisax_shrink_struct *kerstr,
-                                long scmc_internal_g_xlen,
-                                long scmc_internal_g_ylen);
-int cuda_blas_yisax_shrink_scmc_set_parameter_y(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_x(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_a(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_numvec(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_XLEN(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_YLEN(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_ZLEN(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_ovlp(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_xblock(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_yblock(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_zblock(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_shrink_scmc_set_parameter_num_ele(
-    cuda_blas_yisax_shrink_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_init(cuda_pscmc_env *pe,
-                                  cuda_blas_sum_full_block_struct *kerstr);
-void cuda_blas_sum_full_block_get_struct_len(size_t *len);
-int cuda_blas_sum_full_block_get_xlen();
-int cuda_blas_sum_full_block_get_num_compute_units(
-    cuda_blas_sum_full_block_struct *kerstr);
-int cuda_blas_sum_full_block_exec(cuda_blas_sum_full_block_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_blas_sum_full_block_scmc_set_parameter_y(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_rdcd_sum(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_numvec(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_xblock(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_yblock(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_zblock(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_sum_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_sum_init(cuda_pscmc_env *pe, cuda_blas_sum_struct *kerstr);
-void cuda_blas_sum_get_struct_len(size_t *len);
-int cuda_blas_sum_get_xlen();
-int cuda_blas_sum_get_num_compute_units(cuda_blas_sum_struct *kerstr);
-int cuda_blas_sum_exec(cuda_blas_sum_struct *kerstr, long scmc_internal_g_xlen,
-                       long scmc_internal_g_ylen);
-int cuda_blas_sum_scmc_set_parameter_y(cuda_blas_sum_struct *kerstr,
-                                       cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_rdcd_sum(cuda_blas_sum_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_y_cpu_core(cuda_blas_sum_struct *kerstr,
-                                                cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_numvec(cuda_blas_sum_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_XLEN(cuda_blas_sum_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_YLEN(cuda_blas_sum_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_ZLEN(cuda_blas_sum_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_ovlp(cuda_blas_sum_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_xblock(cuda_blas_sum_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_yblock(cuda_blas_sum_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_zblock(cuda_blas_sum_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_sum_scmc_set_parameter_num_ele(cuda_blas_sum_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_init(cuda_pscmc_env *pe,
-                                  cuda_blas_dot_full_block_struct *kerstr);
-void cuda_blas_dot_full_block_get_struct_len(size_t *len);
-int cuda_blas_dot_full_block_get_xlen();
-int cuda_blas_dot_full_block_get_num_compute_units(
-    cuda_blas_dot_full_block_struct *kerstr);
-int cuda_blas_dot_full_block_exec(cuda_blas_dot_full_block_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_blas_dot_full_block_scmc_set_parameter_y(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_x(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_rdcd_sum(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_numvec(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_xblock(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_yblock(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_zblock(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_dot_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_dot_init(cuda_pscmc_env *pe, cuda_blas_dot_struct *kerstr);
-void cuda_blas_dot_get_struct_len(size_t *len);
-int cuda_blas_dot_get_xlen();
-int cuda_blas_dot_get_num_compute_units(cuda_blas_dot_struct *kerstr);
-int cuda_blas_dot_exec(cuda_blas_dot_struct *kerstr, long scmc_internal_g_xlen,
-                       long scmc_internal_g_ylen);
-int cuda_blas_dot_scmc_set_parameter_y(cuda_blas_dot_struct *kerstr,
-                                       cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_x(cuda_blas_dot_struct *kerstr,
-                                       cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_rdcd_sum(cuda_blas_dot_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_y_cpu_core(cuda_blas_dot_struct *kerstr,
-                                                cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_numvec(cuda_blas_dot_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_XLEN(cuda_blas_dot_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_YLEN(cuda_blas_dot_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_ZLEN(cuda_blas_dot_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_ovlp(cuda_blas_dot_struct *kerstr,
-                                          cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_xblock(cuda_blas_dot_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_yblock(cuda_blas_dot_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_zblock(cuda_blas_dot_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_dot_scmc_set_parameter_num_ele(cuda_blas_dot_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_init(
-    cuda_pscmc_env *pe, cuda_blas_findmax_full_block_struct *kerstr);
-void cuda_blas_findmax_full_block_get_struct_len(size_t *len);
-int cuda_blas_findmax_full_block_get_xlen();
-int cuda_blas_findmax_full_block_get_num_compute_units(
-    cuda_blas_findmax_full_block_struct *kerstr);
-int cuda_blas_findmax_full_block_exec(
-    cuda_blas_findmax_full_block_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_blas_findmax_full_block_scmc_set_parameter_y(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_rdcd_max(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_numvec(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_xblock(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_yblock(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_zblock(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_findmax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_init(cuda_pscmc_env *pe,
-                           cuda_blas_findmax_struct *kerstr);
-void cuda_blas_findmax_get_struct_len(size_t *len);
-int cuda_blas_findmax_get_xlen();
-int cuda_blas_findmax_get_num_compute_units(cuda_blas_findmax_struct *kerstr);
-int cuda_blas_findmax_exec(cuda_blas_findmax_struct *kerstr,
-                           long scmc_internal_g_xlen,
-                           long scmc_internal_g_ylen);
-int cuda_blas_findmax_scmc_set_parameter_y(cuda_blas_findmax_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_rdcd_max(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_y_cpu_core(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_numvec(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_XLEN(cuda_blas_findmax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_YLEN(cuda_blas_findmax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_ZLEN(cuda_blas_findmax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_ovlp(cuda_blas_findmax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_xblock(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_yblock(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_zblock(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_findmax_scmc_set_parameter_num_ele(
-    cuda_blas_findmax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_init(cuda_pscmc_env *pe,
-                                    cuda_blas_mulxy_full_block_struct *kerstr);
-void cuda_blas_mulxy_full_block_get_struct_len(size_t *len);
-int cuda_blas_mulxy_full_block_get_xlen();
-int cuda_blas_mulxy_full_block_get_num_compute_units(
-    cuda_blas_mulxy_full_block_struct *kerstr);
-int cuda_blas_mulxy_full_block_exec(cuda_blas_mulxy_full_block_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_y(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_x(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_numvec(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_xblock(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_yblock(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_zblock(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_mulxy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_init(cuda_pscmc_env *pe, cuda_blas_mulxy_struct *kerstr);
-void cuda_blas_mulxy_get_struct_len(size_t *len);
-int cuda_blas_mulxy_get_xlen();
-int cuda_blas_mulxy_get_num_compute_units(cuda_blas_mulxy_struct *kerstr);
-int cuda_blas_mulxy_exec(cuda_blas_mulxy_struct *kerstr,
-                         long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_mulxy_scmc_set_parameter_y(cuda_blas_mulxy_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_x(cuda_blas_mulxy_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_y_cpu_core(
-    cuda_blas_mulxy_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_numvec(cuda_blas_mulxy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_XLEN(cuda_blas_mulxy_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_YLEN(cuda_blas_mulxy_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_ZLEN(cuda_blas_mulxy_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_ovlp(cuda_blas_mulxy_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_xblock(cuda_blas_mulxy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_yblock(cuda_blas_mulxy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_zblock(cuda_blas_mulxy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_scmc_set_parameter_num_ele(cuda_blas_mulxy_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_init(cuda_pscmc_env *pe,
-                                    cuda_blas_axpby_full_block_struct *kerstr);
-void cuda_blas_axpby_full_block_get_struct_len(size_t *len);
-int cuda_blas_axpby_full_block_get_xlen();
-int cuda_blas_axpby_full_block_get_num_compute_units(
-    cuda_blas_axpby_full_block_struct *kerstr);
-int cuda_blas_axpby_full_block_exec(cuda_blas_axpby_full_block_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_blas_axpby_full_block_scmc_set_parameter_y(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_x(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_a(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_b(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_numvec(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_xblock(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_yblock(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_zblock(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_axpby_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_init(cuda_pscmc_env *pe, cuda_blas_axpby_struct *kerstr);
-void cuda_blas_axpby_get_struct_len(size_t *len);
-int cuda_blas_axpby_get_xlen();
-int cuda_blas_axpby_get_num_compute_units(cuda_blas_axpby_struct *kerstr);
-int cuda_blas_axpby_exec(cuda_blas_axpby_struct *kerstr,
-                         long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_axpby_scmc_set_parameter_y(cuda_blas_axpby_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_x(cuda_blas_axpby_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_a(cuda_blas_axpby_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_b(cuda_blas_axpby_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpby_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_numvec(cuda_blas_axpby_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_XLEN(cuda_blas_axpby_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_YLEN(cuda_blas_axpby_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_ZLEN(cuda_blas_axpby_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_ovlp(cuda_blas_axpby_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_xblock(cuda_blas_axpby_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_yblock(cuda_blas_axpby_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_zblock(cuda_blas_axpby_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_axpby_scmc_set_parameter_num_ele(cuda_blas_axpby_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_init(cuda_pscmc_env *pe,
-                                   cuda_blas_axpy_full_block_struct *kerstr);
-void cuda_blas_axpy_full_block_get_struct_len(size_t *len);
-int cuda_blas_axpy_full_block_get_xlen();
-int cuda_blas_axpy_full_block_get_num_compute_units(
-    cuda_blas_axpy_full_block_struct *kerstr);
-int cuda_blas_axpy_full_block_exec(cuda_blas_axpy_full_block_struct *kerstr,
-                                   long scmc_internal_g_xlen,
-                                   long scmc_internal_g_ylen);
-int cuda_blas_axpy_full_block_scmc_set_parameter_y(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_x(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_a(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_numvec(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_xblock(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_yblock(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_zblock(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_axpy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_axpy_init(cuda_pscmc_env *pe, cuda_blas_axpy_struct *kerstr);
-void cuda_blas_axpy_get_struct_len(size_t *len);
-int cuda_blas_axpy_get_xlen();
-int cuda_blas_axpy_get_num_compute_units(cuda_blas_axpy_struct *kerstr);
-int cuda_blas_axpy_exec(cuda_blas_axpy_struct *kerstr,
-                        long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_axpy_scmc_set_parameter_y(cuda_blas_axpy_struct *kerstr,
-                                        cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_x(cuda_blas_axpy_struct *kerstr,
-                                        cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_a(cuda_blas_axpy_struct *kerstr,
-                                        cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_y_cpu_core(cuda_blas_axpy_struct *kerstr,
-                                                 cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_numvec(cuda_blas_axpy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_XLEN(cuda_blas_axpy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_YLEN(cuda_blas_axpy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_ZLEN(cuda_blas_axpy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_ovlp(cuda_blas_axpy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_xblock(cuda_blas_axpy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_yblock(cuda_blas_axpy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_zblock(cuda_blas_axpy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_axpy_scmc_set_parameter_num_ele(cuda_blas_axpy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_init(cuda_pscmc_env *pe,
-                                    cuda_blas_yisax_full_block_struct *kerstr);
-void cuda_blas_yisax_full_block_get_struct_len(size_t *len);
-int cuda_blas_yisax_full_block_get_xlen();
-int cuda_blas_yisax_full_block_get_num_compute_units(
-    cuda_blas_yisax_full_block_struct *kerstr);
-int cuda_blas_yisax_full_block_exec(cuda_blas_yisax_full_block_struct *kerstr,
-                                    long scmc_internal_g_xlen,
-                                    long scmc_internal_g_ylen);
-int cuda_blas_yisax_full_block_scmc_set_parameter_y(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_x(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_a(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_numvec(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_xblock(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_yblock(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_zblock(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_yisax_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_init(cuda_pscmc_env *pe, cuda_blas_yisax_struct *kerstr);
-void cuda_blas_yisax_get_struct_len(size_t *len);
-int cuda_blas_yisax_get_xlen();
-int cuda_blas_yisax_get_num_compute_units(cuda_blas_yisax_struct *kerstr);
-int cuda_blas_yisax_exec(cuda_blas_yisax_struct *kerstr,
-                         long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_yisax_scmc_set_parameter_y(cuda_blas_yisax_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_x(cuda_blas_yisax_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_a(cuda_blas_yisax_struct *kerstr,
-                                         cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisax_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_numvec(cuda_blas_yisax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_XLEN(cuda_blas_yisax_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_YLEN(cuda_blas_yisax_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_ZLEN(cuda_blas_yisax_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_ovlp(cuda_blas_yisax_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_xblock(cuda_blas_yisax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_yblock(cuda_blas_yisax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_zblock(cuda_blas_yisax_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yisax_scmc_set_parameter_num_ele(cuda_blas_yisax_struct *kerstr,
-                                               cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_init(cuda_pscmc_env *pe,
-                                   cuda_blas_invy_full_block_struct *kerstr);
-void cuda_blas_invy_full_block_get_struct_len(size_t *len);
-int cuda_blas_invy_full_block_get_xlen();
-int cuda_blas_invy_full_block_get_num_compute_units(
-    cuda_blas_invy_full_block_struct *kerstr);
-int cuda_blas_invy_full_block_exec(cuda_blas_invy_full_block_struct *kerstr,
-                                   long scmc_internal_g_xlen,
-                                   long scmc_internal_g_ylen);
-int cuda_blas_invy_full_block_scmc_set_parameter_y(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_numvec(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_xblock(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_yblock(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_zblock(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_invy_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_invy_init(cuda_pscmc_env *pe, cuda_blas_invy_struct *kerstr);
-void cuda_blas_invy_get_struct_len(size_t *len);
-int cuda_blas_invy_get_xlen();
-int cuda_blas_invy_get_num_compute_units(cuda_blas_invy_struct *kerstr);
-int cuda_blas_invy_exec(cuda_blas_invy_struct *kerstr,
-                        long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_invy_scmc_set_parameter_y(cuda_blas_invy_struct *kerstr,
-                                        cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_y_cpu_core(cuda_blas_invy_struct *kerstr,
-                                                 cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_numvec(cuda_blas_invy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_XLEN(cuda_blas_invy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_YLEN(cuda_blas_invy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_ZLEN(cuda_blas_invy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_ovlp(cuda_blas_invy_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_xblock(cuda_blas_invy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_yblock(cuda_blas_invy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_zblock(cuda_blas_invy_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_blas_invy_scmc_set_parameter_num_ele(cuda_blas_invy_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_init(
-    cuda_pscmc_env *pe, cuda_blas_get_ITG_Potential_full_block_struct *kerstr);
-void cuda_blas_get_ITG_Potential_full_block_get_struct_len(size_t *len);
-int cuda_blas_get_ITG_Potential_full_block_get_xlen();
-int cuda_blas_get_ITG_Potential_full_block_get_num_compute_units(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr);
-int cuda_blas_get_ITG_Potential_full_block_exec(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr,
-    long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_y(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_x(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_u(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_minus_over_q_e(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_numvec(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_xblock(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_yblock(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_zblock(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_get_ITG_Potential_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_init(
-    cuda_pscmc_env *pe, cuda_blas_get_ITG_Potential_struct *kerstr);
-void cuda_blas_get_ITG_Potential_get_struct_len(size_t *len);
-int cuda_blas_get_ITG_Potential_get_xlen();
-int cuda_blas_get_ITG_Potential_get_num_compute_units(
-    cuda_blas_get_ITG_Potential_struct *kerstr);
-int cuda_blas_get_ITG_Potential_exec(cuda_blas_get_ITG_Potential_struct *kerstr,
-                                     long scmc_internal_g_xlen,
-                                     long scmc_internal_g_ylen);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_y(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_x(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_u(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_minus_over_q_e(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_y_cpu_core(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_numvec(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_XLEN(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_YLEN(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_ZLEN(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_ovlp(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_xblock(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_yblock(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_zblock(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_get_ITG_Potential_scmc_set_parameter_num_ele(
-    cuda_blas_get_ITG_Potential_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_init(
-    cuda_pscmc_env *pe, cuda_blas_yisconst_full_block_struct *kerstr);
-void cuda_blas_yisconst_full_block_get_struct_len(size_t *len);
-int cuda_blas_yisconst_full_block_get_xlen();
-int cuda_blas_yisconst_full_block_get_num_compute_units(
-    cuda_blas_yisconst_full_block_struct *kerstr);
-int cuda_blas_yisconst_full_block_exec(
-    cuda_blas_yisconst_full_block_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_y(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_a(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_numvec(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_xblock(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_yblock(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_zblock(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_yisconst_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_init(cuda_pscmc_env *pe,
-                            cuda_blas_yisconst_struct *kerstr);
-void cuda_blas_yisconst_get_struct_len(size_t *len);
-int cuda_blas_yisconst_get_xlen();
-int cuda_blas_yisconst_get_num_compute_units(cuda_blas_yisconst_struct *kerstr);
-int cuda_blas_yisconst_exec(cuda_blas_yisconst_struct *kerstr,
-                            long scmc_internal_g_xlen,
-                            long scmc_internal_g_ylen);
-int cuda_blas_yisconst_scmc_set_parameter_y(cuda_blas_yisconst_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_a(cuda_blas_yisconst_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_numvec(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_XLEN(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_YLEN(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_ZLEN(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_ovlp(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_xblock(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_yblock(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_zblock(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yisconst_scmc_set_parameter_num_ele(
-    cuda_blas_yisconst_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_init(
-    cuda_pscmc_env *pe, cuda_blas_yiszero_full_block_struct *kerstr);
-void cuda_blas_yiszero_full_block_get_struct_len(size_t *len);
-int cuda_blas_yiszero_full_block_get_xlen();
-int cuda_blas_yiszero_full_block_get_num_compute_units(
-    cuda_blas_yiszero_full_block_struct *kerstr);
-int cuda_blas_yiszero_full_block_exec(
-    cuda_blas_yiszero_full_block_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_y(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_numvec(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_XLEN(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_YLEN(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_ZLEN(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_ovlp(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_xblock(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_yblock(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_zblock(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_full_block_scmc_set_parameter_num_ele(
-    cuda_blas_yiszero_full_block_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_init(cuda_pscmc_env *pe,
-                           cuda_blas_yiszero_struct *kerstr);
-void cuda_blas_yiszero_get_struct_len(size_t *len);
-int cuda_blas_yiszero_get_xlen();
-int cuda_blas_yiszero_get_num_compute_units(cuda_blas_yiszero_struct *kerstr);
-int cuda_blas_yiszero_exec(cuda_blas_yiszero_struct *kerstr,
-                           long scmc_internal_g_xlen,
-                           long scmc_internal_g_ylen);
-int cuda_blas_yiszero_scmc_set_parameter_y(cuda_blas_yiszero_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_numvec(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_XLEN(cuda_blas_yiszero_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_YLEN(cuda_blas_yiszero_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_ZLEN(cuda_blas_yiszero_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_ovlp(cuda_blas_yiszero_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_xblock(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_yblock(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_zblock(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_scmc_set_parameter_num_ele(
-    cuda_blas_yiszero_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_init(cuda_pscmc_env *pe,
-                                 cuda_blas_mulxy_numele3_struct *kerstr);
-void cuda_blas_mulxy_numele3_get_struct_len(size_t *len);
-int cuda_blas_mulxy_numele3_get_xlen();
-int cuda_blas_mulxy_numele3_get_num_compute_units(
-    cuda_blas_mulxy_numele3_struct *kerstr);
-int cuda_blas_mulxy_numele3_exec(cuda_blas_mulxy_numele3_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_y(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_x(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_y_cpu_core(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_numvec(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_XLEN(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_YLEN(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_ZLEN(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_ovlp(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_xblock(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_yblock(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_zblock(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_mulxy_numele3_scmc_set_parameter_num_ele(
-    cuda_blas_mulxy_numele3_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_init(cuda_pscmc_env *pe,
-                                  cuda_blas_yiszero_synced_struct *kerstr);
-void cuda_blas_yiszero_synced_get_struct_len(size_t *len);
-int cuda_blas_yiszero_synced_get_xlen();
-int cuda_blas_yiszero_synced_get_num_compute_units(
-    cuda_blas_yiszero_synced_struct *kerstr);
-int cuda_blas_yiszero_synced_exec(cuda_blas_yiszero_synced_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_blas_yiszero_synced_scmc_set_parameter_y(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_y_cpu_core(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_numvec(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_XLEN(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_YLEN(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_ZLEN(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_ovlp(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_xblock(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_yblock(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_zblock(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_blas_yiszero_synced_scmc_set_parameter_num_ele(
-    cuda_blas_yiszero_synced_struct *kerstr, cuda_pscmc_mem *pm);
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPBY_SHRINK_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPY_ENLARGE_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPY_SHRINK_KERNEL(P)                                                                           \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISAX_ENLARGE_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISAX_SHRINK_KERNEL(P)                                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_SUM_FULL_BLOCK_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_SUM_KERNEL(P)                                                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_DOT_FULL_BLOCK_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_DOT_KERNEL(P)                                                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_FINDMAX_FULL_BLOCK_KERNEL(P)                                                                    \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_FINDMAX_KERNEL(P)                                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_MULXY_FULL_BLOCK_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_MULXY_KERNEL(P)                                                                                 \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPBY_FULL_BLOCK_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPBY_KERNEL(P)                                                                                 \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPY_FULL_BLOCK_KERNEL(P)                                                                       \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_AXPY_KERNEL(P)                                                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISAX_FULL_BLOCK_KERNEL(P)                                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISAX_KERNEL(P)                                                                                 \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_INVY_FULL_BLOCK_KERNEL(P)                                                                       \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_INVY_KERNEL(P)                                                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_FULL_BLOCK_KERNEL(P)                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_KERNEL(P)                                                                     \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISCONST_FULL_BLOCK_KERNEL(P)                                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISCONST_KERNEL(P)                                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISZERO_FULL_BLOCK_KERNEL(P)                                                                    \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISZERO_KERNEL(P)                                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_MULXY_NUMELE3_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+#define DECL_CUDA_BLAS_YISZERO_SYNCED_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
+
+DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL(cuda_blas_axpby_enlarge)
+DECL_CUDA_BLAS_AXPBY_SHRINK_KERNEL(cuda_blas_axpby_shrink)
+DECL_CUDA_BLAS_AXPY_ENLARGE_KERNEL(cuda_blas_axpy_enlarge)
+DECL_CUDA_BLAS_AXPY_SHRINK_KERNEL(cuda_blas_axpy_shrink)
+DECL_CUDA_BLAS_YISAX_ENLARGE_KERNEL(cuda_blas_yisax_enlarge)
+DECL_CUDA_BLAS_YISAX_SHRINK_KERNEL(cuda_blas_yisax_shrink)
+DECL_CUDA_BLAS_SUM_FULL_BLOCK_KERNEL(cuda_blas_sum_full_block)
+DECL_CUDA_BLAS_SUM_KERNEL(cuda_blas_sum)
+DECL_CUDA_BLAS_DOT_FULL_BLOCK_KERNEL(cuda_blas_dot_full_block)
+DECL_CUDA_BLAS_DOT_KERNEL(cuda_blas_dot)
+DECL_CUDA_BLAS_FINDMAX_FULL_BLOCK_KERNEL(cuda_blas_findmax_full_block)
+DECL_CUDA_BLAS_FINDMAX_KERNEL(cuda_blas_findmax)
+DECL_CUDA_BLAS_MULXY_FULL_BLOCK_KERNEL(cuda_blas_mulxy_full_block)
+DECL_CUDA_BLAS_MULXY_KERNEL(cuda_blas_mulxy)
+DECL_CUDA_BLAS_AXPBY_FULL_BLOCK_KERNEL(cuda_blas_axpby_full_block)
+DECL_CUDA_BLAS_AXPBY_KERNEL(cuda_blas_axpby)
+DECL_CUDA_BLAS_AXPY_FULL_BLOCK_KERNEL(cuda_blas_axpy_full_block)
+DECL_CUDA_BLAS_AXPY_KERNEL(cuda_blas_axpy)
+DECL_CUDA_BLAS_YISAX_FULL_BLOCK_KERNEL(cuda_blas_yisax_full_block)
+DECL_CUDA_BLAS_YISAX_KERNEL(cuda_blas_yisax)
+DECL_CUDA_BLAS_INVY_FULL_BLOCK_KERNEL(cuda_blas_invy_full_block)
+DECL_CUDA_BLAS_INVY_KERNEL(cuda_blas_invy)
+DECL_CUDA_BLAS_GET_ITG_POTENTIAL_FULL_BLOCK_KERNEL(cuda_blas_get_ITG_Potential_full_block)
+DECL_CUDA_BLAS_GET_ITG_POTENTIAL_KERNEL(cuda_blas_get_ITG_Potential)
+DECL_CUDA_BLAS_YISCONST_FULL_BLOCK_KERNEL(cuda_blas_yisconst_full_block)
+DECL_CUDA_BLAS_YISCONST_KERNEL(cuda_blas_yisconst)
+DECL_CUDA_BLAS_YISZERO_FULL_BLOCK_KERNEL(cuda_blas_yiszero_full_block)
+DECL_CUDA_BLAS_YISZERO_KERNEL(cuda_blas_yiszero)
+DECL_CUDA_BLAS_MULXY_NUMELE3_KERNEL(cuda_blas_mulxy_numele3)
+DECL_CUDA_BLAS_YISZERO_SYNCED_KERNEL(cuda_blas_yiszero_synced)
+
+#undef DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL
+#undef DECL_CUDA_BLAS_AXPBY_SHRINK_KERNEL
+#undef DECL_CUDA_BLAS_AXPY_ENLARGE_KERNEL
+#undef DECL_CUDA_BLAS_AXPY_SHRINK_KERNEL
+#undef DECL_CUDA_BLAS_YISAX_ENLARGE_KERNEL
+#undef DECL_CUDA_BLAS_YISAX_SHRINK_KERNEL
+#undef DECL_CUDA_BLAS_SUM_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_SUM_KERNEL
+#undef DECL_CUDA_BLAS_DOT_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_DOT_KERNEL
+#undef DECL_CUDA_BLAS_FINDMAX_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_FINDMAX_KERNEL
+#undef DECL_CUDA_BLAS_MULXY_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_MULXY_KERNEL
+#undef DECL_CUDA_BLAS_AXPBY_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_AXPBY_KERNEL
+#undef DECL_CUDA_BLAS_AXPY_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_AXPY_KERNEL
+#undef DECL_CUDA_BLAS_YISAX_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_YISAX_KERNEL
+#undef DECL_CUDA_BLAS_INVY_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_INVY_KERNEL
+#undef DECL_CUDA_BLAS_GET_ITG_POTENTIAL_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_GET_ITG_POTENTIAL_KERNEL
+#undef DECL_CUDA_BLAS_YISCONST_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_YISCONST_KERNEL
+#undef DECL_CUDA_BLAS_YISZERO_FULL_BLOCK_KERNEL
+#undef DECL_CUDA_BLAS_YISZERO_KERNEL
+#undef DECL_CUDA_BLAS_MULXY_NUMELE3_KERNEL
+#undef DECL_CUDA_BLAS_YISZERO_SYNCED_KERNEL

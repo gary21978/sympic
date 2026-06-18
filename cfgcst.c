@@ -87,41 +87,32 @@ double call_GET_NON_UNI_CACHE_DIST(long arg0, long arg1);
 #ifdef CSCHEME_HEAD
 element *GET_NON_UNI_CACHE_DIST;
 #endif
-double (*GET_INIT_DENSITY_DIST_inner_procedure)(long arg0, double arg1,
-                                                double arg2, double arg3);
-double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2,
-                                  double arg3);
+double (*GET_INIT_DENSITY_DIST_inner_procedure)(long arg0, double arg1, double arg2, double arg3);
+double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2, double arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_DENSITY_DIST;
 #endif
-double (*GET_INIT_TEMPERATURE_DIST_inner_procedure)(long arg0, double arg1,
-                                                    double arg2, double arg3,
-                                                    long arg4);
-double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2,
-                                      double arg3, long arg4);
+double (*GET_INIT_TEMPERATURE_DIST_inner_procedure)(long arg0, double arg1, double arg2, double arg3, long arg4);
+double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2, double arg3, long arg4);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_TEMPERATURE_DIST;
 #endif
-double (*GET_INIT_E_inner_procedure)(double arg0, double arg1, double arg2,
-                                     long arg3);
+double (*GET_INIT_E_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_E(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_E;
 #endif
-double (*GET_INIT_B_inner_procedure)(double arg0, double arg1, double arg2,
-                                     long arg3);
+double (*GET_INIT_B_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_B(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_B;
 #endif
-double (*GET_INIT_E0_inner_procedure)(double arg0, double arg1, double arg2,
-                                      long arg3);
+double (*GET_INIT_E0_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_E0(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_E0;
 #endif
-double (*GET_INIT_B0_inner_procedure)(double arg0, double arg1, double arg2,
-                                      long arg3);
+double (*GET_INIT_B0_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_B0(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_B0;
@@ -131,39 +122,32 @@ double call_GET_INIT_VT(long arg0);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_VT;
 #endif
-double (*GET_INIT_V0_x_inner_procedure)(long arg0, double arg1, double arg2,
-                                        double arg3);
+double (*GET_INIT_V0_x_inner_procedure)(long arg0, double arg1, double arg2, double arg3);
 double call_GET_INIT_V0_x(long arg0, double arg1, double arg2, double arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_V0_x;
 #endif
-double (*GET_INIT_V0_y_inner_procedure)(long arg0, double arg1, double arg2,
-                                        double arg3);
+double (*GET_INIT_V0_y_inner_procedure)(long arg0, double arg1, double arg2, double arg3);
 double call_GET_INIT_V0_y(long arg0, double arg1, double arg2, double arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_V0_y;
 #endif
-double (*GET_INIT_V0_z_inner_procedure)(long arg0, double arg1, double arg2,
-                                        double arg3);
+double (*GET_INIT_V0_z_inner_procedure)(long arg0, double arg1, double arg2, double arg3);
 double call_GET_INIT_V0_z(long arg0, double arg1, double arg2, double arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_V0_z;
 #endif
-double (*GET_INIT_FILTER_E_inner_procedure)(double arg0, double arg1,
-                                            double arg2, long arg3);
+double (*GET_INIT_FILTER_E_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_FILTER_E(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_FILTER_E;
 #endif
-double (*GET_INIT_FILTER_KROOK_inner_procedure)(double arg0, double arg1,
-                                                double arg2, long arg3);
-double call_GET_INIT_FILTER_KROOK(double arg0, double arg1, double arg2,
-                                  long arg3);
+double (*GET_INIT_FILTER_KROOK_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
+double call_GET_INIT_FILTER_KROOK(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_FILTER_KROOK;
 #endif
-double (*GET_INIT_FILTER_B_inner_procedure)(double arg0, double arg1,
-                                            double arg2, long arg3);
+double (*GET_INIT_FILTER_B_inner_procedure)(double arg0, double arg1, double arg2, long arg3);
 double call_GET_INIT_FILTER_B(double arg0, double arg1, double arg2, long arg3);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_FILTER_B;
@@ -184,19 +168,11 @@ element *makestring(char *str);
 element *makeint(long i);
 element *makefloat(double i);
 element *eval(element *input, element *env);
-element *external_apply(element *proc, element *args) {
-  element *final_arg =
-      cons(cons(quote_symbol, cons(proc, empty_list_process)), args);
-  push_gc_stack(&final_arg);
-  element *ret = eval(final_arg, global_environment);
-  pop_gc_stack();
-  return ret;
-}
+
 
 int get_constants() {
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("XMAX"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("XMAX"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       XMAX = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -208,8 +184,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("YMAX"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("YMAX"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       YMAX = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -221,8 +196,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("ZMAX"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("ZMAX"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       ZMAX = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -234,8 +208,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_PROCESS"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_PROCESS"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_PROCESS = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -247,8 +220,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_RUNTIME"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_RUNTIME"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_RUNTIME = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -260,8 +232,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_MAX_RUNTIME"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_MAX_RUNTIME"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_MAX_RUNTIME = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -273,8 +244,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_N_HILBERT"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_N_HILBERT"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_N_HILBERT = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -286,8 +256,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele = find_var_in_env(makesymbol("NUM_N_HILBERT_DIMENSION"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_N_HILBERT_DIMENSION"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_N_HILBERT_DIMENSION = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -299,8 +268,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("HILBERT_DIR"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("HILBERT_DIR"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       HILBERT_DIR = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -312,8 +280,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_TIMESTEP"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_TIMESTEP"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_TIMESTEP = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -325,8 +292,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("DELTAT"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("DELTAT"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       DELTAT = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -338,8 +304,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_DUMP_TIMESTEP"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_DUMP_TIMESTEP"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_DUMP_TIMESTEP = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -351,8 +316,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("NUM_SPEC"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_SPEC"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_SPEC = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -364,8 +328,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_NP_BOUNDARY"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_NP_BOUNDARY"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_NP_BOUNDARY = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -377,8 +340,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_DENSITY"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_DENSITY"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_NON_UNI_DENSITY = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -390,8 +352,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_TEMPERATURE"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_TEMPERATURE"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_NON_UNI_TEMPERATURE = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -403,8 +364,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_INIT_EXT_EB"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_INIT_EXT_EB"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_INIT_EXT_EB = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -416,8 +376,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_INIT_EB0"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_INIT_EB0"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_INIT_EB0 = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -429,8 +388,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_FILTER"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_FILTER"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_FILTER = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -442,8 +400,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_CHECKPOINT"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_CHECKPOINT"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_CHECKPOINT = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -455,8 +412,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_INIT_V0"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_INIT_V0"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_INIT_V0 = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -468,8 +424,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_KGM"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_KGM"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_KGM = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -482,8 +437,7 @@ int get_constants() {
   }
   { CAL_FUN_ONE_PARA_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("CAL_FUN_ONE_PARA"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("CAL_FUN_ONE_PARA"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       CAL_FUN_ONE_PARA = tmpele;
     } else {
@@ -491,8 +445,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_TORI"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_TORI"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_TORI = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -504,8 +457,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_PROFILE"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_PROFILE"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_PROFILE = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -517,8 +469,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_DM"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_DM"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_DM = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -530,8 +481,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("USE_LHCD_INPUT"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_LHCD_INPUT"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_LHCD_INPUT = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -543,8 +493,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele = find_var_in_env(makesymbol("NUM_CHECKPOINT_TIMESTEP"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("NUM_CHECKPOINT_TIMESTEP"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       NUM_CHECKPOINT_TIMESTEP = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -556,8 +505,7 @@ int get_constants() {
     }
   }
   {
-    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_CACHE_DIST"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("USE_NON_UNI_CACHE_DIST"), global_environment, 0);
     if (tmpele->type == INTNUM) {
       USE_NON_UNI_CACHE_DIST = tmpele->data.intnum;
     } else if (tmpele->type == FLOATNUM) {
@@ -570,8 +518,7 @@ int get_constants() {
   }
   { GET_DEV_TYPE_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_DEV_TYPE"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_DEV_TYPE"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_DEV_TYPE = tmpele;
     } else {
@@ -580,8 +527,7 @@ int get_constants() {
   }
   { GET_DEV_ID_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_DEV_ID"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_DEV_ID"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_DEV_ID = tmpele;
     } else {
@@ -590,20 +536,16 @@ int get_constants() {
   }
   { GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID"),
-                        global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID = tmpele;
     } else {
-      fprintf(stderr, "GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID Type Error: %d",
-              tmpele->type);
+      fprintf(stderr, "GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID Type Error: %d", tmpele->type);
     }
   }
   { GET_MASS_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_MASS"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_MASS"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_MASS = tmpele;
     } else {
@@ -612,8 +554,7 @@ int get_constants() {
   }
   { GET_NPM_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_NPM"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_NPM"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_NPM = tmpele;
     } else {
@@ -622,8 +563,7 @@ int get_constants() {
   }
   { GET_CHARGE_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_CHARGE"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_CHARGE"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_CHARGE = tmpele;
     } else {
@@ -632,8 +572,7 @@ int get_constants() {
   }
   { GET_GRID_CACHE_LEN_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_GRID_CACHE_LEN"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_GRID_CACHE_LEN"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_GRID_CACHE_LEN = tmpele;
     } else {
@@ -642,8 +581,7 @@ int get_constants() {
   }
   { GET_CU_CACHE_LEN_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_CU_CACHE_LEN"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_CU_CACHE_LEN"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_CU_CACHE_LEN = tmpele;
     } else {
@@ -652,8 +590,7 @@ int get_constants() {
   }
   { GET_INIT_LOAD_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_LOAD"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_LOAD"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_LOAD = tmpele;
     } else {
@@ -662,8 +599,7 @@ int get_constants() {
   }
   { GET_NON_UNI_CACHE_DIST_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_NON_UNI_CACHE_DIST"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_NON_UNI_CACHE_DIST"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_NON_UNI_CACHE_DIST = tmpele;
     } else {
@@ -672,8 +608,7 @@ int get_constants() {
   }
   { GET_INIT_DENSITY_DIST_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_INIT_DENSITY_DIST"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_DENSITY_DIST"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_DENSITY_DIST = tmpele;
     } else {
@@ -682,8 +617,7 @@ int get_constants() {
   }
   { GET_INIT_TEMPERATURE_DIST_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_TEMPERATURE_DIST = tmpele;
     } else {
@@ -692,8 +626,7 @@ int get_constants() {
   }
   { GET_INIT_E_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_E"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_E"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_E = tmpele;
     } else {
@@ -702,8 +635,7 @@ int get_constants() {
   }
   { GET_INIT_B_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_B"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_B"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_B = tmpele;
     } else {
@@ -712,8 +644,7 @@ int get_constants() {
   }
   { GET_INIT_E0_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_E0"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_E0"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_E0 = tmpele;
     } else {
@@ -722,8 +653,7 @@ int get_constants() {
   }
   { GET_INIT_B0_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_B0"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_B0"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_B0 = tmpele;
     } else {
@@ -732,8 +662,7 @@ int get_constants() {
   }
   { GET_INIT_VT_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_VT"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_VT"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_VT = tmpele;
     } else {
@@ -742,8 +671,7 @@ int get_constants() {
   }
   { GET_INIT_V0_x_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_V0_x"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_V0_x"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_V0_x = tmpele;
     } else {
@@ -752,8 +680,7 @@ int get_constants() {
   }
   { GET_INIT_V0_y_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_V0_y"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_V0_y"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_V0_y = tmpele;
     } else {
@@ -762,8 +689,7 @@ int get_constants() {
   }
   { GET_INIT_V0_z_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_V0_z"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_V0_z"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_V0_z = tmpele;
     } else {
@@ -772,8 +698,7 @@ int get_constants() {
   }
   { GET_INIT_FILTER_E_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_FILTER_E"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_FILTER_E"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_FILTER_E = tmpele;
     } else {
@@ -782,8 +707,7 @@ int get_constants() {
   }
   { GET_INIT_FILTER_KROOK_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_INIT_FILTER_KROOK"),
-                                      global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_FILTER_KROOK"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_FILTER_KROOK = tmpele;
     } else {
@@ -792,8 +716,7 @@ int get_constants() {
   }
   { GET_INIT_FILTER_B_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_INIT_FILTER_B"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_INIT_FILTER_B"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_FILTER_B = tmpele;
     } else {
@@ -802,8 +725,7 @@ int get_constants() {
   }
   { GET_VAR_inner_procedure = NULL; }
   {
-    element *tmpele =
-        find_var_in_env(makesymbol("GET_VAR"), global_environment, 0);
+    element *tmpele = find_var_in_env(makesymbol("GET_VAR"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_VAR = tmpele;
     } else {
@@ -817,12 +739,9 @@ double call_CAL_FUN_ONE_PARA(char *arg0, double arg1) {
     return CAL_FUN_ONE_PARA_inner_procedure(arg0, arg1);
   }
 
-  element *arglst =
-      cons(makestring(arg0), cons(makefloat(arg1), empty_list_process));
-  element *fun_var =
-      find_var_in_env(makesymbol("CAL_FUN_ONE_PARA"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst = cons(makestring(arg0), cons(makefloat(arg1), empty_list_process));
+  element *fun_var = find_var_in_env(makesymbol("CAL_FUN_ONE_PARA"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -844,12 +763,9 @@ long call_GET_DEV_TYPE(long arg0, long arg1) {
     return GET_DEV_TYPE_inner_procedure(arg0, arg1);
   }
 
-  element *arglst =
-      cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_DEV_TYPE"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst = cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
+  element *fun_var = find_var_in_env(makesymbol("GET_DEV_TYPE"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -871,12 +787,9 @@ long call_GET_DEV_ID(long arg0, long arg1) {
     return GET_DEV_ID_inner_procedure(arg0, arg1);
   }
 
-  element *arglst =
-      cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_DEV_ID"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst = cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
+  element *fun_var = find_var_in_env(makesymbol("GET_DEV_ID"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -893,43 +806,15 @@ long call_GET_DEV_ID(long arg0, long arg1) {
 
   return ans;
 }
-long call_GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID(long arg0) {
-  if (GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID_inner_procedure) {
-    return GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID_inner_procedure(arg0);
-  }
 
-  element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID"),
-                      global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
-  push_gc_stack(&final_arg);
-  element *ret = eval(final_arg, global_environment);
-  pop_gc_stack();
-  long ans;
-  if (ret->type == INTNUM) {
-    ans = ret->data.intnum;
-  } else if (ret->type == FLOATNUM) {
-    ans = ret->data.floatnum;
-  } else if (ret->type == CHAR) {
-    ans = ret->data.char_var;
-  } else {
-    fprintf(stderr, "ans Type Error: %d", ret->type);
-  }
-
-  return ans;
-}
 double call_GET_MASS(long arg0) {
   if (GET_MASS_inner_procedure) {
     return GET_MASS_inner_procedure(arg0);
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_MASS"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_MASS"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -952,10 +837,8 @@ double call_GET_NPM(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_NPM"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_NPM"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -978,10 +861,8 @@ double call_GET_CHARGE(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_CHARGE"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_CHARGE"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1004,10 +885,8 @@ long call_GET_GRID_CACHE_LEN(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_GRID_CACHE_LEN"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_GRID_CACHE_LEN"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1030,10 +909,8 @@ long call_GET_CU_CACHE_LEN(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_CU_CACHE_LEN"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_CU_CACHE_LEN"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1056,10 +933,8 @@ long call_GET_INIT_LOAD(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_LOAD"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_LOAD"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1081,12 +956,9 @@ double call_GET_NON_UNI_CACHE_DIST(long arg0, long arg1) {
     return GET_NON_UNI_CACHE_DIST_inner_procedure(arg0, arg1);
   }
 
-  element *arglst =
-      cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
-  element *fun_var = find_var_in_env(makesymbol("GET_NON_UNI_CACHE_DIST"),
-                                     global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst = cons(makeint(arg0), cons(makeint(arg1), empty_list_process));
+  element *fun_var = find_var_in_env(makesymbol("GET_NON_UNI_CACHE_DIST"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1103,20 +975,15 @@ double call_GET_NON_UNI_CACHE_DIST(long arg0, long arg1) {
 
   return ans;
 }
-double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2,
-                                  double arg3) {
+double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2, double arg3) {
   if (GET_INIT_DENSITY_DIST_inner_procedure) {
     return GET_INIT_DENSITY_DIST_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makeint(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
-  element *fun_var = find_var_in_env(makesymbol("GET_INIT_DENSITY_DIST"),
-                                     global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_DENSITY_DIST"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1133,22 +1000,16 @@ double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2,
 
   return ans;
 }
-double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2,
-                                      double arg3, long arg4) {
+double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2, double arg3, long arg4) {
   if (GET_INIT_TEMPERATURE_DIST_inner_procedure) {
-    return GET_INIT_TEMPERATURE_DIST_inner_procedure(arg0, arg1, arg2, arg3,
-                                                     arg4);
+    return GET_INIT_TEMPERATURE_DIST_inner_procedure(arg0, arg1, arg2, arg3, arg4);
   }
 
-  element *arglst = cons(
-      makeint(arg0), cons(makefloat(arg1),
-                          cons(makefloat(arg2),
-                               cons(makefloat(arg3),
-                                    cons(makeint(arg4), empty_list_process)))));
-  element *fun_var = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"),
-                                     global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makeint(arg0), cons(makefloat(arg1),
+                               cons(makefloat(arg2), cons(makefloat(arg3), cons(makeint(arg4), empty_list_process)))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1170,14 +1031,10 @@ double call_GET_INIT_E(double arg0, double arg1, double arg2, long arg3) {
     return GET_INIT_E_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_E"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_E"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1199,14 +1056,10 @@ double call_GET_INIT_B(double arg0, double arg1, double arg2, long arg3) {
     return GET_INIT_B_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_B"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_B"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1228,14 +1081,10 @@ double call_GET_INIT_E0(double arg0, double arg1, double arg2, long arg3) {
     return GET_INIT_E0_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_E0"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_E0"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1257,14 +1106,10 @@ double call_GET_INIT_B0(double arg0, double arg1, double arg2, long arg3) {
     return GET_INIT_B0_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_B0"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_B0"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1287,10 +1132,8 @@ double call_GET_INIT_VT(long arg0) {
   }
 
   element *arglst = cons(makeint(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_VT"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_VT"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1312,14 +1155,10 @@ double call_GET_INIT_V0_x(long arg0, double arg1, double arg2, double arg3) {
     return GET_INIT_V0_x_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makeint(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_V0_x"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_x"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1341,14 +1180,10 @@ double call_GET_INIT_V0_y(long arg0, double arg1, double arg2, double arg3) {
     return GET_INIT_V0_y_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makeint(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_V0_y"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_y"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1370,14 +1205,10 @@ double call_GET_INIT_V0_z(long arg0, double arg1, double arg2, double arg3) {
     return GET_INIT_V0_z_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makeint(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_V0_z"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_z"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1394,20 +1225,15 @@ double call_GET_INIT_V0_z(long arg0, double arg1, double arg2, double arg3) {
 
   return ans;
 }
-double call_GET_INIT_FILTER_E(double arg0, double arg1, double arg2,
-                              long arg3) {
+double call_GET_INIT_FILTER_E(double arg0, double arg1, double arg2, long arg3) {
   if (GET_INIT_FILTER_E_inner_procedure) {
     return GET_INIT_FILTER_E_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_FILTER_E"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_FILTER_E"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1424,50 +1250,16 @@ double call_GET_INIT_FILTER_E(double arg0, double arg1, double arg2,
 
   return ans;
 }
-double call_GET_INIT_FILTER_KROOK(double arg0, double arg1, double arg2,
-                                  long arg3) {
-  if (GET_INIT_FILTER_KROOK_inner_procedure) {
-    return GET_INIT_FILTER_KROOK_inner_procedure(arg0, arg1, arg2, arg3);
-  }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var = find_var_in_env(makesymbol("GET_INIT_FILTER_KROOK"),
-                                     global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
-  push_gc_stack(&final_arg);
-  element *ret = eval(final_arg, global_environment);
-  pop_gc_stack();
-  double ans;
-  if (ret->type == INTNUM) {
-    ans = ret->data.intnum;
-  } else if (ret->type == FLOATNUM) {
-    ans = ret->data.floatnum;
-  } else if (ret->type == CHAR) {
-    ans = ret->data.char_var;
-  } else {
-    fprintf(stderr, "ans Type Error: %d", ret->type);
-  }
-
-  return ans;
-}
-double call_GET_INIT_FILTER_B(double arg0, double arg1, double arg2,
-                              long arg3) {
+double call_GET_INIT_FILTER_B(double arg0, double arg1, double arg2, long arg3) {
   if (GET_INIT_FILTER_B_inner_procedure) {
     return GET_INIT_FILTER_B_inner_procedure(arg0, arg1, arg2, arg3);
   }
 
-  element *arglst = cons(
-      makefloat(arg0),
-      cons(makefloat(arg1),
-           cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_INIT_FILTER_B"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *arglst =
+      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+  element *fun_var = find_var_in_env(makesymbol("GET_INIT_FILTER_B"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();
@@ -1490,10 +1282,8 @@ double call_GET_VAR(char *arg0) {
   }
 
   element *arglst = cons(makestring(arg0), empty_list_process);
-  element *fun_var =
-      find_var_in_env(makesymbol("GET_VAR"), global_environment, 0);
-  element *final_arg =
-      cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
+  element *fun_var = find_var_in_env(makesymbol("GET_VAR"), global_environment, 0);
+  element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
   pop_gc_stack();

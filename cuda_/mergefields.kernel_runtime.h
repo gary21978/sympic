@@ -1,528 +1,313 @@
 #include "pubdefs.h"
 
-int cuda_merge_ovlp_m2o_once_init(cuda_pscmc_env *pe,
-                                  cuda_merge_ovlp_m2o_once_struct *kerstr);
-void cuda_merge_ovlp_m2o_once_get_struct_len(size_t *len);
-int cuda_merge_ovlp_m2o_once_get_xlen();
-int cuda_merge_ovlp_m2o_once_get_num_compute_units(
-    cuda_merge_ovlp_m2o_once_struct *kerstr);
-int cuda_merge_ovlp_m2o_once_exec(cuda_merge_ovlp_m2o_once_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp0(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp1(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp2(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp3(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp4(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp5(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp6(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp7(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp8(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp9(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp10(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp11(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp12(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp14(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp15(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp16(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp17(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp18(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp19(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp20(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp21(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp22(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp23(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp24(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp25(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp26(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_once_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_init(
-    cuda_pscmc_env *pe, cuda_merge_ovlp_m2o_all_in_one_struct *kerstr);
-void cuda_merge_ovlp_m2o_all_in_one_get_struct_len(size_t *len);
-int cuda_merge_ovlp_m2o_all_in_one_get_xlen();
-int cuda_merge_ovlp_m2o_all_in_one_get_num_compute_units(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr);
-int cuda_merge_ovlp_m2o_all_in_one_exec(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_init(cuda_pscmc_env *pe,
-                             cuda_merge_ovlp_m2o_struct *kerstr);
-void cuda_merge_ovlp_m2o_get_struct_len(size_t *len);
-int cuda_merge_ovlp_m2o_get_xlen();
-int cuda_merge_ovlp_m2o_get_num_compute_units(
-    cuda_merge_ovlp_m2o_struct *kerstr);
-int cuda_merge_ovlp_m2o_exec(cuda_merge_ovlp_m2o_struct *kerstr,
-                             long scmc_internal_g_xlen,
-                             long scmc_internal_g_ylen);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_vecovlp(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_ovlpindex(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_m2o_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_init(cuda_pscmc_env *pe,
-                                  cuda_merge_ovlp_o2m_once_struct *kerstr);
-void cuda_merge_ovlp_o2m_once_get_struct_len(size_t *len);
-int cuda_merge_ovlp_o2m_once_get_xlen();
-int cuda_merge_ovlp_o2m_once_get_num_compute_units(
-    cuda_merge_ovlp_o2m_once_struct *kerstr);
-int cuda_merge_ovlp_o2m_once_exec(cuda_merge_ovlp_o2m_once_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp0(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp1(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp2(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp3(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp4(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp5(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp6(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp7(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp8(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp9(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp10(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp11(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp12(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp14(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp15(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp16(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp17(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp18(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp19(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp20(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp21(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp22(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp23(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp24(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp25(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp26(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_once_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_init(
-    cuda_pscmc_env *pe, cuda_merge_ovlp_o2m_all_in_one_struct *kerstr);
-void cuda_merge_ovlp_o2m_all_in_one_get_struct_len(size_t *len);
-int cuda_merge_ovlp_o2m_all_in_one_get_xlen();
-int cuda_merge_ovlp_o2m_all_in_one_get_num_compute_units(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr);
-int cuda_merge_ovlp_o2m_all_in_one_exec(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_init(cuda_pscmc_env *pe,
-                             cuda_merge_ovlp_o2m_struct *kerstr);
-void cuda_merge_ovlp_o2m_get_struct_len(size_t *len);
-int cuda_merge_ovlp_o2m_get_xlen();
-int cuda_merge_ovlp_o2m_get_num_compute_units(
-    cuda_merge_ovlp_o2m_struct *kerstr);
-int cuda_merge_ovlp_o2m_exec(cuda_merge_ovlp_o2m_struct *kerstr,
-                             long scmc_internal_g_xlen,
-                             long scmc_internal_g_ylen);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_vecmain(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_vecovlp(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_ovlpindex(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_numvec(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_num_ele(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_xblock(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_yblock(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_zblock(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_merge_ovlp_o2m_scmc_set_parameter_ovlp(
-    cuda_merge_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_init(cuda_pscmc_env *pe,
-                                 cuda_sync_ovlp_m2o_once_struct *kerstr);
-void cuda_sync_ovlp_m2o_once_get_struct_len(size_t *len);
-int cuda_sync_ovlp_m2o_once_get_xlen();
-int cuda_sync_ovlp_m2o_once_get_num_compute_units(
-    cuda_sync_ovlp_m2o_once_struct *kerstr);
-int cuda_sync_ovlp_m2o_once_exec(cuda_sync_ovlp_m2o_once_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp0(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp1(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp2(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp3(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp4(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp5(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp6(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp7(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp8(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp9(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp10(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp11(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp12(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp14(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp15(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp16(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp17(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp18(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp19(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp20(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp21(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp22(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp23(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp24(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp25(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp26(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_once_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_m2o_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_init(
-    cuda_pscmc_env *pe, cuda_sync_ovlp_m2o_all_in_one_struct *kerstr);
-void cuda_sync_ovlp_m2o_all_in_one_get_struct_len(size_t *len);
-int cuda_sync_ovlp_m2o_all_in_one_get_xlen();
-int cuda_sync_ovlp_m2o_all_in_one_get_num_compute_units(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr);
-int cuda_sync_ovlp_m2o_all_in_one_exec(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_m2o_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_init(cuda_pscmc_env *pe,
-                            cuda_sync_ovlp_m2o_struct *kerstr);
-void cuda_sync_ovlp_m2o_get_struct_len(size_t *len);
-int cuda_sync_ovlp_m2o_get_xlen();
-int cuda_sync_ovlp_m2o_get_num_compute_units(cuda_sync_ovlp_m2o_struct *kerstr);
-int cuda_sync_ovlp_m2o_exec(cuda_sync_ovlp_m2o_struct *kerstr,
-                            long scmc_internal_g_xlen,
-                            long scmc_internal_g_ylen);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_vecovlp(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_ovlpindex(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_m2o_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_m2o_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_init(cuda_pscmc_env *pe,
-                                 cuda_sync_ovlp_o2m_once_struct *kerstr);
-void cuda_sync_ovlp_o2m_once_get_struct_len(size_t *len);
-int cuda_sync_ovlp_o2m_once_get_xlen();
-int cuda_sync_ovlp_o2m_once_get_num_compute_units(
-    cuda_sync_ovlp_o2m_once_struct *kerstr);
-int cuda_sync_ovlp_o2m_once_exec(cuda_sync_ovlp_o2m_once_struct *kerstr,
-                                 long scmc_internal_g_xlen,
-                                 long scmc_internal_g_ylen);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp0(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp1(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp2(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp3(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp4(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp5(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp6(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp7(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp8(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp9(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp10(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp11(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp12(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp14(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp15(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp16(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp17(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp18(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp19(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp20(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp21(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp22(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp23(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp24(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp25(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp26(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_once_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_o2m_once_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_init(
-    cuda_pscmc_env *pe, cuda_sync_ovlp_o2m_all_in_one_struct *kerstr);
-void cuda_sync_ovlp_o2m_all_in_one_get_struct_len(size_t *len);
-int cuda_sync_ovlp_o2m_all_in_one_get_xlen();
-int cuda_sync_ovlp_o2m_all_in_one_get_num_compute_units(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr);
-int cuda_sync_ovlp_o2m_all_in_one_exec(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_o2m_all_in_one_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_init(cuda_pscmc_env *pe,
-                            cuda_sync_ovlp_o2m_struct *kerstr);
-void cuda_sync_ovlp_o2m_get_struct_len(size_t *len);
-int cuda_sync_ovlp_o2m_get_xlen();
-int cuda_sync_ovlp_o2m_get_num_compute_units(cuda_sync_ovlp_o2m_struct *kerstr);
-int cuda_sync_ovlp_o2m_exec(cuda_sync_ovlp_o2m_struct *kerstr,
-                            long scmc_internal_g_xlen,
-                            long scmc_internal_g_ylen);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_vecmain(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_vecovlp(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_ovlpindex(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_numvec(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_num_ele(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_xblock(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_yblock(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_zblock(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_sync_ovlp_o2m_scmc_set_parameter_ovlp(
-    cuda_sync_ovlp_o2m_struct *kerstr, cuda_pscmc_mem *pm);
-int cuda_yee_local_init(cuda_pscmc_env *pe, cuda_yee_local_struct *kerstr);
-void cuda_yee_local_get_struct_len(size_t *len);
-int cuda_yee_local_get_xlen();
-int cuda_yee_local_get_num_compute_units(cuda_yee_local_struct *kerstr);
-int cuda_yee_local_exec(cuda_yee_local_struct *kerstr,
-                        long scmc_internal_g_xlen, long scmc_internal_g_ylen);
-int cuda_yee_local_scmc_set_parameter_inout(cuda_yee_local_struct *kerstr,
-                                            cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_numvec(cuda_yee_local_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_num_ele(cuda_yee_local_struct *kerstr,
-                                              cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_xblock(cuda_yee_local_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_yblock(cuda_yee_local_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_zblock(cuda_yee_local_struct *kerstr,
-                                             cuda_pscmc_mem *pm);
-int cuda_yee_local_scmc_set_parameter_ovlp(cuda_yee_local_struct *kerstr,
-                                           cuda_pscmc_mem *pm);
+#include "cuda_/pscmc_runtime_macros.h"
+
+#define DECL_CUDA_MERGE_OVLP_M2O_ONCE_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp0)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp1)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp2)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp3)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp4)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp5)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp6)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp7)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp8)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp9)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp10)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp11)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp12)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp14)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp15)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp16)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp17)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp18)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp19)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp20)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp21)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp22)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp23)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp24)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp25)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp26)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_MERGE_OVLP_M2O_ALL_IN_ONE_KERNEL(P)                                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlps)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_MERGE_OVLP_M2O_KERNEL(P)                                                                             \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlpindex)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_MERGE_OVLP_O2M_ONCE_KERNEL(P)                                                                        \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp0)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp1)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp2)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp3)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp4)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp5)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp6)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp7)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp8)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp9)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp10)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp11)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp12)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp14)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp15)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp16)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp17)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp18)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp19)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp20)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp21)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp22)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp23)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp24)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp25)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp26)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_MERGE_OVLP_O2M_ALL_IN_ONE_KERNEL(P)                                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlps)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_MERGE_OVLP_O2M_KERNEL(P)                                                                             \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlpindex)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_M2O_ONCE_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp0)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp1)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp2)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp3)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp4)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp5)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp6)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp7)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp8)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp9)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp10)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp11)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp12)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp14)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp15)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp16)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp17)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp18)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp19)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp20)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp21)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp22)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp23)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp24)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp25)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp26)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_M2O_ALL_IN_ONE_KERNEL(P)                                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlps)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_M2O_KERNEL(P)                                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlpindex)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_O2M_ONCE_KERNEL(P)                                                                         \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp0)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp1)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp2)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp3)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp4)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp5)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp6)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp7)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp8)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp9)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp10)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp11)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp12)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp14)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp15)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp16)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp17)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp18)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp19)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp20)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp21)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp22)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp23)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp24)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp25)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp26)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_O2M_ALL_IN_ONE_KERNEL(P)                                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlps)                                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+#define DECL_CUDA_SYNC_OVLP_O2M_KERNEL(P)                                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecmain)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, vecovlp)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlpindex)                                                                            \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)                                                                              \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)
+
+DECL_CUDA_MERGE_OVLP_M2O_ONCE_KERNEL(cuda_merge_ovlp_m2o_once)
+DECL_CUDA_MERGE_OVLP_M2O_ALL_IN_ONE_KERNEL(cuda_merge_ovlp_m2o_all_in_one)
+DECL_CUDA_MERGE_OVLP_M2O_KERNEL(cuda_merge_ovlp_m2o)
+DECL_CUDA_MERGE_OVLP_O2M_ONCE_KERNEL(cuda_merge_ovlp_o2m_once)
+DECL_CUDA_MERGE_OVLP_O2M_ALL_IN_ONE_KERNEL(cuda_merge_ovlp_o2m_all_in_one)
+DECL_CUDA_MERGE_OVLP_O2M_KERNEL(cuda_merge_ovlp_o2m)
+DECL_CUDA_SYNC_OVLP_M2O_ONCE_KERNEL(cuda_sync_ovlp_m2o_once)
+DECL_CUDA_SYNC_OVLP_M2O_ALL_IN_ONE_KERNEL(cuda_sync_ovlp_m2o_all_in_one)
+DECL_CUDA_SYNC_OVLP_M2O_KERNEL(cuda_sync_ovlp_m2o)
+DECL_CUDA_SYNC_OVLP_O2M_ONCE_KERNEL(cuda_sync_ovlp_o2m_once)
+DECL_CUDA_SYNC_OVLP_O2M_ALL_IN_ONE_KERNEL(cuda_sync_ovlp_o2m_all_in_one)
+DECL_CUDA_SYNC_OVLP_O2M_KERNEL(cuda_sync_ovlp_o2m)
+
+#undef DECL_CUDA_MERGE_OVLP_M2O_ONCE_KERNEL
+#undef DECL_CUDA_MERGE_OVLP_M2O_ALL_IN_ONE_KERNEL
+#undef DECL_CUDA_MERGE_OVLP_M2O_KERNEL
+#undef DECL_CUDA_MERGE_OVLP_O2M_ONCE_KERNEL
+#undef DECL_CUDA_MERGE_OVLP_O2M_ALL_IN_ONE_KERNEL
+#undef DECL_CUDA_MERGE_OVLP_O2M_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_M2O_ONCE_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_M2O_ALL_IN_ONE_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_M2O_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_O2M_ONCE_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_O2M_ALL_IN_ONE_KERNEL
+#undef DECL_CUDA_SYNC_OVLP_O2M_KERNEL

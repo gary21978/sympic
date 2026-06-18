@@ -446,21 +446,3 @@ typedef struct {
   cuda_pscmc_mem *ovlp;
 
 } cuda_sync_ovlp_o2m_struct;
-typedef struct {
-  cuda_pscmc_env *pe;
-
-  cuda_pscmc_mem *inout;
-
-  cuda_pscmc_mem *numvec;
-
-  cuda_pscmc_mem *num_ele;
-
-  cuda_pscmc_mem *xblock;
-
-  cuda_pscmc_mem *yblock;
-
-  cuda_pscmc_mem *zblock;
-
-  cuda_pscmc_mem *ovlp;
-
-} cuda_yee_local_struct;

@@ -40,8 +40,6 @@ typedef struct {
   void *swap_layer_pscmc[NUM_SYNC_LAYER];
   void *sync_kernels[NUM_SYNC_KERNEL];
   void *geo_yeefdtd_kernels[2];
-  void *geo_yeefdtd_rect_kernels[1];
-  void *yeefdtd_stencil_kernels[3];
   void *rdcd;
 
   double *rdcd_host;

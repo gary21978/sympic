@@ -13,7 +13,6 @@
 #include "cuda_/inner_split_pass.kernel_inc.h"
 
 
-#include "cuda_/stencil.kernel_inc.h"
 
 #include "cuda_/mergefields.kernel_inc.h"
 
@@ -25,7 +24,6 @@
 
 #include "cuda_/particle_iter.kernel_inc.h"
 
-#include "cuda_/geo_yeefdtd_rect.kernel_inc.h"
 
 #include "cuda_/geo_yeefdtd.kernel_inc.h"
 

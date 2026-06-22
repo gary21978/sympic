@@ -12,8 +12,6 @@
 
 #include "cuda_/inner_split_pass.kernel_inc.h"
 
-#include "cuda_/stencil.kernel_inc.h"
-
 #include "cuda_/mergefields.kernel_inc.h"
 
 #include "cuda_/miniblas.kernel_inc.h"
@@ -23,8 +21,6 @@
 #include "cuda_/move_back.kernel_inc.h"
 
 #include "cuda_/particle_iter.kernel_inc.h"
-
-#include "cuda_/geo_yeefdtd_rect.kernel_inc.h"
 
 #include "cuda_/geo_yeefdtd.kernel_inc.h"
 
@@ -257,34 +253,6 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
       cuda_GEO_YEE_CURL_L_get_struct_len(&(structlen));
       (((pthis)->geo_yeefdtd_kernels)[1] = malloc(structlen));
       cuda_GEO_YEE_CURL_L_init(pe, ((pthis)->geo_yeefdtd_kernels)[1]);
-    }
-    {
-      size_t structlen;
-
-      cuda_RECT_YEE_CURL_L_get_struct_len(&(structlen));
-      (((pthis)->geo_yeefdtd_rect_kernels)[0] = malloc(structlen));
-      cuda_RECT_YEE_CURL_L_init(pe, ((pthis)->geo_yeefdtd_rect_kernels)[0]);
-    }
-    {
-      size_t structlen;
-
-      cuda_Yee_FDTD_W04_2_get_struct_len(&(structlen));
-      (((pthis)->yeefdtd_stencil_kernels)[0] = malloc(structlen));
-      cuda_Yee_FDTD_W04_2_init(pe, ((pthis)->yeefdtd_stencil_kernels)[0]);
-    }
-    {
-      size_t structlen;
-
-      cuda_Yee_FDTD_W04_1_get_struct_len(&(structlen));
-      (((pthis)->yeefdtd_stencil_kernels)[1] = malloc(structlen));
-      cuda_Yee_FDTD_W04_1_init(pe, ((pthis)->yeefdtd_stencil_kernels)[1]);
-    }
-    {
-      size_t structlen;
-
-      cuda_Yee_FDTD_W04_0_get_struct_len(&(structlen));
-      (((pthis)->yeefdtd_stencil_kernels)[2] = malloc(structlen));
-      cuda_Yee_FDTD_W04_0_init(pe, ((pthis)->yeefdtd_stencil_kernels)[2]);
     }
     {
       size_t structlen;

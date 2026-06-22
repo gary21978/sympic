@@ -7,7 +7,6 @@ typedef double NUMBER_REAL;
 
 #define NUM_SYNC_KERNEL 12
 
-#define NUM_FDTD_KERNEL 22
 typedef struct {
   void *pe;
 
@@ -40,7 +39,6 @@ typedef struct {
   void *sync_layer_pscmc[NUM_SYNC_LAYER];
   void *swap_layer_pscmc[NUM_SYNC_LAYER];
   void *sync_kernels[NUM_SYNC_KERNEL];
-  void *fdtd_kernels[NUM_FDTD_KERNEL];
   void *geo_yeefdtd_kernels[2];
   void *geo_yeefdtd_rect_kernels[1];
   void *yeefdtd_stencil_kernels[3];

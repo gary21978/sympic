@@ -8,7 +8,6 @@
 
 #include "cuda_/inner_split_pass.kernel_inc.h"
 
-#include "cuda_/yeefdtd.kernel_inc.h"
 
 #include "cuda_/stencil.kernel_inc.h"
 

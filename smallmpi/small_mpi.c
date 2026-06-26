@@ -5,6 +5,10 @@ int PS_MPI_Barrier(PS_MPI_Comm comm) {
   return MPI_Barrier(comm);
 }
 
+int PS_MPI_Bcast(void *buffer, int count, PS_MPI_Datatype datatype, int root, PS_MPI_Comm comm) {
+  return MPI_Bcast(buffer, count, datatype, root, comm);
+}
+
 int PS_MPI_Comm_rank(PS_MPI_Comm comm, int *rank) {
   return MPI_Comm_rank(comm, rank);
 }

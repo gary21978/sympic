@@ -18,6 +18,7 @@ typedef MPI_Status PS_MPI_Status;
 typedef MPI_Op PS_MPI_Op;
 
 int PS_MPI_Barrier(PS_MPI_Comm comm);
+int PS_MPI_Bcast(void *buffer, int count, PS_MPI_Datatype datatype, int root, PS_MPI_Comm comm);
 int PS_MPI_Comm_rank(PS_MPI_Comm comm, int *rank);
 int PS_MPI_Comm_size(PS_MPI_Comm comm, int *size);
 int PS_MPI_Finalize(void);

@@ -1,5 +1,6 @@
 #ifndef NCSPIC_SEQ_FIELD
 #include "smallmpi/small_mpi.h"
+#include <nccl.h>
 
 #define NCSPIC_SEQ_FIELD
 typedef double NUMBER_REAL;
@@ -9,6 +10,8 @@ typedef double NUMBER_REAL;
 
 typedef struct {
   void *pe;
+
+  int cuda_device;
 
   long xlen;
 
@@ -199,6 +202,8 @@ typedef struct {
   long num_runtime;
 
   PS_MPI_Comm comm;
+
+  ncclComm_t nccl_comm;
 
   long cur_rank;
 

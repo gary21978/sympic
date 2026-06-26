@@ -31,20 +31,15 @@
 
 int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
-  // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
 
   long num_runtime = (pthis)->num_runtime;
 
-  PS_MPI_Comm comm = (pthis)->comm;
-
+  ncclComm_t nccl_comm = (pthis)->nccl_comm;
 
   long *sync_layer_len = (pthis)->sync_layer_len;
 
-  PS_MPI_Request **rqst = (pthis)->rqst;
 
-
-  //====================Field3D_MPI
   long i = 0;
 
   long num_data = num_runtime;
@@ -54,32 +49,21 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   for (i = 0; i < num_data; i++) {
     Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one((data + i), 1);
 
-    // defined from class Field3D_Seq
-
     long xlen = ((data + i))->xlen;
-
     long ylen = ((data + i))->ylen;
-
     long zlen = ((data + i))->zlen;
-
     long xblock = ((data + i))->xblock;
-
     long yblock = ((data + i))->yblock;
-
     long zblock = ((data + i))->zblock;
-
     long numvec = ((data + i))->numvec;
-
-
     int num_ele = ((data + i))->num_ele;
 
-
-    //====================Field3D_Seq
     ((v_offset)[i] = 0);
     ((all_sync_len)[i] = (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
   }
   int fieldid;
 
+  ncclGroupStart();
   for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
     if ((fieldid == (NUM_SYNC_LAYER / 2))) {
       continue;
@@ -87,28 +71,15 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
     for (i = 0; i < num_data; i++) {
 
-      // defined from class Field3D_Seq
-
-
       long numvec = ((data + i))->numvec;
-
 
       void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
 
-
       long *adj_ids = ((data + i))->adj_ids;
-
       long *adj_processes = ((data + i))->adj_processes;
 
-
-      //====================Field3D_Seq
-      double *sync_mem_host;
-
-      cuda_pscmc_get_h_data((sync_layer_pscmc)[0], &(sync_mem_host));
-
-      if ((fieldid == 0)) {
-        cuda_pscmc_mem_sync_d2h((sync_layer_pscmc)[0]);
-      }
+      cuda_pscmc_mem *sync_mem = (cuda_pscmc_mem *)(sync_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
 
       int tid;
 
@@ -117,65 +88,53 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
       for (tid = 0; (tid < numvec); tid++) {
         double *t0;
 
-        (t0 = (sync_mem_host + (v_offset)[i]));
-        int REMOTE_PROC_ID = ((adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)] / (pthis)->num_runtime);
-
+        (t0 = (sync_d_data + (v_offset)[i]));
         {
-          if (((adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)] ==
+          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
+          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
+
+          if ((adj_proc_id ==
                (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
             continue;
 
+          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
+            continue;
+
           } else {
-            PS_MPI_Isend((t0 + (tid * sllen)), sllen, PS_MPI_DOUBLE, REMOTE_PROC_ID,
-                         ((NUM_SYNC_LAYER * (adj_ids)[((tid * NUM_SYNC_LAYER) + fieldid)]) + fieldid), comm,
-                         ((rqst)[i] + ((tid * NUM_SYNC_LAYER) + fieldid)));
+            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
           }
         }
       }
     }
     for (i = 0; i < num_data; i++) {
 
-      // defined from class Field3D_Seq
-
-
       long numvec = ((data + i))->numvec;
 
-
       void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
-
       void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
 
-
       long *adj_ids = ((data + i))->adj_ids;
-
       long *adj_processes = ((data + i))->adj_processes;
-
       long *adj_local_tid = ((data + i))->adj_local_tid;
 
+      cuda_pscmc_mem *sync_mem = (cuda_pscmc_mem *)(sync_layer_pscmc[0]);
+      cuda_pscmc_mem *swap_mem = (cuda_pscmc_mem *)(swap_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
+      double *swap_d_data = (double *)(swap_mem->d_data);
 
-      //====================Field3D_Seq
-      double *sync_mem_host;
-
-      double *swap_mem_host;
-
-      cuda_pscmc_get_h_data((sync_layer_pscmc)[0], &(sync_mem_host));
-
-      cuda_pscmc_get_h_data((swap_layer_pscmc)[0], &(swap_mem_host));
-
-      (swap_mem_host = (swap_mem_host + (all_sync_len)[i]));
+      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
       int tid;
 
       int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
 
       double *t1;
-
       double *t0;
 
       long sllen = (sync_layer_len)[fieldid1];
 
       for (tid = 0; (tid < numvec); tid++) {
-        (t1 = (swap_mem_host - ((v_offset)[i] + (sllen * numvec))));
-        (t0 = (sync_mem_host + (v_offset)[i]));
+        (t1 = (swap_d_data - ((v_offset)[i] + (sllen * numvec))));
+        (t0 = (sync_d_data + (v_offset)[i]));
         {
           long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid1)];
 
@@ -184,55 +143,33 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
           if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
             long t0id = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
 
-            memcpy((t1 + (tid * sllen)), (t0 + (t0id * sllen)), (sizeof(double) * sllen));
+            cudaMemcpy((t1 + (tid * sllen)), (t0 + (t0id * sllen)), (sizeof(double) * sllen),
+                       cudaMemcpyDeviceToDevice);
+
+          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
+            long src_runtime = (adj_proc_id % (pthis)->num_runtime);
+            int src_dev = ((data + src_runtime))->cuda_device;
+            int dst_dev = ((data + i))->cuda_device;
+            cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
+            double *src_sync = (double *)(src_sync_mem->d_data);
+            long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
+            double *src_ptr = (src_sync + (v_offset)[src_runtime] + (src_tid * sllen));
+            cudaMemcpyPeer((t1 + (tid * sllen)), dst_dev, src_ptr, src_dev, (sizeof(double) * sllen));
 
           } else {
-            PS_MPI_Recv((t1 + (tid * sllen)), sllen, PS_MPI_DOUBLE, REMOTE_PROC_ID,
-                        ((NUM_SYNC_LAYER * (adj_ids)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))]) +
-                         ((NUM_SYNC_LAYER - 1) - fieldid1)),
-                        comm, NULL);
+            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
           }
         }
       }
       ((v_offset)[i] = ((v_offset)[i] + (sllen * numvec)));
     }
-    for (i = 0; i < num_data; i++) {
-
-      // defined from class Field3D_Seq
-
-
-      long numvec = ((data + i))->numvec;
-
-
-      long *adj_processes = ((data + i))->adj_processes;
-
-
-      //====================Field3D_Seq
-      int tid;
-
-      for (tid = 0; (tid < numvec); tid++) {
-        long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
-
-
-        if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-          continue;
-
-        } else {
-          PS_MPI_Wait(((rqst)[i] + ((tid * NUM_SYNC_LAYER) + fieldid)), NULL);
-        }
-      }
-    }
   }
+  ncclGroupEnd();
+  cudaDeviceSynchronize();
+
   for (i = 0; i < num_data; i++) {
 
-    // defined from class Field3D_Seq
-
-
     void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
-
-
-    //====================Field3D_Seq
-    cuda_pscmc_mem_sync_h2d((swap_layer_pscmc)[0]);
 
     Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one((data + i), 0);
   }
@@ -241,20 +178,15 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
 int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
-  // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
 
   long num_runtime = (pthis)->num_runtime;
 
-  PS_MPI_Comm comm = (pthis)->comm;
-
+  ncclComm_t nccl_comm = (pthis)->nccl_comm;
 
   long *sync_layer_len = (pthis)->sync_layer_len;
 
-  PS_MPI_Request **rqst = (pthis)->rqst;
 
-
-  //====================Field3D_MPI
   long i = 0;
 
   long num_data = num_runtime;
@@ -264,32 +196,21 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   for (i = 0; i < num_data; i++) {
     Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one((data + i), 1);
 
-    // defined from class Field3D_Seq
-
     long xlen = ((data + i))->xlen;
-
     long ylen = ((data + i))->ylen;
-
     long zlen = ((data + i))->zlen;
-
     long xblock = ((data + i))->xblock;
-
     long yblock = ((data + i))->yblock;
-
     long zblock = ((data + i))->zblock;
-
     long numvec = ((data + i))->numvec;
-
-
     int num_ele = ((data + i))->num_ele;
 
-
-    //====================Field3D_Seq
     ((v_offset)[i] = 0);
     ((all_sync_len)[i] = (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
   }
   int fieldid;
 
+  ncclGroupStart();
   for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
     if ((fieldid == (NUM_SYNC_LAYER / 2))) {
       continue;
@@ -297,28 +218,15 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
     for (i = 0; i < num_data; i++) {
 
-      // defined from class Field3D_Seq
-
-
       long numvec = ((data + i))->numvec;
-
 
       void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
 
-
       long *adj_ids = ((data + i))->adj_ids;
-
       long *adj_processes = ((data + i))->adj_processes;
 
-
-      //====================Field3D_Seq
-      double *sync_mem_host;
-
-      cuda_pscmc_get_h_data((sync_layer_pscmc)[0], &(sync_mem_host));
-
-      if ((fieldid == 0)) {
-        cuda_pscmc_mem_sync_d2h((sync_layer_pscmc)[0]);
-      }
+      cuda_pscmc_mem *sync_mem = (cuda_pscmc_mem *)(sync_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
 
       int tid;
 
@@ -327,65 +235,53 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
       for (tid = 0; (tid < numvec); tid++) {
         double *t0;
 
-        (t0 = (sync_mem_host + (v_offset)[i]));
-        int REMOTE_PROC_ID = ((adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)] / (pthis)->num_runtime);
-
+        (t0 = (sync_d_data + (v_offset)[i]));
         {
-          if (((adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)] ==
+          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
+          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
+
+          if ((adj_proc_id ==
                (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
             continue;
 
+          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
+            continue;
+
           } else {
-            PS_MPI_Isend((t0 + (tid * sllen)), sllen, PS_MPI_DOUBLE, REMOTE_PROC_ID,
-                         ((NUM_SYNC_LAYER * (adj_ids)[((tid * NUM_SYNC_LAYER) + fieldid)]) + fieldid), comm,
-                         ((rqst)[i] + ((tid * NUM_SYNC_LAYER) + fieldid)));
+            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
           }
         }
       }
     }
     for (i = 0; i < num_data; i++) {
 
-      // defined from class Field3D_Seq
-
-
       long numvec = ((data + i))->numvec;
 
-
       void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
-
       void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
 
-
       long *adj_ids = ((data + i))->adj_ids;
-
       long *adj_processes = ((data + i))->adj_processes;
-
       long *adj_local_tid = ((data + i))->adj_local_tid;
 
+      cuda_pscmc_mem *sync_mem = (cuda_pscmc_mem *)(sync_layer_pscmc[0]);
+      cuda_pscmc_mem *swap_mem = (cuda_pscmc_mem *)(swap_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
+      double *swap_d_data = (double *)(swap_mem->d_data);
 
-      //====================Field3D_Seq
-      double *sync_mem_host;
-
-      double *swap_mem_host;
-
-      cuda_pscmc_get_h_data((sync_layer_pscmc)[0], &(sync_mem_host));
-
-      cuda_pscmc_get_h_data((swap_layer_pscmc)[0], &(swap_mem_host));
-
-      (swap_mem_host = (swap_mem_host + (all_sync_len)[i]));
+      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
       int tid;
 
       int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
 
       double *t1;
-
       double *t0;
 
       long sllen = (sync_layer_len)[fieldid1];
 
       for (tid = 0; (tid < numvec); tid++) {
-        (t1 = (swap_mem_host - ((v_offset)[i] + (sllen * numvec))));
-        (t0 = (sync_mem_host + (v_offset)[i]));
+        (t1 = (swap_d_data - ((v_offset)[i] + (sllen * numvec))));
+        (t0 = (sync_d_data + (v_offset)[i]));
         {
           long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid1)];
 
@@ -394,55 +290,33 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
           if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
             long t0id = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
 
-            memcpy((t1 + (tid * sllen)), (t0 + (t0id * sllen)), (sizeof(double) * sllen));
+            cudaMemcpy((t1 + (tid * sllen)), (t0 + (t0id * sllen)), (sizeof(double) * sllen),
+                       cudaMemcpyDeviceToDevice);
+
+          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
+            long src_runtime = (adj_proc_id % (pthis)->num_runtime);
+            int src_dev = ((data + src_runtime))->cuda_device;
+            int dst_dev = ((data + i))->cuda_device;
+            cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
+            double *src_sync = (double *)(src_sync_mem->d_data);
+            long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
+            double *src_ptr = (src_sync + (v_offset)[src_runtime] + (src_tid * sllen));
+            cudaMemcpyPeer((t1 + (tid * sllen)), dst_dev, src_ptr, src_dev, (sizeof(double) * sllen));
 
           } else {
-            PS_MPI_Recv((t1 + (tid * sllen)), sllen, PS_MPI_DOUBLE, REMOTE_PROC_ID,
-                        ((NUM_SYNC_LAYER * (adj_ids)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))]) +
-                         ((NUM_SYNC_LAYER - 1) - fieldid1)),
-                        comm, NULL);
+            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
           }
         }
       }
       ((v_offset)[i] = ((v_offset)[i] + (sllen * numvec)));
     }
-    for (i = 0; i < num_data; i++) {
-
-      // defined from class Field3D_Seq
-
-
-      long numvec = ((data + i))->numvec;
-
-
-      long *adj_processes = ((data + i))->adj_processes;
-
-
-      //====================Field3D_Seq
-      int tid;
-
-      for (tid = 0; (tid < numvec); tid++) {
-        long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
-
-
-        if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-          continue;
-
-        } else {
-          PS_MPI_Wait(((rqst)[i] + ((tid * NUM_SYNC_LAYER) + fieldid)), NULL);
-        }
-      }
-    }
   }
+  ncclGroupEnd();
+  cudaDeviceSynchronize();
+
   for (i = 0; i < num_data; i++) {
 
-    // defined from class Field3D_Seq
-
-
     void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
-
-
-    //====================Field3D_Seq
-    cuda_pscmc_mem_sync_h2d((swap_layer_pscmc)[0]);
 
     Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one((data + i), 0);
   }
@@ -451,48 +325,36 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
 int sync_main_data_d2h(Field3D_MPI *pthis) {
 
-  // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
 
   long num_runtime = (pthis)->num_runtime;
 
 
-  //====================Field3D_MPI
   long i = 0;
 
   for (i = 0; i < num_runtime; i++) {
-
-    // defined from class Field3D_Seq
-
+    cudaSetDevice(((data + i))->cuda_device);
 
     void *main_data = ((data + i))->main_data;
 
-
-    //====================Field3D_Seq
     cuda_pscmc_mem_sync_d2h(main_data);
   }
   return 0;
 }
 int sync_main_data_h2d(Field3D_MPI *pthis) {
 
-  // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
 
   long num_runtime = (pthis)->num_runtime;
 
 
-  //====================Field3D_MPI
   long i = 0;
 
   for (i = 0; i < num_runtime; i++) {
-
-    // defined from class Field3D_Seq
-
+    cudaSetDevice(((data + i))->cuda_device);
 
     void *main_data = ((data + i))->main_data;
 
-
-    //====================Field3D_Seq
     cuda_pscmc_mem_sync_h2d(main_data);
   }
   return 0;

@@ -339,6 +339,11 @@ int main(int argc, char **argv) {
 
   PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(rank));
   assert((rank < n));
+  ncclUniqueId nccl_id;
+  if ((rank == 0)) {
+    ncclGetUniqueId(&(nccl_id));
+  }
+  PS_MPI_Bcast(&(nccl_id), sizeof(ncclUniqueId), PS_MPI_CHAR, 0, PS_MPI_COMM_WORLD);
   double M_USE_TIME_AS_RANDOM_SEED = call_GET_VAR("USE_TIME_AS_RANDOM_SEED");
 
   double M_RAND_SEED = call_GET_VAR("RAND_SEED");
@@ -443,6 +448,24 @@ int main(int argc, char **argv) {
            ((G_USE_DIFFERENT_DEV_PERFORMANCE) ? (call_CAL_FUN_ONE_PARA("GET_DEV_PERFORMANCE", i)) : (1)));
     }
   }
+  {
+    long i, j;
+    for (i = 0; i < NUM_RUNTIME; i++) {
+      cudaSetDevice((dev_ids)[i]);
+      for (j = 0; j < NUM_RUNTIME; j++) {
+        if ((i != j)) {
+          int canPeer = 0;
+          cudaDeviceCanAccessPeer(&(canPeer), (dev_ids)[i], (dev_ids)[j]);
+          if (canPeer) {
+            cudaDeviceEnablePeerAccess((dev_ids)[j], 0);
+          }
+        }
+      }
+    }
+  }
+  ncclComm_t nccl_comm;
+  cudaSetDevice((dev_ids)[0]);
+  ncclCommInitRank(&(nccl_comm), n, nccl_id, rank);
   fprintf(stderr, "rank %d init, pid=%d\n", rank, getpid());
   memset(pfstest, 0, sizeof(Field3D_Seq));
   long fieldlen = 3;
@@ -469,6 +492,7 @@ int main(int argc, char **argv) {
   ((pfstestSPEC)->num_ele = (7 * NUM_SPEC));
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids, local_tid_array, cd_types,
                        dev_ids, cd_performances, num_runtime, PS_MPI_COMM_WORLD, rank, n);
+  (ptestfield->nccl_comm = nccl_comm);
   init_Field3D_MPI_from_new_num_ele(ptestfieldSPEC, ptestfield, (7 * NUM_SPEC));
 
 
@@ -702,6 +726,7 @@ int main(int argc, char **argv) {
 
   }
 
+  ncclCommDestroy(nccl_comm);
   PS_MPI_Finalize();
   return 0;
 }

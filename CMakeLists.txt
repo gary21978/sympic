@@ -94,6 +94,7 @@ target_link_libraries(sympic PRIVATE
     CUDA::cudart
     CUDA::cuda_driver
     MPI::MPI_C
+    /usr/lib/x86_64-linux-gnu/libnccl.so
 )
 
 # ============================================================

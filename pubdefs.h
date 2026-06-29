@@ -203,7 +203,7 @@ typedef struct {
 
   PS_MPI_Comm comm;
 
-  ncclComm_t nccl_comm;
+  ncclComm_t *nccl_comm;
 
   long cur_rank;
 

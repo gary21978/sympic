@@ -158,6 +158,7 @@ int blas_yisax_enlarge_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a,
   int i;
 
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     blas_yisax_enlarge_Field3D_Seq((data + i), ((y)->data + i), a, ((x)->data + i));
   }
   return 0;
@@ -286,6 +287,7 @@ int blas_axpy_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a, Field3D_
   int i;
 
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     blas_axpy_Field3D_Seq((data + i), ((y)->data + i), a, ((x)->data + i));
   }
   return 0;
@@ -414,6 +416,7 @@ int blas_yisax_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a, Field3D
   int i;
 
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     blas_yisax_Field3D_Seq((data + i), ((y)->data + i), a, ((x)->data + i));
   }
   return 0;
@@ -535,6 +538,7 @@ int blas_yiszero_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y) {
   int i;
 
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     blas_yiszero_Field3D_Seq((data + i), ((y)->data + i));
   }
   return 0;
@@ -656,6 +660,7 @@ int blas_yiszero_synced_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y) {
   int i;
 
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     blas_yiszero_synced_Field3D_Seq((data + i), ((y)->data + i));
   }
   return 0;

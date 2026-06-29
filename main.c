@@ -463,9 +463,16 @@ int main(int argc, char **argv) {
       }
     }
   }
-  ncclComm_t nccl_comm;
-  cudaSetDevice((dev_ids)[0]);
-  ncclCommInitRank(&(nccl_comm), n, nccl_id, rank);
+  ncclComm_t *nccl_comms = malloc(sizeof(ncclComm_t) * NUM_RUNTIME);
+  ncclGroupStart();
+  {
+    long ri;
+    for (ri = 0; ri < NUM_RUNTIME; ri++) {
+      cudaSetDevice((dev_ids)[ri]);
+      ncclCommInitRank(&(nccl_comms)[ri], (n * NUM_RUNTIME), nccl_id, ((rank * NUM_RUNTIME) + ri));
+    }
+  }
+  ncclGroupEnd();
   fprintf(stderr, "rank %d init, pid=%d\n", rank, getpid());
   memset(pfstest, 0, sizeof(Field3D_Seq));
   long fieldlen = 3;
@@ -492,7 +499,7 @@ int main(int argc, char **argv) {
   ((pfstestSPEC)->num_ele = (7 * NUM_SPEC));
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids, local_tid_array, cd_types,
                        dev_ids, cd_performances, num_runtime, PS_MPI_COMM_WORLD, rank, n);
-  (ptestfield->nccl_comm = nccl_comm);
+  (ptestfield->nccl_comm = nccl_comms);
   init_Field3D_MPI_from_new_num_ele(ptestfieldSPEC, ptestfield, (7 * NUM_SPEC));
 
 
@@ -726,7 +733,14 @@ int main(int argc, char **argv) {
 
   }
 
-  ncclCommDestroy(nccl_comm);
+  {
+    long ri;
+    for (ri = 0; ri < NUM_RUNTIME; ri++) {
+      cudaSetDevice((dev_ids)[ri]);
+      ncclCommDestroy((nccl_comms)[ri]);
+    }
+  }
+  free(nccl_comms);
   PS_MPI_Finalize();
   return 0;
 }

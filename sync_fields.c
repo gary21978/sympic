@@ -35,8 +35,6 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   long num_runtime = (pthis)->num_runtime;
 
-  ncclComm_t nccl_comm = (pthis)->nccl_comm;
-
   long *sync_layer_len = (pthis)->sync_layer_len;
 
 
@@ -47,6 +45,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   size_t all_sync_len[num_data];
   size_t v_offset[num_data];
   for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one((data + i), 1);
 
     long xlen = ((data + i))->xlen;
@@ -70,6 +69,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
     }
 
     for (i = 0; i < num_data; i++) {
+      cudaSetDevice(((data + i))->cuda_device);
 
       long numvec = ((data + i))->numvec;
 
@@ -101,12 +101,13 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
             continue;
 
           } else {
-            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
+            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
           }
         }
       }
     }
     for (i = 0; i < num_data; i++) {
+      cudaSetDevice(((data + i))->cuda_device);
 
       long numvec = ((data + i))->numvec;
 
@@ -157,7 +158,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
             cudaMemcpyPeer((t1 + (tid * sllen)), dst_dev, src_ptr, src_dev, (sizeof(double) * sllen));
 
           } else {
-            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
+            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
           }
         }
       }
@@ -165,9 +166,13 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
     }
   }
   ncclGroupEnd();
-  cudaDeviceSynchronize();
+  for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
+    cudaDeviceSynchronize();
+  }
 
   for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
 
     void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
 
@@ -182,8 +187,6 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   long num_runtime = (pthis)->num_runtime;
 
-  ncclComm_t nccl_comm = (pthis)->nccl_comm;
-
   long *sync_layer_len = (pthis)->sync_layer_len;
 
 
@@ -194,6 +197,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   size_t all_sync_len[num_data];
   size_t v_offset[num_data];
   for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
     Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one((data + i), 1);
 
     long xlen = ((data + i))->xlen;
@@ -217,6 +221,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
     }
 
     for (i = 0; i < num_data; i++) {
+      cudaSetDevice(((data + i))->cuda_device);
 
       long numvec = ((data + i))->numvec;
 
@@ -248,12 +253,13 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
             continue;
 
           } else {
-            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
+            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
           }
         }
       }
     }
     for (i = 0; i < num_data; i++) {
+      cudaSetDevice(((data + i))->cuda_device);
 
       long numvec = ((data + i))->numvec;
 
@@ -304,7 +310,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
             cudaMemcpyPeer((t1 + (tid * sllen)), dst_dev, src_ptr, src_dev, (sizeof(double) * sllen));
 
           } else {
-            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, REMOTE_PROC_ID, nccl_comm, 0);
+            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
           }
         }
       }
@@ -312,9 +318,13 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
     }
   }
   ncclGroupEnd();
-  cudaDeviceSynchronize();
+  for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
+    cudaDeviceSynchronize();
+  }
 
   for (i = 0; i < num_data; i++) {
+    cudaSetDevice(((data + i))->cuda_device);
 
     void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
 

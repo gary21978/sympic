@@ -66,23 +66,6 @@ static void copy_between_devices(double *dst, int dst_dev, const double *src, in
   free(host_buf);
 }
 
-static void check_device_copy_range(const char *where, cuda_pscmc_mem *dst_mem, double *dst, cuda_pscmc_mem *src_mem,
-                                    const double *src, size_t bytes, long dst_runtime, long src_runtime, int tid,
-                                    long src_tid, long sllen, int fieldid) {
-  ptrdiff_t dst_off = dst - ((double *)dst_mem->d_data);
-  ptrdiff_t src_off = src - ((double *)src_mem->d_data);
-  size_t count = bytes / sizeof(double);
-  if ((dst_off < 0) || (src_off < 0) || (((size_t)dst_off + count) > dst_mem->len) ||
-      (((size_t)src_off + count) > src_mem->len)) {
-    fprintf(stderr,
-            "%s range error: dst_runtime=%ld src_runtime=%ld tid=%d src_tid=%ld sllen=%ld fieldid=%d "
-            "dst_off=%td dst_len=%zu src_off=%td src_len=%zu count=%zu dst=%p dst_base=%p src=%p src_base=%p\n",
-            where, dst_runtime, src_runtime, tid, src_tid, sllen, fieldid, dst_off, dst_mem->len, src_off,
-            src_mem->len, count, (void *)dst, (void *)dst_mem->d_data, (void *)src, (void *)src_mem->d_data);
-    assert(0);
-  }
-}
-
 int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   Field3D_Seq *data = (pthis)->data;
@@ -160,7 +143,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
             continue;
 
           } else {
-            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
+            ncclSend(t0 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
           }
         }
       }
@@ -214,12 +197,10 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
             double *src_sync = (double *)(src_sync_mem->d_data);
             long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
             double *src_ptr = (src_sync + (recv_offset)[src_runtime] + (src_tid * sllen));
-            check_device_copy_range("merge", swap_mem, (t1 + (tid * sllen)), src_sync_mem, src_ptr,
-                                    (sizeof(double) * sllen), i, src_runtime, tid, src_tid, sllen, fieldid1);
             copy_between_devices(t1 + tid * sllen, dst_dev, src_ptr, src_dev, sizeof(double) * sllen);
 
           } else {
-            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
+            ncclRecv(t1 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
           }
         }
       }
@@ -324,7 +305,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
             continue;
 
           } else {
-            ncclSend((t0 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
+            ncclSend(t0 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
           }
         }
       }
@@ -378,12 +359,10 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
             double *src_sync = (double *)(src_sync_mem->d_data);
             long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
             double *src_ptr = (src_sync + (recv_offset)[src_runtime] + (src_tid * sllen));
-            check_device_copy_range("sync", swap_mem, (t1 + (tid * sllen)), src_sync_mem, src_ptr,
-                                    (sizeof(double) * sllen), i, src_runtime, tid, src_tid, sllen, fieldid1);
             copy_between_devices(t1 + tid * sllen, dst_dev, src_ptr, src_dev, sizeof(double) * sllen);
 
           } else {
-            ncclRecv((t1 + (tid * sllen)), sllen, ncclDouble, adj_proc_id, ((pthis)->nccl_comm)[i], 0);
+            ncclRecv(t1 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
           }
         }
       }

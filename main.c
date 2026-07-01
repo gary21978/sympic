@@ -341,9 +341,9 @@ int main(int argc, char **argv) {
   assert((rank < n));
   ncclUniqueId nccl_id;
   if ((rank == 0)) {
-    ncclGetUniqueId(&(nccl_id));
+    ncclGetUniqueId(&nccl_id);
   }
-  PS_MPI_Bcast(&(nccl_id), sizeof(ncclUniqueId), PS_MPI_CHAR, 0, PS_MPI_COMM_WORLD);
+  PS_MPI_Bcast(&nccl_id, sizeof(ncclUniqueId), PS_MPI_CHAR, 0, PS_MPI_COMM_WORLD);
   double M_USE_TIME_AS_RANDOM_SEED = call_GET_VAR("USE_TIME_AS_RANDOM_SEED");
 
   double M_RAND_SEED = call_GET_VAR("RAND_SEED");
@@ -451,13 +451,13 @@ int main(int argc, char **argv) {
   {
     long i, j;
     for (i = 0; i < NUM_RUNTIME; i++) {
-      cudaSetDevice((dev_ids)[i]);
+      cudaSetDevice(dev_ids[i]);
       for (j = 0; j < NUM_RUNTIME; j++) {
         if ((i != j)) {
           int canPeer = 0;
-          cudaDeviceCanAccessPeer(&(canPeer), (dev_ids)[i], (dev_ids)[j]);
+          cudaDeviceCanAccessPeer(&canPeer, dev_ids[i], dev_ids[j]);
           if (canPeer) {
-            cudaDeviceEnablePeerAccess((dev_ids)[j], 0);
+            cudaDeviceEnablePeerAccess(dev_ids[j], 0);
           }
         }
       }
@@ -468,8 +468,8 @@ int main(int argc, char **argv) {
   {
     long ri;
     for (ri = 0; ri < NUM_RUNTIME; ri++) {
-      cudaSetDevice((dev_ids)[ri]);
-      ncclCommInitRank(&(nccl_comms)[ri], (n * NUM_RUNTIME), nccl_id, ((rank * NUM_RUNTIME) + ri));
+      cudaSetDevice(dev_ids[ri]);
+      ncclCommInitRank(&nccl_comms[ri], n * NUM_RUNTIME, nccl_id, rank * NUM_RUNTIME + ri);
     }
   }
   ncclGroupEnd();
@@ -499,7 +499,7 @@ int main(int argc, char **argv) {
   ((pfstestSPEC)->num_ele = (7 * NUM_SPEC));
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids, local_tid_array, cd_types,
                        dev_ids, cd_performances, num_runtime, PS_MPI_COMM_WORLD, rank, n);
-  (ptestfield->nccl_comm = nccl_comms);
+  ptestfield->nccl_comm = nccl_comms;
   init_Field3D_MPI_from_new_num_ele(ptestfieldSPEC, ptestfield, (7 * NUM_SPEC));
 
 
@@ -736,8 +736,8 @@ int main(int argc, char **argv) {
   {
     long ri;
     for (ri = 0; ri < NUM_RUNTIME; ri++) {
-      cudaSetDevice((dev_ids)[ri]);
-      ncclCommDestroy((nccl_comms)[ri]);
+      cudaSetDevice(dev_ids[ri]);
+      ncclCommDestroy(nccl_comms[ri]);
     }
   }
   free(nccl_comms);

@@ -33,7 +33,7 @@
 
 #include "mpifields.h"
 
-static void copy_between_devices(double *dst, int dst_dev, const double *src, int src_dev, size_t bytes) {
+void copy_between_devices(double *dst, int dst_dev, const double *src, int src_dev, size_t bytes) {
   if (bytes == 0) {
     return;
   }

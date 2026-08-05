@@ -21,3 +21,6 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask);
 int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask);
 int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int mask);
 int call_particle_sort_mpi(Field3D_MPI *pthis, int dir, int use_vlo);
+int cuda_particle_shift_launch(double *cu_cache, int *cu_xyzw, const int *frl,
+    long cu_cache_length, long numvec, int dir, long XYZLEN,
+    int ptlen, int device_id);

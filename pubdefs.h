@@ -195,6 +195,8 @@ typedef struct {
 
   void *adjoint_vec_pids;
 
+  void *swap_len_buf;
+
 } One_Particle_Collection;
 typedef struct {
   Field3D_Seq *data;

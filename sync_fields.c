@@ -127,24 +127,31 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid];
 
-      for (tid = 0; (tid < numvec); tid++) {
-        double *t0;
-
-        (t0 = (sync_d_data + (v_offset)[i]));
-        {
-          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
-          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-
-          if ((adj_proc_id ==
-               (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-            continue;
-
-          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
-            continue;
-
-          } else {
-            ncclSend(t0 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
+      /* sends sorted by adj_ids[tid*27+fieldid] (receiver subdomain ID) for NCCL order match */
+      {
+        long send_count = 0;
+        for (tid = 0; tid < numvec; tid++) {
+          long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid];
+          if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+          if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+          send_count++;
+        }
+        char *sent = (char *)alloca(numvec);
+        memset(sent, 0, numvec);
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_tid = -1, best_key = -1;
+          for (tid = 0; tid < numvec; tid++) {
+            if (sent[tid]) continue;
+            long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid];
+            if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+            if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+            long key = (adj_ids)[(tid * NUM_SYNC_LAYER) + fieldid];
+            if (best_tid == -1 || key < best_key) { best_tid = tid; best_key = key; }
           }
+          sent[best_tid] = 1;
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid];
+          ncclSend(sync_d_data + (v_offset)[i] + best_tid * sllen, sllen, ncclDouble,
+                   peer, pthis->nccl_comm[i], 0);
         }
       }
     }
@@ -175,33 +182,54 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid1];
 
-      for (tid = 0; (tid < numvec); tid++) {
-        (t1 = (swap_d_data - ((recv_offset)[i] + (sllen * numvec))));
-        (t0 = (sync_d_data + (recv_offset)[i]));
-        {
-          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid1)];
+      /* self and same-rank recvs (not part of NCCL group ordering) */
+      for (tid = 0; tid < numvec; tid++) {
+        long adj_proc_id = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+        int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
+        if (adj_proc_id == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) {
+          long t0id = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
+                               data[i].cuda_device,
+                               sync_d_data + (recv_offset)[i] + t0id * sllen,
+                               data[i].cuda_device, sizeof(double) * sllen);
+        } else if (REMOTE_PROC_ID == (pthis)->cur_rank) {
+          long src_runtime = (adj_proc_id % (pthis)->num_runtime);
+          int src_dev = data[src_runtime].cuda_device;
+          cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
+          double *src_sync = (double *)(src_sync_mem->d_data);
+          long src_tid = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
+                               data[i].cuda_device,
+                               src_sync + (recv_offset)[src_runtime] + (src_tid * sllen),
+                               src_dev, sizeof(double) * sllen);
+        }
+      }
 
-          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-
-          if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-            long t0id = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
-
-            copy_between_devices(t1 + tid * sllen, data[i].cuda_device, t0 + t0id * sllen,
-                                 data[i].cuda_device, sizeof(double) * sllen);
-
-          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
-            long src_runtime = (adj_proc_id % (pthis)->num_runtime);
-            int src_dev = data[src_runtime].cuda_device;
-            int dst_dev = data[i].cuda_device;
-            cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
-            double *src_sync = (double *)(src_sync_mem->d_data);
-            long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
-            double *src_ptr = (src_sync + (recv_offset)[src_runtime] + (src_tid * sllen));
-            copy_between_devices(t1 + tid * sllen, dst_dev, src_ptr, src_dev, sizeof(double) * sllen);
-
-          } else {
-            ncclRecv(t1 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
+      /* remote recvs sorted by adj_ids[tid*27+13] (receiver subdomain ID) for NCCL order match */
+      {
+        long recv_count = 0;
+        for (tid = 0; tid < numvec; tid++) {
+          long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+          if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+          recv_count++;
+        }
+        char *recvd = (char *)alloca(numvec);
+        memset(recvd, 0, numvec);
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_tid = -1, best_key = -1;
+          for (tid = 0; tid < numvec; tid++) {
+            if (recvd[tid]) continue;
+            long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+            if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+            if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+            long key = (adj_ids)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)];
+            if (best_tid == -1 || key < best_key) { best_tid = tid; best_key = key; }
           }
+          recvd[best_tid] = 1;
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid1];
+          ncclRecv(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + best_tid * sllen,
+                   sllen, ncclDouble, peer, pthis->nccl_comm[i], 0);
         }
       }
       ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));
@@ -289,24 +317,31 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid];
 
-      for (tid = 0; (tid < numvec); tid++) {
-        double *t0;
-
-        (t0 = (sync_d_data + (v_offset)[i]));
-        {
-          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid)];
-          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-
-          if ((adj_proc_id ==
-               (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-            continue;
-
-          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
-            continue;
-
-          } else {
-            ncclSend(t0 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
+      /* sends sorted by adj_ids[tid*27+fieldid] (receiver subdomain ID) for NCCL order match */
+      {
+        long send_count = 0;
+        for (tid = 0; tid < numvec; tid++) {
+          long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid];
+          if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+          if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+          send_count++;
+        }
+        char *sent = (char *)alloca(numvec);
+        memset(sent, 0, numvec);
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_tid = -1, best_key = -1;
+          for (tid = 0; tid < numvec; tid++) {
+            if (sent[tid]) continue;
+            long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid];
+            if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+            if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+            long key = (adj_ids)[(tid * NUM_SYNC_LAYER) + fieldid];
+            if (best_tid == -1 || key < best_key) { best_tid = tid; best_key = key; }
           }
+          sent[best_tid] = 1;
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid];
+          ncclSend(sync_d_data + (v_offset)[i] + best_tid * sllen, sllen, ncclDouble,
+                   peer, pthis->nccl_comm[i], 0);
         }
       }
     }
@@ -337,33 +372,54 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid1];
 
-      for (tid = 0; (tid < numvec); tid++) {
-        (t1 = (swap_d_data - ((recv_offset)[i] + (sllen * numvec))));
-        (t0 = (sync_d_data + (recv_offset)[i]));
-        {
-          long adj_proc_id = (adj_processes)[((tid * NUM_SYNC_LAYER) + fieldid1)];
+      /* self and same-rank recvs (not part of NCCL group ordering) */
+      for (tid = 0; tid < numvec; tid++) {
+        long adj_proc_id = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+        int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
+        if (adj_proc_id == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) {
+          long t0id = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
+                               data[i].cuda_device,
+                               sync_d_data + (recv_offset)[i] + t0id * sllen,
+                               data[i].cuda_device, sizeof(double) * sllen);
+        } else if (REMOTE_PROC_ID == (pthis)->cur_rank) {
+          long src_runtime = (adj_proc_id % (pthis)->num_runtime);
+          int src_dev = data[src_runtime].cuda_device;
+          cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
+          double *src_sync = (double *)(src_sync_mem->d_data);
+          long src_tid = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
+                               data[i].cuda_device,
+                               src_sync + (recv_offset)[src_runtime] + (src_tid * sllen),
+                               src_dev, sizeof(double) * sllen);
+        }
+      }
 
-          int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-
-          if ((adj_proc_id == (adj_processes)[((tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2))])) {
-            long t0id = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
-
-            copy_between_devices(t1 + tid * sllen, data[i].cuda_device, t0 + t0id * sllen,
-                                 data[i].cuda_device, sizeof(double) * sllen);
-
-          } else if ((REMOTE_PROC_ID == (pthis)->cur_rank)) {
-            long src_runtime = (adj_proc_id % (pthis)->num_runtime);
-            int src_dev = data[src_runtime].cuda_device;
-            int dst_dev = data[i].cuda_device;
-            cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
-            double *src_sync = (double *)(src_sync_mem->d_data);
-            long src_tid = (adj_local_tid)[((tid * NUM_SYNC_LAYER) + fieldid1)];
-            double *src_ptr = (src_sync + (recv_offset)[src_runtime] + (src_tid * sllen));
-            copy_between_devices(t1 + tid * sllen, dst_dev, src_ptr, src_dev, sizeof(double) * sllen);
-
-          } else {
-            ncclRecv(t1 + tid * sllen, sllen, ncclDouble, adj_proc_id, pthis->nccl_comm[i], 0);
+      /* remote recvs sorted by adj_ids[tid*27+13] (receiver subdomain ID) for NCCL order match */
+      {
+        long recv_count = 0;
+        for (tid = 0; tid < numvec; tid++) {
+          long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+          if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+          if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+          recv_count++;
+        }
+        char *recvd = (char *)alloca(numvec);
+        memset(recvd, 0, numvec);
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_tid = -1, best_key = -1;
+          for (tid = 0; tid < numvec; tid++) {
+            if (recvd[tid]) continue;
+            long p = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
+            if (p == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) continue;
+            if ((p / (pthis)->num_runtime) == (pthis)->cur_rank) continue;
+            long key = (adj_ids)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)];
+            if (best_tid == -1 || key < best_key) { best_tid = tid; best_key = key; }
           }
+          recvd[best_tid] = 1;
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid1];
+          ncclRecv(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + best_tid * sllen,
+                   sllen, ncclDouble, peer, pthis->nccl_comm[i], 0);
         }
       }
       ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));

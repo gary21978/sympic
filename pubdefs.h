@@ -1,6 +1,6 @@
 #ifndef NCSPIC_SEQ_FIELD
 #include "smallmpi/small_mpi.h"
-#include <nccl.h>
+#include <nccl.h> /* USENCCL */
 
 #define NCSPIC_SEQ_FIELD
 typedef double NUMBER_REAL;
@@ -11,7 +11,7 @@ typedef double NUMBER_REAL;
 typedef struct {
   void *pe;
 
-  int cuda_device;
+  int cuda_device; /* USENCCL */
 
   long xlen;
 
@@ -195,7 +195,7 @@ typedef struct {
 
   void *adjoint_vec_pids;
 
-  void *swap_len_buf;
+  void *swap_len_buf; /* USENCCL */
 
 } One_Particle_Collection;
 typedef struct {
@@ -205,7 +205,7 @@ typedef struct {
 
   PS_MPI_Comm comm;
 
-  ncclComm_t *nccl_comm;
+  ncclComm_t *nccl_comm; /* USENCCL */
 
   long cur_rank;
 

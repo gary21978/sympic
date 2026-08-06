@@ -1,9 +1,5 @@
 #include <stdio.h>
 
-#include <stdlib.h>
-
-#include <string.h>
-
 #include "pubdefs.h"
 
 #include "cuda_/cuda_pscmc_inc.h"
@@ -26,12 +22,9 @@
 #include "cuda_/geo_yeefdtd.kernel_inc.h"
 
 #include "cuda_yeefdtd.h"
-#include "sync_fields.h"
 #include "sort_particle.h"
 
 #include <assert.h>
-
-#include <math.h>
 
 int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
@@ -2191,50 +2184,52 @@ int call_particle_sort_single(One_Particle_Collection *pthis, int dir, int use_v
   }
 }
 
+/* USENCCL: swap particle data via NCCL */
 int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
-  long num_runtime = (pthis)->num_runtime;
-  One_Particle_Collection *particles = (pthis)->particles;
-  int num_spec = (pthis)->num_spec;
+  long num_runtime = pthis->num_runtime;
+  One_Particle_Collection *particles = pthis->particles;
+  int num_spec = pthis->num_spec;
 
   {
-    long xyzx;
-    for (xyzx = 0; xyzx < num_spec; xyzx++) {
-      One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
-      int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[xyzx];
-      int ptlen = (((ptype & 2)) ? (8) : (6));
+    for (long xyzx = 0; xyzx < num_spec; xyzx++) {
+      One_Particle_Collection *particle_spec_1 = &particles[xyzx * num_runtime];
+      int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[xyzx];
+      int ptlen = ((ptype & 2) ? 8 : 6);
       long i, j;
 
-      if (!((mask == 0) || (ptype & mask))) continue;
+      if (!(mask == 0 || ptype & mask)) continue;
 
       /* Phase 0: D2H cu_xyzw for host-side metadata reads */
       for (i = 0; i < num_runtime; i++) {
-        cudaSetDevice(((particle_spec_1 + i)->pfield)->cuda_device);
-        cuda_pscmc_mem_sync_d2h(((particle_spec_1 + i)->cu_xyzw));
+        cudaSetDevice(particle_spec_1[i].pfield->cuda_device);
+        cuda_pscmc_mem_sync_d2h(particle_spec_1[i].cu_xyzw);
       }
 
       /* ---- Phase 1: exchange cu_xyzw rows via NCCL ---- */
       /* Step 1a: collect and post sends in (peer, left_id) order */
       ncclGroupStart();
-      for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+      for (i = 0; i < num_runtime; i++) 
+      {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        int *xyzw_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->d_data);
+        int *xyzw_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->d_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
 
         /* collect eligible sends: gate=-1, cross-process, cross-rank */
         long send_count = 0;
-        for (j = 0; j < numvec; j++) {
+        for (j = 0; j < numvec; j++) 
+        {
           long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
           if (send_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 0;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2243,7 +2238,8 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
         }
 
         /* simple selection-sort by (peer, left_id) and post */
-        for (long pass = 0; pass < send_count; pass++) {
+        for (long pass = 0; pass < send_count; pass++) 
+        {
           long best_j = -1;
           long best_peer = -1, best_left_id = -1;
           for (j = 0; j < numvec; j++) {
@@ -2252,7 +2248,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             if (send_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 0;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2279,12 +2275,12 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
       /* Step 1b: collect and post recvs in (peer, cur_id) order */
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        int *len_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->d_data);
+        int *len_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->d_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2295,7 +2291,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
           if (recv_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 2;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2311,7 +2307,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             if (recv_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 2;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2336,23 +2332,23 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
       }
       ncclGroupEnd();
       for (i = 0; i < num_runtime; i++) {
-        cudaSetDevice(((particle_spec_1 + i)->pfield)->cuda_device);
+        cudaSetDevice(particle_spec_1[i].pfield->cuda_device);
         cudaDeviceSynchronize();
       }
 
       /* ---- Compute frl (from_right_len) from received/swapped rows ---- */
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
-        int *len_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->h_data;
         long *adj_processes = pfield->adj_processes;
         long *adj_local_tid = pfield->adj_local_tid;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
 
         cudaSetDevice(pfield->cuda_device);
-        cuda_pscmc_mem_sync_d2h(((particle_spec_1 + i)->swap_len_buf));
+        cuda_pscmc_mem_sync_d2h(particle_spec_1[i].swap_len_buf);
 
         for (j = 0; j < numvec; j++) {
           long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
@@ -2360,7 +2356,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 2;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           long REMOTE_RANK = neighbor_pid / num_runtime;
@@ -2370,7 +2366,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             len_h[4 * numvec + j] = 0;
           } else if (REMOTE_RANK == pthis->cur_rank) {
             long src_runtime = neighbor_pid % num_runtime;
-            int *src_xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_xyzw))->h_data);
+            int *src_xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
             int n = src_xyzw_h[4 * left_local_tid + 2] - src_xyzw_h[4 * left_local_tid + 1];
             len_h[4 * numvec + j] = n;
             int cur_len = xyzw_h[4 * j];
@@ -2384,20 +2380,20 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             assert(((cur_len + n) < beg_to_left));
           }
         }
-        cuda_pscmc_mem_sync_h2d(((particle_spec_1 + i)->swap_len_buf));
+        cuda_pscmc_mem_sync_h2d(particle_spec_1[i].swap_len_buf);
       }
 
       /* ---- Phase 2: exchange particle data via NCCL ---- */
       ncclGroupStart();
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2409,7 +2405,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
           if (send_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 0;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2428,7 +2424,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             if (send_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 0;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2458,16 +2454,16 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
       }
 
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
-        int *len_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->h_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
         long *adj_local_tid = pfield->adj_local_tid;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2478,7 +2474,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
           if (recv_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 2;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2495,7 +2491,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             if (recv_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 2;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2517,16 +2513,16 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
             long src_runtime = best_peer % num_runtime;
             long xyzarr2[3] = {1, 1, 1};
             xyzarr2[dir] = 2;
-            int xyz_idx2 = 0 + 1 * (xyzarr2[0] + 3 * (xyzarr2[1] + 3 * xyzarr2[2]));
+            int xyz_idx2 = xyzarr2[0] + 3 * (xyzarr2[1] + 3 * xyzarr2[2]);
             long left_local_tid = adj_local_tid[best_j * NUM_SYNC_LAYER + xyz_idx2];
-            int *src_xyzw_h2 = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_xyzw))->h_data);
-            double *src_cache_d2 = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_cache))->d_data);
-            int src_dev2 = ((particle_spec_1 + src_runtime)->pfield)->cuda_device;
+            int *src_xyzw_h2 = (int *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            double *src_cache_d2 = (double *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_cache)->d_data;
+            int src_dev2 = particle_spec_1[src_runtime].pfield->cuda_device;
             int src_end2 = src_xyzw_h2[4 * left_local_tid + 2];
             long src_base2 = left_local_tid * cu_cache_length * 6;
-            copy_between_devices(cache_d + base + (long)cur_len * ptlen, dev,
-                                 src_cache_d2 + src_base2 + (long)src_end2 * ptlen, src_dev2,
-                                 sizeof(double) * from_right_len * ptlen);
+            cudaMemcpyPeer(cache_d + base + (long)cur_len * ptlen, dev,
+                           src_cache_d2 + src_base2 + (long)src_end2 * ptlen, src_dev2,
+                           sizeof(double) * from_right_len * ptlen);
           } else {
             ncclRecv(cache_d + base + (long)cur_len * ptlen,
                      (size_t)from_right_len * ptlen,
@@ -2542,19 +2538,19 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
       /* ---- Phase 3: coordinate shift via GPU kernel ---- */
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         int dev = pfield->cuda_device;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
         long xyzlenarr[3] = {pfield->xlen, pfield->ylen, pfield->zlen};
         long XYZLEN = (1 - 0) * xyzlenarr[dir];
 
         cudaSetDevice(dev);
         cudaDeviceSynchronize();
 
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->d_data);
-        int *frl_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->d_data) + 4 * numvec;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->d_data;
+        int *frl_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->d_data + 4 * numvec;
 
         cuda_particle_shift_launch(cache_d, xyzw_d, frl_d, cu_cache_length,
                                    numvec, dir, XYZLEN, ptlen, dev);
@@ -2575,27 +2571,27 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
     long xyzx;
     for (xyzx = 0; xyzx < num_spec; xyzx++) {
       One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
-      int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[xyzx];
-      int ptlen = (((ptype & 2)) ? (8) : (6));
+      int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[xyzx];
+      int ptlen = ((ptype & 2) ? 8 : 6);
       long i, j;
 
-      if (!((mask == 0) || (ptype & mask))) continue;
+      if (!(mask == 0 || ptype & mask)) continue;
 
       /* Phase 0: D2H cu_xyzw */
       for (i = 0; i < num_runtime; i++) {
-        cudaSetDevice(((particle_spec_1 + i)->pfield)->cuda_device);
-        cuda_pscmc_mem_sync_d2h(((particle_spec_1 + i)->cu_xyzw));
+        cudaSetDevice(particle_spec_1[i].pfield->cuda_device);
+        cuda_pscmc_mem_sync_d2h(particle_spec_1[i].cu_xyzw);
       }
 
       /* ---- Phase 1: exchange cu_xyzw rows ---- */
       ncclGroupStart();
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        int *xyzw_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->d_data);
+        int *xyzw_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->d_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2606,7 +2602,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
           if (send_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 2;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2622,7 +2618,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             if (send_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 2;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2645,12 +2641,12 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
       }
 
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        int *len_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->d_data);
+        int *len_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->d_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2661,7 +2657,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
           if (recv_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 0;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2676,7 +2672,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             if (recv_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 0;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2699,23 +2695,23 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
       }
       ncclGroupEnd();
       for (i = 0; i < num_runtime; i++) {
-        cudaSetDevice(((particle_spec_1 + i)->pfield)->cuda_device);
+        cudaSetDevice(particle_spec_1[i].pfield->cuda_device);
         cudaDeviceSynchronize();
       }
 
       /* ---- Compute frl ---- */
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
-        int *len_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->h_data;
         long *adj_processes = pfield->adj_processes;
         long *adj_local_tid = pfield->adj_local_tid;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
 
         cudaSetDevice(pfield->cuda_device);
-        cuda_pscmc_mem_sync_d2h(((particle_spec_1 + i)->swap_len_buf));
+        cuda_pscmc_mem_sync_d2h(particle_spec_1[i].swap_len_buf);
 
         for (j = 0; j < numvec; j++) {
           long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
@@ -2723,7 +2719,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
 
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 0;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           long REMOTE_RANK = neighbor_pid / num_runtime;
@@ -2733,7 +2729,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             len_h[4 * numvec + j] = 0;
           } else if (REMOTE_RANK == pthis->cur_rank) {
             long src_runtime = neighbor_pid % num_runtime;
-            int *src_xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_xyzw))->h_data);
+            int *src_xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
             int n = cu_cache_length - src_xyzw_h[4 * left_local_tid + 3];
             len_h[4 * numvec + j] = n;
             int cur_len = xyzw_h[4 * j];
@@ -2747,20 +2743,20 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             assert(((cur_len + n) < beg_to_left));
           }
         }
-        cuda_pscmc_mem_sync_h2d(((particle_spec_1 + i)->swap_len_buf));
+        cuda_pscmc_mem_sync_h2d(particle_spec_1[i].swap_len_buf);
       }
 
       /* ---- Phase 2: exchange particle data ---- */
       ncclGroupStart();
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2771,7 +2767,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
           if (send_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 2;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2789,7 +2785,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             if (send_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 2;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2817,16 +2813,16 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
       }
 
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->h_data);
-        int *len_h = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->h_data);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->h_data;
         long *adj_ids = pfield->adj_ids;
         long *adj_processes = pfield->adj_processes;
         long *adj_local_tid = pfield->adj_local_tid;
-        long *adjoint_vec_pids_h = (long *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->adjoint_vec_pids))->h_data);
+        long *adjoint_vec_pids_h = (long *)((cuda_pscmc_mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
         int dev = pfield->cuda_device;
 
         cudaSetDevice(dev);
@@ -2837,7 +2833,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
           if (recv_gate != -1) continue;
           long xyzarr[3] = {1, 1, 1};
           xyzarr[dir] = 0;
-          int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
           long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
           long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
           if (neighbor_pid == self_pid) continue;
@@ -2854,7 +2850,7 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             if (recv_gate != -1) continue;
             long xyzarr[3] = {1, 1, 1};
             xyzarr[dir] = 0;
-            int xyz_idx = 0 + 1 * (xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]));
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
             long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
             long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
             if (neighbor_pid == self_pid) continue;
@@ -2878,14 +2874,14 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
             xyzarr2[dir] = 0;
             int xyz_idx2 = 0 + 1 * (xyzarr2[0] + 3 * (xyzarr2[1] + 3 * xyzarr2[2]));
             long left_local_tid = adj_local_tid[best_j * NUM_SYNC_LAYER + xyz_idx2];
-            int *src_xyzw_h2 = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_xyzw))->h_data);
-            double *src_cache_d2 = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + src_runtime)->cu_cache))->d_data);
-            int src_dev2 = ((particle_spec_1 + src_runtime)->pfield)->cuda_device;
+            int *src_xyzw_h2 = (int *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            double *src_cache_d2 = (double *)((cuda_pscmc_mem *)particle_spec_1[src_runtime].cu_cache)->d_data;
+            int src_dev2 = particle_spec_1[src_runtime].pfield->cuda_device;
             int src_beg2 = src_xyzw_h2[4 * left_local_tid + 3];
             long src_base2 = left_local_tid * cu_cache_length * 6;
-            copy_between_devices(cache_d + base + (long)cur_len * ptlen, dev,
-                                 src_cache_d2 + src_base2 + (long)src_beg2 * ptlen, src_dev2,
-                                 sizeof(double) * from_right_len * ptlen);
+            cudaMemcpyPeer(cache_d + base + (long)cur_len * ptlen, dev,
+                           src_cache_d2 + src_base2 + (long)src_beg2 * ptlen, src_dev2,
+                           sizeof(double) * from_right_len * ptlen);
           } else {
             ncclRecv(cache_d + base + (long)cur_len * ptlen,
                      (size_t)from_right_len * ptlen,
@@ -2901,19 +2897,19 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
 
       /* ---- Phase 3: coordinate shift ---- */
       for (i = 0; i < num_runtime; i++) {
-        Field3D_Seq *pfield = ((particle_spec_1 + i)->pfield);
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
         int dev = pfield->cuda_device;
         long numvec = pfield->numvec;
-        long cu_cache_length = ((particle_spec_1 + i)->cu_cache_length);
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
         long xyzlenarr[3] = {pfield->xlen, pfield->ylen, pfield->zlen};
         long XYZLEN = (1 - 2) * xyzlenarr[dir];
 
         cudaSetDevice(dev);
         cudaDeviceSynchronize();
 
-        double *cache_d = (double *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_cache))->d_data);
-        int *xyzw_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->cu_xyzw))->d_data);
-        int *frl_d = (int *)(((cuda_pscmc_mem *)((particle_spec_1 + i)->swap_len_buf))->d_data) + 4 * numvec;
+        double *cache_d = (double *)((cuda_pscmc_mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].cu_xyzw)->d_data;
+        int *frl_d = (int *)((cuda_pscmc_mem *)particle_spec_1[i].swap_len_buf)->d_data + 4 * numvec;
 
         cuda_particle_shift_launch(cache_d, xyzw_d, frl_d, cu_cache_length,
                                    numvec, dir, XYZLEN, ptlen, dev);
@@ -2922,7 +2918,8 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
     }
   }
   return 0;
-}
+} 
+/* USENCCL end */
 int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int mask) {
 
   // defined from class Field3D_MPI

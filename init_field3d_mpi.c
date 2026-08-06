@@ -147,7 +147,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
 
           long numvec = ((pthis->data + i))->numvec;
 
-          cudaSetDevice(pthis->data[i].cuda_device);
+          /* USENCCL */ cudaSetDevice(pthis->data[i].cuda_device); /* USENCCL end */
           alloc_Field3D_Seq((pthis->data + i), 0);
           (((pthis->data + i))->cur_rankx_pscmc = ((tmpdata + i))->cur_rankx_pscmc);
           (((pthis->data + i))->cur_ranky_pscmc = ((tmpdata + i))->cur_ranky_pscmc);
@@ -257,7 +257,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
 
     (((pthis->data + i))->pe = malloc(pelen));
     cuda_pscmc_env_init(((pthis->data + i))->pe, (dev_nums)[i], NULL);
-    pthis->data[i].cuda_device = dev_nums[i];
+    /* USENCCL */ pthis->data[i].cuda_device = dev_nums[i]; /* USENCCL end */
     (((pthis->data + i))->global_pid = ((cur_rank * num_runtime) + i));
     alloc_Field3D_Seq((pthis->data + i), 1);
     pthis->rqst[i] = malloc(sizeof(PS_MPI_Request) * NUM_SYNC_LAYER * pthis->data[i].numvec);

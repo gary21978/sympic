@@ -33,6 +33,7 @@
 
 #include "mpifields.h"
 
+/* USENCCL: cross-device GPU memcpy for intra-rank particle/field exchange */
 void copy_between_devices(double *dst, int dst_dev, const double *src, int src_dev, size_t bytes) {
   if (bytes == 0) {
     return;
@@ -99,6 +100,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   }
   int fieldid;
 
+  /* USENCCL: field exchange via NCCL  */
   ncclGroupStart();
   for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
     if ((fieldid == (NUM_SYNC_LAYER / 2))) {
@@ -235,7 +237,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
       ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));
     }
   }
-  ncclGroupEnd();
+  ncclGroupEnd(); /* USENCCL end */
   for (i = 0; i < num_data; i++) {
     cudaSetDevice(data[i].cuda_device);
     cudaError_t sync_err = cudaDeviceSynchronize();
@@ -289,6 +291,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   }
   int fieldid;
 
+  /* USENCCL: field exchange via NCCL (replaces MPI) */
   ncclGroupStart();
   for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
     if ((fieldid == (NUM_SYNC_LAYER / 2))) {
@@ -425,7 +428,8 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
       ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));
     }
   }
-  ncclGroupEnd();
+  ncclGroupEnd(); 
+  /* USENCCL end */
   for (i = 0; i < num_data; i++) {
     cudaSetDevice(data[i].cuda_device);
     cudaError_t sync_err = cudaDeviceSynchronize();

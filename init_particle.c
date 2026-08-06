@@ -103,7 +103,9 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     ((pthis)->cu_cache = malloc((sizeof(cuda_pscmc_mem))));
     ((pthis)->cu_xyzw = malloc((sizeof(cuda_pscmc_mem))));
     ((pthis)->adjoint_vec_pids = malloc((sizeof(cuda_pscmc_mem))));
-    ((pthis)->swap_len_buf = malloc((sizeof(cuda_pscmc_mem))));
+    /* USENCCL */ 
+    pthis->swap_len_buf = malloc(sizeof(cuda_pscmc_mem));
+    /* USENCCL end */
     // NOTE: Standard CUDA regression uses *_pushJ_vlo path only.
     {
       size_t structlen;
@@ -254,13 +256,12 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
       memset(tmp_h_data, 0, (sizeof(long) * (numvec * 6)));
     }
     {
-      cuda_pscmc_mem_init(pe, (pthis)->swap_len_buf, PS_INT_NUM, (numvec * 5));
-
+      /* USENCCL */
+      cuda_pscmc_mem_init(pe, pthis->swap_len_buf, PS_INT_NUM, numvec * 5);
       char *tmp_h_data;
-
-      cuda_pscmc_get_h_data((pthis)->swap_len_buf, &(tmp_h_data));
-
-      memset(tmp_h_data, 0, (sizeof(int) * (numvec * 5)));
+      cuda_pscmc_get_h_data(pthis->swap_len_buf, &tmp_h_data);
+      memset(tmp_h_data, 0, sizeof(int) * numvec * 5);
+      /* USENCCL end */
     }
     {
 

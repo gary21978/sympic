@@ -89,6 +89,15 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   ((pthis)->adj_ids = malloc((sizeof(long) * (NUM_SYNC_LAYER * numvec))));
   ((pthis)->adj_local_tid = malloc((sizeof(long) * (NUM_SYNC_LAYER * numvec))));
   ((pthis)->adj_processes = malloc((sizeof(long) * (NUM_SYNC_LAYER * numvec))));
+  /* USENCCL local recv cache */
+  pthis->cache_valid = 0;
+  for (int _li = 0; _li < NUM_SYNC_LAYER; _li++) {
+    pthis->local_recv_tid[_li] = NULL;
+    pthis->local_recv_src[_li] = NULL;
+    pthis->local_recv_peer[_li] = NULL;
+    pthis->local_recv_count[_li] = 0;
+  }
+  /* USENCCL end */
   int i;
 
   if (is_init_kernels) {

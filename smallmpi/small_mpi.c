@@ -29,11 +29,6 @@ int PS_MPI_Send(void *buf, int count, PS_MPI_Datatype datatype, int dest, int ta
   return MPI_Send(buf, count, datatype, dest, tag, comm);
 }
 
-int PS_MPI_Isend(void *buf, int count, PS_MPI_Datatype datatype, int dest, int tag, PS_MPI_Comm comm,
-                 PS_MPI_Request *request) {
-  return MPI_Isend(buf, count, datatype, dest, tag, comm, request);
-}
-
 int PS_MPI_Recv(void *buf, int count, PS_MPI_Datatype datatype, int source, int tag, PS_MPI_Comm comm,
                 PS_MPI_Status *status) {
   PS_MPI_Status s0;
@@ -41,12 +36,4 @@ int PS_MPI_Recv(void *buf, int count, PS_MPI_Datatype datatype, int source, int 
     status = &s0;
   }
   return MPI_Recv(buf, count, datatype, source, tag, comm, status);
-}
-
-int PS_MPI_Wait(PS_MPI_Request *request, PS_MPI_Status *status) {
-  PS_MPI_Status s0;
-  if (!status) {
-    status = &s0;
-  }
-  return MPI_Wait(request, status);
 }

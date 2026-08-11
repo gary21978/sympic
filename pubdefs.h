@@ -75,6 +75,14 @@ typedef struct {
 
   long *adj_local_tid;
 
+  /* USENCCL precomputed local recv lists, per layer */
+  long *local_recv_tid[NUM_SYNC_LAYER];       /* destination tid in swap buf */
+  long *local_recv_src[NUM_SYNC_LAYER];       /* source tid (t0id for self, src_tid for peer) */
+  int  *local_recv_peer[NUM_SYNC_LAYER];      /* src_runtime, -1 = self (same device) */
+  long  local_recv_count[NUM_SYNC_LAYER];
+  int   cache_valid;
+  /* USENCCL end */
+
   void *main_data;
 
   double delta_x;

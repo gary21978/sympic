@@ -33,39 +33,46 @@
 
 #include "mpifields.h"
 
-/* USENCCL: cross-device GPU memcpy for intra-rank particle/field exchange */
-void copy_between_devices(double *dst, int dst_dev, const double *src, int src_dev, size_t bytes) {
-  if (bytes == 0) {
-    return;
+/* USENCCL Precompute self/same-rank recv mapping.  
+   adj_ids/adj_processes/adj_local_tid never change after init. */
+static void build_local_recv_cache(Field3D_Seq *data, long num_runtime, long cur_rank) {
+  long numvec = data->numvec;
+  long *adjp = data->adj_processes;
+  long *adjl = data->adj_local_tid;
+  for (int fid = 0; fid < NUM_SYNC_LAYER; fid++) {
+    if (fid == NUM_SYNC_LAYER / 2) continue;
+    int fid1 = NUM_SYNC_LAYER - 1 - fid;
+    long n = 0;
+    for (long tid = 0; tid < numvec; tid++) {
+      long ap = adjp[tid * NUM_SYNC_LAYER + fid1];
+      if (ap == adjp[tid * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)]) n++;
+      else if (ap / num_runtime == cur_rank) n++;
+    }
+    data->local_recv_count[fid] = n;
+    if (n == 0) continue;
+    data->local_recv_tid[fid]  = (long *)malloc(n * sizeof(long));
+    data->local_recv_src[fid]  = (long *)malloc(n * sizeof(long));
+    data->local_recv_peer[fid] = (int  *)malloc(n * sizeof(int));
+    long k = 0;
+    for (long tid = 0; tid < numvec; tid++) {
+      long ap = adjp[tid * NUM_SYNC_LAYER + fid1];
+      long t0 = adjl[tid * NUM_SYNC_LAYER + fid1];
+      if (ap == adjp[tid * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)]) {
+        data->local_recv_tid[fid][k]  = tid;
+        data->local_recv_src[fid][k]  = t0;
+        data->local_recv_peer[fid][k] = -1;
+        k++;
+      } else if (ap / num_runtime == cur_rank) {
+        data->local_recv_tid[fid][k]  = tid;
+        data->local_recv_src[fid][k]  = t0;
+        data->local_recv_peer[fid][k] = (int)(ap % num_runtime);
+        k++;
+      }
+    }
   }
-
-  if (dst_dev == src_dev) {
-    cudaSetDevice(dst_dev);
-    cudaError_t err = cudaMemcpy(dst, src, bytes, cudaMemcpyDeviceToDevice);
-    ERROPT(err, "cudaMemcpyDeviceToDevice failed in overlap copy");
-    return;
-  }
-
-  cudaSetDevice(dst_dev);
-  cudaError_t err = cudaMemcpyPeer(dst, dst_dev, src, src_dev, bytes);
-  if (err == cudaSuccess) {
-    return;
-  }
-
-  cudaGetLastError();
-  void *host_buf = malloc(bytes);
-  assert(host_buf);
-
-  cudaSetDevice(src_dev);
-  err = cudaMemcpy(host_buf, src, bytes, cudaMemcpyDeviceToHost);
-  ERROPT(err, "cudaMemcpyDeviceToHost fallback failed in overlap copy");
-
-  cudaSetDevice(dst_dev);
-  err = cudaMemcpy(dst, host_buf, bytes, cudaMemcpyHostToDevice);
-  ERROPT(err, "cudaMemcpyHostToDevice fallback failed in overlap copy");
-
-  free(host_buf);
+  data->cache_valid = 1;
 }
+/* USENCCL end */
 
 int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
@@ -79,7 +86,11 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   long i = 0;
 
   long num_data = num_runtime;
-
+  /* USENCCL */
+  for (i = 0; i < num_data; i++)
+    if (!data[i].cache_valid)
+      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank);
+  /* USENCCL end */
   size_t all_sync_len[num_data];
   size_t v_offset[num_data];
   for (i = 0; i < num_data; i++) {
@@ -184,26 +195,26 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid1];
 
-      /* self and same-rank recvs (not part of NCCL group ordering) */
-      for (tid = 0; tid < numvec; tid++) {
-        long adj_proc_id = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
-        int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-        if (adj_proc_id == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) {
-          long t0id = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
-          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
-                               data[i].cuda_device,
-                               sync_d_data + (recv_offset)[i] + t0id * sllen,
-                               data[i].cuda_device, sizeof(double) * sllen);
-        } else if (REMOTE_PROC_ID == (pthis)->cur_rank) {
-          long src_runtime = (adj_proc_id % (pthis)->num_runtime);
-          int src_dev = data[src_runtime].cuda_device;
-          cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
-          double *src_sync = (double *)(src_sync_mem->d_data);
-          long src_tid = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
-          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
-                               data[i].cuda_device,
-                               src_sync + (recv_offset)[src_runtime] + (src_tid * sllen),
-                               src_dev, sizeof(double) * sllen);
+      /* self/same-rank recvs: iterate precomputed list */
+      {
+        long *lr_tid  = data[i].local_recv_tid[fieldid];
+        long *lr_src  = data[i].local_recv_src[fieldid];
+        int  *lr_peer = data[i].local_recv_peer[fieldid];
+        long  lr_n    = data[i].local_recv_count[fieldid];
+        for (long k = 0; k < lr_n; k++) {
+          long _t = lr_tid[k], _s = lr_src[k];
+          int  _p = lr_peer[k];
+          if (_p < 0)
+            cudaMemcpy(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + _t * sllen,
+                       sync_d_data + (recv_offset)[i] + _s * sllen,
+                       sizeof(double) * sllen, cudaMemcpyDeviceToDevice);
+          else {
+            cuda_pscmc_mem *sm = (cuda_pscmc_mem *)(data[_p].sync_layer_pscmc[0]);
+            cudaMemcpyPeer(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + _t * sllen,
+                           data[i].cuda_device,
+                           ((double *)(sm->d_data)) + (recv_offset)[_p] + _s * sllen,
+                           data[_p].cuda_device, sizeof(double) * sllen);
+          }
         }
       }
 
@@ -270,7 +281,11 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   long i = 0;
 
   long num_data = num_runtime;
-
+  /* USENCCL */
+  for (i = 0; i < num_data; i++)
+    if (!data[i].cache_valid)
+      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank);
+  /* USENCCL end */
   size_t all_sync_len[num_data];
   size_t v_offset[num_data];
   for (i = 0; i < num_data; i++) {
@@ -375,26 +390,26 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
       long sllen = (sync_layer_len)[fieldid1];
 
-      /* self and same-rank recvs (not part of NCCL group ordering) */
-      for (tid = 0; tid < numvec; tid++) {
-        long adj_proc_id = (adj_processes)[(tid * NUM_SYNC_LAYER) + fieldid1];
-        int REMOTE_PROC_ID = (adj_proc_id / (pthis)->num_runtime);
-        if (adj_proc_id == (adj_processes)[(tid * NUM_SYNC_LAYER) + (NUM_SYNC_LAYER / 2)]) {
-          long t0id = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
-          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
-                               data[i].cuda_device,
-                               sync_d_data + (recv_offset)[i] + t0id * sllen,
-                               data[i].cuda_device, sizeof(double) * sllen);
-        } else if (REMOTE_PROC_ID == (pthis)->cur_rank) {
-          long src_runtime = (adj_proc_id % (pthis)->num_runtime);
-          int src_dev = data[src_runtime].cuda_device;
-          cuda_pscmc_mem *src_sync_mem = (cuda_pscmc_mem *)(((data + src_runtime)->sync_layer_pscmc)[0]);
-          double *src_sync = (double *)(src_sync_mem->d_data);
-          long src_tid = (adj_local_tid)[(tid * NUM_SYNC_LAYER) + fieldid1];
-          copy_between_devices(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + tid * sllen,
-                               data[i].cuda_device,
-                               src_sync + (recv_offset)[src_runtime] + (src_tid * sllen),
-                               src_dev, sizeof(double) * sllen);
+      /* self/same-rank recvs: iterate precomputed list */
+      {
+        long *lr_tid  = data[i].local_recv_tid[fieldid];
+        long *lr_src  = data[i].local_recv_src[fieldid];
+        int  *lr_peer = data[i].local_recv_peer[fieldid];
+        long  lr_n    = data[i].local_recv_count[fieldid];
+        for (long k = 0; k < lr_n; k++) {
+          long _t = lr_tid[k], _s = lr_src[k];
+          int  _p = lr_peer[k];
+          if (_p < 0)
+            cudaMemcpy(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + _t * sllen,
+                       sync_d_data + (recv_offset)[i] + _s * sllen,
+                       sizeof(double) * sllen, cudaMemcpyDeviceToDevice);
+          else {
+            cuda_pscmc_mem *sm = (cuda_pscmc_mem *)(data[_p].sync_layer_pscmc[0]);
+            cudaMemcpyPeer(swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + _t * sllen,
+                           data[i].cuda_device,
+                           ((double *)(sm->d_data)) + (recv_offset)[_p] + _s * sllen,
+                           data[_p].cuda_device, sizeof(double) * sllen);
+          }
         }
       }
 

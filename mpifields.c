@@ -32,6 +32,7 @@
 
 #include "sync_fields.h"
 
+
 int set_Field3D_Seq(Field3D_Seq *pthis, void *pe, double delta_x, double delta_y, double delta_z, long xlen, long ylen,
                     long zlen, long numvec, int ovlp, int num_ele, int CD_type, long x_num_thread_block,
                     long y_num_thread_block, long z_num_thread_block, long global_pid) {
@@ -95,7 +96,13 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->local_recv_tid[_li] = NULL;
     pthis->local_recv_src[_li] = NULL;
     pthis->local_recv_peer[_li] = NULL;
+    pthis->local_recv_tid_d[_li] = NULL;
+    pthis->local_recv_src_d[_li] = NULL;
     pthis->local_recv_count[_li] = 0;
+    pthis->remote_send_tid[_li] = NULL;
+    pthis->remote_send_count[_li] = 0;
+    pthis->remote_recv_tid[_li] = NULL;
+    pthis->remote_recv_count[_li] = 0;
   }
   /* USENCCL end */
   int i;
@@ -997,6 +1004,7 @@ int MPI_YEE_CURL_R(Field3D_MPI *pthis, Field3D_MPI *inB0, double DT) {
 
   sync_ovlp_mpi_field(inB0);
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice((data + i)->cuda_device);
     Field3D_Seq_YEE_CURL_R((data + i), ((inB0)->data + i), DT);
   }
   return 0;
@@ -1026,6 +1034,7 @@ int MPI_GEO_YEE_CURL_L(Field3D_MPI *pthis, Field3D_MPI *inB0, double x0, double 
 
   sync_ovlp_mpi_field(inB0);
   for (i = 0; (i < num_runtime); i++) {
+    cudaSetDevice((data + i)->cuda_device);
     Field3D_Seq_GEO_YEE_CURL_L((data + i), ((inB0)->data + i), x0, DELTA_X, DELTA_Y, DELTA_Z, DT);
   }
   return 0;

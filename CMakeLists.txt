@@ -33,7 +33,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g -ffast-math -ffunction-sections")
 
 # CUDA 文件
 set(CMAKE_CUDA_ARCHITECTURES 86)
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -O3")
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -O3 --default-stream per-thread")
 if(CUDA_SOURCE_PROFILE)
     set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo")
 endif()
@@ -81,6 +81,7 @@ set(HOST_SOURCES
     sync_fields.c
     mpi_fieldio.c
     seqfields.c
+    local_halo_copy.cu
     main.c
     cfgcst.c
 )

@@ -1,37 +1,46 @@
 #!/bin/bash
 # run.sh — 准备测试环境、运行 sympic 算例，并生成 test_npy/
 # 用法:
-#     bash run.sh <case_directory>
+#   bash run.sh <case_directory> [cuda|nvscale]
 # 例如:
-#     bash run.sh case/template_cuda
-#     bash run.sh /absolute/path/to/case
-
-
-_ORIGINAL_ARGS=("$@")
-set --
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source ${SCRIPT_DIR}/scripts/env.sh
-source ${VM_DRIVER_DIR}/maps-umd/setup_env.sh
-
-export MALOG_STDOUT_LEVEL="error"
-export MALOG_SIMPLE_FILE_LEVEL="error"
-export MALOG_LEVEL="error"
-export MAPS_API_LOG_ALWAYS=0
-
-set -- "${_ORIGINAL_ARGS[@]}"
-unset _ORIGINAL_ARGS
+#   bash run.sh case/demo-8          # 使用 build/bin 的 CUDA 版本
+#   bash run.sh case/demo-8 nvscale  # 使用 build-nvscale/bin 的 NVScale 版本
+# 输出:
+#   cuda    版本 -> build/test/test_npy/
+#   nvscale 版本 -> build-nvscale/test/test_npy/
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="${SCRIPT_DIR}/build"
-TEST_DIR="${BUILD_DIR}/test"
 
 # 算例目录为必填参数
 if [ "$#" -lt 1 ]; then
     echo "[fatal] missing case directory argument"
-    echo "usage: bash $0 <case_directory>"
+    echo "usage: bash $0 <case_directory> [cuda|nvscale]"
+    exit 1
+fi
+
+# 后端选择: cuda(默认) / nvscale
+BACKEND="${2:-cuda}"
+case "${BACKEND}" in
+    cuda)
+        BUILD_DIR="${SCRIPT_DIR}/build"
+        ;;
+    nvscale)
+        BUILD_DIR="${SCRIPT_DIR}/build-nvscale"
+        ;;
+    *)
+        echo "[fatal] unknown backend: ${BACKEND}"
+        echo "usage: bash $0 <case_directory> [cuda|nvscale]"
+        exit 1
+        ;;
+esac
+TEST_DIR="${BUILD_DIR}/test"
+
+# 检查后端可执行文件是否已编译
+if [ ! -x "${BUILD_DIR}/bin/sympic" ] || [ ! -x "${BUILD_DIR}/bin/gapsio2to0" ]; then
+    echo "[fatal] ${BACKEND} 版本尚未编译: ${BUILD_DIR}/bin/"
+    echo "请先执行: bash ${SCRIPT_DIR}/build.sh ${BACKEND}"
     exit 1
 fi
 
@@ -52,6 +61,7 @@ if [ ! -f "${CASE_DIR_ABS}/test.ss" ]; then
     exit 1
 fi
 
+echo "=== 后端: ${BACKEND} ==="
 echo "=== 使用算例目录: ${CASE_DIR_ABS} ==="
 echo ""
 echo "=== 1. 创建并清空测试目录 ==="
@@ -79,8 +89,6 @@ ln -sf "${SCRIPT_DIR}/src/stdlib.scm"    "${TEST_DIR}/stdlib.scm"
 echo "=== 5. 链接 pygapsio3.py ==="
 ln -sf "${SCRIPT_DIR}/src/cgapsio/pygapsio3.py" "${TEST_DIR}/pygapsio3.py"
 
-
-
 echo ""
 echo "=== 测试环境准备完成，开始运行测试 ==="
 echo "目录: ${TEST_DIR}"
@@ -90,7 +98,7 @@ cd "${TEST_DIR}"
 echo "--- 运行 sympic ---"
 export STDLIB="${TEST_DIR}/stdlib.scm"
 export OMP_NUM_THREADS=1
-mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/sympic" test.ss 
+mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/sympic" test.ss
 
 echo ""
 echo "--- 合并 GAPSIO 分片 ---"
@@ -105,11 +113,11 @@ done
 
 echo ""
 echo "--- 转换为 .npy ---"
-rm -f "${TEST_DIR}/test_npy"
+rm -rf "${TEST_DIR}/test_npy"
 mkdir -p "${TEST_DIR}/test_npy"
 python3 "${SCRIPT_DIR}/scripts/gapsio_to_npy.py" --work-dir "${TEST_DIR}" --out-dir "${TEST_DIR}/test_npy"
 
 echo ""
-echo "=== 算例运行结束 ==="
+echo "=== 算例运行结束 (${BACKEND}) ==="
 echo "输出分片目录: ${TEST_DIR}"
 echo "转换后的 .npy 目录: ${TEST_DIR}/test_npy"

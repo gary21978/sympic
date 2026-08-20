@@ -1,0 +1,90 @@
+/*
+ * NVScale Compatibility Shim
+ * --------------------------
+ * This is NOT an official SmartLogic SCALE header.
+ * It maps a subset of SCALE/MAPS/Aurora APIs to NVIDIA CUDA for local
+ * compilation and functional bring-up.
+ */
+#pragma once
+
+#include <cuda_runtime.h>
+#include <stddef.h>
+#include <string.h>
+
+namespace scale {
+enum thread_scope {
+  thread_scope_thread,
+  thread_scope_block,
+  thread_scope_device,
+  thread_scope_system
+};
+
+enum barrier_type {
+  sync_read_write,
+  sync_read,
+  sync_write,
+  sync_none
+};
+
+enum async_contract_fulfillment {
+  none,
+  async
+};
+
+template <size_t Alignment>
+struct aligned_size_t {
+  __device__ __host__ explicit aligned_size_t(size_t size) : value(size) {}
+  size_t value;
+};
+
+struct dma_config {
+  int granularity;
+  int warp_size;
+  int src_stride;
+  int dst_stride;
+  int rows;
+  int cols;
+};
+
+struct __empty_completion {
+  __device__ void operator()() noexcept {}
+};
+
+template <thread_scope Scope, class Completion = __empty_completion,
+          bool NeedSwitch = true, barrier_type Type = sync_read_write,
+          bool SyncMPU = true>
+struct barrier {
+  using arrival_token = unsigned;
+
+  __device__ barrier() = default;
+  __device__ explicit barrier(unsigned) {}
+  __device__ barrier(unsigned, Completion completion) : completion_(completion) {}
+
+  __device__ arrival_token arrive() {
+    __syncthreads();
+    return 0;
+  }
+  __device__ void wait(arrival_token &&) { __syncthreads(); }
+  __device__ void arrive_and_wait() { __syncthreads(); }
+
+  Completion completion_;
+};
+} // namespace scale
+
+template <typename Barrier>
+__device__ static inline void init(Barrier *, unsigned int) {
+  __syncthreads();
+}
+
+template <typename Barrier, typename Completion>
+__device__ static inline void init(Barrier *, unsigned int, Completion) {
+  __syncthreads();
+}
+
+template <typename Group, typename Barrier, size_t Alignment>
+__device__ static inline scale::async_contract_fulfillment memcpy_async(
+    Group, void *dst, const void *src, scale::aligned_size_t<Alignment> bytes,
+    Barrier &) {
+  memcpy(dst, src, bytes.value);
+  return scale::async;
+}

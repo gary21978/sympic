@@ -1,0 +1,16 @@
+#include "pubdefs.h"
+
+long find_vec_id(long id, long *adj_ids, long numvec);
+int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Mass, double Charge,
+                  double Number_particle_per_marker, long grid_cache_len, long cu_cache_length);
+int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Charge,
+                      double *Number_particle_per_marker, long *grid_cache_len, long *cu_cache_length);
+int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, int cur_sp, double VT, double vmax,
+                              int ptlen);
+int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax);
+void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D_MPI *fE2x, Field3D_MPI *fEN,
+                           int use_small_num_grids, int pml_abc_dir, int pml_level, double pml_sigma_max, double deltat,
+                           int num_spec, long *allxyzmax, double *massp, double *chargep, double *npm,
+                           long *grid_cache_len, long *cu_cache_len, int *particle_types, int reduce_dim,
+                           double r_x_rat, double r_y_rat, double r_z_rat, double random_rate, int use_vlo_o,
+                           int use_rel_ncr1);

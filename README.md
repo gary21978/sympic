@@ -9,11 +9,11 @@
 ## 1. 一键编译
 
 ```sh
-bash build.sh            # 全部编译: CUDA -> build/, NVScale -> build-nvscale/
-bash build.sh cuda       # 只编译 CUDA 版本
-bash build.sh nvscale    # 只编译 NVScale 版本
-bash build.sh --arch 89  # 指定 CUDA 架构 (默认 86)
-bash build.sh --clean    # 编译前清空构建目录
+./build.sh            # 全部编译: CUDA -> build/, NVScale -> build-nvscale/
+./build.sh cuda       # 只编译 CUDA 版本
+./build.sh nvscale    # 只编译 NVScale 版本
+./build.sh --arch 89  # 指定 CUDA 架构 (默认 86)
+./build.sh --clean    # 编译前清空构建目录
 ```
 
 产物：`build/bin/sympic`、`build/bin/gapsio2to0`、
@@ -24,8 +24,8 @@ bash build.sh --clean    # 编译前清空构建目录
 ## 2. 运行算例
 
 ```sh
-bash ./run.sh case/demo-8           # 用 CUDA 版本运行, 结果在 build/test/test_npy/
-bash ./run.sh case/demo-8 nvscale   # 用 NVScale 版本运行, 结果在 build-nvscale/test/test_npy/
+./run.sh case/demo-8           # 用 CUDA 版本运行, 结果在 build/test/test_npy/
+./run.sh case/demo-8 nvscale   # 用 NVScale 版本运行, 结果在 build-nvscale/test/test_npy/
 ```
 
 `run.sh` 把算例输入链接到 `<build>/test/`，链接 `sympic`、`gapsio2to0`、
@@ -35,10 +35,10 @@ bash ./run.sh case/demo-8 nvscale   # 用 NVScale 版本运行, 结果在 build-
 ## 3. 一键比较结果
 
 ```sh
-bash ./compare.sh case/demo-8                 # 两个后端都运行: 互相对比, 再与 result_npy 对比
-bash ./compare.sh case/demo-8 cuda            # 只运行 cuda, 与 result_npy 对比
-bash ./compare.sh case/demo-8 nvscale         # 只运行 nvscale, 与 result_npy 对比
-bash ./compare.sh case/demo-8 both --no-run   # 不重新运行, 直接比较已有的 test_npy
+./compare.sh case/demo-8                 # 两个后端都运行: 互相对比, 再与 result_npy 对比
+./compare.sh case/demo-8 cuda            # 只运行 cuda, 与 result_npy 对比
+./compare.sh case/demo-8 nvscale         # 只运行 nvscale, 与 result_npy 对比
+./compare.sh case/demo-8 both --no-run   # 不重新运行, 直接比较已有的 test_npy
 ```
 
 比较内容：
@@ -70,6 +70,13 @@ python3 scripts/gapsio_to_npy.py \
 
 如果 case 目录中没有参考结果，可把某次生成的 `test_npy/` 改名为
 `result_npy/` 放进对应 case 目录，之后 `compare.sh` 就会自动做参考对比。
+
+## 6. 回归测试方案
+
+每次改完代码后，运行
+```sh
+./build.sh nvscale && ./compare.sh case/demo-8 nvscale
+```
 
 ## 附：原生 SCALE/MPU 后端
 

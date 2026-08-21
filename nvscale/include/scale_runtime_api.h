@@ -24,6 +24,16 @@ typedef enum cudaMemcpyKind scaleMemcpyKind;
 static inline scaleError_t scaleSetDevice(int device) {
   return cudaSetDevice(device);
 }
+static inline scaleError_t scaleGetDevice(int *device) {
+  return cudaGetDevice(device);
+}
+static inline scaleError_t scaleGetDeviceCount(int *count) {
+  return cudaGetDeviceCount(count);
+}
+static inline scaleError_t scaleDeviceSynchronize(void) {
+  return cudaDeviceSynchronize();
+}
+static inline scaleError_t scaleDeviceReset(void) { return cudaDeviceReset(); }
 static inline scaleError_t scaleStreamCreate(scaleStream_t *stream) {
   return cudaStreamCreate(stream);
 }
@@ -54,6 +64,12 @@ static inline scaleError_t scaleMalloc(void **ptr, size_t size) {
   return cudaMalloc(ptr, size);
 }
 static inline scaleError_t scaleFree(void *ptr) { return cudaFree(ptr); }
+static inline scaleError_t scaleHostMalloc(void **ptr, size_t size) {
+  return cudaMallocHost(ptr, size);
+}
+static inline scaleError_t scaleFreeHost(void *ptr) {
+  return cudaFreeHost(ptr);
+}
 static inline scaleError_t scaleMemcpy(void *dst, const void *src, size_t count,
                                        enum cudaMemcpyKind kind) {
   return cudaMemcpy(dst, src, count, kind);
@@ -63,4 +79,17 @@ static inline scaleError_t scaleMemcpyAsync(void *dst, const void *src,
                                             enum cudaMemcpyKind kind,
                                             scaleStream_t stream) {
   return cudaMemcpyAsync(dst, src, count, kind, stream);
+}
+static inline scaleError_t scaleMemset(void *dst, int value, size_t count) {
+  return cudaMemset(dst, value, count);
+}
+static inline scaleError_t scaleMemsetAsync(void *dst, int value, size_t count,
+                                            scaleStream_t stream = 0) {
+  return cudaMemsetAsync(dst, value, count, stream);
+}
+static inline const char *scaleGetErrorString(scaleError_t error) {
+  return cudaGetErrorString(error);
+}
+static inline scaleError_t scaleGetLastError(void) {
+  return cudaGetLastError();
 }

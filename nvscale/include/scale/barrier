@@ -10,6 +10,7 @@
 #include <cuda_runtime.h>
 #include <stddef.h>
 #include <string.h>
+#include "scale.h"
 
 namespace scale {
 enum thread_scope {
@@ -34,6 +35,8 @@ enum async_contract_fulfillment {
 template <size_t Alignment>
 struct aligned_size_t {
   __device__ __host__ explicit aligned_size_t(size_t size) : value(size) {}
+  __device__ __host__ operator size_t() const { return value; }
+  static constexpr size_t align = Alignment;
   size_t value;
 };
 
@@ -60,31 +63,53 @@ struct barrier {
   __device__ explicit barrier(unsigned) {}
   __device__ barrier(unsigned, Completion completion) : completion_(completion) {}
 
-  __device__ arrival_token arrive() {
-    __syncthreads();
-    return 0;
-  }
-  __device__ void wait(arrival_token &&) { __syncthreads(); }
-  __device__ void arrive_and_wait() { __syncthreads(); }
+  __device__ arrival_token arrive() { return 0; }
+  __device__ void wait(arrival_token &&) { wait_impl(); }
+  __device__ void arrive_and_wait() { wait_impl(); }
 
   Completion completion_;
+
+private:
+  __device__ void wait_impl() {
+    if (Scope == thread_scope_block) {
+      __syncthreads();
+    } else if (SyncMPU) {
+      __threadfence_block();
+    }
+  }
 };
 } // namespace scale
 
 template <typename Barrier>
-__device__ static inline void init(Barrier *, unsigned int) {
-  __syncthreads();
-}
+__device__ static inline void init(Barrier *, unsigned int) {}
 
 template <typename Barrier, typename Completion>
-__device__ static inline void init(Barrier *, unsigned int, Completion) {
-  __syncthreads();
+__device__ static inline void init(Barrier *, unsigned int, Completion) {}
+
+template <typename Size>
+__device__ static inline size_t nvscale_copy_size(Size bytes) {
+  return (size_t)bytes;
 }
 
-template <typename Group, typename Barrier, size_t Alignment>
+template <typename Group, typename Destination, typename Source, typename Size,
+          typename Barrier>
 __device__ static inline scale::async_contract_fulfillment memcpy_async(
-    Group, void *dst, const void *src, scale::aligned_size_t<Alignment> bytes,
-    Barrier &) {
-  memcpy(dst, src, bytes.value);
+    const Group &, Destination *dst, const Source *src, Size bytes, Barrier &,
+    const scale::dma_config & = scale::dma_config{12, 15, 4096, 4096, 1, 4096},
+    const scale::dma_config & = scale::dma_config{12, 15, 4096, 4096, 1, 4096}) {
+  memcpy((void *)dst, (const void *)src, nvscale_copy_size(bytes));
   return scale::async;
+}
+
+template <typename Destination, typename Source, typename Size,
+          typename Barrier>
+__device__ static inline scale::async_contract_fulfillment memcpy_async(
+    Destination *dst, const Source *src, Size bytes, Barrier &barrier,
+    const scale::dma_config &dst_config =
+        scale::dma_config{12, 15, 4096, 4096, 1, 4096},
+    const scale::dma_config &src_config =
+        scale::dma_config{12, 15, 4096, 4096, 1, 4096}) {
+  struct nvscale_single_thread_group {};
+  return memcpy_async(nvscale_single_thread_group{}, dst, src, bytes, barrier,
+                      dst_config, src_config);
 }

@@ -18,6 +18,8 @@
 
 #include "init_particle.h"
 
+#include "init_particle_gpu.h"
+
 #include "seqfields.h"
 
 #include "sync_fields.h"
@@ -49,6 +51,12 @@ void user_defined_particle_distribution(double *xyzvx, long xyzx, long xyzy, lon
 #include "cuda_yeefdtd.h"
 
 extern long srand_seed;
+
+static int init_particle_gpu_fast_enabled(void) {
+  const char *env = getenv("SYMPIC_INIT_PARTICLE_GPU_FAST");
+  return env && strcmp(env, "0") != 0 && strcmp(env, "false") != 0 && strcmp(env, "FALSE") != 0;
+}
+
 long find_vec_id(long id, long *adj_ids, long numvec) {
   long num_id_min = (adj_ids)[(NUM_SYNC_LAYER / 2)];
 
@@ -391,6 +399,45 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
 
   //====================One_Particle_Collection
+  if (init_particle_gpu_fast_enabled()) {
+    if (ptlen != 6) {
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped for ptlen=%d\n", ptlen);
+    } else if (tgrid_load > (pthis)->grid_cache_len) {
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped, grid_load=%d grid_cache_len=%ld\n",
+              tgrid_load, (pthis)->grid_cache_len);
+    } else {
+      cuda_pscmc_mem *inoutput_mem = (cuda_pscmc_mem *)inoutput;
+      cuda_pscmc_mem *xyzw_mem = (cuda_pscmc_mem *)xyzw;
+      cuda_pscmc_mem *cu_xyzw_mem = (cuda_pscmc_mem *)cu_xyzw;
+      double vx0 = 0;
+      double vy0 = 0;
+      double vz0 = 0;
+      double tempx = 1;
+      double tempy = 1;
+      double tempz = 1;
+      if (USE_INIT_V0) {
+        vx0 = call_GET_INIT_V0_x(cur_sp, 0.5, 0.5, 0.5);
+        vy0 = call_GET_INIT_V0_y(cur_sp, 0.5, 0.5, 0.5);
+        vz0 = call_GET_INIT_V0_z(cur_sp, 0.5, 0.5, 0.5);
+      }
+      if (USE_NON_UNI_TEMPERATURE) {
+        tempx = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 0);
+        tempy = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 1);
+        tempz = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 2);
+      }
+      unsigned long long seed = ((unsigned long long)(srand_seed ? srand_seed : 1) << 32) ^
+                                (unsigned long long)(cur_sp + 1);
+      fprintf(stderr,
+              "info init_non_uni_particle_opc: GPU fast path enabled spec=%d grid_load=%d "
+              "assume uniform density/temp/v0\n",
+              cur_sp, tgrid_load);
+      launch_init_non_uni_particle_gpu((double *)inoutput_mem->d_data, (int *)xyzw_mem->d_data,
+                                       (int *)cu_xyzw_mem->d_data, pfield->xlen, pfield->ylen, pfield->zlen,
+                                       pfield->numvec, (pthis)->grid_cache_len, tgrid_load, ptlen, VT, vmax, vx0, vy0,
+                                       vz0, tempx, tempy, tempz, seed, ((cuda_pscmc_env *)pfield->pe)->device_id);
+      return 0;
+    }
+  }
   {
 
     // defined from class One_Particle_Collection

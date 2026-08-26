@@ -73,6 +73,7 @@ set(HOST_SOURCES
     init_field3d_mpi.c
     genrand.c
     init_particle.c
+    init_particle_gpu.cu
     sort_particle.c
     run_particle.c
     run_particle_call_fun.c

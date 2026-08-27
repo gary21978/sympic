@@ -42,6 +42,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 find_package(MPI REQUIRED)
 if(SYMPIC_CUDA)
     find_package(CUDAToolkit REQUIRED)
+    find_library(NCCL_LIBRARY NAMES nccl REQUIRED)
 
     # ============================================================
     # 3. CUDA 相关选项与默认值
@@ -55,13 +56,15 @@ elseif(SYMPIC_MAPU)
     # 填写scale编程需要的环境
     set(USE_SCALE_EXT_0001 ON)
     if(DEFINED ENV{TOOLCHAIN_DIR})
-    set(SCALE_TOOLCHAIN_PATH $ENV{TOOLCHAIN_DIR})
+        set(SCALE_TOOLCHAIN_PATH $ENV{TOOLCHAIN_DIR})
     elseif(DEFINED ENV{SCALE_TOOLCHAIN_ROOT})
         message("SCALE_TOOLCHAIN_ROOT is defined ${SCALE_TOOLCHAIN_ROOT}")
-    set(SCALE_TOOLCHAIN_PATH $ENV{SCALE_TOOLCHAIN_ROOT})
+        set(SCALE_TOOLCHAIN_PATH $ENV{SCALE_TOOLCHAIN_ROOT})
+    elseif(DEFINED ENV{MAPU_ROOT})
+        set(SCALE_TOOLCHAIN_PATH "$ENV{MAPU_ROOT}/toolchain")
     else()
-        message(FATAL_ERROR "Scale toolchain is not set, please set ENV VAR \"TOOLCHAIN_DIR\" or \"SCALE_TOOLCHAIN_ROOT\" to the directory of \"toolchain\"")
-    return()
+        message(FATAL_ERROR "Scale toolchain is not set, please set ENV VAR \"TOOLCHAIN_DIR\", \"SCALE_TOOLCHAIN_ROOT\", or \"MAPU_ROOT\"")
+        return()
     endif()
 
     # The scale cmake module path must be appended before enabling scale language
@@ -74,6 +77,20 @@ elseif(SYMPIC_MAPU)
     set(USE_MAPS_UMD ON)
     include(scale_config)
     enable_language(SCALE)
+
+    set(MACCL_ROOT "$ENV{MACCL_ROOT}" CACHE PATH
+        "MACCL installation prefix (must contain include/maccl.h and lib/libmaccl.so)")
+    find_path(MACCL_INCLUDE_DIR maccl.h
+        HINTS
+            "${MACCL_ROOT}/include"
+            "${SCALE_TOOLCHAIN_PATH}/include/maccl_include"
+        REQUIRED)
+    find_library(MACCL_LIBRARY NAMES maccl
+        HINTS
+            "${MACCL_ROOT}/lib"
+            "${SCALE_TOOLCHAIN_PATH}/lib"
+            "${SCALE_TOOLCHAIN_PATH}/../demo/build/lib"
+        REQUIRED)
 endif()
 
 # ============================================================
@@ -104,7 +121,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--gc-sections")
 # 5. 后端宏与库名（传递给 src/CMakeLists.txt）
 # ============================================================
 if(SYMPIC_CUDA)
-    add_compile_definitions(SYMPIC_CUDA)
+    add_compile_definitions(SYMPIC_CUDA SYMPIC_USE_NCCL)
     set(SYMPIC_BACKEND_LIB cuda_yeefdtd)
     set(SYMPIC_BACKEND_DIR cuda_)
 elseif(SYMPIC_MAPU)

@@ -61,3 +61,27 @@ DEFINE_CUDA_DUMP_ENE_NUM_KERNEL(cuda_dump_ene_num)
 
 #undef DEFINE_CUDA_DUMP_ENE_NUM_KERNEL
 #undef CUDA_DUMP_ENE_NUM_ARGS
+/* Device-side coordinate fixup after particle payload exchange. */
+__global__ static void sympic_particle_shift_kernel(
+    double *cu_cache, int *cu_xyzw, const int *frl,
+    long cu_cache_length, int dir, long xyz_len, int ptlen) {
+  long j = blockIdx.x;
+  int cur_len = cu_xyzw[4 * j];
+  int n = frl[j];
+  if (n <= 0) return;
+  long base = j * cu_cache_length * 6;
+  for (int i = threadIdx.x; i < n; i += blockDim.x)
+    cu_cache[base + (cur_len + i) * ptlen + dir] += xyz_len;
+  if (threadIdx.x == 0) cu_xyzw[4 * j] = cur_len + n;
+}
+
+extern "C" int cuda_particle_shift_launch(
+    double *cu_cache, int *cu_xyzw, const int *frl,
+    long cu_cache_length, long numvec, int dir, long xyz_len,
+    int ptlen, int device_id) {
+  cudaError_t err = cudaSetDevice(device_id);
+  if (err != cudaSuccess) return 1;
+  sympic_particle_shift_kernel<<<numvec, 256>>>(
+      cu_cache, cu_xyzw, frl, cu_cache_length, dir, xyz_len, ptlen);
+  return cudaGetLastError() == cudaSuccess ? 0 : 2;
+}

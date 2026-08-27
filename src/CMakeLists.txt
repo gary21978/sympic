@@ -32,20 +32,22 @@ set(SYMPIC_LINK_LIBS
     MPI::MPI_C
 )
 if(SYMPIC_CUDA)
-    list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver)
+    list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver ${NCCL_LIBRARY})
 elseif(SYMPIC_MAPU)
-    target_include_directories(sympic PRIVATE ${SCALE_TOOLCHAIN_PATH}/../maps-umd/include)
+    target_include_directories(sympic PRIVATE
+        ${SCALE_TOOLCHAIN_PATH}/../maps-umd/include
+        ${SCALE_TOOLCHAIN_PATH}/include/maps_include
+        ${MACCL_INCLUDE_DIR}
+    )
 
     list(APPEND SYMPIC_LINK_LIBS
         ${SCALE_TOOLCHAIN_PATH}/lib/scale/release/libscalehost.so
         ${SCALE_TOOLCHAIN_PATH}/../maps-umd/lib/libmaps.so
+        ${MACCL_LIBRARY}
     )
 
 
 endif()
 
 target_link_libraries(sympic PRIVATE ${SYMPIC_LINK_LIBS})
-
-
-
 

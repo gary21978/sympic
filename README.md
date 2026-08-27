@@ -3,8 +3,9 @@
 本仓库支持两种构建模式：
 
 - CUDA 原生后端：用 nvcc 编译 `src/cuda_`。
-- NVScale 兼容模式：通过本地 `nvscale/` 适配头文件，把 `src/mapu_` 代码
-  编译成 CUDA，在 NVIDIA GPU 上做功能验证，无需修改源码。
+- NVScale 兼容模式：通过 `NVSCALE_ROOT` 或 `MAPU_ROOT` 指定兼容层；
+  若未设置则使用仓库内 `nvscale/`。该模式把 `src/mapu_` 代码编译成 CUDA，
+  在 NVIDIA GPU 上做功能验证，无需修改源码。
 
 ## 1. 一键编译
 
@@ -20,6 +21,13 @@
 `build-nvscale/bin/sympic`、`build-nvscale/bin/gapsio2to0`。
 
 `build.sh` 默认复用已有构建目录做增量编译；需要全新重编时加 `--clean`。
+
+NVScale 默认会把 `__cluster_dims__` 作为兼容属性编译掉。若需要在
+Hopper/更新 NVIDIA 架构上保留 CUDA thread-block cluster，可显式打开：
+
+```sh
+./build.sh nvscale --arch 90 --cuda-cluster
+```
 
 ## 2. 运行算例
 

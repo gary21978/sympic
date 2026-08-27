@@ -208,7 +208,6 @@ int main(int argc, char **argv) {
       assert(((pV0_z_gid_global_var)->version == 0));
       assert(((pV0_z_gid_global_var)->dim == 4));
       (GET_INIT_V0_z_inner_procedure = V0_z_global_procedure);
-
     }
   }
   {
@@ -223,7 +222,6 @@ int main(int argc, char **argv) {
       assert(((pV0_y_gid_global_var)->version == 0));
       assert(((pV0_y_gid_global_var)->dim == 4));
       (GET_INIT_V0_y_inner_procedure = V0_y_global_procedure);
-
     }
   }
   {
@@ -238,7 +236,6 @@ int main(int argc, char **argv) {
       assert(((pV0_x_gid_global_var)->version == 0));
       assert(((pV0_x_gid_global_var)->dim == 4));
       (GET_INIT_V0_x_inner_procedure = V0_x_global_procedure);
-
     }
   }
   {
@@ -253,7 +250,6 @@ int main(int argc, char **argv) {
       assert(((pDENSITY_DIST_gid_global_var)->version == 0));
       assert(((pDENSITY_DIST_gid_global_var)->dim == 4));
       (GET_INIT_DENSITY_DIST_inner_procedure = DENSITY_DIST_global_procedure);
-
     }
   }
   {
@@ -268,7 +264,6 @@ int main(int argc, char **argv) {
       assert(((pTEMPERATURE_DIST_gid_global_var)->version == 0));
       assert(((pTEMPERATURE_DIST_gid_global_var)->dim == 5));
       (GET_INIT_TEMPERATURE_DIST_inner_procedure = TEMPERATURE_DIST_global_procedure);
-
     }
   }
   int n = NUM_PROCESS;
@@ -276,7 +271,6 @@ int main(int argc, char **argv) {
   if ((NUM_PROCESS == 0)) {
     PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(n));
     (NUM_PROCESS = n);
-
   }
 
   long num_runtime = NUM_RUNTIME;
@@ -298,6 +292,14 @@ int main(int argc, char **argv) {
 
   PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(rank));
   assert((rank < n));
+  /* USENCCL: NCCL unique ID exchange */
+  SymPIC_Device_UniqueId device_comm_id;
+  if (rank == 0)
+  {
+    sympic_comm_get_unique_id(&device_comm_id);
+  }
+  PS_MPI_Bcast(&device_comm_id, sizeof(device_comm_id), PS_MPI_CHAR, 0, PS_MPI_COMM_WORLD);
+  /* USENCCL end */
   double M_USE_TIME_AS_RANDOM_SEED = call_GET_VAR("USE_TIME_AS_RANDOM_SEED");
 
   double M_RAND_SEED = call_GET_VAR("RAND_SEED");
@@ -328,17 +330,14 @@ int main(int argc, char **argv) {
 
   if ((M_DELTA_X == 0)) {
     (M_DELTA_X = 1);
-
   }
 
   if ((M_DELTA_Y == 0)) {
     (M_DELTA_Y = 1);
-
   }
 
   if ((M_DELTA_Z == 0)) {
     (M_DELTA_Z = 1);
-
   }
 
   (srand_seed = (rank + 1));
@@ -389,7 +388,6 @@ int main(int argc, char **argv) {
 
   if ((G_GAPSIO_VERSION < 2)) {
     (G_GAPSIO_NUM_REDUCEWRITE = 0);
-
   }
 
   {
@@ -402,6 +400,29 @@ int main(int argc, char **argv) {
            ((G_USE_DIFFERENT_DEV_PERFORMANCE) ? (call_CAL_FUN_ONE_PARA("GET_DEV_PERFORMANCE", i)) : (1)));
     }
   }
+  /* USENCCL: enable GPU peer access for cross-device memcpy */
+  for (long i = 0; i < NUM_RUNTIME; i++)
+  {
+    sympic_set_device(dev_ids[i]);
+    for (long j = 0; j < NUM_RUNTIME; j++)
+    {
+      if (i != j)
+      {
+        sympic_enable_peer_access(dev_ids[i], dev_ids[j]);
+      }
+    }
+  }
+  // initialize NCCL communicators
+  SymPIC_Device_Comm *device_comms = malloc(sizeof(*device_comms) * NUM_RUNTIME);
+  sympic_comm_group_start();
+  for (long ri = 0; ri < NUM_RUNTIME; ri++)
+  {
+    sympic_set_device(dev_ids[ri]);
+    sympic_comm_init_rank(&device_comms[ri], n * NUM_RUNTIME,
+                          device_comm_id, rank * NUM_RUNTIME + ri);
+  }
+  sympic_comm_group_end();
+  /* USENCCL end */
   fprintf(stderr, "rank %d init, pid=%d\n", rank, getpid());
   memset(pfstest, 0, sizeof(Field3D_Seq));
   long fieldlen = 3;
@@ -410,12 +431,10 @@ int main(int argc, char **argv) {
 
   if ((G_OVERLAP_LEN != 0)) {
     (overlap_len = G_OVERLAP_LEN);
-
   }
 
   if ((rank == 0)) {
     fprintf(stderr, "overlap=%d\n", overlap_len);
-
   }
 
   long allxyzmax[3];
@@ -428,8 +447,8 @@ int main(int argc, char **argv) {
   ((pfstestSPEC)->num_ele = (7 * NUM_SPEC));
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids, local_tid_array, cd_types,
                        dev_ids, cd_performances, num_runtime, PS_MPI_COMM_WORLD, rank, n);
+  ptestfield->device_comm = device_comms;
   init_Field3D_MPI_from_new_num_ele(ptestfieldSPEC, ptestfield, (7 * NUM_SPEC));
-
 
   double *pnpm = malloc((sizeof(double) * NUM_SPEC));
 
@@ -507,7 +526,6 @@ int main(int argc, char **argv) {
 
   if ((M_INIT_VMAX == 0)) {
     (M_INIT_VMAX = 1);
-
   }
 
   init_non_uni_particle_fmpi(&((ppis)->MPI_fieldE), M_INIT_VMAX);
@@ -542,12 +560,10 @@ int main(int argc, char **argv) {
       if ((0 == (t % NUM_DUMP_TIMESTEP))) {
         if ((rank == 0)) {
           fprintf(stderr, "outputing...");
-
         }
 
         if (M_USE_OUTPUT_PERFORMANCE) {
           PS_MPI_Barrier(PS_MPI_COMM_WORLD);
-
         }
 
         double tbeg = wclk_now();
@@ -567,17 +583,14 @@ int main(int argc, char **argv) {
         GAPS_IO_FileFlush(pgide);
         if (M_USE_OUTPUT_PERFORMANCE) {
           PS_MPI_Barrier(PS_MPI_COMM_WORLD);
-
         }
 
         (tbeg = (wclk_now() - tbeg));
         if ((rank == 0)) {
           fprintf(stderr, "done, time used=%fs\n", tbeg);
-
         }
 
         (tsave = (tsave + 1));
-
       }
 
       // set B1=B
@@ -630,11 +643,11 @@ int main(int argc, char **argv) {
 
 
 
-  #ifdef SYMPIC_MAPU 
+  #ifdef SYMPIC_MAPU
       mapu_pscmc_mem *data = ppis->MPI_fieldE.data->main_data;
 #endif
 
-#ifdef SYMPIC_CUDA 
+#ifdef SYMPIC_CUDA
       cuda_pscmc_mem *data = ppis->MPI_fieldE.data->main_data;
 #endif
 
@@ -663,14 +676,20 @@ int main(int argc, char **argv) {
         }
       }
       fprintf(stderr, "\n");
-
     }
   }
   if ((rank == 0)) {
     fprintf(stderr, "Calling Finalize\n");
-
   }
 
+  /* USENCCL */
+  for (long ri = 0; ri < NUM_RUNTIME; ri++)
+  {
+    sympic_set_device(dev_ids[ri]);
+    sympic_comm_destroy(device_comms[ri]);
+  }
+  free(device_comms);
+  /* USENCCL end */
   PS_MPI_Finalize();
   return 0;
 }

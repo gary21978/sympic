@@ -1,6 +1,16 @@
 #ifndef NCSPIC_SEQ_FIELD
 #include "smallmpi/small_mpi.h"
 
+#if defined(SYMPIC_USE_NCCL)
+#include <nccl.h>
+typedef ncclComm_t SymPIC_Device_Comm;
+typedef ncclUniqueId SymPIC_Device_UniqueId;
+#elif defined(SYMPIC_MAPU)
+#include <maccl.h>
+typedef macclComm_t SymPIC_Device_Comm;
+typedef macclUniqueId SymPIC_Device_UniqueId;
+#endif
+
 #define NCSPIC_SEQ_FIELD
 typedef double NUMBER_REAL;
 #define NUM_SYNC_LAYER 27
@@ -9,6 +19,8 @@ typedef double NUMBER_REAL;
 
 typedef struct {
   void *pe;
+
+  int cuda_device; /* USENCCL */
 
   long xlen;
 
@@ -71,6 +83,18 @@ typedef struct {
   long *adj_processes;
 
   long *adj_local_tid;
+
+  /* USENCCL precomputed local recv lists, per layer */
+  long *local_recv_tid[NUM_SYNC_LAYER];       /* destination tid in swap buf */
+  long *local_recv_src[NUM_SYNC_LAYER];       /* source tid (t0id for self, src_tid for peer) */
+  int  *local_recv_peer[NUM_SYNC_LAYER];      /* src_runtime, -1 = self (same device) */
+  long  local_recv_count[NUM_SYNC_LAYER];
+  long *remote_send_tid[NUM_SYNC_LAYER];      /* remote sends, preordered for NCCL matching */
+  long  remote_send_count[NUM_SYNC_LAYER];
+  long *remote_recv_tid[NUM_SYNC_LAYER];      /* remote recvs, preordered for NCCL matching */
+  long  remote_recv_count[NUM_SYNC_LAYER];
+  int   cache_valid;
+  /* USENCCL end */
 
   void *main_data;
 
@@ -192,6 +216,8 @@ typedef struct {
 
   void *adjoint_vec_pids;
 
+  void *swap_len_buf; /* USENCCL */
+
 } One_Particle_Collection;
 typedef struct {
   Field3D_Seq *data;
@@ -199,6 +225,8 @@ typedef struct {
   long num_runtime;
 
   PS_MPI_Comm comm;
+
+  SymPIC_Device_Comm *device_comm;
 
   long cur_rank;
 

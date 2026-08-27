@@ -6,6 +6,39 @@
 
 #include "pubdefs.h"
 #include "kernel_includes.h"
+#include "sort_particle.h"
+
+static void sympic_particle_shift(One_Particle_Collection *particles,
+                                  long numvec, int dir, long xyz_len,
+                                  int ptlen, int device_id) {
+  SymPIC_Device_Mem *cache = (SymPIC_Device_Mem *)particles->cu_cache;
+  SymPIC_Device_Mem *xyzw = (SymPIC_Device_Mem *)particles->cu_xyzw;
+  SymPIC_Device_Mem *lengths = (SymPIC_Device_Mem *)particles->swap_len_buf;
+#if defined(SYMPIC_USE_NCCL)
+  cuda_particle_shift_launch((double *)cache->d_data, (int *)xyzw->d_data,
+                             (int *)lengths->d_data + 4 * numvec,
+                             particles->cu_cache_length, numvec, dir, xyz_len,
+                             ptlen, device_id);
+#elif defined(SYMPIC_MAPU)
+  /* Conservative native-MAPU fallback until this small fixup gets an MPU kernel. */
+  mapu_pscmc_mem_sync_d2h(cache);
+  mapu_pscmc_mem_sync_d2h(xyzw);
+  mapu_pscmc_mem_sync_d2h(lengths);
+  double *cache_h = (double *)cache->h_data;
+  int *xyzw_h = (int *)xyzw->h_data;
+  int *frl_h = (int *)lengths->h_data + 4 * numvec;
+  for (long j = 0; j < numvec; ++j) {
+    int cur_len = xyzw_h[4 * j];
+    int n = frl_h[j];
+    long base = j * particles->cu_cache_length * 6;
+    for (int k = 0; k < n; ++k)
+      cache_h[base + (cur_len + k) * ptlen + dir] += xyz_len;
+    xyzw_h[4 * j] = cur_len + n;
+  }
+  mapu_pscmc_mem_sync_h2d(cache);
+  mapu_pscmc_mem_sync_h2d(xyzw);
+#endif
+}
 
 #ifdef SYMPIC_CUDA
 int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
@@ -1369,7 +1402,7 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection* pthis) {
         (sort_kernel)[1], &(mapu_alloc_prefix_cu_cache_length));
     mapu_sort_one_grid_y_6_exec((sort_kernel)[1],
         mapu_sort_one_grid_y_6_get_xlen(), numvec);
-    
+
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ZLEN));
@@ -1399,7 +1432,7 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection* pthis) {
             &(mapu_alloc_prefix_XYZLEN));
         mapu_cu_swap_l_6_exec(cu_swap_l_6_kernel, mapu_cu_swap_l_6_get_xlen(),
             numvec);
-        
+
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_cu_cache_length));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
@@ -1425,7 +1458,7 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection* pthis) {
             &(mapu_alloc_prefix_XYZLEN));
         mapu_cu_swap_r_6_exec(cu_swap_r_6_kernel, mapu_cu_swap_r_6_get_xlen(),
             numvec);
-        
+
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_cu_cache_length));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
@@ -1513,10 +1546,10 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection* pthis) {
     ((((long*)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
     mapu_sort_one_grid_z_6_scmc_set_parameter_cu_cache_length(
         (sort_kernel)[2], &(mapu_alloc_prefix_cu_cache_length));
-    
+
     mapu_sort_one_grid_z_6_exec((sort_kernel)[2],
         mapu_sort_one_grid_z_6_get_xlen(), numvec);
-    
+
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ZLEN));
@@ -1546,7 +1579,7 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection* pthis) {
             &(mapu_alloc_prefix_XYZLEN));
         mapu_cu_swap_l_6_exec(cu_swap_l_6_kernel, mapu_cu_swap_l_6_get_xlen(),
             numvec);
-        
+
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_cu_cache_length));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
@@ -1572,7 +1605,7 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection* pthis) {
             &(mapu_alloc_prefix_XYZLEN));
         mapu_cu_swap_r_6_exec(cu_swap_r_6_kernel, mapu_cu_swap_r_6_get_xlen(),
             numvec);
-        
+
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_cu_cache_length));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
         mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
@@ -2223,347 +2256,369 @@ int call_particle_sort_single(One_Particle_Collection* pthis, int dir, int use_v
 
 int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
-  // defined from class Field3D_MPI
+  long num_runtime = pthis->num_runtime;
+  One_Particle_Collection *particles = pthis->particles;
+  int num_spec = pthis->num_spec;
 
-  long num_runtime = (pthis)->num_runtime;
-
-  PS_MPI_Comm comm = (pthis)->comm;
-
-
-  PS_MPI_Request **rqst = (pthis)->rqst;
-
-  One_Particle_Collection *particles = (pthis)->particles;
-
-  int num_spec = (pthis)->num_spec;
-
-
-  //====================Field3D_MPI
   {
-    long xyzz;
+    for (long xyzx = 0; xyzx < num_spec; xyzx++) {
+      One_Particle_Collection *particle_spec_1 = &particles[xyzx * num_runtime];
+      int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[xyzx];
+      int ptlen = ((ptype & 2) ? 8 : 6);
+      long i, j;
 
-    for ((xyzz = 0); (xyzz < 1); (xyzz = (xyzz + 1))) {
+      if (!(mask == 0 || ptype & mask)) continue;
+
+      /* Phase 0: D2H cu_xyzw for host-side metadata reads */
+      for (i = 0; i < num_runtime; i++) {
+        sympic_set_device(particle_spec_1[i].pfield->cuda_device);
+        sympic_mem_sync_d2h(particle_spec_1[i].cu_xyzw);
+      }
+
+      /* ---- Phase 1: exchange cu_xyzw rows via NCCL ---- */
+      /* Step 1a: collect and post sends in (peer, left_id) order */
+      sympic_comm_group_start();
+      for (i = 0; i < num_runtime; i++)
       {
-        long xyzy;
-
-        for ((xyzy = 0); (xyzy < 1); (xyzy = (xyzy + 1))) {
-          {
-            long xyzx;
-
-            for ((xyzx = 0); (xyzx < num_spec); (xyzx = (xyzx + 1))) {
-              One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
-
-              int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[xyzx];
-
-              int ptlen = (((ptype & 2)) ? (8) : (6));
-
-              long i;
-
-              long j;
-
-              if (((mask == 0) || (ptype & mask))) {
-                int **p_to_left_len_buffer = malloc((sizeof(int *) * num_runtime));
-
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  long cu_cache_length = ((particle_spec_1 + i))->cu_cache_length;
-
-
-                  void *cu_cache = ((particle_spec_1 + i))->cu_cache;
-
-                  void *cu_xyzw = ((particle_spec_1 + i))->cu_xyzw;
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *adj_ids = (pfield)->adj_ids;
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-
-                  //====================Field3D_Seq
-                  double *cu_cache_host = (((double **)cu_cache))[0];
-
-                  int *cu_xyzw_host = (((int **)cu_xyzw))[0];
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  ((p_to_left_len_buffer)[i] = malloc((sizeof(int) * numvec)));
-                  for (j = 0; (j < numvec); j++) {
-                    long *cur_adj_ids = (adj_ids + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-                    int *cur_cu_xyzw = (cu_xyzw_host + (4 * j));
-
-                    int beg_to_left = (cur_cu_xyzw)[1];
-
-                    int end_to_left = (cur_cu_xyzw)[2];
-
-                    double *cur_cu_cache = (cu_cache_host + (j * (cu_cache_length * 6)));
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 0);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-                    long left_proc_id = (left_pid / (pthis)->num_runtime);
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-                    int local_xyz_all_tmp = (0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))));
-
-                    long left_id = (cur_adj_ids)[local_xyz_all_tmp];
-
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (0 / 2))];
-
-
-                    int to_left_len = (end_to_left - beg_to_left);
-
-                    (((p_to_left_len_buffer)[i])[j] = to_left_len);
-                    if ((cur_left_id_ismin1 == -1)) {
-                      if ((0 || (cur_proc_id != left_pid))) {
-                        PS_MPI_Isend(((p_to_left_len_buffer)[i] + j), 1, PS_MPI_INT, left_proc_id, (left_id * 2), comm,
-                                     ((rqst)[i] + j));
-                        PS_MPI_Isend((cur_cu_cache + (beg_to_left * ptlen)), (to_left_len * ptlen), PS_MPI_DOUBLE,
-                                     left_proc_id, (1 + (left_id * 2)), comm, ((rqst)[i] + (numvec + j)));
-                      }
-                    }
-                  }
-                }
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  long cu_cache_length = ((particle_spec_1 + i))->cu_cache_length;
-
-
-                  void *cu_cache = ((particle_spec_1 + i))->cu_cache;
-
-                  void *cu_xyzw = ((particle_spec_1 + i))->cu_xyzw;
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-                  long xlen = (pfield)->xlen;
-
-                  long ylen = (pfield)->ylen;
-
-                  long zlen = (pfield)->zlen;
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *global_x_offset = (pfield)->global_x_offset;
-
-                  long *global_y_offset = (pfield)->global_y_offset;
-
-                  long *global_z_offset = (pfield)->global_z_offset;
-
-
-                  long *adj_ids = (pfield)->adj_ids;
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-                  long *adj_local_tid = (pfield)->adj_local_tid;
-
-
-                  //====================Field3D_Seq
-                  double *cu_cache_host = (((double **)cu_cache))[0];
-
-                  int *cu_xyzw_host = (((int **)cu_xyzw))[0];
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  for (j = 0; (j < numvec); j++) {
-                    long *cur_adj_ids = (adj_ids + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-                    long *cur_local_tid = (adj_local_tid + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-                    int *cur_cu_xyzw = (cu_xyzw_host + (4 * j));
-
-                    int beg_to_left = (cur_cu_xyzw)[1];
-
-
-                    double *cur_cu_cache = (cu_cache_host + (j * (cu_cache_length * 6)));
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 2);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-                    long left_proc_id = (left_pid / (pthis)->num_runtime);
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-                    int local_xyz_all_tmp = (0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))));
-
-
-                    long left_local_tid = (cur_local_tid)[local_xyz_all_tmp];
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (2 / 2))];
-
-                    long cur_id = (cur_adj_ids)[(NUM_SYNC_LAYER / 2)];
-
-
-                    if ((cur_left_id_ismin1 == -1)) {
-                      volatile int from_right_len;
-
-                      int cur_len = (cur_cu_xyzw)[0];
-
-                      if ((0 || (left_pid != cur_proc_id))) {
-                        PS_MPI_Recv((void*)(&from_right_len), 1, PS_MPI_INT, left_proc_id, (2 * cur_id), comm, NULL);
-                        if ((((cur_cu_xyzw)[0] + from_right_len) >= beg_to_left)) {
-                          fprintf(stderr, "[%e %e %e],offs=[%ld %ld %ld]\n", (cur_cu_cache)[0], (cur_cu_cache)[1],
-                                  (cur_cu_cache)[2], (global_x_offset)[j], (global_y_offset)[j], (global_z_offset)[j]);
-                        }
-
-                        assert((((cur_cu_xyzw)[0] + from_right_len) < beg_to_left));
-                        PS_MPI_Recv((void*)(cur_cu_cache + (ptlen * cur_len)), (from_right_len * ptlen), PS_MPI_DOUBLE,
-                                    left_proc_id, (1 + (2 * cur_id)), comm, NULL);
-
-                      } else {
-                        (from_right_len =
-                             ((cu_xyzw_host)[((4 * left_local_tid) + 2)] - (cu_xyzw_host)[((4 * left_local_tid) + 1)]));
-                        if ((((cur_cu_xyzw)[0] + from_right_len) >= beg_to_left)) {
-                          fprintf(stderr, "[%e %e %e],offs=[%ld %ld %ld]\n", (cur_cu_cache)[0], (cur_cu_cache)[1],
-                                  (cur_cu_cache)[2], (global_x_offset)[j], (global_y_offset)[j], (global_z_offset)[j]);
-                        }
-
-                        assert((((cur_cu_xyzw)[0] + from_right_len) < beg_to_left));
-                        memcpy((cur_cu_cache + (ptlen * cur_len)),
-                               (cu_cache_host + ((left_pid * (ptlen * cu_cache_length)) +
-                                                 (ptlen * (cu_xyzw_host)[((4 * left_local_tid) + 2)]))),
-                               (from_right_len * (ptlen * sizeof(double))));
-                      }
-
-                      long xyzlenarr[3];
-                      ((xyzlenarr)[0] = xlen);
-                      ((xyzlenarr)[1] = ylen);
-                      ((xyzlenarr)[2] = zlen);
-                      long XYZLEN = ((1 - 0) * (xyzlenarr)[dir]);
-
-                      {
-                        long xyzz;
-
-                        for ((xyzz = 0); (xyzz < 1); (xyzz = (xyzz + 1))) {
-                          {
-                            long xyzy;
-
-                            for ((xyzy = 0); (xyzy < 1); (xyzy = (xyzy + 1))) {
-                              {
-                                long xyzx;
-
-                                for ((xyzx = 0); (xyzx < from_right_len); (xyzx = (xyzx + 1))) {
-                                  ((cur_cu_cache)[((ptlen * (xyzx + cur_len)) + dir)] =
-                                       ((cur_cu_cache)[((ptlen * (xyzx + cur_len)) + dir)] + XYZLEN));
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                      ((cur_cu_xyzw)[0] = ((cur_cu_xyzw)[0] + from_right_len));
-                    }
-                  }
-                }
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-
-                  //====================Field3D_Seq
-
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  for (j = 0; (j < numvec); j++) {
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 0);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (0 / 2))];
-
-
-                    if ((cur_left_id_ismin1 == -1)) {
-                      if ((0 || (cur_proc_id != left_pid))) {
-                        PS_MPI_Wait(((rqst)[i] + j), NULL);
-                        PS_MPI_Wait(((rqst)[i] + (numvec + j)), NULL);
-                      }
-                    }
-                  }
-                }
-                {
-                  long i;
-
-                  for ((i = 0); (i < num_runtime); (i = (i + 1))) {
-                    free((p_to_left_len_buffer)[i]);
-                  }
-                }
-                free(p_to_left_len_buffer);
-              }
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        int *xyzw_d = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->d_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        /* collect eligible sends: gate=-1, cross-process, cross-rank */
+        long send_count = 0;
+        for (j = 0; j < numvec; j++)
+        {
+          long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+          if (send_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 0;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+          send_count++;
+        }
+
+        /* simple selection-sort by (peer, left_id) and post */
+        for (long pass = 0; pass < send_count; pass++)
+        {
+          long best_j = -1;
+          long best_peer = -1, best_left_id = -1;
+          for (j = 0; j < numvec; j++) {
+            long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+            if (send_gate == -2) continue; /* already posted */
+            if (send_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 0;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            long left_id = adj_ids[j * NUM_SYNC_LAYER + xyz_idx];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && left_id < best_left_id)) {
+              best_j = j;
+              best_peer = neighbor_pid;
+              best_left_id = left_id;
             }
           }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir] = -2; /* mark posted */
+          sympic_comm_send_int(xyzw_d + 4 * best_j, 4, best_peer, pthis->device_comm[i]);
         }
+        /* restore gates */
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir] = -1;
+        }
+      }
+
+      /* Step 1b: collect and post recvs in (peer, cur_id) order */
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        int *len_d = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->d_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long recv_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+          if (recv_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 2;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime != pthis->cur_rank) recv_count++;
+        }
+
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_j = -1;
+          long best_peer = -1, best_cur_id = -1;
+          for (j = 0; j < numvec; j++) {
+            long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+            if (recv_gate == -2) continue;
+            if (recv_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 2;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            long cur_id = adj_ids[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && cur_id < best_cur_id)) {
+              best_j = j;
+              best_peer = neighbor_pid;
+              best_cur_id = cur_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir + 1] = -2;
+          sympic_comm_recv_int(len_d + 4 * best_j, 4, best_peer, pthis->device_comm[i]);
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir + 1] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir + 1] = -1;
+        }
+      }
+      sympic_comm_group_end();
+      for (i = 0; i < num_runtime; i++) {
+        sympic_set_device(particle_spec_1[i].pfield->cuda_device);
+        sympic_device_synchronize();
+      }
+
+      /* ---- Compute frl (from_right_len) from received/swapped rows ---- */
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->h_data;
+        long *adj_processes = pfield->adj_processes;
+        long *adj_local_tid = pfield->adj_local_tid;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+
+        sympic_set_device(pfield->cuda_device);
+        sympic_mem_sync_d2h(particle_spec_1[i].swap_len_buf);
+
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+          if (recv_gate != -1) { len_h[4 * numvec + j] = 0; continue; }
+
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 2;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          long REMOTE_RANK = neighbor_pid / num_runtime;
+          long left_local_tid = adj_local_tid[j * NUM_SYNC_LAYER + xyz_idx];
+
+          if (neighbor_pid == self_pid) {
+            len_h[4 * numvec + j] = 0;
+          } else if (REMOTE_RANK == pthis->cur_rank) {
+            long src_runtime = neighbor_pid % num_runtime;
+            int *src_xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            int n = src_xyzw_h[4 * left_local_tid + 2] - src_xyzw_h[4 * left_local_tid + 1];
+            len_h[4 * numvec + j] = n;
+            int cur_len = xyzw_h[4 * j];
+            int beg_to_left = xyzw_h[4 * j + 1];
+            assert(((cur_len + n) < beg_to_left));
+          } else {
+            int n = len_h[4 * j + 2] - len_h[4 * j + 1];
+            len_h[4 * numvec + j] = n;
+            int cur_len = xyzw_h[4 * j];
+            int beg_to_left = xyzw_h[4 * j + 1];
+            assert(((cur_len + n) < beg_to_left));
+          }
+        }
+        sympic_mem_sync_h2d(particle_spec_1[i].swap_len_buf);
+      }
+
+      /* ---- Phase 2: exchange particle data via NCCL ---- */
+      sympic_comm_group_start();
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        /* collect and post sends in sorted order */
+        long send_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+          if (send_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 0;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+          int beg = xyzw_h[4 * j + 1];
+          int end = xyzw_h[4 * j + 2];
+          if (end <= beg) continue;
+          send_count++;
+        }
+
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+            if (send_gate == -2) continue;
+            if (send_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 0;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            int beg = xyzw_h[4 * j + 1];
+            int end = xyzw_h[4 * j + 2];
+            if (end <= beg) continue;
+            long left_id = adj_ids[j * NUM_SYNC_LAYER + xyz_idx];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && left_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = left_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir] = -2;
+          int beg = xyzw_h[4 * best_j + 1];
+          int end = xyzw_h[4 * best_j + 2];
+          int count = end - beg;
+          long base = best_j * cu_cache_length * 6;
+          sympic_comm_send_double(cache_d + base + (long)beg * ptlen,
+                                  (size_t)count * ptlen, best_peer,
+                                  pthis->device_comm[i]);
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir] = -1;
+        }
+      }
+
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->h_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adj_local_tid = pfield->adj_local_tid;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long recv_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+          if (recv_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 2;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          int n = len_h[4 * numvec + j];
+          if (n <= 0) continue;
+          recv_count++;
+        }
+
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+            if (recv_gate == -2) continue;
+            if (recv_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 2;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            int n = len_h[4 * numvec + j];
+            if (n <= 0) continue;
+            long cur_id = adj_ids[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && cur_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = cur_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir + 1] = -2;
+          int cur_len = xyzw_h[4 * best_j];
+          int from_right_len = len_h[4 * numvec + best_j];
+          long base = best_j * cu_cache_length * 6;
+
+          if (best_peer / num_runtime == pthis->cur_rank) {
+            long src_runtime = best_peer % num_runtime;
+            long xyzarr2[3] = {1, 1, 1};
+            xyzarr2[dir] = 2;
+            int xyz_idx2 = xyzarr2[0] + 3 * (xyzarr2[1] + 3 * xyzarr2[2]);
+            long left_local_tid = adj_local_tid[best_j * NUM_SYNC_LAYER + xyz_idx2];
+            int *src_xyzw_h2 = (int *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            double *src_cache_d2 = (double *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_cache)->d_data;
+            int src_dev2 = particle_spec_1[src_runtime].pfield->cuda_device;
+            int src_end2 = src_xyzw_h2[4 * left_local_tid + 2];
+            long src_base2 = left_local_tid * cu_cache_length * 6;
+            sympic_copy_peer(cache_d + base + (long)cur_len * ptlen, dev,
+                           src_cache_d2 + src_base2 + (long)src_end2 * ptlen, src_dev2,
+                           sizeof(double) * from_right_len * ptlen);
+          } else {
+            sympic_comm_recv_double(cache_d + base + (long)cur_len * ptlen,
+                                    (size_t)from_right_len * ptlen, best_peer,
+                                    pthis->device_comm[i]);
+          }
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir + 1] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir + 1] = -1;
+        }
+      }
+      sympic_comm_group_end();
+
+      /* ---- Phase 3: coordinate shift via GPU kernel ---- */
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        int dev = pfield->cuda_device;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        long xyzlenarr[3] = {pfield->xlen, pfield->ylen, pfield->zlen};
+        long XYZLEN = (1 - 0) * xyzlenarr[dir];
+
+        sympic_set_device(dev);
+        sympic_device_synchronize();
+
+        sympic_particle_shift(&particle_spec_1[i], numvec, dir, XYZLEN,
+                              ptlen, dev);
+        sympic_device_synchronize();
       }
     }
   }
@@ -2572,352 +2627,358 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
 int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
 
-  // defined from class Field3D_MPI
-
   long num_runtime = (pthis)->num_runtime;
-
-  PS_MPI_Comm comm = (pthis)->comm;
-
-
-  PS_MPI_Request **rqst = (pthis)->rqst;
-
   One_Particle_Collection *particles = (pthis)->particles;
-
   int num_spec = (pthis)->num_spec;
 
-
-  //====================Field3D_MPI
   {
-    long xyzz;
-
-    for ((xyzz = 0); (xyzz < 1); (xyzz = (xyzz + 1))) {
-      {
-        long xyzy;
-
-        for ((xyzy = 0); (xyzy < 1); (xyzy = (xyzy + 1))) {
-          {
-            long xyzx;
-
-            for ((xyzx = 0); (xyzx < num_spec); (xyzx = (xyzx + 1))) {
-              One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
-
-              int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[xyzx];
-
-              int ptlen = (((ptype & 2)) ? (8) : (6));
-
-              long i;
-
-              long j;
-
-              if (((mask == 0) || (ptype & mask))) {
-                int **p_to_left_len_buffer = malloc((sizeof(int *) * num_runtime));
-
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  long cu_cache_length = ((particle_spec_1 + i))->cu_cache_length;
-
-
-                  void *cu_cache = ((particle_spec_1 + i))->cu_cache;
-
-                  void *cu_xyzw = ((particle_spec_1 + i))->cu_xyzw;
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *adj_ids = (pfield)->adj_ids;
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-
-                  //====================Field3D_Seq
-                  double *cu_cache_host = (((double **)cu_cache))[0];
-
-                  int *cu_xyzw_host = (((int **)cu_xyzw))[0];
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  ((p_to_left_len_buffer)[i] = malloc((sizeof(int) * numvec)));
-                  for (j = 0; (j < numvec); j++) {
-                    long *cur_adj_ids = (adj_ids + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-                    int *cur_cu_xyzw = (cu_xyzw_host + (4 * j));
-
-                    int beg_to_left = (cur_cu_xyzw)[3];
-
-                    long end_to_left = cu_cache_length;
-
-                    double *cur_cu_cache = (cu_cache_host + (j * (cu_cache_length * 6)));
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 2);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-                    long left_proc_id = (left_pid / (pthis)->num_runtime);
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-                    int local_xyz_all_tmp = (0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))));
-
-                    long left_id = (cur_adj_ids)[local_xyz_all_tmp];
-
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (2 / 2))];
-
-
-                    int to_left_len = (end_to_left - beg_to_left);
-
-                    (((p_to_left_len_buffer)[i])[j] = to_left_len);
-                    if ((cur_left_id_ismin1 == -1)) {
-                      if ((0 || (cur_proc_id != left_pid))) {
-                        PS_MPI_Isend(((p_to_left_len_buffer)[i] + j), 1, PS_MPI_INT, left_proc_id, (left_id * 2), comm,
-                                     ((rqst)[i] + j));
-                        PS_MPI_Isend((cur_cu_cache + (beg_to_left * ptlen)), (to_left_len * ptlen), PS_MPI_DOUBLE,
-                                     left_proc_id, (1 + (left_id * 2)), comm, ((rqst)[i] + (numvec + j)));
-                      }
-                    }
-                  }
-                }
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  long cu_cache_length = ((particle_spec_1 + i))->cu_cache_length;
-
-
-                  void *cu_cache = ((particle_spec_1 + i))->cu_cache;
-
-                  void *cu_xyzw = ((particle_spec_1 + i))->cu_xyzw;
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-                  long xlen = (pfield)->xlen;
-
-                  long ylen = (pfield)->ylen;
-
-                  long zlen = (pfield)->zlen;
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *global_x_offset = (pfield)->global_x_offset;
-
-                  long *global_y_offset = (pfield)->global_y_offset;
-
-                  long *global_z_offset = (pfield)->global_z_offset;
-
-
-                  long *adj_ids = (pfield)->adj_ids;
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-                  long *adj_local_tid = (pfield)->adj_local_tid;
-
-
-                  //====================Field3D_Seq
-                  double *cu_cache_host = (((double **)cu_cache))[0];
-
-                  int *cu_xyzw_host = (((int **)cu_xyzw))[0];
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  for (j = 0; (j < numvec); j++) {
-                    long *cur_adj_ids = (adj_ids + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-                    long *cur_local_tid = (adj_local_tid + (j * NUM_SYNC_LAYER));
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-                    int *cur_cu_xyzw = (cu_xyzw_host + (4 * j));
-
-                    int beg_to_left = (cur_cu_xyzw)[3];
-
-
-                    double *cur_cu_cache = (cu_cache_host + (j * (cu_cache_length * 6)));
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 0);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-                    long left_proc_id = (left_pid / (pthis)->num_runtime);
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-                    int local_xyz_all_tmp = (0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))));
-
-
-                    long left_local_tid = (cur_local_tid)[local_xyz_all_tmp];
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (0 / 2))];
-
-                    long cur_id = (cur_adj_ids)[(NUM_SYNC_LAYER / 2)];
-
-
-                    if ((cur_left_id_ismin1 == -1)) {
-                      volatile int from_right_len;
-
-                      int cur_len = (cur_cu_xyzw)[0];
-
-                      if ((0 || (left_pid != cur_proc_id))) {
-                        PS_MPI_Recv((void*)(&from_right_len), 1, PS_MPI_INT, left_proc_id, (2 * cur_id), comm, NULL);
-                        if ((((cur_cu_xyzw)[0] + from_right_len) >= beg_to_left)) {
-                          fprintf(stderr, "[%e %e %e],offs=[%ld %ld %ld]\n", (cur_cu_cache)[0], (cur_cu_cache)[1],
-                                  (cur_cu_cache)[2], (global_x_offset)[j], (global_y_offset)[j], (global_z_offset)[j]);
-                        }
-
-                        assert((((cur_cu_xyzw)[0] + from_right_len) < beg_to_left));
-                        PS_MPI_Recv((cur_cu_cache + (ptlen * cur_len)), (from_right_len * ptlen), PS_MPI_DOUBLE,
-                                    left_proc_id, (1 + (2 * cur_id)), comm, NULL);
-
-                      } else {
-                        (from_right_len = ((cu_xyzw_host)[((4 * left_local_tid) + 3)] - cu_cache_length));
-                        if ((((cur_cu_xyzw)[0] + from_right_len) >= beg_to_left)) {
-                          fprintf(stderr, "[%e %e %e],offs=[%ld %ld %ld]\n", (cur_cu_cache)[0], (cur_cu_cache)[1],
-                                  (cur_cu_cache)[2], (global_x_offset)[j], (global_y_offset)[j], (global_z_offset)[j]);
-                        }
-
-                        assert((((cur_cu_xyzw)[0] + from_right_len) < beg_to_left));
-                        memcpy((cur_cu_cache + (ptlen * cur_len)),
-                               (cu_cache_host + ((left_pid * (ptlen * cu_cache_length)) +
-                                                 (ptlen * (cu_xyzw_host)[((4 * left_local_tid) + 3)]))),
-                               (from_right_len * (ptlen * sizeof(double))));
-                      }
-
-                      long xyzlenarr[3];
-                      ((xyzlenarr)[0] = xlen);
-                      ((xyzlenarr)[1] = ylen);
-                      ((xyzlenarr)[2] = zlen);
-                      long XYZLEN = ((1 - 2) * (xyzlenarr)[dir]);
-
-                      {
-                        long xyzz;
-
-                        for ((xyzz = 0); (xyzz < 1); (xyzz = (xyzz + 1))) {
-                          {
-                            long xyzy;
-
-                            for ((xyzy = 0); (xyzy < 1); (xyzy = (xyzy + 1))) {
-                              {
-                                long xyzx;
-
-                                for ((xyzx = 0); (xyzx < from_right_len); (xyzx = (xyzx + 1))) {
-                                  ((cur_cu_cache)[((ptlen * (xyzx + cur_len)) + dir)] =
-                                       ((cur_cu_cache)[((ptlen * (xyzx + cur_len)) + dir)] + XYZLEN));
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                      ((cur_cu_xyzw)[0] = ((cur_cu_xyzw)[0] + from_right_len));
-                    }
-                  }
-                }
-                for (i = 0; (i < num_runtime); i++) {
-
-                  // defined from class One_Particle_Collection
-                  Field3D_Seq *pfield = ((particle_spec_1 + i))->pfield;
-
-
-                  void *adjoint_vec_pids = ((particle_spec_1 + i))->adjoint_vec_pids;
-
-                  //====================One_Particle_Collection
-
-                  // defined from class Field3D_Seq
-
-
-                  long numvec = (pfield)->numvec;
-
-
-                  long *adj_processes = (pfield)->adj_processes;
-
-
-                  //====================Field3D_Seq
-
-
-                  long *adjoint_vec_pids_host = (((long **)adjoint_vec_pids))[0];
-
-                  for (j = 0; (j < numvec); j++) {
-
-                    long *cur_adj_procs = (adj_processes + (j * NUM_SYNC_LAYER));
-
-
-                    long *cur_adjoint_vec_pids = (adjoint_vec_pids_host + (j * 6));
-
-
-                    long xyzarr[3];
-                    ((xyzarr)[0] = 1);
-                    ((xyzarr)[1] = 1);
-                    ((xyzarr)[2] = 1);
-                    ((xyzarr)[dir] = 2);
-                    long left_pid =
-                        (cur_adj_procs)[(0 + (1 * ((xyzarr)[0] + (3 * ((xyzarr)[1] + (3 * (xyzarr)[2]))))))];
-
-
-                    long cur_proc_id = ((adj_processes + (j * NUM_SYNC_LAYER)))[(NUM_SYNC_LAYER / 2)];
-
-
-                    long cur_left_id_ismin1 = (cur_adjoint_vec_pids)[((2 * dir) + (2 / 2))];
-
-
-                    if ((cur_left_id_ismin1 == -1)) {
-                      if ((0 || (cur_proc_id != left_pid))) {
-                        PS_MPI_Wait(((rqst)[i] + j), NULL);
-                        PS_MPI_Wait(((rqst)[i] + (numvec + j)), NULL);
-                      }
-                    }
-                  }
-                }
-                {
-                  long i;
-
-                  for ((i = 0); (i < num_runtime); (i = (i + 1))) {
-                    free((p_to_left_len_buffer)[i]);
-                  }
-                }
-                free(p_to_left_len_buffer);
-              }
+    long xyzx;
+    for (xyzx = 0; xyzx < num_spec; xyzx++) {
+      One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
+      int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[xyzx];
+      int ptlen = ((ptype & 2) ? 8 : 6);
+      long i, j;
+
+      if (!(mask == 0 || ptype & mask)) continue;
+
+      /* Phase 0: D2H cu_xyzw */
+      for (i = 0; i < num_runtime; i++) {
+        sympic_set_device(particle_spec_1[i].pfield->cuda_device);
+        sympic_mem_sync_d2h(particle_spec_1[i].cu_xyzw);
+      }
+
+      /* ---- Phase 1: exchange cu_xyzw rows ---- */
+      sympic_comm_group_start();
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        int *xyzw_d = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->d_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long send_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+          if (send_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 2;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+          send_count++;
+        }
+
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+            if (send_gate == -2) continue;
+            if (send_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 2;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            long left_id = adj_ids[j * NUM_SYNC_LAYER + xyz_idx];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && left_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = left_id;
             }
           }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir + 1] = -2;
+          sympic_comm_send_int(xyzw_d + 4 * best_j, 4, best_peer, pthis->device_comm[i]);
         }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir + 1] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir + 1] = -1;
+        }
+      }
+
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        int *len_d = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->d_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long recv_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+          if (recv_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 0;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime != pthis->cur_rank) recv_count++;
+        }
+
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+            if (recv_gate == -2) continue;
+            if (recv_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 0;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            long cur_id = adj_ids[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && cur_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = cur_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir] = -2;
+          sympic_comm_recv_int(len_d + 4 * best_j, 4, best_peer, pthis->device_comm[i]);
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir] = -1;
+        }
+      }
+      sympic_comm_group_end();
+      for (i = 0; i < num_runtime; i++) {
+        sympic_set_device(particle_spec_1[i].pfield->cuda_device);
+        sympic_device_synchronize();
+      }
+
+      /* ---- Compute frl ---- */
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->h_data;
+        long *adj_processes = pfield->adj_processes;
+        long *adj_local_tid = pfield->adj_local_tid;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+
+        sympic_set_device(pfield->cuda_device);
+        sympic_mem_sync_d2h(particle_spec_1[i].swap_len_buf);
+
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+          if (recv_gate != -1) { len_h[4 * numvec + j] = 0; continue; }
+
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 0;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          long REMOTE_RANK = neighbor_pid / num_runtime;
+          long left_local_tid = adj_local_tid[j * NUM_SYNC_LAYER + xyz_idx];
+
+          if (neighbor_pid == self_pid) {
+            len_h[4 * numvec + j] = 0;
+          } else if (REMOTE_RANK == pthis->cur_rank) {
+            long src_runtime = neighbor_pid % num_runtime;
+            int *src_xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            int n = cu_cache_length - src_xyzw_h[4 * left_local_tid + 3];
+            len_h[4 * numvec + j] = n;
+            int cur_len = xyzw_h[4 * j];
+            int beg_to_left = xyzw_h[4 * j + 1];
+            assert(((cur_len + n) < beg_to_left));
+          } else {
+            int n = cu_cache_length - len_h[4 * j + 3];
+            len_h[4 * numvec + j] = n;
+            int cur_len = xyzw_h[4 * j];
+            int beg_to_left = xyzw_h[4 * j + 1];
+            assert(((cur_len + n) < beg_to_left));
+          }
+        }
+        sympic_mem_sync_h2d(particle_spec_1[i].swap_len_buf);
+      }
+
+      /* ---- Phase 2: exchange particle data ---- */
+      sympic_comm_group_start();
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long send_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+          if (send_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 2;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+          int count = cu_cache_length - xyzw_h[4 * j + 3];
+          if (count <= 0) continue;
+          send_count++;
+        }
+
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long send_gate = adjoint_vec_pids_h[j * 6 + 2 * dir + 1];
+            if (send_gate == -2) continue;
+            if (send_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 2;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            if (neighbor_pid / num_runtime == pthis->cur_rank) continue;
+            int count = cu_cache_length - xyzw_h[4 * j + 3];
+            if (count <= 0) continue;
+            long left_id = adj_ids[j * NUM_SYNC_LAYER + xyz_idx];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && left_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = left_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir + 1] = -2;
+          int beg = xyzw_h[4 * best_j + 3];
+          int count = cu_cache_length - beg;
+          long base = best_j * cu_cache_length * 6;
+          sympic_comm_send_double(cache_d + base + (long)beg * ptlen,
+                                  (size_t)count * ptlen, best_peer,
+                                  pthis->device_comm[i]);
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir + 1] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir + 1] = -1;
+        }
+      }
+
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        double *cache_d = (double *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_cache)->d_data;
+        int *xyzw_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].cu_xyzw)->h_data;
+        int *len_h = (int *)((SymPIC_Device_Mem *)particle_spec_1[i].swap_len_buf)->h_data;
+        long *adj_ids = pfield->adj_ids;
+        long *adj_processes = pfield->adj_processes;
+        long *adj_local_tid = pfield->adj_local_tid;
+        long *adjoint_vec_pids_h = (long *)((SymPIC_Device_Mem *)particle_spec_1[i].adjoint_vec_pids)->h_data;
+        int dev = pfield->cuda_device;
+
+        sympic_set_device(dev);
+
+        long recv_count = 0;
+        for (j = 0; j < numvec; j++) {
+          long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+          if (recv_gate != -1) continue;
+          long xyzarr[3] = {1, 1, 1};
+          xyzarr[dir] = 0;
+          int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+          long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+          long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+          if (neighbor_pid == self_pid) continue;
+          int n = len_h[4 * numvec + j];
+          if (n <= 0) continue;
+          recv_count++;
+        }
+
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_j = -1, best_peer = -1, best_key = -1;
+          for (j = 0; j < numvec; j++) {
+            long recv_gate = adjoint_vec_pids_h[j * 6 + 2 * dir];
+            if (recv_gate == -2) continue;
+            if (recv_gate != -1) continue;
+            long xyzarr[3] = {1, 1, 1};
+            xyzarr[dir] = 0;
+            int xyz_idx = xyzarr[0] + 3 * (xyzarr[1] + 3 * xyzarr[2]);
+            long neighbor_pid = adj_processes[j * NUM_SYNC_LAYER + xyz_idx];
+            long self_pid = adj_processes[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (neighbor_pid == self_pid) continue;
+            int n = len_h[4 * numvec + j];
+            if (n <= 0) continue;
+            long cur_id = adj_ids[j * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)];
+            if (best_j == -1 || neighbor_pid < best_peer ||
+                (neighbor_pid == best_peer && cur_id < best_key)) {
+              best_j = j; best_peer = neighbor_pid; best_key = cur_id;
+            }
+          }
+          if (best_j < 0) break;
+          adjoint_vec_pids_h[best_j * 6 + 2 * dir] = -2;
+          int cur_len = xyzw_h[4 * best_j];
+          int from_right_len = len_h[4 * numvec + best_j];
+          long base = best_j * cu_cache_length * 6;
+
+          if (best_peer / num_runtime == pthis->cur_rank) {
+            long src_runtime = best_peer % num_runtime;
+            long xyzarr2[3] = {1, 1, 1};
+            xyzarr2[dir] = 0;
+            int xyz_idx2 = 0 + 1 * (xyzarr2[0] + 3 * (xyzarr2[1] + 3 * xyzarr2[2]));
+            long left_local_tid = adj_local_tid[best_j * NUM_SYNC_LAYER + xyz_idx2];
+            int *src_xyzw_h2 = (int *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_xyzw)->h_data;
+            double *src_cache_d2 = (double *)((SymPIC_Device_Mem *)particle_spec_1[src_runtime].cu_cache)->d_data;
+            int src_dev2 = particle_spec_1[src_runtime].pfield->cuda_device;
+            int src_beg2 = src_xyzw_h2[4 * left_local_tid + 3];
+            long src_base2 = left_local_tid * cu_cache_length * 6;
+            sympic_copy_peer(cache_d + base + (long)cur_len * ptlen, dev,
+                           src_cache_d2 + src_base2 + (long)src_beg2 * ptlen, src_dev2,
+                           sizeof(double) * from_right_len * ptlen);
+          } else {
+            sympic_comm_recv_double(cache_d + base + (long)cur_len * ptlen,
+                                    (size_t)from_right_len * ptlen, best_peer,
+                                    pthis->device_comm[i]);
+          }
+        }
+        for (j = 0; j < numvec; j++) {
+          if (adjoint_vec_pids_h[j * 6 + 2 * dir] == -2)
+            adjoint_vec_pids_h[j * 6 + 2 * dir] = -1;
+        }
+      }
+      sympic_comm_group_end();
+
+      /* ---- Phase 3: coordinate shift ---- */
+      for (i = 0; i < num_runtime; i++) {
+        Field3D_Seq *pfield = particle_spec_1[i].pfield;
+        int dev = pfield->cuda_device;
+        long numvec = pfield->numvec;
+        long cu_cache_length = particle_spec_1[i].cu_cache_length;
+        long xyzlenarr[3] = {pfield->xlen, pfield->ylen, pfield->zlen};
+        long XYZLEN = (1 - 2) * xyzlenarr[dir];
+
+        sympic_set_device(dev);
+        sympic_device_synchronize();
+
+        sympic_particle_shift(&particle_spec_1[i], numvec, dir, XYZLEN,
+                              ptlen, dev);
+        sympic_device_synchronize();
       }
     }
   }
   return 0;
 }
-
+/* USENCCL end */
 int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int mask) {
 
   // defined from class Field3D_MPI
@@ -2940,58 +3001,11 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
 
     if (((mask == 0) || (mask & ptype))) {
       call_particle_sort_single((particles + i), dir, ((ptype) ? (0) : (use_vlo)), ptlen);
-
-      // defined from class One_Particle_Collection
-
-
-      void *cu_cache = ((particles + i))->cu_cache;
-
-      void *cu_xyzw = ((particles + i))->cu_xyzw;
-
-
-      //====================One_Particle_Collection
-
-      // defined from class Field3D_Seq
-
-
-      //====================Field3D_Seq
-#ifdef SYMPIC_MAPU
-      mapu_pscmc_mem_sync_d2h(cu_cache);
-      mapu_pscmc_mem_sync_d2h(cu_xyzw);
-#endif
-
-#ifdef SYMPIC_CUDA
-      cuda_pscmc_mem_sync_d2h(cu_cache);
-      cuda_pscmc_mem_sync_d2h(cu_xyzw);
-#endif
     }
   }
   swap_particle_sort_host_l(pthis, dir, mask);
   swap_particle_sort_host_r(pthis, dir, mask);
-
   for (i = 0; (i < (num_runtime * num_spec)); i++) {
-
-    // defined from class One_Particle_Collection
-    void *cu_cache = ((particles + i))->cu_cache;
-
-    void *cu_xyzw = ((particles + i))->cu_xyzw;
-
-
-    //====================One_Particle_Collection
-
-    // defined from class Field3D_Seq
-
-
-    //====================Field3D_Seq
-#ifdef SYMPIC_MAPU
-    mapu_pscmc_mem_sync_h2d(cu_cache);
-    mapu_pscmc_mem_sync_h2d(cu_xyzw);
-#endif
-
-#ifdef SYMPIC_CUDA
-    cuda_pscmc_mem_sync_h2d(cu_cache);
-    cuda_pscmc_mem_sync_h2d(cu_xyzw);
-#endif
 
     int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[(i / num_runtime)];
 
@@ -2999,29 +3013,23 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
 
     if (((ptype == 0) || (mask & ptype))) {
       if ((ptlen == 6)) {
-
-#ifdef SYMPIC_MAPU
-            mapu_call_move_back_kernel_single_6((particles + i));
-#endif
 #ifdef SYMPIC_CUDA
-            cuda_call_move_back_kernel_single_6((particles + i));
+        cuda_call_move_back_kernel_single_6((particles + i));
+#elif defined(SYMPIC_MAPU)
+        mapu_call_move_back_kernel_single_6((particles + i));
 #endif
 
       } else {
-
-#ifdef SYMPIC_MAPU
-          mapu_call_move_back_kernel_single_8((particles + i));
-#endif
 #ifdef SYMPIC_CUDA
-          cuda_call_move_back_kernel_single_8((particles + i));
+        cuda_call_move_back_kernel_single_8((particles + i));
+#elif defined(SYMPIC_MAPU)
+        mapu_call_move_back_kernel_single_8((particles + i));
 #endif
-
       }
     }
   }
   return 0;
 }
-
 int call_particle_sort_mpi(Field3D_MPI *pthis, int dir, int use_vlo) {
 
   // defined from class Field3D_MPI

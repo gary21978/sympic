@@ -20,13 +20,32 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 set(NVSCALE_CUDA_ARCH "86" CACHE STRING
     "Numeric CUDA architecture, for example 75, 86, or 89")
+option(NVSCALE_USE_CUDA_CLUSTER
+    "Preserve CUDA/Hopper __cluster_dims__ instead of compiling it away" OFF)
 
-list(APPEND CMAKE_MODULE_PATH "${SYMPIC_SOURCE_DIR}/nvscale/cmake")
+set(MAPU_ROOT "$ENV{MAPU_ROOT}" CACHE PATH
+    "Shared MaPU root containing toolchain/nvscale")
+if(MAPU_ROOT)
+  set(DEFAULT_NVSCALE_ROOT "${MAPU_ROOT}/toolchain/nvscale")
+else()
+  set(DEFAULT_NVSCALE_ROOT "${SYMPIC_SOURCE_DIR}/nvscale")
+endif()
+
+set(NVSCALE_ROOT "${DEFAULT_NVSCALE_ROOT}" CACHE PATH
+    "Shared NVScale compatibility layer")
+if(NOT EXISTS "${NVSCALE_ROOT}/cmake/NVScale.cmake")
+  message(FATAL_ERROR
+    "NVScale compatibility layer not found: ${NVSCALE_ROOT}/cmake/NVScale.cmake. "
+    "Set MAPU_ROOT or NVSCALE_ROOT.")
+endif()
+
+list(APPEND CMAKE_MODULE_PATH "${NVSCALE_ROOT}/cmake")
 include(NVScale)
 
 find_package(MPI REQUIRED)
+find_library(NCCL_LIBRARY NAMES nccl REQUIRED)
 
-add_compile_definitions(SYMPIC_MAPU)
+add_compile_definitions(SYMPIC_MAPU SYMPIC_USE_NCCL)
 
 include_directories(
   "${SYMPIC_SOURCE_DIR}/src"
@@ -49,7 +68,9 @@ nvscale_add_scale_library(mapu_yeefdtd
 )
 
 file(GLOB HOST_SOURCES CONFIGURE_DEPENDS "${SYMPIC_SOURCE_DIR}/src/*.c")
-add_executable(sympic ${HOST_SOURCES})
+add_executable(sympic
+  ${HOST_SOURCES}
+)
 target_link_libraries(sympic PRIVATE
   cgapsio
   cscheme
@@ -58,5 +79,5 @@ target_link_libraries(sympic PRIVATE
   MPI::MPI_C
   CUDA::cudart
   CUDA::cuda_driver
+  ${NCCL_LIBRARY}
 )
-

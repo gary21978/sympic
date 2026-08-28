@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.22)
 project(sympic_nvscale LANGUAGES C CXX CUDA)
 
 get_filename_component(DEFAULT_SYMPIC_SOURCE_DIR
@@ -17,6 +17,15 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
+option(SYMPIC_MAPU "Build MAPU sources through the NVScale compatibility layer" ON)
+option(SYMPIC_CUDA "Reserved for the native CUDA backend; must stay OFF here" OFF)
+if(NOT SYMPIC_MAPU)
+  message(FATAL_ERROR "NVScale build requires -DSYMPIC_MAPU=ON")
+endif()
+if(SYMPIC_CUDA)
+  message(FATAL_ERROR "NVScale build compiles MAPU sources; use -DSYMPIC_CUDA=OFF")
+endif()
 
 set(NVSCALE_CUDA_ARCH "86" CACHE STRING
     "Numeric CUDA architecture, for example 75, 86, or 89")
@@ -45,7 +54,10 @@ include(NVScale)
 find_package(MPI REQUIRED)
 find_library(NCCL_LIBRARY NAMES nccl REQUIRED)
 
-add_compile_definitions(SYMPIC_MAPU SYMPIC_USE_NCCL)
+set(SYMPIC_NVSCALE_COMPILE_DEFINITIONS
+  SYMPIC_MAPU
+  SYMPIC_USE_NCCL
+)
 
 include_directories(
   "${SYMPIC_SOURCE_DIR}/src"
@@ -66,10 +78,16 @@ nvscale_add_scale_library(mapu_yeefdtd
     ${MAPU_RUNTIME_SRC}
     "${SYMPIC_SOURCE_DIR}/src/mapu_/mapu_pscmc.cpp"
 )
+target_compile_definitions(mapu_yeefdtd PUBLIC
+  ${SYMPIC_NVSCALE_COMPILE_DEFINITIONS}
+)
 
 file(GLOB HOST_SOURCES CONFIGURE_DEPENDS "${SYMPIC_SOURCE_DIR}/src/*.c")
 add_executable(sympic
   ${HOST_SOURCES}
+)
+target_compile_definitions(sympic PRIVATE
+  ${SYMPIC_NVSCALE_COMPILE_DEFINITIONS}
 )
 target_link_libraries(sympic PRIVATE
   cgapsio

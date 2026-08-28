@@ -94,6 +94,7 @@ build_nvscale() {
     fi
     cmake -S "${SCRIPT_DIR}/cmake/sympic-nvscale" -B "${dir}" \
         -DSYMPIC_SOURCE_DIR="${SCRIPT_DIR}" \
+        -DSYMPIC_MAPU=ON -DSYMPIC_CUDA=OFF \
         -DNVSCALE_CUDA_ARCH="${ARCH}" \
         -DNVSCALE_USE_CUDA_CLUSTER="${CUDA_CLUSTER}"
     cmake --build "${dir}" -j"${JOBS}"

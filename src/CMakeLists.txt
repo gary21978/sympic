@@ -31,7 +31,7 @@ set(SYMPIC_LINK_LIBS
     ${SYMPIC_BACKEND_LIB}
     MPI::MPI_C
 )
-if(SYMPIC_CUDA)
+if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver ${NCCL_LIBRARY})
 elseif(SYMPIC_MAPU)
     target_include_directories(sympic PRIVATE

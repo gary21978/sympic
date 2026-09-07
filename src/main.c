@@ -529,6 +529,9 @@ int main(int argc, char **argv) {
   }
 
   init_non_uni_particle_fmpi(&((ppis)->MPI_fieldE), M_INIT_VMAX);
+
+  blas_yiszero_synced_Field3D_MPI(&(ppis->MPI_FoutJ), &(ppis->MPI_FoutJ));
+  
   Gaps_IO_DataFile gid;
 
   Gaps_IO_DataFile *pgid = &(gid);
@@ -650,6 +653,16 @@ int main(int argc, char **argv) {
 #ifdef SYMPIC_CUDA
       cuda_pscmc_mem *data = ppis->MPI_fieldE.data->main_data;
 #endif
+
+      // 临时比对计算结果方案
+      // printf("NUM_TIMESTEP = %d, data->len = %d, data->type_len = %d\n", NUM_TIMESTEP, data->len, data->type_len); 
+      
+      // double *value = data->h_data;
+      // for (int i = 258; i < 261; ++i)
+      // {
+      //   printf("value[%d] = %lf\n", i, value[i]);
+      // }
+
 
       // set B=B1
       blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB1));

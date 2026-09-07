@@ -1031,7 +1031,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_recv_count[layer] = 0;
   }
   int i;
-
+#if 0
   if (is_init_kernels) {
     ((pthis)->blas_yiszero_synced_kernel =
          malloc((sizeof(mapu_blas_yiszero_synced_struct))));
@@ -1149,7 +1149,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
          malloc((sizeof(mapu_blas_axpby_enlarge_struct))));
     mapu_blas_axpby_enlarge_init(pe, (pthis)->blas_axpby_enlarge_kernel);
   }
-
+#endif
   size_t ovleal_aio = 0;
 
   for (i = 0; (i < NUM_SYNC_LAYER); i++) {

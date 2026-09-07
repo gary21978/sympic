@@ -5,16 +5,20 @@ cmake_minimum_required(VERSION 3.18)
 # ============================================================
 option(SYMPIC_CUDA "Use CUDA backend" OFF)
 option(SYMPIC_MAPU "Use MAPU backend" OFF)
+option(SYMPIC_NVSCALE "Build the MAPU backend through NVScale/CUDA" OFF)
 
 
-if(NOT SYMPIC_CUDA AND NOT SYMPIC_MAPU)
-    message(FATAL_ERROR "Please select one backend: -DSYMPIC_CUDA=ON or -DSYMPIC_MAPU=ON")
+set(SYMPIC_BACKEND_COUNT 0)
+foreach(_backend SYMPIC_CUDA SYMPIC_MAPU SYMPIC_NVSCALE)
+    if(${_backend})
+        math(EXPR SYMPIC_BACKEND_COUNT "${SYMPIC_BACKEND_COUNT}+1")
+    endif()
+endforeach()
+if(NOT SYMPIC_BACKEND_COUNT EQUAL 1)
+    message(FATAL_ERROR "Select exactly one backend: SYMPIC_CUDA, SYMPIC_MAPU, or SYMPIC_NVSCALE")
 endif()
-if(SYMPIC_CUDA AND SYMPIC_MAPU)
-    message(FATAL_ERROR "SYMPIC_CUDA and SYMPIC_MAPU are mutually exclusive")
-endif()
 
-if(SYMPIC_CUDA)
+if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     project(sympic LANGUAGES C CXX CUDA)
 elseif(SYMPIC_MAPU)
     project(sympic LANGUAGES C CXX)
@@ -40,7 +44,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # 2. 查找外部依赖包
 # ============================================================
 find_package(MPI REQUIRED)
-if(SYMPIC_CUDA)
+if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     find_package(CUDAToolkit REQUIRED)
     find_library(NCCL_LIBRARY NAMES nccl REQUIRED)
 
@@ -51,6 +55,12 @@ if(SYMPIC_CUDA)
     option(CUDA_PTXAS_VERBOSE  "Enable nvcc -Xptxas -v (print regs/stack/spills)" OFF)
     option(CUDA_DUMP_CUBIN     "Dump cubin for inner_split_pass.kernel.cu" OFF)
     set(CUDA_ARCH "sm_86" CACHE STRING "CUDA arch, e.g. sm_75, sm_86")
+endif()
+
+if(SYMPIC_NVSCALE)
+    set(NVSCALE_ROOT "/home/cheney/Projects/MaPU/toolchain/nvscale" CACHE PATH "NVScale root")
+    list(APPEND CMAKE_MODULE_PATH "${NVSCALE_ROOT}/cmake")
+    include(NVScale)
 elseif(SYMPIC_MAPU)
 
     # 填写scale编程需要的环境
@@ -98,7 +108,7 @@ endif()
 # ============================================================
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g -ffast-math -ffunction-sections")
 
-if(SYMPIC_CUDA)
+if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     # 从 CUDA_ARCH 解析数值架构，例如 sm_86 -> 86
     if(CUDA_ARCH MATCHES "^sm_([0-9]+)$")
         set(CMAKE_CUDA_ARCHITECTURES ${CMAKE_MATCH_1})
@@ -126,6 +136,14 @@ if(SYMPIC_CUDA)
     set(SYMPIC_BACKEND_DIR cuda_)
 elseif(SYMPIC_MAPU)
     add_compile_definitions(SYMPIC_MAPU)
+    set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
+    set(SYMPIC_BACKEND_DIR mapu_)
+endif()
+
+if(SYMPIC_NVSCALE)
+    # NVScale validates the MaPU kernels on CUDA while retaining dev's
+    # device-communication implementation through its NCCL branch.
+    add_compile_definitions(SYMPIC_MAPU SYMPIC_USE_NCCL)
     set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
     set(SYMPIC_BACKEND_DIR mapu_)
 endif()

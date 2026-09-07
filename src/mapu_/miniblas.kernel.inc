@@ -4,697 +4,212 @@ static int mapu_counter_for_debug = 0;
 #define _MAPU_SIMD_BASE_FUN
 #endif
 
-__global__ void mapu_blas_axpy(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int num_ele)
+#define MAX_SIZE 3072
+#define DOUBLE_VEC_SIZE 8
+__device__ KERNEL_M void vaxpy_v8fp64_mpu(v8fp64 *y, v8fp64 *x, v8fp64 *a, int cnt)
+{
+    for (int i = 0; i < cnt; i++)
+    {
+        y[i] = y[i] + a[0] * x[i];
+    }
+}
+
+__device__ KERNEL_M void vyisax_v8fp64_mpu(v8fp64 *x, v8fp64 *a, int cnt)
+{
+    for (int i = 0; i < cnt; i++)
+    {
+        x[i] = a[0] * x[i];
+    }
+}
+
+__global__ void mapu_blas_axpy(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xb, MAPU_LONG yb, MAPU_LONG zb, int num_ele)
 {
 #ifdef __SCALE_ARCH__
-    auto __pscmc_mapu_internal_block__ = cooperative_groups::this_thread_block();
+    auto block = cooperative_groups::this_thread_block();
     using barrier_t = scale::barrier<scale::thread_scope_block>;
-    __shared__ barrier_t __pscmc_mapu_internal_barrier__;
+    __shared__ barrier_t bar;
+    init(&bar, 1);
 
-    static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-    init(&(__pscmc_mapu_internal_barrier__), 1);
-    // __mem1__ int __mapu_dma_index;
-    // __mapu_dma_index = 0;
-    // const MAPU_LONG pscmc_compute_unit_id = 0;
-    // const MAPU_LONG pscmc_num_compute_units = 1;
-    const MAPU_LONG __idx = 0;
-    // const MAPU_LONG __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
-    const MAPU_LONG __xlen = 1;
-    // const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
-    // const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
-    // __mem1__ MAPU_LONG local_ynum;
-    // local_ynum = (((numvec - 1) / y_cpu_core) + 1);
-    // __mem1__ MAPU_LONG local_ymin;
-    // local_ymin = (__idy * local_ynum);
-    // __mem1__ MAPU_LONG local_ymax;
-    // local_ymax = ((1 + __idy) * local_ynum);
-    __mem1__ MAPU_LONG xb;
-    xb = xblock;
-    __mem1__ MAPU_LONG yb;
-    yb = yblock;
-    __mem1__ MAPU_LONG zb;
-    zb = zblock;
-    __mem1__ MAPU_LONG blk_all_len;
-    blk_all_len = (xb * (yb * (zb * num_ele)));
+    MAPU_LONG blk_all_len = xb * yb * zb * num_ele;
+    MAPU_LONG tid = blockIdx.x * blockDim.x + threadIdx.x;
+    int vnum = (XLEN * num_ele + DOUBLE_VEC_SIZE - 1) / DOUBLE_VEC_SIZE;
+    const size_t data_size = sizeof(double) * XLEN * num_ele;
+    y = y + tid * blk_all_len;
+    x = x + tid * blk_all_len;
 
-    // if ((local_ymax >= numvec))
-    // {
-    //     {
-    //         (local_ymax = numvec);
-    //     }
-    // }
-    // else
-    // {
-    //     {
-    //         0;
-    //     }
-    // }
-    // __mem0__ double reduce_tmp_arr[IDX_OPT_MAX];
-    // __mem1__ double reduce_tmp;
-    // reduce_tmp = 0.00000000000000000e+00;
-    // {
-        __mem1__ MAPU_LONG i;
-        i = blockIdx.x * blockDim.x + threadIdx.x;
-        // for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))
-        // {
+    __mem0__ __fix2__ double dm_x[MAX_SIZE];
+    __mem1__ __fix3__ double dm_y[MAX_SIZE];
+    __mem2__ __fix4__ double dm_a[DOUBLE_VEC_SIZE];
+    for(int i = 0; i < DOUBLE_VEC_SIZE; i++)
+    {
+        dm_a[i] = a;
+    }
 
-            if ((blk_all_len <= 3072))
+    for (MAPU_LONG k = 0; k < ZLEN; k++)
+    {
+        for (MAPU_LONG j = 0; j < YLEN; j++)
+        {   
+            MAPU_LONG offset = num_ele * (ovlp + xb * (j + ovlp + yb * (k + ovlp)));
+            memcpy_async(block, (unsigned *)dm_y, (__DDR unsigned *)(y + offset), data_size, bar);
+            memcpy_async(block, (unsigned *)dm_x, (__DDR unsigned *)(x + offset), data_size, bar);
+            bar.arrive_and_wait();
+            sync_call vaxpy_v8fp64_mpu((v8fp64*)dm_y, (v8fp64*)dm_x, (v8fp64*)dm_a, vnum);
+            memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_y, data_size, bar);
+            bar.arrive_and_wait();
+        }
+    }
+#endif
+}
+
+__global__ void mapu_blas_yisax(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xb, MAPU_LONG yb, MAPU_LONG zb, int num_ele)
+{
+#ifdef __SCALE_ARCH__
+#ifdef USE_LLCD
+    __aurora_s_startCounter(f_Clear);
+#endif
+    auto block = cooperative_groups::this_thread_block();
+    using barrier_t = scale::barrier<scale::thread_scope_block>;
+    __shared__ barrier_t bar;
+    init(&bar, 1);
+
+    MAPU_LONG blk_all_len = xb * yb * zb * num_ele;
+    MAPU_LONG tid = blockIdx.x * blockDim.x + threadIdx.x;
+    int vnum = (XLEN * num_ele + DOUBLE_VEC_SIZE - 1) / DOUBLE_VEC_SIZE;
+    const size_t data_size = sizeof(double) * XLEN * num_ele;
+    y = y + tid * blk_all_len;
+    x = x + tid * blk_all_len;
+
+    __mem0__ __fix2__ double dm_x[MAX_SIZE];
+    __mem1__ __fix3__ double dm_a[DOUBLE_VEC_SIZE];
+    for(int i = 0; i < DOUBLE_VEC_SIZE; i++)
+    {
+        dm_a[i] = a;
+    }
+
+    for (MAPU_LONG k = 0; k < ZLEN; k++)
+    {
+        for (MAPU_LONG j = 0; j < YLEN; j++)
+        {   
+            MAPU_LONG offset = num_ele * (ovlp + xb * (j + ovlp + yb * (k + ovlp)));
+            memcpy_async(block, (unsigned *)dm_x, (__DDR unsigned *)(x + offset), data_size, bar);
+            bar.arrive_and_wait();
+            sync_call vyisax_v8fp64_mpu((v8fp64*)dm_x, (v8fp64*)dm_a, vnum);
+            memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size, bar);
+            bar.arrive_and_wait();
+        }
+    }  
+#endif
+}
+
+__global__ void mapu_blas_yisax_enlarge(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xb, MAPU_LONG yb, MAPU_LONG zb, int num_ele)
+{
+#ifdef __SCALE_ARCH__
+    auto block = cooperative_groups::this_thread_block();
+    using barrier_t = scale::barrier<scale::thread_scope_block>;
+    __shared__ barrier_t bar;
+    init(&(bar), 1);
+
+    MAPU_LONG xb_2x = 2 * ovlp + (XLEN == 1 ? 1 : XLEN * 2);
+    MAPU_LONG yb_2x = 2 * ovlp + (YLEN == 1 ? 1 : YLEN * 2);
+    MAPU_LONG zb_2x = 2 * ovlp + (ZLEN == 1 ? 1 : ZLEN * 2);
+    int x2 = XLEN == 1 ? 1 : 2;
+    int y2 = YLEN == 1 ? 1 : 2;
+    int z2 = ZLEN == 1 ? 1 : 2;
+
+    const size_t x_size = XLEN * num_ele;
+    const size_t data_size = sizeof(double) * x_size;
+    int vnum = (XLEN * num_ele + DOUBLE_VEC_SIZE - 1) / DOUBLE_VEC_SIZE;
+    MAPU_LONG tid = blockIdx.x * blockDim.x + threadIdx.x;
+    y = y + tid * xb_2x * yb_2x * zb_2x * num_ele;
+    x = x + tid * xb * yb * zb * num_ele;
+
+    __mem0__ __fix2__ double dm_x[MAX_SIZE];
+    __mem1__ __fix3__ double dm_a[DOUBLE_VEC_SIZE];
+    for(int i = 0; i < DOUBLE_VEC_SIZE; i++)
+    {
+        dm_a[i] = a * 0.125;
+    }
+
+    for (MAPU_LONG k = 0; k < ZLEN; k++)
+    {
+        for (MAPU_LONG j = 0; j < YLEN; j++)
+        {
+            MAPU_LONG offset = num_ele * (ovlp + xb * (j + ovlp + yb * (k + ovlp)));
+            memcpy_async(block, (unsigned *)dm_x, (__DDR unsigned *)(x + offset), data_size, bar);
+            bar.arrive_and_wait();
+            sync_call vyisax_v8fp64_mpu((v8fp64*)dm_x, (v8fp64*)dm_a, vnum);
+            if (x2 == 2)
             {
+                for (MAPU_LONG i = x_size - num_ele; i > -1; i-=num_ele)
                 {
-                    __mem0__ double fast_y[3072];
-                    if ((blk_all_len * 1))
+                    for (int e = 0; e < num_ele; e++)
                     {
-                        {
-                            const size_t data_size = sizeof(((y + (i * blk_all_len)))[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)fast_y), ((__DDR unsigned *)(y + (i * blk_all_len))), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
+                        dm_x[2 * i + e] = dm_x[i + e];
+                        dm_x[2 * i + e + num_ele] = dm_x[i + e];
                     }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                    __mem0__ double fast_x[3072];
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof(((x + (i * blk_all_len)))[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)fast_x), ((__DDR unsigned *)(x + (i * blk_all_len))), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            {
-                                                __mem1__ MAPU_LONG realidx;
-                                                for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1)))
-                                                {
-                                                    ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)] = ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)] + (a * (fast_x)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)])));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof((fast_y)[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(y + (i * blk_all_len))), ((unsigned *)fast_y), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                }
+                }          
+            }
+            if (y2 == 2 && z2 == 2)
+            {
+                offset = num_ele * (ovlp + xb_2x * (2 * j + ovlp + yb_2x * (2 * k + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+                offset = num_ele * (ovlp + xb_2x * (2 * j + ovlp + yb_2x * (2 * k + 1 + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+                offset = num_ele * (ovlp + xb_2x * (2 * j + 1 + ovlp + yb_2x * (2 * k + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+                offset = num_ele * (ovlp + xb_2x * (2 * j + 1 + ovlp + yb_2x * (2 * k + 1 + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+            }
+            else if(y2 == 2)
+            {
+                offset = num_ele * (ovlp + xb_2x * (2 * j + ovlp + yb_2x * ovlp));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+                offset = num_ele * (ovlp + xb_2x * (2 * j + 1 + ovlp + yb_2x * ovlp));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+            }
+            else if(z2 == 2)
+            {
+                offset = num_ele * (ovlp + xb_2x * (ovlp + yb_2x * (2 * k + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
+                offset = num_ele * (ovlp + xb_2x * (ovlp + yb_2x * (2 * k + 1 + ovlp)));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
             }
             else
             {
-                {
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            __mem1__ MAPU_LONG blk_offset_t1;
-                                            blk_offset_t1 = (blk_all_len * i);
-                                            __mem1__ MAPU_LONG blk_offset;
-                                            blk_offset = ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
-                                            {
-                                                __mem1__ MAPU_LONG g;
-                                                g = 0;
-                                                for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++)
-                                                {
-                                                    __mem1__ MAPU_LONG realidx;
-                                                    realidx = (__idx + (g * __xlen));
-                                                    ((y)[(blk_offset + realidx)] = ((y)[(blk_offset + realidx)] + (a * (x)[(blk_offset + realidx)])));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                offset = num_ele * (ovlp + xb_2x * (ovlp + yb_2x * ovlp));
+                memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_x, data_size * x2, bar);
             }
-        // }
-    // }
-
-#endif
-}
-
-__global__ void mapu_blas_yisax(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int num_ele)
-{
-
-#ifdef __SCALE_ARCH__
-    auto __pscmc_mapu_internal_block__ = cooperative_groups::this_thread_block();
-    using barrier_t = scale::barrier<scale::thread_scope_block>;
-    __shared__ barrier_t __pscmc_mapu_internal_barrier__;
-
-    static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-    init(&(__pscmc_mapu_internal_barrier__), 1);
-    // __mem1__ int __mapu_dma_index;
-    // __mapu_dma_index = 0;
-    // const MAPU_LONG pscmc_compute_unit_id = 0;
-    // const MAPU_LONG pscmc_num_compute_units = 1;
-    const MAPU_LONG __idx = 0;
-    // const MAPU_LONG __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
-    const MAPU_LONG __xlen = 1;
-    // const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
-    // const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
-    // __mem1__ MAPU_LONG local_ynum;
-    // local_ynum = (((numvec - 1) / y_cpu_core) + 1);
-    // __mem1__ MAPU_LONG local_ymin;
-    // local_ymin = (__idy * local_ynum);
-    // __mem1__ MAPU_LONG local_ymax;
-    // local_ymax = ((1 + __idy) * local_ynum);
-    __mem1__ MAPU_LONG xb;
-    xb = xblock;
-    __mem1__ MAPU_LONG yb;
-    yb = yblock;
-    __mem1__ MAPU_LONG zb;
-    zb = zblock;
-    __mem1__ MAPU_LONG blk_all_len;
-    blk_all_len = (xb * (yb * (zb * num_ele)));
-
-    // if ((local_ymax >= numvec))
-    // {
-    //     {
-    //         (local_ymax = numvec);
-    //     }
-    // }
-    // else
-    // {
-    //     {
-    //         0;
-    //     }
-    // }
-    // __mem0__ double reduce_tmp_arr[IDX_OPT_MAX];
-    // __mem1__ double reduce_tmp;
-    // reduce_tmp = 0.00000000000000000e+00;
-    // {
-        __mem1__ MAPU_LONG i;
-        i = blockIdx.x * blockDim.x + threadIdx.x;
-        // for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))
-        // {
-
-            if ((blk_all_len <= 3072))
-            {
-                {
-                    __mem0__ double fast_y[3072];
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof(((y + (i * blk_all_len)))[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)fast_y), ((__DDR unsigned *)(y + (i * blk_all_len))), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                    __mem0__ double fast_x[3072];
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof(((x + (i * blk_all_len)))[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)fast_x), ((__DDR unsigned *)(x + (i * blk_all_len))), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            {
-                                                __mem1__ MAPU_LONG realidx;
-                                                for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1)))
-                                                {
-                                                    ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)] = (a * (fast_x)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)]));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof((fast_y)[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(y + (i * blk_all_len))), ((unsigned *)fast_y), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                {
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            __mem1__ MAPU_LONG blk_offset_t1;
-                                            blk_offset_t1 = (blk_all_len * i);
-                                            __mem1__ MAPU_LONG blk_offset;
-                                            blk_offset = ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
-                                            {
-                                                __mem1__ MAPU_LONG g;
-                                                g = 0;
-                                                for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++)
-                                                {
-                                                    __mem1__ MAPU_LONG realidx;
-                                                    realidx = (__idx + (g * __xlen));
-                                                    ((y)[(blk_offset + realidx)] = (a * (x)[(blk_offset + realidx)]));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        // }
-    // }
-#endif
-}
-
-__global__ void mapu_blas_yisax_enlarge(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int num_ele)
-{
-
-#ifdef __SCALE_ARCH__
-    auto __pscmc_mapu_internal_block__ = cooperative_groups::this_thread_block();
-    using barrier_t = scale::barrier<scale::thread_scope_block>;
-    __shared__ barrier_t __pscmc_mapu_internal_barrier__;
-
-    static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-    init(&(__pscmc_mapu_internal_barrier__), 1);
-    // __mem1__ int __mapu_dma_index;
-    // __mapu_dma_index = 0;
-    // const MAPU_LONG pscmc_compute_unit_id = 0;
-    // const MAPU_LONG pscmc_num_compute_units = 1;
-    const MAPU_LONG __idx = 0;
-    // const MAPU_LONG __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
-    const MAPU_LONG __xlen = 1;
-    // const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
-    // const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
-    // __mem1__ MAPU_LONG local_ynum;
-    // local_ynum = (((numvec - 1) / y_cpu_core) + 1);
-    // __mem1__ MAPU_LONG local_ymin;
-    // local_ymin = (__idy * local_ynum);
-    // __mem1__ MAPU_LONG local_ymax;
-    // local_ymax = ((1 + __idy) * local_ynum);
-    __mem1__ MAPU_LONG xb;
-    xb = xblock;
-    __mem1__ MAPU_LONG yb;
-    yb = yblock;
-    __mem1__ MAPU_LONG zb;
-    zb = zblock;
-    __mem1__ MAPU_LONG blk_all_len;
-    blk_all_len = (xb * (yb * (zb * num_ele)));
-    __mem1__ MAPU_LONG xb_2x;
-    xb_2x = ((2 * ovlp) + (((XLEN == 1)) ? (({ XLEN; })) : (({ (XLEN * 2); }))));
-    __mem1__ MAPU_LONG yb_2x;
-    yb_2x = ((2 * ovlp) + (((YLEN == 1)) ? (({ YLEN; })) : (({ (YLEN * 2); }))));
-    __mem1__ MAPU_LONG zb_2x;
-    zb_2x = ((2 * ovlp) + (((ZLEN == 1)) ? (({ ZLEN; })) : (({ (ZLEN * 2); }))));
-    __mem1__ MAPU_LONG blk_all_len_2x;
-    blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
-    {
-        __mem1__ MAPU_LONG i;
-        i = blockIdx.x * blockDim.x + threadIdx.x;
-        // for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))
-        {
-            {
-                __mem1__ MAPU_LONG xyzz;
-                for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                {
-                    {
-                        __mem1__ MAPU_LONG xyzy;
-                        for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzx;
-                                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG realidx;
-                                        for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1)))
-                                        {
-                                            {
-                                                __mem1__ MAPU_LONG gz;
-                                                for ((gz = 0); (gz < 2); (gz = (gz + 1)))
-                                                {
-                                                    {
-                                                        __mem1__ MAPU_LONG gy;
-                                                        for ((gy = 0); (gy < 2); (gy = (gy + 1)))
-                                                        {
-                                                            {
-                                                                __mem1__ MAPU_LONG gx;
-                                                                for ((gx = 0); (gx < 2); (gx = (gx + 1)))
-                                                                {
-                                                                    ((y)[((blk_all_len_2x * i) + (realidx + (num_ele * ((ovlp + ((2 * xyzx) + (((XLEN == 1)) ? (({ 0; })) : (({ gx; }))))) + (xb_2x * (((2 * xyzy) + (ovlp + (((YLEN == 1)) ? (({ 0; })) : (({ gy; }))))) + (yb_2x * ((2 * xyzz) + ((((ZLEN == 1)) ? (({ 0; })) : (({ gz; }))) + ovlp)))))))))] = (a * (1.25000000000000000e-01 * (x)[((blk_all_len * i) + (realidx + (num_ele * ((xyzx + ovlp) + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))))])));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            bar.arrive_and_wait();
         }
     }
 #endif
 }
 
-__global__ void mapu_blas_yiszero_synced(__DDR double *y, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int num_ele)
+__global__ void mapu_blas_yiszero(__DDR double *y, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xb, MAPU_LONG yb, MAPU_LONG zb, int num_ele)
 {
-
 #ifdef __SCALE_ARCH__
-    auto __pscmc_mapu_internal_block__ = cooperative_groups::this_thread_block();
+    auto block = cooperative_groups::this_thread_block();
     using barrier_t = scale::barrier<scale::thread_scope_block>;
-    __shared__ barrier_t __pscmc_mapu_internal_barrier__;
+    __shared__ barrier_t bar;
+    init(&bar, 1);
 
-    static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-    init(&(__pscmc_mapu_internal_barrier__), 1);
-    // __mem1__ int __mapu_dma_index;
-    // __mapu_dma_index = 0;
-    // const MAPU_LONG pscmc_compute_unit_id = 0;
-    // const MAPU_LONG pscmc_num_compute_units = 1;
-    const MAPU_LONG __idx = 0;
-    // const MAPU_LONG __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
-    const MAPU_LONG __xlen = 1;
-    // const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
-    // const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
-    // __mem1__ MAPU_LONG local_ynum;
-    // local_ynum = (((numvec - 1) / y_cpu_core) + 1);
-    const MAPU_LONG LOCAL_CACHE_LEN = 128;
-    // __mem1__ MAPU_LONG local_ymin;
-    // local_ymin = (__idy * local_ynum);
-    // __mem1__ MAPU_LONG local_ymax;
-    // local_ymax = ((1 + __idy) * local_ynum);
-    __mem1__ MAPU_LONG xb;
-    xb = xblock;
-    __mem1__ MAPU_LONG yb;
-    yb = yblock;
-    __mem1__ MAPU_LONG zb;
-    zb = zblock;
-    __mem1__ MAPU_LONG blk_all_len;
-    blk_all_len = (xb * (yb * (zb * num_ele)));
-
-    // if ((local_ymax >= numvec))
-    // {
-    //     {
-    //         (local_ymax = numvec);
-    //     }
-    // }
-    // else
-    // {
-    //     {
-    //         0;
-    //     }
-    // }
-    __mem0__ double zeros[128];
-    __mem1__ MAPU_LONG lg;
-    lg = 0;
-    for ((lg = 0); ((lg + __idx) < LOCAL_CACHE_LEN); (lg = (lg + __xlen)))
+    MAPU_LONG tid = blockIdx.x * blockDim.x + threadIdx.x;
+    y = y + tid * xb * yb * zb * num_ele;
+    const size_t data_size = sizeof(double) * XLEN * num_ele;
+    __mem0__ __fix2__ double dm_y[MAX_SIZE];
+    for (MAPU_LONG i = 0; i < XLEN * num_ele; i++)
     {
-        ((zeros)[(lg + __idx)] = 0);
+        dm_y[i] = 0;
     }
-    __shared__ barrier_t put_sync_id;
 
-    if ((threadIdx.x == 0))
+    for (MAPU_LONG k = 0; k < ZLEN; k++)
     {
+        for (MAPU_LONG j = 0; j < YLEN; j++)
         {
-            init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+            MAPU_LONG offset = num_ele * (ovlp + xb * (j + ovlp + yb * (k + ovlp)));
+            memcpy_async(block, (__DDR unsigned *)(y + offset), (unsigned *)dm_y, data_size, bar);
         }
     }
-    else
-    {
-        {
-            0;
-        }
-    }
-    {
-        __mem1__ MAPU_LONG i;
-        i = blockIdx.x * blockDim.x + threadIdx.x;
-        // for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))
-        {
-            __mem1__ MAPU_LONG blk_offset_t1;
-            blk_offset_t1 = (blk_all_len * i);
-            __mem1__ MAPU_LONG j;
-            j = 0;
-            for ((j = 0); (j < blk_all_len); (j = (j + LOCAL_CACHE_LEN)))
-            {
-                __mem1__ int numcp;
-                numcp = ((((j + LOCAL_CACHE_LEN) < blk_all_len)) ? (({ LOCAL_CACHE_LEN; })) : (({ (blk_all_len - j); })));
-
-                if ((numcp * 1))
-                {
-                    {
-                        const size_t data_size = sizeof((zeros)[0]);
-                        memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(y + (blk_offset_t1 + j))), ((unsigned *)zeros), ((uint64_t)(1 * (numcp * data_size))), put_sync_id);
-                    }
-                }
-                else
-                {
-                    {
-                        0;
-                    }
-                }
-            }
-        }
-    }
-    (put_sync_id).arrive_and_wait();
-
-#endif
-}
-
-__global__ void mapu_blas_yiszero(__DDR double *y, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int num_ele)
-{
-
-#ifdef __SCALE_ARCH__
-    auto __pscmc_mapu_internal_block__ = cooperative_groups::this_thread_block();
-    using barrier_t = scale::barrier<scale::thread_scope_block>;
-    __shared__ barrier_t __pscmc_mapu_internal_barrier__;
-
-    static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-    init(&(__pscmc_mapu_internal_barrier__), 1);
-    // __mem1__ int __mapu_dma_index;
-    // __mapu_dma_index = 0;
-    // const MAPU_LONG pscmc_compute_unit_id = 0;
-    // const MAPU_LONG pscmc_num_compute_units = 1;
-    const MAPU_LONG __idx = 0;
-    // const MAPU_LONG __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
-    const MAPU_LONG __xlen = 1;
-    // const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
-    // const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
-    // __mem1__ MAPU_LONG local_ynum;
-    // local_ynum = (((numvec - 1) / y_cpu_core) + 1);
-    // __mem1__ MAPU_LONG local_ymin;
-    // local_ymin = (__idy * local_ynum);
-    // __mem1__ MAPU_LONG local_ymax;
-    // local_ymax = ((1 + __idy) * local_ynum);
-    __mem1__ MAPU_LONG xb;
-    xb = xblock;
-    __mem1__ MAPU_LONG yb;
-    yb = yblock;
-    __mem1__ MAPU_LONG zb;
-    zb = zblock;
-    __mem1__ MAPU_LONG blk_all_len;
-    blk_all_len = (xb * (yb * (zb * num_ele)));
-
-    // if ((local_ymax >= numvec))
-    // {
-    //     {
-    //         (local_ymax = numvec);
-    //     }
-    // }
-    // else
-    // {
-    //     {
-    //         0;
-    //     }
-    // }
-    // __mem0__ double reduce_tmp_arr[IDX_OPT_MAX];
-    // __mem1__ double reduce_tmp;
-    // reduce_tmp = 0.00000000000000000e+00;
-    {
-        __mem1__ MAPU_LONG i;
-        i = blockIdx.x * blockDim.x + threadIdx.x;
-        // for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))
-        {
-
-            if ((blk_all_len <= 3072))
-            {
-                {
-                    __mem0__ double fast_y[3072];
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof(((y + (i * blk_all_len)))[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)fast_y), ((__DDR unsigned *)(y + (i * blk_all_len))), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            {
-                                                __mem1__ MAPU_LONG realidx;
-                                                for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1)))
-                                                {
-                                                    ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) + realidx)] = 0);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if ((blk_all_len * 1))
-                    {
-                        {
-                            const size_t data_size = sizeof((fast_y)[0]);
-                            memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(y + (i * blk_all_len))), ((unsigned *)fast_y), ((uint64_t)(1 * (blk_all_len * data_size))), __pscmc_mapu_internal_barrier__);
-                            (__pscmc_mapu_internal_barrier__).arrive_and_wait();
-                        }
-                    }
-                    else
-                    {
-                        {
-                            0;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                {
-                    {
-                        __mem1__ MAPU_LONG xyzz;
-                        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1)))
-                        {
-                            {
-                                __mem1__ MAPU_LONG xyzy;
-                                for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1)))
-                                {
-                                    {
-                                        __mem1__ MAPU_LONG xyzx;
-                                        for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1)))
-                                        {
-                                            __mem1__ MAPU_LONG blk_offset_t1;
-                                            blk_offset_t1 = (blk_all_len * i);
-                                            __mem1__ MAPU_LONG blk_offset;
-                                            blk_offset = ((blk_all_len * i) + (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
-                                            {
-                                                __mem1__ MAPU_LONG g;
-                                                g = 0;
-                                                for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++)
-                                                {
-                                                    __mem1__ MAPU_LONG realidx;
-                                                    realidx = (__idx + (g * __xlen));
-                                                    ((y)[(blk_offset + realidx)] = 0);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    bar.arrive_and_wait();
 #endif
 }

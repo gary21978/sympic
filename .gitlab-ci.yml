@@ -1,0 +1,11 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_REF_PROTECTED == "true"
+    
+test-runner:
+  stage: test
+  script:
+    - echo "HOST_DRIVER_DIR=[${HOST_DRIVER_DIR}]"
+    - echo "VM_DRIVER_DIR=[${VM_DRIVER_DIR}]"
+    - bash scripts/auto-ci.sh

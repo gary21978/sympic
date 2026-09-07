@@ -6,7 +6,9 @@
 
 
 #include "geo_yeefdtd.kernel.inc"
-#define VEC_WIDTH 8
+#define TILE_X 64
+extern "C"
+{
     static int dump_kernel_variables = 0;
 
     extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
@@ -39,13 +41,12 @@
         MAPU_LONG ZLEN_val = kerstr->ZLEN->h_data[0];
         MAPU_LONG numvec_val = kerstr->numvec->h_data[0];
 
-        MAPU_LONG X_segments = (XLEN_val + VEC_WIDTH - 1) / VEC_WIDTH;
-        MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * X_segments;
+        MAPU_LONG ntile_x = (XLEN_val + TILE_X - 1) / TILE_X;
+        MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * ntile_x;
 
-        int block_size = 128;
+        int block_size = 4;
         MAPU_LONG grid_size = (total_threads + block_size - 1) / block_size;
 
-     
         dim3 grid((unsigned int)grid_size, 1, 1);
         mapu_YEE_CURL_R<<<grid, block_size>>>(((__DDR double *)({
 	 uint64_t  __d_data_address_tmp2 ;
@@ -64,7 +65,7 @@ __d_data_address_tmp2; })), ((__DDR int *)({
 	mapsMemobjGetPhysicalAddress ( kerstr->zoffset->d_data , & (__d_data_address_tmp2) );
 __d_data_address_tmp2; })), (((MAPU_LONG *)kerstr->y_cpu_core->h_data))[0], (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0], (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0], (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0], (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->num_ele->h_data))[0], (((double *)kerstr->DT->h_data))[0]);
        
-        
+
         (_pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1));
         return 0;
     }
@@ -191,10 +192,10 @@ __d_data_address_tmp2; })), (((MAPU_LONG *)kerstr->y_cpu_core->h_data))[0], (((M
         MAPU_LONG ZLEN_val = kerstr->ZLEN->h_data[0];
         MAPU_LONG numvec_val = kerstr->numvec->h_data[0];
 
-        MAPU_LONG X_segments = (XLEN_val + VEC_WIDTH - 1) / VEC_WIDTH;
-        MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * X_segments;
+        MAPU_LONG ntile_x = (XLEN_val + TILE_X - 1) / TILE_X;
+        MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * ntile_x;
 
-        int block_size = 128;
+        int block_size = 4;
         MAPU_LONG grid_size = (total_threads + block_size - 1) / block_size;
 
         dim3 grid((unsigned int)grid_size, 1, 1);
@@ -345,3 +346,5 @@ __d_data_address_tmp2; })), (((MAPU_LONG *)kerstr->y_cpu_core->h_data))[0], (((M
         (kerstr->r0 = pm);
         return 0;
     }
+    
+}

@@ -3,6 +3,10 @@
 .vscode
 /.vs
 build/
+/build-mapu/
+/build-nvscale/
+/nvscale/
+__pycache__/
 .cache/
 builds/
 env.local.sh

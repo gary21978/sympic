@@ -64,7 +64,9 @@ __global__ void mapu_blas_axpy(__DDR double *y, __DDR double *x, double a, MAPU_
 __global__ void mapu_blas_yisax(__DDR double *y, __DDR double *x, double a, MAPU_LONG y_cpu_core, MAPU_LONG numvec, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG xb, MAPU_LONG yb, MAPU_LONG zb, int num_ele)
 {
 #ifdef __SCALE_ARCH__
+#ifdef USE_LLCD
     __aurora_s_startCounter(f_Clear);
+#endif
     auto block = cooperative_groups::this_thread_block();
     using barrier_t = scale::barrier<scale::thread_scope_block>;
     __shared__ barrier_t bar;

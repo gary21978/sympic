@@ -6,6 +6,16 @@ bash build.sh mapu
 编译cuda代码不能进入模拟器环境
 bash build.sh cuda
 
+使用 NVIDIA GPU 对 MAPU/SCALE 源码做 NVScale 功能验证：
+
+```bash
+export NVSCALE_ROOT=/home/cheney/Projects/MaPU/toolchain/nvscale
+export NVSCALE_CUDA_ARCH=89
+bash build.sh nvscale
+```
+
+NVScale 只验证源码兼容性和数值结果，不模拟 Aurora 的 DM 分区、DMA 重叠、MPU 调度或时序行为。
+
 
 
 # 2. 运行算例cuda/mapu

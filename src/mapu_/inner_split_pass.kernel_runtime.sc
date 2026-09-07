@@ -1,13 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
+
+#include <maps_runtime.h>
+#include <scale.h>
+#include <aurora_s-intrin.h>
+
 #include "local_header.h"
 #include "inner_split_pass.kernel_runtime.h"
+
+#ifndef PUSHJ_VLO_REAL_PARALLEL_N
+#define PUSHJ_VLO_REAL_PARALLEL_N 1
+#endif
+#if (PUSHJ_VLO_REAL_PARALLEL_N < 1) || (PUSHJ_VLO_REAL_PARALLEL_N > 4)
+#error "multi supports 1 to 4 threads per block"
+#endif
 
 #include "inner_split_pass.kernel.inc"
 
 
-  
+#ifndef MAPU_LONG
+#define MAPU_LONG long
+#endif
+
+/*
+ * Default path follows the generated MAPU runtime style: d_data is treated as a
+ * MAPS memory object and converted to a physical DDR address before being passed
+ * into the __global__ kernel.  For unit tests that put a raw mapsMalloc pointer
+ * directly in d_data, compile this file with -DMAPU_RUNTIME_USE_DIRECT_D_DATA.
+ */
+#ifndef MAPU_RUNTIME_USE_DIRECT_D_DATA
+#define MAPU_DDR_PTR(T, PM)                                                          \
+  ((__DDR T *)({                                                                      \
+    uint64_t __mapu_runtime_addr = 0;                                                 \
+    mapsMemobjGetPhysicalAddress((PM)->d_data, &__mapu_runtime_addr);                 \
+    __mapu_runtime_addr;                                                              \
+  }))
+#else
+#define MAPU_DDR_PTR(T, PM) ((__DDR T *)((PM)->d_data))
+#endif
+
+#define MAPU_HVAL(T, PM) (((T *)((PM)->h_data))[0])
+#define MAPU_HVAL_OR(T, PM, DEFAULT_VALUE) ((PM) ? MAPU_HVAL(T, (PM)) : (T)(DEFAULT_VALUE))
+
+static inline void mapu_geo_nr_Bfield_pushJ_vlo_set_device(
+    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
+  if (kerstr != NULL && kerstr->pe != NULL) {
+    mapsSetDevice((kerstr->pe)->device_id);
+  }
+}
+
+#define MAPU_DEFINE_SET_PARAM(NAME)                                                   \
+  int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_##NAME(                         \
+      mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm) {              \
+    mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);                                  \
+    kerstr->NAME = pm;                                                                \
+    return 0;                                                                         \
+  }
+
+
 int mapu_geo_nr_Bfield_pushJ_vlo_init(
     mapu_pscmc_env *pe,
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
@@ -22,7 +74,7 @@ long mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len(void) {
 }
 
 long mapu_geo_nr_Bfield_pushJ_vlo_get_xlen(void) {
-  return 1;
+  return PUSHJ_VLO_REAL_PARALLEL_N;
 }
 
 long mapu_geo_nr_Bfield_pushJ_vlo_get_num_compute_units(void) {
@@ -62,13 +114,19 @@ MAPU_DEFINE_SET_PARAM(MIN_R0)
 MAPU_DEFINE_SET_PARAM(Q0)
 MAPU_DEFINE_SET_PARAM(b0)
 MAPU_DEFINE_SET_PARAM(zmid)
-  
+
 int mapu_geo_nr_Bfield_pushJ_vlo_exec(
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
     long scmc_internal_g_xlen,
     long scmc_internal_g_ylen) {
 
   mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);
+
+  /* The multi kernel and its shared-DM layout are compiled for a fixed N.
+   * Always launch that N so an older host-side caller passing xlen=1 cannot
+   * silently fall back to the former single-owner execution path. */
+  (void)scmc_internal_g_xlen;
+  const long multi_xlen = PUSHJ_VLO_REAL_PARALLEL_N;
 
   mapu_pscmc_mem *fieldE_ext_pm = kerstr->fieldE_ext ? kerstr->fieldE_ext : kerstr->fieldE;
 
@@ -112,12 +170,12 @@ int mapu_geo_nr_Bfield_pushJ_vlo_exec(
       DELTA_X_v, DELTA_Y_v, DELTA_Z_v, Mass0_v, Charge0_v, Deltat_v,                  \
       Tori_X0_v, r0_v, MIN_R0_v, Q0_v, b0_v, zmid_v
 
-    if (scmc_internal_g_ylen < 65536) {
-    mapu_geo_nr_Bfield_pushJ_vlo<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
+  if (scmc_internal_g_ylen < 65536) {
+    mapu_geo_nr_Bfield_pushJ_vlo<<<scmc_internal_g_ylen, multi_xlen>>>(
         MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS);
   } else {
     dim3 gridDim(65535, (unsigned int)((scmc_internal_g_ylen + 65534) / 65535), 1);
-    dim3 blockDim((unsigned int)scmc_internal_g_xlen, 1, 1);
+    dim3 blockDim((unsigned int)multi_xlen, 1, 1);
     mapu_geo_nr_Bfield_pushJ_vlo<<<gridDim, blockDim>>>(
         MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS);
   }

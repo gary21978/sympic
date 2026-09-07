@@ -3,6 +3,9 @@
 
 #define NCSPIC_SEQ_FIELD
 typedef double NUMBER_REAL;
+
+#ifndef FIELD3D_SEQ
+#define FIELD3D_SEQ
 #define NUM_SYNC_LAYER 27
 
 #define NUM_SYNC_KERNEL 12
@@ -141,6 +144,8 @@ typedef struct {
   void *blas_axpby_enlarge_kernel;
 
 } Field3D_Seq;
+#endif
+
 typedef struct {
   Field3D_Seq *pfield;
 

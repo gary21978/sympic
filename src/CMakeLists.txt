@@ -22,6 +22,7 @@ add_subdirectory(${SYMPIC_BACKEND_DIR})
 # ============================================================
 file(GLOB HOST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 
+set(CMAKE_EXECUTABLE_SUFFIX ".out")
 add_executable(sympic ${HOST_SOURCES})
 
 set(SYMPIC_LINK_LIBS
@@ -33,15 +34,6 @@ set(SYMPIC_LINK_LIBS
 )
 if(SYMPIC_CUDA)
     list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver)
-elseif(SYMPIC_MAPU)
-    target_include_directories(sympic PRIVATE ${SCALE_TOOLCHAIN_PATH}/../maps-umd/include)
-
-    list(APPEND SYMPIC_LINK_LIBS
-        ${SCALE_TOOLCHAIN_PATH}/lib/scale/release/libscalehost.so
-        ${SCALE_TOOLCHAIN_PATH}/../maps-umd/lib/libmaps.so
-    )
-
-
 endif()
 
 target_link_libraries(sympic PRIVATE ${SYMPIC_LINK_LIBS})

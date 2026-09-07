@@ -7,9 +7,6 @@
 
 #include "general_partial_sort.kernel.inc"
 
-
-
-
 int mapu_cu_swap_r_8_init(mapu_pscmc_env *pe, mapu_cu_swap_r_8_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
@@ -4185,7 +4182,24 @@ int mapu_gpu_sort_one_grid_z_6_init(mapu_pscmc_env *pe,
 void mapu_gpu_sort_one_grid_z_6_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_gpu_sort_one_grid_z_6_struct));
 }
-int mapu_gpu_sort_one_grid_z_6_get_xlen() { return 32; }
+
+#ifndef MAPU_GPU_SORT_ONE_GRID_6_XLEN
+#define MAPU_GPU_SORT_ONE_GRID_6_XLEN
+#endif
+/* number of thread within a block: 1~32 */
+#define MAPU_GPU_SORT_ONE_GRID_6_XLEN 1
+#if (MAPU_GPU_SORT_ONE_GRID_6_XLEN < 1) || \
+    (MAPU_GPU_SORT_ONE_GRID_6_XLEN > 32)
+#error "MAPU_GPU_SORT_ONE_GRID_6_XLEN must be in [1, 32]"
+#endif
+
+static int mapu_gpu_sort_one_grid_6_runtime_xlen() {
+    return MAPU_GPU_SORT_ONE_GRID_6_XLEN;
+}
+
+int mapu_gpu_sort_one_grid_z_6_get_xlen() {
+    return mapu_gpu_sort_one_grid_6_runtime_xlen();
+}
 int mapu_gpu_sort_one_grid_z_6_get_num_compute_units(
     mapu_gpu_sort_one_grid_z_6_struct *kerstr) {
   return 4;
@@ -4572,7 +4586,9 @@ int mapu_gpu_sort_one_grid_y_6_init(mapu_pscmc_env *pe,
 void mapu_gpu_sort_one_grid_y_6_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_gpu_sort_one_grid_y_6_struct));
 }
-int mapu_gpu_sort_one_grid_y_6_get_xlen() { return 32; }
+int mapu_gpu_sort_one_grid_y_6_get_xlen() {
+    return mapu_gpu_sort_one_grid_6_runtime_xlen();
+}
 int mapu_gpu_sort_one_grid_y_6_get_num_compute_units(
     mapu_gpu_sort_one_grid_y_6_struct *kerstr) {
   return 4;
@@ -4959,7 +4975,9 @@ int mapu_gpu_sort_one_grid_x_6_init(mapu_pscmc_env *pe,
 void mapu_gpu_sort_one_grid_x_6_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_gpu_sort_one_grid_x_6_struct));
 }
-int mapu_gpu_sort_one_grid_x_6_get_xlen() { return 32; }
+int mapu_gpu_sort_one_grid_x_6_get_xlen() {
+    return mapu_gpu_sort_one_grid_6_runtime_xlen();
+}
 int mapu_gpu_sort_one_grid_x_6_get_num_compute_units(
     mapu_gpu_sort_one_grid_x_6_struct *kerstr) {
   return 4;

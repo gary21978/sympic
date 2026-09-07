@@ -1,3 +1,8 @@
-/build/
-/build-nvscale/
-
+*.o
+*.a
+.vscode
+/.vs
+build/
+.cache/
+builds/
+env.local.sh

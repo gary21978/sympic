@@ -16,7 +16,8 @@ int build_Field_compute_unit_from_seq_field(Field3D_Seq *pthis, Field3D_Seq *inp
 #ifdef SYMPIC_CUDA
   int num_cu = (cuda_blas_sum_get_num_compute_units(NULL));
 #elif defined(SYMPIC_MAPU)
-  int num_cu = (mapu_blas_sum_get_num_compute_units(NULL));
+  // int num_cu = (mapu_blas_sum_get_num_compute_units(NULL));
+  int num_cu = 4;
 #endif
 
   int new_num_ele = (num_cu * (input_E)->num_ele);

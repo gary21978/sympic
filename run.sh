@@ -10,16 +10,18 @@ CASE_PATH=""          # 必填：算例路径
 # ---------- 用法说明 ----------
 usage() {
     cat <<EOF
-用法: $0 <算例路径> [--masight]
+用法: $0 <算例路径> [--masight] [--build-dir <目录>]
 
 参数:
   <算例路径>     必填，算例所在目录的路径
   --masight     可选，启用 masight 性能分析工具
+  --build-dir   可选，指定 build 目录；默认使用最近一次 build.sh 记录的目录
   -h, --help    显示本帮助信息
 
 示例:
   $0 /data/cases/demo01
   $0 /data/cases/demo01 --masight
+  $0 case/demo-8 --build-dir build-nvscale
 EOF
 }
 
@@ -29,6 +31,15 @@ while [[ $# -gt 0 ]]; do
         --masight)
             ENABLE_MASIGHT=1
             shift
+            ;;
+        --build-dir)
+            if [[ $# -lt 2 ]]; then
+                echo "错误: --build-dir 缺少参数" >&2
+                usage >&2
+                exit 1
+            fi
+            BUILD_DIR_ARG="$2"
+            shift 2
             ;;
         -h|--help)
             usage
@@ -71,7 +82,22 @@ export MAPS_API_LOG_ALWAYS=0
 export SCALE_TOOLCHAIN_ROOT=/opt/maps/toolchain
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="${SCRIPT_DIR}/build"
+BUILD_DIR_ARG="${BUILD_DIR_ARG:-${SYMPIC_BUILD_DIR:-}}"
+if [[ -n "${BUILD_DIR_ARG}" ]]; then
+    if [[ "${BUILD_DIR_ARG}" = /* ]]; then
+        BUILD_DIR="${BUILD_DIR_ARG}"
+    else
+        BUILD_DIR="${SCRIPT_DIR}/${BUILD_DIR_ARG}"
+    fi
+elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
+    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
+elif [[ -d "${SCRIPT_DIR}/build-nvscale" ]]; then
+    BUILD_DIR="${SCRIPT_DIR}/build-nvscale"
+elif [[ -d "${SCRIPT_DIR}/build-cuda" ]]; then
+    BUILD_DIR="${SCRIPT_DIR}/build-cuda"
+else
+    BUILD_DIR="${SCRIPT_DIR}/build"
+fi
 TEST_DIR="${BUILD_DIR}/test"
 
 # 解析算例目录：支持相对路径（基于 repo 根）或绝对路径
@@ -89,8 +115,19 @@ if [ ! -f "${CASE_DIR_ABS}/test.ss" ]; then
     echo "[fatal] test.ss not found in ${CASE_DIR_ABS}"
     exit 1
 fi
+if [ ! -x "${BUILD_DIR}/bin/sympic" ] && [ ! -x "${BUILD_DIR}/bin/sympic.out" ]; then
+    echo "[fatal] sympic executable not found in ${BUILD_DIR}/bin"
+    echo "[hint ] run: bash ./build.sh nvscale"
+    exit 1
+fi
+if [ ! -x "${BUILD_DIR}/bin/gapsio2to0" ]; then
+    echo "[fatal] gapsio2to0 executable not found in ${BUILD_DIR}/bin"
+    echo "[hint ] run: bash ./build.sh nvscale"
+    exit 1
+fi
 
 echo "=== 使用算例目录: ${CASE_DIR_ABS} ==="
+echo "=== 使用构建目录: ${BUILD_DIR} ==="
 echo ""
 echo "=== 1. 创建并清空测试目录 ==="
 mkdir -p "${TEST_DIR}"
@@ -108,7 +145,11 @@ for f in "${CASE_DIR_ABS}/"*; do
 done
 
 echo "=== 3. 链接可执行文件 ==="
-ln -sf "${BUILD_DIR}/bin/sympic.out"     "${TEST_DIR}/sympic.out"
+if [ -x "${BUILD_DIR}/bin/sympic.out" ]; then
+    ln -sf "${BUILD_DIR}/bin/sympic.out" "${TEST_DIR}/sympic.out"
+else
+    ln -sf "${BUILD_DIR}/bin/sympic" "${TEST_DIR}/sympic.out"
+fi
 ln -sf "${BUILD_DIR}/bin/gapsio2to0" "${TEST_DIR}/gapsio2to0"
 
 echo "=== 4. 链接 cscheme 标准库 ==="

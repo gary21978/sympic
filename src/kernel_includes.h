@@ -17,6 +17,7 @@
 #endif
 
 #ifdef SYMPIC_MAPU
+#include <maps_runtime.h>
 #include "mapu_/mapu_pscmc.h"
 #include "mapu_/inner_split_pass.kernel_runtime.h"
 #include "mapu_/general_partial_sort.kernel_runtime.h"
@@ -35,7 +36,7 @@ typedef mapu_pscmc_mem SymPIC_Device_Mem;
 #endif
 
 static inline void sympic_set_device(int device_id) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   cudaSetDevice(device_id);
 #elif defined(SYMPIC_MAPU)
   mapsSetDevice(device_id);
@@ -44,7 +45,7 @@ static inline void sympic_set_device(int device_id) {
 
 static inline void sympic_enable_peer_access(int device_id, int peer_device_id) {
   int can_access = 0;
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   cudaDeviceCanAccessPeer(&can_access, device_id, peer_device_id);
   if (can_access) cudaDeviceEnablePeerAccess(peer_device_id, 0);
 #elif defined(SYMPIC_MAPU)
@@ -55,7 +56,7 @@ static inline void sympic_enable_peer_access(int device_id, int peer_device_id) 
 
 static inline int sympic_copy_local_async(void *dst, const void *src,
                                           size_t bytes) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   return (int)cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToDevice, 0);
 #elif defined(SYMPIC_MAPU)
   return (int)mapsMemcpyAsync(dst, src, bytes, mapsMemcpyDeviceToDevice, 0);
@@ -65,7 +66,7 @@ static inline int sympic_copy_local_async(void *dst, const void *src,
 static inline int sympic_copy_peer_async(void *dst, int dst_device,
                                          const void *src, int src_device,
                                          size_t bytes) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   return (int)cudaMemcpyPeerAsync(dst, dst_device, src, src_device, bytes, 0);
 #elif defined(SYMPIC_MAPU)
   return (int)mapsMemcpyPeerAsync(dst, dst_device, src, src_device, bytes, 0);
@@ -74,7 +75,7 @@ static inline int sympic_copy_peer_async(void *dst, int dst_device,
 
 static inline void sympic_copy_peer(void *dst, int dst_device, const void *src,
                                     int src_device, size_t bytes) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   cudaMemcpyPeer(dst, dst_device, src, src_device, bytes);
 #elif defined(SYMPIC_MAPU)
   mapsMemcpyPeer(dst, dst_device, src, src_device, bytes);
@@ -82,7 +83,7 @@ static inline void sympic_copy_peer(void *dst, int dst_device, const void *src,
 }
 
 static inline int sympic_device_synchronize(void) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   return (int)cudaDeviceSynchronize();
 #elif defined(SYMPIC_MAPU)
   return (int)mapsDeviceSynchronize();
@@ -90,7 +91,7 @@ static inline int sympic_device_synchronize(void) {
 }
 
 static inline const char *sympic_device_error_string(int error) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   return cudaGetErrorString((cudaError_t)error);
 #elif defined(SYMPIC_MAPU)
   return mapsGetErrorString((mapsError_t)error);
@@ -114,7 +115,7 @@ static inline void sympic_mem_sync_h2d(void *mem) {
 }
 
 static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclGetUniqueId(id);
 #elif defined(SYMPIC_MAPU)
   macclGetUniqueId(id);
@@ -122,7 +123,7 @@ static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
 }
 
 static inline void sympic_comm_group_start(void) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclGroupStart();
 #elif defined(SYMPIC_MAPU)
   macclGroupStart();
@@ -130,7 +131,7 @@ static inline void sympic_comm_group_start(void) {
 }
 
 static inline void sympic_comm_group_end(void) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclGroupEnd();
 #elif defined(SYMPIC_MAPU)
   macclGroupEnd();
@@ -139,7 +140,7 @@ static inline void sympic_comm_group_end(void) {
 
 static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
                                          SymPIC_Device_UniqueId id, int rank) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclCommInitRank(comm, nranks, id, rank);
 #elif defined(SYMPIC_MAPU)
   macclCommInitRank(comm, nranks, id, rank);
@@ -147,7 +148,7 @@ static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
 }
 
 static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclCommDestroy(comm);
 #elif defined(SYMPIC_MAPU)
   macclCommDestroy(comm);
@@ -156,7 +157,7 @@ static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
 
 static inline void sympic_comm_send_int(const int *buffer, size_t count,
                                         int peer, SymPIC_Device_Comm comm) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclSend(buffer, count, ncclInt, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclSend(buffer, count, macclInt, peer, comm, 0);
@@ -165,7 +166,7 @@ static inline void sympic_comm_send_int(const int *buffer, size_t count,
 
 static inline void sympic_comm_recv_int(int *buffer, size_t count, int peer,
                                         SymPIC_Device_Comm comm) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclRecv(buffer, count, ncclInt, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclRecv(buffer, count, macclInt, peer, comm, 0);
@@ -174,7 +175,7 @@ static inline void sympic_comm_recv_int(int *buffer, size_t count, int peer,
 
 static inline void sympic_comm_send_double(const double *buffer, size_t count,
                                            int peer, SymPIC_Device_Comm comm) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclSend(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclSend(buffer, count, macclDouble, peer, comm, 0);
@@ -183,7 +184,7 @@ static inline void sympic_comm_send_double(const double *buffer, size_t count,
 
 static inline void sympic_comm_recv_double(double *buffer, size_t count,
                                            int peer, SymPIC_Device_Comm comm) {
-#if defined(SYMPIC_USE_NCCL)
+#ifdef SYMPIC_CUDA
   ncclRecv(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclRecv(buffer, count, macclDouble, peer, comm, 0);

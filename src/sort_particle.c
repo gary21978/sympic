@@ -14,13 +14,19 @@ static void sympic_particle_shift(One_Particle_Collection *particles,
   SymPIC_Device_Mem *cache = (SymPIC_Device_Mem *)particles->cu_cache;
   SymPIC_Device_Mem *xyzw = (SymPIC_Device_Mem *)particles->cu_xyzw;
   SymPIC_Device_Mem *lengths = (SymPIC_Device_Mem *)particles->swap_len_buf;
-#if defined(SYMPIC_USE_NCCL)
+#if defined(SYMPIC_CUDA)
   cuda_particle_shift_launch((double *)cache->d_data, (int *)xyzw->d_data,
                              (int *)lengths->d_data + 4 * numvec,
                              particles->cu_cache_length, numvec, dir, xyz_len,
                              ptlen, device_id);
 #elif defined(SYMPIC_MAPU)
-  /* Conservative native-MAPU fallback until this small fixup gets an MPU kernel. */
+  if (cuda_particle_shift_launch) {
+    cuda_particle_shift_launch((double *)cache->d_data, (int *)xyzw->d_data,
+                               (int *)lengths->d_data + 4 * numvec,
+                               particles->cu_cache_length, numvec, dir,
+                               xyz_len, ptlen, device_id);
+    return;
+  }
   mapu_pscmc_mem_sync_d2h(cache);
   mapu_pscmc_mem_sync_d2h(xyzw);
   mapu_pscmc_mem_sync_d2h(lengths);
@@ -2956,7 +2962,6 @@ int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
   }
   return 0;
 }
-/* USENCCL end */
 int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int mask) {
 
   // defined from class Field3D_MPI

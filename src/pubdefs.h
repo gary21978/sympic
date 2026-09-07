@@ -1,7 +1,7 @@
 #ifndef NCSPIC_SEQ_FIELD
 #include "smallmpi/small_mpi.h"
 
-#if defined(SYMPIC_USE_NCCL)
+#if defined(SYMPIC_CUDA)
 #include <nccl.h>
 typedef ncclComm_t SymPIC_Device_Comm;
 typedef ncclUniqueId SymPIC_Device_UniqueId;
@@ -221,7 +221,7 @@ typedef struct {
 
   void *adjoint_vec_pids;
 
-  void *swap_len_buf; /* USENCCL */
+  void *swap_len_buf;
 
 } One_Particle_Collection;
 typedef struct {

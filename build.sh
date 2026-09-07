@@ -1,6 +1,6 @@
 #!/bin/bash
-# build.sh — 创建/清空 build 目录并编译
-# 用法: bash build.sh
+# build.sh — 创建/清空对应后端 build 目录并编译
+# 用法: bash build.sh [cuda|mapu|nvscale]
 
 
 
@@ -20,11 +20,11 @@ fi
 MODE="$1"
 case "${MODE}" in
     cuda)
-        BUILD_DIR="${SCRIPT_DIR}/build"
+        BUILD_DIR="${SCRIPT_DIR}/build-cuda"
         CMAKE_FLAGS="-DSYMPIC_CUDA=ON -DSYMPIC_MAPU=OFF"
         ;;
     mapu)
-        BUILD_DIR="${SCRIPT_DIR}/build"
+        BUILD_DIR="${SCRIPT_DIR}/build-mapu"
         CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=ON"
 
         ;;
@@ -61,3 +61,5 @@ make -j16
 
 echo ""
 echo "=== 构建完成 ==="
+echo "${BUILD_DIR}" > "${SCRIPT_DIR}/.sympic-last-build"
+echo "=== 当前默认运行目录: ${BUILD_DIR} ==="

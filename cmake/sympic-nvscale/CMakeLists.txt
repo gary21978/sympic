@@ -56,7 +56,6 @@ find_library(NCCL_LIBRARY NAMES nccl REQUIRED)
 
 set(SYMPIC_NVSCALE_COMPILE_DEFINITIONS
   SYMPIC_MAPU
-  SYMPIC_USE_NCCL
 )
 
 include_directories(

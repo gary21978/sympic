@@ -292,14 +292,13 @@ int main(int argc, char **argv) {
 
   PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(rank));
   assert((rank < n));
-  /* USENCCL: NCCL unique ID exchange */
+  /* Device communicator unique ID exchange. */
   SymPIC_Device_UniqueId device_comm_id;
   if (rank == 0)
   {
     sympic_comm_get_unique_id(&device_comm_id);
   }
   PS_MPI_Bcast(&device_comm_id, sizeof(device_comm_id), PS_MPI_CHAR, 0, PS_MPI_COMM_WORLD);
-  /* USENCCL end */
   double M_USE_TIME_AS_RANDOM_SEED = call_GET_VAR("USE_TIME_AS_RANDOM_SEED");
 
   double M_RAND_SEED = call_GET_VAR("RAND_SEED");
@@ -400,7 +399,7 @@ int main(int argc, char **argv) {
            ((G_USE_DIFFERENT_DEV_PERFORMANCE) ? (call_CAL_FUN_ONE_PARA("GET_DEV_PERFORMANCE", i)) : (1)));
     }
   }
-  /* USENCCL: enable GPU peer access for cross-device memcpy */
+  /* Enable peer access for cross-device copies. */
   for (long i = 0; i < NUM_RUNTIME; i++)
   {
     sympic_set_device(dev_ids[i]);
@@ -412,7 +411,7 @@ int main(int argc, char **argv) {
       }
     }
   }
-  // initialize NCCL communicators
+  // Initialize device communicators.
   SymPIC_Device_Comm *device_comms = malloc(sizeof(*device_comms) * NUM_RUNTIME);
   sympic_comm_group_start();
   for (long ri = 0; ri < NUM_RUNTIME; ri++)
@@ -422,7 +421,6 @@ int main(int argc, char **argv) {
                           device_comm_id, rank * NUM_RUNTIME + ri);
   }
   sympic_comm_group_end();
-  /* USENCCL end */
   fprintf(stderr, "rank %d init, pid=%d\n", rank, getpid());
   memset(pfstest, 0, sizeof(Field3D_Seq));
   long fieldlen = 3;
@@ -695,14 +693,12 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Calling Finalize\n");
   }
 
-  /* USENCCL */
   for (long ri = 0; ri < NUM_RUNTIME; ri++)
   {
     sympic_set_device(dev_ids[ri]);
     sympic_comm_destroy(device_comms[ri]);
   }
   free(device_comms);
-  /* USENCCL end */
   PS_MPI_Finalize();
   return 0;
 }

@@ -35,4 +35,4 @@ int call_particle_sort_mpi(Field3D_MPI *pthis, int dir, int use_vlo);
 
 int cuda_particle_shift_launch(double *cu_cache, int *cu_xyzw, const int *frl,
     long cu_cache_length, long numvec, int dir, long XYZLEN,
-    int ptlen, int device_id); /* USENCCL */
+    int ptlen, int device_id) __attribute__((weak));

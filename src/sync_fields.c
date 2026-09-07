@@ -70,7 +70,7 @@ static void enqueue_local_recv_copies(Field3D_Seq *data, long data_id, int field
   }
 }
 
-/* USENCCL Precompute self/same-rank recv mapping.
+/* Precompute self/same-rank recv mapping.
    adj_ids/adj_processes/adj_local_tid never change after init. */
 static void build_local_recv_cache(Field3D_Seq *data, long num_runtime, long cur_rank) {
   long numvec = data->numvec;
@@ -159,7 +159,6 @@ static void build_local_recv_cache(Field3D_Seq *data, long num_runtime, long cur
   }
   data->cache_valid = 1;
 }
-/* USENCCL end */
 
 int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
@@ -174,11 +173,9 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   long num_data = num_runtime;
 
-  /* USENCCL */
   for (i = 0; i < num_data; i++)
     if (!data[i].cache_valid)
       build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank);
-  /* USENCCL end */
   size_t all_sync_len[num_data];
   size_t v_offset[num_data];
   for (i = 0; i < num_data; i++) {
@@ -199,164 +196,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   }
   int fieldid;
 
-  /* USENCCL: field exchange via NCCL  */
-  sympic_comm_group_start();
-  for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
-    if ((fieldid == (NUM_SYNC_LAYER / 2))) {
-      continue;
-    }
-
-    size_t recv_offset[num_data];
-    for (i = 0; i < num_data; i++) {
-      recv_offset[i] = v_offset[i];
-    }
-
-    for (i = 0; i < num_data; i++) {
-      sympic_set_device(data[i].cuda_device);
-
-      long numvec = ((data + i))->numvec;
-
-      void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
-      void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
-
-      long *adj_ids = ((data + i))->adj_ids;
-      long *adj_processes = ((data + i))->adj_processes;
-
-      SymPIC_Device_Mem *sync_mem = (SymPIC_Device_Mem *)(sync_layer_pscmc[0]);
-      SymPIC_Device_Mem *swap_mem = (SymPIC_Device_Mem *)(swap_layer_pscmc[0]);
-      double *sync_d_data = (double *)(sync_mem->d_data);
-      double *swap_d_data = (double *)(swap_mem->d_data);
-
-      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
-
-      int tid;
-
-      long sllen = (sync_layer_len)[fieldid];
-
-      /* self/same-rank recvs: async copies on default stream, enqueued BEFORE
-         NCCL sends so they do not wait for peer arrival */
-      {
-        int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
-        long sllen1 = (sync_layer_len)[fieldid1];
-        enqueue_local_recv_copies(data, i, fieldid, recv_offset, numvec,
-                                  sllen1, swap_d_data, sync_d_data);
-      }
-
-      /* sends sorted by adj_ids[tid*27+fieldid] (receiver subdomain ID) for NCCL order match */
-      {
-        long send_count = data[i].remote_send_count[fieldid];
-        long *send_tid = data[i].remote_send_tid[fieldid];
-        for (long pass = 0; pass < send_count; pass++) {
-          long best_tid = send_tid[pass];
-          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid];
-          sympic_comm_send_double(sync_d_data + (v_offset)[i] + best_tid * sllen,
-                                  sllen, peer, pthis->device_comm[i]);
-        }
-      }
-    }
-    for (i = 0; i < num_data; i++) {
-      sympic_set_device(data[i].cuda_device);
-
-      long numvec = ((data + i))->numvec;
-
-      void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
-      void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
-
-      long *adj_ids = ((data + i))->adj_ids;
-      long *adj_processes = ((data + i))->adj_processes;
-      long *adj_local_tid = ((data + i))->adj_local_tid;
-
-      SymPIC_Device_Mem *sync_mem = (SymPIC_Device_Mem *)(sync_layer_pscmc[0]);
-      SymPIC_Device_Mem *swap_mem = (SymPIC_Device_Mem *)(swap_layer_pscmc[0]);
-      double *sync_d_data = (double *)(sync_mem->d_data);
-      double *swap_d_data = (double *)(swap_mem->d_data);
-
-      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
-      int tid;
-
-      int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
-
-      double *t1;
-      double *t0;
-
-      long sllen = (sync_layer_len)[fieldid1];
-
-      /* remote recvs sorted by adj_ids[tid*27+13] (receiver subdomain ID) for NCCL order match */
-      {
-        long recv_count = data[i].remote_recv_count[fieldid];
-        long *recv_tid = data[i].remote_recv_tid[fieldid];
-        for (long pass = 0; pass < recv_count; pass++) {
-          long best_tid = recv_tid[pass];
-          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid1];
-          sympic_comm_recv_double(
-              swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + best_tid * sllen,
-              sllen, peer, pthis->device_comm[i]);
-        }
-      }
-      ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));
-    }
-  }
-  sympic_comm_group_end(); /* USENCCL end */
-  for (i = 0; i < num_data; i++) {
-    sympic_set_device(data[i].cuda_device);
-    int sync_err = sympic_device_synchronize();
-    if (sync_err != 0) {
-      fprintf(stderr, "sympic_device_synchronize failed in merge: err=%s runtime=%ld dev=%d\n",
-              sympic_device_error_string(sync_err), i, data[i].cuda_device);
-      assert(0);
-    }
-  }
-
-  for (i = 0; i < num_data; i++) {
-    sympic_set_device(data[i].cuda_device);
-
-    void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
-
-    Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one((data + i), 0);
-  }
-
-  return 0;
-}
-
-int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
-
-  Field3D_Seq *data = (pthis)->data;
-
-  long num_runtime = (pthis)->num_runtime;
-
-  long *sync_layer_len = (pthis)->sync_layer_len;
-
-
-  long i = 0;
-
-  long num_data = num_runtime;
-
-  /* USENCCL */
-  for (i = 0; i < num_data; i++)
-    if (!data[i].cache_valid)
-      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank);
-  /* USENCCL end */
-  size_t all_sync_len[num_data];
-  size_t v_offset[num_data];
-  for (i = 0; i < num_data; i++) {
-    sympic_set_device(data[i].cuda_device);
-    Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one((data + i), 1);
-
-    long xlen = ((data + i))->xlen;
-    long ylen = ((data + i))->ylen;
-    long zlen = ((data + i))->zlen;
-    long xblock = ((data + i))->xblock;
-    long yblock = ((data + i))->yblock;
-    long zblock = ((data + i))->zblock;
-    long numvec = ((data + i))->numvec;
-    int num_ele = ((data + i))->num_ele;
-
-    ((v_offset)[i] = 0);
-    ((all_sync_len)[i] = (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
-  }
-  int fieldid;
-
-  /* USENCCL: field exchange via NCCL (replaces MPI) */
+  /* Field exchange through the selected device communication backend. */
   sympic_comm_group_start();
   for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
     if ((fieldid == (NUM_SYNC_LAYER / 2))) {
@@ -454,7 +294,161 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
     }
   }
   sympic_comm_group_end();
-  /* USENCCL end */
+  for (i = 0; i < num_data; i++) {
+    sympic_set_device(data[i].cuda_device);
+    int sync_err = sympic_device_synchronize();
+    if (sync_err != 0) {
+      fprintf(stderr, "sympic_device_synchronize failed in merge: err=%s runtime=%ld dev=%d\n",
+              sympic_device_error_string(sync_err), i, data[i].cuda_device);
+      assert(0);
+    }
+  }
+
+  for (i = 0; i < num_data; i++) {
+    sympic_set_device(data[i].cuda_device);
+
+    void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
+
+    Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one((data + i), 0);
+  }
+
+  return 0;
+}
+
+int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
+
+  Field3D_Seq *data = (pthis)->data;
+
+  long num_runtime = (pthis)->num_runtime;
+
+  long *sync_layer_len = (pthis)->sync_layer_len;
+
+
+  long i = 0;
+
+  long num_data = num_runtime;
+
+  for (i = 0; i < num_data; i++)
+    if (!data[i].cache_valid)
+      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank);
+  size_t all_sync_len[num_data];
+  size_t v_offset[num_data];
+  for (i = 0; i < num_data; i++) {
+    sympic_set_device(data[i].cuda_device);
+    Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one((data + i), 1);
+
+    long xlen = ((data + i))->xlen;
+    long ylen = ((data + i))->ylen;
+    long zlen = ((data + i))->zlen;
+    long xblock = ((data + i))->xblock;
+    long yblock = ((data + i))->yblock;
+    long zblock = ((data + i))->zblock;
+    long numvec = ((data + i))->numvec;
+    int num_ele = ((data + i))->num_ele;
+
+    ((v_offset)[i] = 0);
+    ((all_sync_len)[i] = (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
+  }
+  int fieldid;
+
+  /* Field exchange through the selected device communication backend. */
+  sympic_comm_group_start();
+  for (fieldid = 0; (fieldid < NUM_SYNC_LAYER); fieldid++) {
+    if ((fieldid == (NUM_SYNC_LAYER / 2))) {
+      continue;
+    }
+
+    size_t recv_offset[num_data];
+    for (i = 0; i < num_data; i++) {
+      recv_offset[i] = v_offset[i];
+    }
+
+    for (i = 0; i < num_data; i++) {
+      sympic_set_device(data[i].cuda_device);
+
+      long numvec = ((data + i))->numvec;
+
+      void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
+      void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
+
+      long *adj_ids = ((data + i))->adj_ids;
+      long *adj_processes = ((data + i))->adj_processes;
+
+      SymPIC_Device_Mem *sync_mem = (SymPIC_Device_Mem *)(sync_layer_pscmc[0]);
+      SymPIC_Device_Mem *swap_mem = (SymPIC_Device_Mem *)(swap_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
+      double *swap_d_data = (double *)(swap_mem->d_data);
+
+      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
+
+      int tid;
+
+      long sllen = (sync_layer_len)[fieldid];
+
+      /* self/same-rank recvs: async copies on default stream, enqueued BEFORE
+         NCCL sends so they do not wait for peer arrival */
+      {
+        int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
+        long sllen1 = (sync_layer_len)[fieldid1];
+        enqueue_local_recv_copies(data, i, fieldid, recv_offset, numvec,
+                                  sllen1, swap_d_data, sync_d_data);
+      }
+
+      /* sends sorted by adj_ids[tid*27+fieldid] (receiver subdomain ID) for NCCL order match */
+      {
+        long send_count = data[i].remote_send_count[fieldid];
+        long *send_tid = data[i].remote_send_tid[fieldid];
+        for (long pass = 0; pass < send_count; pass++) {
+          long best_tid = send_tid[pass];
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid];
+          sympic_comm_send_double(sync_d_data + (v_offset)[i] + best_tid * sllen,
+                                  sllen, peer, pthis->device_comm[i]);
+        }
+      }
+    }
+    for (i = 0; i < num_data; i++) {
+      sympic_set_device(data[i].cuda_device);
+
+      long numvec = ((data + i))->numvec;
+
+      void **sync_layer_pscmc = ((data + i))->sync_layer_pscmc;
+      void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
+
+      long *adj_ids = ((data + i))->adj_ids;
+      long *adj_processes = ((data + i))->adj_processes;
+      long *adj_local_tid = ((data + i))->adj_local_tid;
+
+      SymPIC_Device_Mem *sync_mem = (SymPIC_Device_Mem *)(sync_layer_pscmc[0]);
+      SymPIC_Device_Mem *swap_mem = (SymPIC_Device_Mem *)(swap_layer_pscmc[0]);
+      double *sync_d_data = (double *)(sync_mem->d_data);
+      double *swap_d_data = (double *)(swap_mem->d_data);
+
+      (swap_d_data = (swap_d_data + (all_sync_len)[i]));
+      int tid;
+
+      int fieldid1 = ((NUM_SYNC_LAYER - 1) - fieldid);
+
+      double *t1;
+      double *t0;
+
+      long sllen = (sync_layer_len)[fieldid1];
+
+      /* remote recvs sorted by adj_ids[tid*27+13] (receiver subdomain ID) for NCCL order match */
+      {
+        long recv_count = data[i].remote_recv_count[fieldid];
+        long *recv_tid = data[i].remote_recv_tid[fieldid];
+        for (long pass = 0; pass < recv_count; pass++) {
+          long best_tid = recv_tid[pass];
+          long peer = (adj_processes)[(best_tid * NUM_SYNC_LAYER) + fieldid1];
+          sympic_comm_recv_double(
+              swap_d_data - ((recv_offset)[i] + (sllen * numvec)) + best_tid * sllen,
+              sllen, peer, pthis->device_comm[i]);
+        }
+      }
+      ((v_offset)[i] = ((recv_offset)[i] + (sllen * numvec)));
+    }
+  }
+  sympic_comm_group_end();
   for (i = 0; i < num_data; i++) {
     sympic_set_device(data[i].cuda_device);
     int sync_err = sympic_device_synchronize();

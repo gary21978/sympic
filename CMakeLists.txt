@@ -131,7 +131,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--gc-sections")
 # 5. 后端宏与库名（传递给 src/CMakeLists.txt）
 # ============================================================
 if(SYMPIC_CUDA)
-    add_compile_definitions(SYMPIC_CUDA SYMPIC_USE_NCCL)
+    add_compile_definitions(SYMPIC_CUDA)
     set(SYMPIC_BACKEND_LIB cuda_yeefdtd)
     set(SYMPIC_BACKEND_DIR cuda_)
 elseif(SYMPIC_MAPU)
@@ -141,9 +141,9 @@ elseif(SYMPIC_MAPU)
 endif()
 
 if(SYMPIC_NVSCALE)
-    # NVScale validates the MaPU kernels on CUDA while retaining dev's
-    # device-communication implementation through its NCCL branch.
-    add_compile_definitions(SYMPIC_MAPU SYMPIC_USE_NCCL)
+    # NVScale validates the MaPU kernels on CUDA while preserving MAPU-facing
+    # source interfaces. NVScale provides CUDA/NCCL-backed MAPS and MACCL shims.
+    add_compile_definitions(SYMPIC_MAPU)
     set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
     set(SYMPIC_BACKEND_DIR mapu_)
 endif()

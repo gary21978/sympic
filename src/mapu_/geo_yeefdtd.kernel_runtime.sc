@@ -36,10 +36,10 @@ extern "C"
         mapsSetDevice((kerstr->pe)->device_id);
 
         
-        MAPU_LONG XLEN_val = kerstr->XLEN->h_data[0];
-        MAPU_LONG YLEN_val = kerstr->YLEN->h_data[0];
-        MAPU_LONG ZLEN_val = kerstr->ZLEN->h_data[0];
-        MAPU_LONG numvec_val = kerstr->numvec->h_data[0];
+        MAPU_LONG XLEN_val = ((MAPU_LONG *)kerstr->XLEN->h_data)[0];
+        MAPU_LONG YLEN_val = ((MAPU_LONG *)kerstr->YLEN->h_data)[0];
+        MAPU_LONG ZLEN_val = ((MAPU_LONG *)kerstr->ZLEN->h_data)[0];
+        MAPU_LONG numvec_val = ((MAPU_LONG *)kerstr->numvec->h_data)[0];
 
         MAPU_LONG ntile_x = (XLEN_val + TILE_X - 1) / TILE_X;
         MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * ntile_x;
@@ -187,10 +187,10 @@ __d_data_address_tmp2; })), (((MAPU_LONG *)kerstr->y_cpu_core->h_data))[0], (((M
     {
         mapsSetDevice((kerstr->pe)->device_id);
 
-        MAPU_LONG XLEN_val = kerstr->XLEN->h_data[0];
-        MAPU_LONG YLEN_val = kerstr->YLEN->h_data[0];
-        MAPU_LONG ZLEN_val = kerstr->ZLEN->h_data[0];
-        MAPU_LONG numvec_val = kerstr->numvec->h_data[0];
+        MAPU_LONG XLEN_val = ((MAPU_LONG *)kerstr->XLEN->h_data)[0];
+        MAPU_LONG YLEN_val = ((MAPU_LONG *)kerstr->YLEN->h_data)[0];
+        MAPU_LONG ZLEN_val = ((MAPU_LONG *)kerstr->ZLEN->h_data)[0];
+        MAPU_LONG numvec_val = ((MAPU_LONG *)kerstr->numvec->h_data)[0];
 
         MAPU_LONG ntile_x = (XLEN_val + TILE_X - 1) / TILE_X;
         MAPU_LONG total_threads = numvec_val * YLEN_val * ZLEN_val * ntile_x;

@@ -1813,7 +1813,8 @@ extern "C" int cuda_particle_shift_launch(
     int ptlen, int device_id) {
   cudaError_t err = cudaSetDevice(device_id);
   if (err != cudaSuccess) return 1;
-  sympic_particle_shift_kernel<<<numvec, 256>>>(
+
+  sympic_particle_shift_kernel<<<numvec, 4>>>(
       cu_cache, cu_xyzw, frl, cu_cache_length, dir, xyz_len, ptlen);
   return cudaGetLastError() == cudaSuccess ? 0 : 2;
 }

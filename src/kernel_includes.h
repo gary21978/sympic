@@ -19,6 +19,7 @@
 #ifdef SYMPIC_MAPU
 #include <maps_runtime.h>
 #include "mapu_/mapu_pscmc.h"
+#include "mapu_/init_particle_gpu.kernel_runtime.h"
 #include "mapu_/inner_split_pass.kernel_runtime.h"
 #include "mapu_/general_partial_sort.kernel_runtime.h"
 #include "mapu_sort_one_grid_6_dispatch.h"

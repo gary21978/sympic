@@ -13,8 +13,16 @@
 #include "sync_fields.h"
 #include "blas_shell.h"
 #include "kernel_includes.h"
+#ifdef SYMPIC_CUDA
+#include "init_particle_gpu.kernel_runtime.h"
+#endif
 
 extern long srand_seed;
+
+static int init_particle_gpu_fast_enabled(void) {
+  const char *env = getenv("SYMPIC_INIT_PARTICLE_GPU_FAST");
+  return !(env && (strcmp(env, "0") == 0 || strcmp(env, "false") == 0 || strcmp(env, "FALSE") == 0));
+}
 long find_vec_id(long id, long *adj_ids, long numvec) {
   long num_id_min = (adj_ids)[(NUM_SYNC_LAYER / 2)];
 
@@ -517,6 +525,58 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
   void *cu_xyzw = (pthis)->cu_xyzw;
 
   //====================One_Particle_Collection
+  if (init_particle_gpu_fast_enabled()) {
+    if (ptlen != 6) {
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped for ptlen=%d\n", ptlen);
+    } else if (tgrid_load > (pthis)->grid_cache_len) {
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped, grid_load=%d grid_cache_len=%ld\n",
+              tgrid_load, (pthis)->grid_cache_len);
+    } else {
+      double vx0 = 0;
+      double vy0 = 0;
+      double vz0 = 0;
+      double tempx = 1;
+      double tempy = 1;
+      double tempz = 1;
+      if (USE_INIT_V0) {
+        vx0 = call_GET_INIT_V0_x(cur_sp, 0.5, 0.5, 0.5);
+        vy0 = call_GET_INIT_V0_y(cur_sp, 0.5, 0.5, 0.5);
+        vz0 = call_GET_INIT_V0_z(cur_sp, 0.5, 0.5, 0.5);
+      }
+      if (USE_NON_UNI_TEMPERATURE) {
+        tempx = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 0);
+        tempy = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 1);
+        tempz = call_GET_INIT_TEMPERATURE_DIST(cur_sp, 0.5, 0.5, 0.5, 2);
+      }
+      unsigned long long seed = ((unsigned long long)(srand_seed ? srand_seed : 1) << 32) ^
+                                (unsigned long long)(cur_sp + 1);
+      int launch_rc = -1;
+#ifdef SYMPIC_CUDA
+      launch_rc = launch_init_non_uni_particle_gpu((double *)((cuda_pscmc_mem *)inoutput)->d_data,
+                                                   (int *)((cuda_pscmc_mem *)xyzw)->d_data,
+                                                   (int *)((cuda_pscmc_mem *)cu_xyzw)->d_data, pfield->xlen, pfield->ylen,
+                                                   pfield->zlen, pfield->numvec, (pthis)->grid_cache_len, tgrid_load,
+                                                   ptlen, VT, vmax, vx0, vy0, vz0, tempx, tempy, tempz, seed,
+                                                   ((cuda_pscmc_env *)pfield->pe)->device_id);
+#endif
+#ifdef SYMPIC_MAPU
+      launch_rc = mapu_init_non_uni_particle_gpu_launch((mapu_pscmc_mem *)inoutput,
+                                                        (mapu_pscmc_mem *)xyzw,
+                                                        (mapu_pscmc_mem *)cu_xyzw, pfield->xlen, pfield->ylen,
+                                                        pfield->zlen, pfield->numvec, (pthis)->grid_cache_len, tgrid_load,
+                                                        ptlen, VT, vmax, vx0, vy0, vz0, tempx, tempy, tempz, seed,
+                                                        ((mapu_pscmc_env *)pfield->pe)->device_id);
+#endif
+      if (launch_rc == 0) {
+        fprintf(stderr,
+                "info init_non_uni_particle_opc: GPU fast path enabled spec=%d grid_load=%d "
+                "assume uniform density/temp/v0\n",
+                cur_sp, tgrid_load);
+        return 0;
+      }
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path unavailable, fallback to host init\n");
+    }
+  }
   {
     // defined from class One_Particle_Collection
     Field3D_Seq *pfield = (pthis)->pfield;

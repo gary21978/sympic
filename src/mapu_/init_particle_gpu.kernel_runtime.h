@@ -4,8 +4,6 @@
 extern "C" {
 #endif
 
-/* 粒子初始化 GPU 快路径（SYMPIC_INIT_PARTICLE_GPU_FAST）。
- * 返回 0 表示成功；非 0 表示不可用，调用方应回退 host 初始化。 */
 int mapu_init_non_uni_particle_gpu_launch(mapu_pscmc_mem *inoutput,
                                           mapu_pscmc_mem *xyzw,
                                           mapu_pscmc_mem *cu_xyzw,

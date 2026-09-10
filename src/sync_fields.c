@@ -36,11 +36,26 @@ static void enqueue_local_recv_copies(Field3D_Seq *data, long data_id, int field
   long *lr_src  = data[data_id].local_recv_src[fieldid];
   int  *lr_peer = data[data_id].local_recv_peer[fieldid];
   long  lr_n    = data[data_id].local_recv_count[fieldid];
+
+  /* self copies: one halo gather kernel replaces per-segment copies */
+  long self_n = data[data_id].local_self_count[fieldid];
+  if (self_n > 0)
+    sympic_launch_local_halo_copy(swap_d_data, sync_d_data,
+                                  data[data_id].local_self_tid_d[fieldid],
+                                  data[data_id].local_self_src_d[fieldid],
+                                  self_n, sllen, numvec, recv_offset[data_id],
+                                  data[data_id].cuda_device);
+
+  /* same-rank-different-runtime copies (num_runtime > 1 only): per-segment */
   long k = 0;
   while (k < lr_n) {
+    int peer = lr_peer[k];
+    if (peer < 0) {
+      k++;
+      continue;
+    }
     long dst0 = lr_tid[k];
     long src0 = lr_src[k];
-    int peer = lr_peer[k];
     long run = 1;
     while (k + run < lr_n &&
            lr_peer[k + run] == peer &&
@@ -51,16 +66,10 @@ static void enqueue_local_recv_copies(Field3D_Seq *data, long data_id, int field
 
     double *dst = swap_d_data - (recv_offset[data_id] + (sllen * numvec)) + dst0 * sllen;
     size_t bytes = sizeof(double) * sllen * run;
-    int err;
-    if (peer < 0) {
-      double *src = sync_d_data + recv_offset[data_id] + src0 * sllen;
-      err = sympic_copy_local_async(dst, src, bytes);
-    } else {
-      SymPIC_Device_Mem *sm = (SymPIC_Device_Mem *)(data[peer].sync_layer_pscmc[0]);
-      double *src = ((double *)(sm->d_data)) + recv_offset[peer] + src0 * sllen;
-      err = sympic_copy_peer_async(dst, data[data_id].cuda_device,
-                                   src, data[peer].cuda_device, bytes);
-    }
+    SymPIC_Device_Mem *sm = (SymPIC_Device_Mem *)(data[peer].sync_layer_pscmc[0]);
+    double *src = ((double *)(sm->d_data)) + recv_offset[peer] + src0 * sllen;
+    int err = sympic_copy_peer_async(dst, data[data_id].cuda_device,
+                                     src, data[peer].cuda_device, bytes);
     if (err != 0) {
       fprintf(stderr, "local recv copy failed: err=%s dst_runtime=%ld peer=%d bytes=%zu\n",
               sympic_device_error_string(err), data_id, peer, bytes);
@@ -155,6 +164,46 @@ static void build_local_recv_cache(Field3D_Seq *data, long num_runtime, long cur
       qsort(recv_order, nr, sizeof(SyncOrderEntry), cmp_sync_order_entry);
       for (long x = 0; x < nr; x++) data->remote_recv_tid[fid][x] = recv_order[x].tid;
       free(recv_order);
+    }
+
+    /* self-copy lists for the halo kernel: host arrays + device copies */
+    long n_self = 0;
+    for (long tid = 0; tid < numvec; tid++) {
+      long ap = adjp[tid * NUM_SYNC_LAYER + fid1];
+      if (ap == adjp[tid * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)]) n_self++;
+    }
+    data->local_self_count[fid] = n_self;
+    if (n_self > 0) {
+      data->local_self_tid[fid] = (long *)malloc(n_self * sizeof(long));
+      data->local_self_src[fid] = (long *)malloc(n_self * sizeof(long));
+      long x = 0;
+      for (long tid = 0; tid < numvec; tid++) {
+        long ap = adjp[tid * NUM_SYNC_LAYER + fid1];
+        if (ap == adjp[tid * NUM_SYNC_LAYER + (NUM_SYNC_LAYER / 2)]) {
+          data->local_self_tid[fid][x] = tid;
+          data->local_self_src[fid][x] = adjl[tid * NUM_SYNC_LAYER + fid1];
+          x++;
+        }
+      }
+      sympic_set_device(data->cuda_device);
+      int err = sympic_device_malloc((void **)&data->local_self_tid_d[fid],
+                                     n_self * sizeof(long));
+      if (err != 0) {
+        fprintf(stderr, "device malloc local_self_tid_d failed: err=%s dev=%d n=%ld\n",
+                sympic_device_error_string(err), data->cuda_device, n_self);
+        assert(0);
+      }
+      err = sympic_device_malloc((void **)&data->local_self_src_d[fid],
+                                 n_self * sizeof(long));
+      if (err != 0) {
+        fprintf(stderr, "device malloc local_self_src_d failed: err=%s dev=%d n=%ld\n",
+                sympic_device_error_string(err), data->cuda_device, n_self);
+        assert(0);
+      }
+      sympic_copy_h2d(data->local_self_tid_d[fid], data->local_self_tid[fid],
+                      n_self * sizeof(long));
+      sympic_copy_h2d(data->local_self_src_d[fid], data->local_self_src[fid],
+                      n_self * sizeof(long));
     }
   }
   data->cache_valid = 1;

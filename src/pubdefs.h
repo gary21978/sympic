@@ -167,6 +167,13 @@ typedef struct {
   long remote_recv_count[NUM_SYNC_LAYER];
   int cache_valid;
 
+  /* self-copy metadata for the halo kernel: host lists + device copies.*/
+  long local_self_count[NUM_SYNC_LAYER];
+  long *local_self_tid[NUM_SYNC_LAYER];
+  long *local_self_src[NUM_SYNC_LAYER];
+  long *local_self_tid_d[NUM_SYNC_LAYER];
+  long *local_self_src_d[NUM_SYNC_LAYER];
+
 } Field3D_Seq;
 #endif
 

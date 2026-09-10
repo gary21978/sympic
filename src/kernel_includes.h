@@ -13,6 +13,7 @@
 #include "cuda_/miniblas.kernel_inc.h"
 #include "cuda_/move_back.kernel_inc.h"
 #include "cuda_/particle_iter.kernel_inc.h"
+#include "cuda_/local_halo_copy.kernel_runtime.h"
 #include "cuda_yeefdtd.h"
 #endif
 
@@ -20,6 +21,7 @@
 #include <maps_runtime.h>
 #include "mapu_/mapu_pscmc.h"
 #include "mapu_/init_particle_gpu.kernel_runtime.h"
+#include "mapu_/local_halo_copy.kernel_runtime.h"
 #include "mapu_/inner_split_pass.kernel_runtime.h"
 #include "mapu_/general_partial_sort.kernel_runtime.h"
 #include "mapu_sort_one_grid_6_dispatch.h"
@@ -112,6 +114,40 @@ static inline void sympic_mem_sync_h2d(void *mem) {
   cuda_pscmc_mem_sync_h2d((cuda_pscmc_mem *)mem);
 #elif defined(SYMPIC_MAPU)
   mapu_pscmc_mem_sync_h2d((mapu_pscmc_mem *)mem);
+#endif
+}
+
+static inline int sympic_device_malloc(void **ptr, size_t bytes) {
+#ifdef SYMPIC_CUDA
+  return (int)cudaMalloc(ptr, bytes);
+#elif defined(SYMPIC_MAPU)
+  return (int)mapsMalloc(ptr, bytes);
+#endif
+}
+
+static inline int sympic_copy_h2d(void *dst, const void *src, size_t bytes) {
+#ifdef SYMPIC_CUDA
+  return (int)cudaMemcpy(dst, src, bytes, cudaMemcpyHostToDevice);
+#elif defined(SYMPIC_MAPU)
+  return (int)mapsMemcpy(dst, src, bytes, mapsMemcpyHostToDevice);
+#endif
+}
+
+/* single-kernel gather for self halo copies; replaces per-segment
+   cudaMemcpyAsync/mapsMemcpyAsync enqueue (the old self_copy hotspot) */
+static inline void sympic_launch_local_halo_copy(double *dst_base,
+                                                 const double *src_base,
+                                                 const long *dst_tid_d,
+                                                 const long *src_tid_d,
+                                                 long ncopy, long sllen,
+                                                 long numvec, size_t recv_offset,
+                                                 int device_id) {
+#ifdef SYMPIC_CUDA
+  cuda_local_halo_copy_launch(dst_base, src_base, dst_tid_d, src_tid_d, ncopy,
+                              sllen, numvec, recv_offset, device_id);
+#elif defined(SYMPIC_MAPU)
+  mapu_local_halo_copy_launch(dst_base, src_base, dst_tid_d, src_tid_d, ncopy,
+                              sllen, numvec, recv_offset, device_id);
 #endif
 }
 

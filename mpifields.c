@@ -104,6 +104,27 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_recv_tid[_li] = NULL;
     pthis->remote_recv_count[_li] = 0;
   }
+  /* USENCCL aggregated field-halo P2P plan */
+  pthis->field_halo_send_seg_count = 0;
+  pthis->field_halo_recv_seg_count = 0;
+  pthis->field_halo_send_src_d = NULL;
+  pthis->field_halo_send_dst_d = NULL;
+  pthis->field_halo_send_len_d = NULL;
+  pthis->field_halo_recv_src_d = NULL;
+  pthis->field_halo_recv_dst_d = NULL;
+  pthis->field_halo_recv_len_d = NULL;
+  pthis->field_halo_send_peer_count = 0;
+  pthis->field_halo_recv_peer_count = 0;
+  pthis->field_halo_send_peer = NULL;
+  pthis->field_halo_recv_peer = NULL;
+  pthis->field_halo_send_peer_offset = NULL;
+  pthis->field_halo_recv_peer_offset = NULL;
+  pthis->field_halo_send_peer_count_elems = NULL;
+  pthis->field_halo_recv_peer_count_elems = NULL;
+  pthis->field_halo_send_buf = NULL;
+  pthis->field_halo_recv_buf = NULL;
+  pthis->field_halo_send_total_elems = 0;
+  pthis->field_halo_recv_total_elems = 0;
   /* USENCCL end */
   int i;
 

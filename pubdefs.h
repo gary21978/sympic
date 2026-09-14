@@ -157,6 +157,29 @@ typedef struct {
 
   void *blas_axpby_enlarge_kernel;
 
+  /* USENCCL aggregated field-halo P2P plan.  Particle exchange keeps its own path. */
+  long field_halo_send_seg_count;
+  long field_halo_recv_seg_count;
+  long *field_halo_send_src_d;
+  long *field_halo_send_dst_d;
+  long *field_halo_send_len_d;
+  long *field_halo_recv_src_d;
+  long *field_halo_recv_dst_d;
+  long *field_halo_recv_len_d;
+  int field_halo_send_peer_count;
+  int field_halo_recv_peer_count;
+  int *field_halo_send_peer;
+  int *field_halo_recv_peer;
+  long *field_halo_send_peer_offset;
+  long *field_halo_recv_peer_offset;
+  long *field_halo_send_peer_count_elems;
+  long *field_halo_recv_peer_count_elems;
+  double *field_halo_send_buf;
+  double *field_halo_recv_buf;
+  long field_halo_send_total_elems;
+  long field_halo_recv_total_elems;
+  /* USENCCL end */
+
 } Field3D_Seq;
 typedef struct {
   Field3D_Seq *pfield;

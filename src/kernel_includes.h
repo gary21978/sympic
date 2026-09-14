@@ -151,6 +151,38 @@ static inline void sympic_launch_local_halo_copy(double *dst_base,
 #endif
 }
 
+static inline void sympic_launch_field_halo_pack(double *dst_base,
+                                                 const double *src_base,
+                                                 const long *src_off_d,
+                                                 const long *dst_off_d,
+                                                 const long *len_d,
+                                                 long nseg,
+                                                 int device_id) {
+#ifdef SYMPIC_CUDA
+  cuda_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
+                              nseg, device_id);
+#elif defined(SYMPIC_MAPU)
+  mapu_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
+                              nseg, device_id);
+#endif
+}
+
+static inline void sympic_launch_field_halo_unpack(double *dst_base,
+                                                   const double *src_base,
+                                                   const long *src_off_d,
+                                                   const long *dst_off_d,
+                                                   const long *len_d,
+                                                   long nseg,
+                                                   int device_id) {
+#ifdef SYMPIC_CUDA
+  cuda_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d,
+                                len_d, nseg, device_id);
+#elif defined(SYMPIC_MAPU)
+  mapu_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d,
+                                len_d, nseg, device_id);
+#endif
+}
+
 static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
 #ifdef SYMPIC_CUDA
   ncclGetUniqueId(id);

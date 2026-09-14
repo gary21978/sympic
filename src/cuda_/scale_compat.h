@@ -9,6 +9,7 @@
 
 #ifdef __CUDACC__
 #include <cstddef>
+#include <new>
 
 #include <cuda/barrier>
 #include <cooperative_groups.h>

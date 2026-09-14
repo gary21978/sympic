@@ -10,6 +10,16 @@ int mapu_local_halo_copy_launch(double *dst_base, const double *src_base,
                                 long ncopy, long sllen, long numvec,
                                 size_t recv_offset, int device_id);
 
+int mapu_field_halo_pack_launch(double *dst_base, const double *src_base,
+                                const long *src_off_d, const long *dst_off_d,
+                                const long *len_d, long nseg,
+                                int device_id);
+
+int mapu_field_halo_unpack_launch(double *dst_base, const double *src_base,
+                                  const long *src_off_d, const long *dst_off_d,
+                                  const long *len_d, long nseg,
+                                  int device_id);
+
 #ifdef __cplusplus
 }
 #endif

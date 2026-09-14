@@ -79,7 +79,32 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_send_count[_li] = 0;
     pthis->remote_recv_tid[_li] = NULL;
     pthis->remote_recv_count[_li] = 0;
+    pthis->local_self_count[_li] = 0;
+    pthis->local_self_tid[_li] = NULL;
+    pthis->local_self_src[_li] = NULL;
+    pthis->local_self_tid_d[_li] = NULL;
+    pthis->local_self_src_d[_li] = NULL;
   }
+  pthis->field_halo_send_seg_count = 0;
+  pthis->field_halo_recv_seg_count = 0;
+  pthis->field_halo_send_src_d = NULL;
+  pthis->field_halo_send_dst_d = NULL;
+  pthis->field_halo_send_len_d = NULL;
+  pthis->field_halo_recv_src_d = NULL;
+  pthis->field_halo_recv_dst_d = NULL;
+  pthis->field_halo_recv_len_d = NULL;
+  pthis->field_halo_send_peer_count = 0;
+  pthis->field_halo_recv_peer_count = 0;
+  pthis->field_halo_send_peer = NULL;
+  pthis->field_halo_recv_peer = NULL;
+  pthis->field_halo_send_peer_offset = NULL;
+  pthis->field_halo_recv_peer_offset = NULL;
+  pthis->field_halo_send_peer_count_elems = NULL;
+  pthis->field_halo_recv_peer_count_elems = NULL;
+  pthis->field_halo_send_buf = NULL;
+  pthis->field_halo_recv_buf = NULL;
+  pthis->field_halo_send_total_elems = 0;
+  pthis->field_halo_recv_total_elems = 0;
   int i;
 
   if (is_init_kernels) {
@@ -1028,7 +1053,32 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_send_count[layer] = 0;
     pthis->remote_recv_tid[layer] = NULL;
     pthis->remote_recv_count[layer] = 0;
+    pthis->local_self_count[layer] = 0;
+    pthis->local_self_tid[layer] = NULL;
+    pthis->local_self_src[layer] = NULL;
+    pthis->local_self_tid_d[layer] = NULL;
+    pthis->local_self_src_d[layer] = NULL;
   }
+  pthis->field_halo_send_seg_count = 0;
+  pthis->field_halo_recv_seg_count = 0;
+  pthis->field_halo_send_src_d = NULL;
+  pthis->field_halo_send_dst_d = NULL;
+  pthis->field_halo_send_len_d = NULL;
+  pthis->field_halo_recv_src_d = NULL;
+  pthis->field_halo_recv_dst_d = NULL;
+  pthis->field_halo_recv_len_d = NULL;
+  pthis->field_halo_send_peer_count = 0;
+  pthis->field_halo_recv_peer_count = 0;
+  pthis->field_halo_send_peer = NULL;
+  pthis->field_halo_recv_peer = NULL;
+  pthis->field_halo_send_peer_offset = NULL;
+  pthis->field_halo_recv_peer_offset = NULL;
+  pthis->field_halo_send_peer_count_elems = NULL;
+  pthis->field_halo_recv_peer_count_elems = NULL;
+  pthis->field_halo_send_buf = NULL;
+  pthis->field_halo_recv_buf = NULL;
+  pthis->field_halo_send_total_elems = 0;
+  pthis->field_halo_recv_total_elems = 0;
   int i;
 #if 0
   if (is_init_kernels) {

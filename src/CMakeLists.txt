@@ -33,14 +33,6 @@ set(SYMPIC_LINK_LIBS
 )
 if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver ${NCCL_LIBRARY})
-    if(SYMPIC_NVSCALE)
-        # nvscale builds compile with SYMPIC_MAPU, so the comm layer resolves
-        # to maccl; the toolchain ships libmaccl in <NVSCALE_ROOT>/../lib
-        find_library(MACCL_LIBRARY NAMES maccl
-            HINTS "${NVSCALE_ROOT}/../lib" "${NVSCALE_ROOT}/lib"
-            REQUIRED)
-        list(APPEND SYMPIC_LINK_LIBS ${MACCL_LIBRARY})
-    endif()
 elseif(SYMPIC_MAPU)
     target_include_directories(sympic PRIVATE
         ${SCALE_TOOLCHAIN_PATH}/../maps-umd/include

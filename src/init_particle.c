@@ -260,6 +260,24 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     ((pthis)->cu_xyzw = malloc((sizeof(mapu_pscmc_mem))));
     ((pthis)->adjoint_vec_pids = malloc((sizeof(mapu_pscmc_mem))));
     pthis->swap_len_buf = malloc(sizeof(mapu_pscmc_mem));
+    /* sort exchange plan */
+    pthis->sort_order_valid = 0;
+    pthis->sort_send_ord[0][0] = NULL;
+    pthis->sort_send_peer[0][0] = NULL;
+    pthis->sort_recv_ord[0][0] = NULL;
+    pthis->sort_recv_peer[0][0] = NULL;
+    pthis->sort_plan_src_d = NULL;
+    pthis->sort_plan_dst_d = NULL;
+    pthis->sort_plan_len_d = NULL;
+    pthis->sort_plan_cap = 0;
+    pthis->sort_meta_send_buf = NULL;
+    pthis->sort_meta_recv_buf = NULL;
+    pthis->sort_meta_send_cap = 0;
+    pthis->sort_meta_recv_cap = 0;
+    pthis->sort_data_send_buf = NULL;
+    pthis->sort_data_recv_buf = NULL;
+    pthis->sort_data_send_cap = 0;
+    pthis->sort_data_recv_cap = 0;
     // NOTE: Standard CUDA regression uses *_pushJ_vlo path only.
     {
       size_t structlen = mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len();

@@ -224,7 +224,7 @@ static inline void sympic_device_free(void *ptr) {
 }
 
 static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclGetUniqueId(id);
 #elif defined(SYMPIC_MAPU)
   macclGetUniqueId(id);
@@ -232,7 +232,7 @@ static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
 }
 
 static inline void sympic_comm_group_start(void) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclGroupStart();
 #elif defined(SYMPIC_MAPU)
   macclGroupStart();
@@ -240,7 +240,7 @@ static inline void sympic_comm_group_start(void) {
 }
 
 static inline void sympic_comm_group_end(void) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclGroupEnd();
 #elif defined(SYMPIC_MAPU)
   macclGroupEnd();
@@ -249,7 +249,7 @@ static inline void sympic_comm_group_end(void) {
 
 static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
                                          SymPIC_Device_UniqueId id, int rank) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclCommInitRank(comm, nranks, id, rank);
 #elif defined(SYMPIC_MAPU)
   macclCommInitRank(comm, nranks, id, rank);
@@ -257,7 +257,7 @@ static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
 }
 
 static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclCommDestroy(comm);
 #elif defined(SYMPIC_MAPU)
   macclCommDestroy(comm);
@@ -266,7 +266,7 @@ static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
 
 static inline void sympic_comm_send_int(const int *buffer, size_t count,
                                         int peer, SymPIC_Device_Comm comm) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclSend(buffer, count, ncclInt, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclSend(buffer, count, macclInt, peer, comm, 0);
@@ -275,7 +275,7 @@ static inline void sympic_comm_send_int(const int *buffer, size_t count,
 
 static inline void sympic_comm_recv_int(int *buffer, size_t count, int peer,
                                         SymPIC_Device_Comm comm) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclRecv(buffer, count, ncclInt, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclRecv(buffer, count, macclInt, peer, comm, 0);
@@ -284,7 +284,7 @@ static inline void sympic_comm_recv_int(int *buffer, size_t count, int peer,
 
 static inline void sympic_comm_send_double(const double *buffer, size_t count,
                                            int peer, SymPIC_Device_Comm comm) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclSend(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclSend(buffer, count, macclDouble, peer, comm, 0);
@@ -293,7 +293,7 @@ static inline void sympic_comm_send_double(const double *buffer, size_t count,
 
 static inline void sympic_comm_recv_double(double *buffer, size_t count,
                                            int peer, SymPIC_Device_Comm comm) {
-#ifdef SYMPIC_CUDA
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
   ncclRecv(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
   macclRecv(buffer, count, macclDouble, peer, comm, 0);

@@ -1,7 +1,7 @@
 #ifndef NCSPIC_SEQ_FIELD
 #include "smallmpi/small_mpi.h"
 
-#if defined(SYMPIC_CUDA)
+#if defined(SYMPIC_CUDA) || defined(__SCALE_ARCH__)
 #include <nccl.h>
 typedef ncclComm_t SymPIC_Device_Comm;
 typedef ncclUniqueId SymPIC_Device_UniqueId;

@@ -20,6 +20,14 @@ int mapu_field_halo_unpack_launch(double *dst_base, const double *src_base,
                                   const long *len_d, long nseg,
                                   int device_id);
 
+int mapu_sort_copy_int_launch(int *dst_base, const int *src_base,
+                              const long *src_off_d, const long *dst_off_d,
+                              const long *len_d, long nseg, int device_id);
+
+int mapu_sort_copy_double_launch(double *dst_base, const double *src_base,
+                                 const long *src_off_d, const long *dst_off_d,
+                                 const long *len_d, long nseg, int device_id);
+
 #ifdef __cplusplus
 }
 #endif

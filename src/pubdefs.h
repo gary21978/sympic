@@ -252,6 +252,22 @@ typedef struct {
 
   void *swap_len_buf;
 
+  /* Sort exchange plan: static (peer, key) ordering precomputed once per
+     collection, plus packed-exchange scratch buffers. */
+  int sort_order_valid;
+  long *sort_send_ord[3][2];   /* [dir][side 0=L 1=R] cross-rank send j list */
+  long *sort_send_peer[3][2];
+  long sort_send_n[3][2];
+  long *sort_recv_ord[3][2];
+  long *sort_recv_peer[3][2];
+  long sort_recv_n[3][2];
+  long *sort_plan_src_d, *sort_plan_dst_d, *sort_plan_len_d;
+  long sort_plan_cap;
+  int *sort_meta_send_buf, *sort_meta_recv_buf;
+  long sort_meta_send_cap, sort_meta_recv_cap;
+  double *sort_data_send_buf, *sort_data_recv_buf;
+  long sort_data_send_cap, sort_data_recv_cap;
+
 } One_Particle_Collection;
 typedef struct {
   Field3D_Seq *data;

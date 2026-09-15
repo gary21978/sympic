@@ -183,6 +183,46 @@ static inline void sympic_launch_field_halo_unpack(double *dst_base,
 #endif
 }
 
+/* packed particle-sort exchange: segment gather/scatter for the meta rows
+   (int) and particle data (double) */
+static inline void sympic_launch_sort_copy_int(int *dst_base,
+                                               const int *src_base,
+                                               const long *src_off_d,
+                                               const long *dst_off_d,
+                                               const long *len_d, long nseg,
+                                               int device_id) {
+#ifdef SYMPIC_CUDA
+  cuda_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
+                            nseg, device_id);
+#elif defined(SYMPIC_MAPU)
+  mapu_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
+                            nseg, device_id);
+#endif
+}
+
+static inline void sympic_launch_sort_copy_double(double *dst_base,
+                                                  const double *src_base,
+                                                  const long *src_off_d,
+                                                  const long *dst_off_d,
+                                                  const long *len_d,
+                                                  long nseg, int device_id) {
+#ifdef SYMPIC_CUDA
+  cuda_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d,
+                               len_d, nseg, device_id);
+#elif defined(SYMPIC_MAPU)
+  mapu_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d,
+                               len_d, nseg, device_id);
+#endif
+}
+
+static inline void sympic_device_free(void *ptr) {
+#ifdef SYMPIC_CUDA
+  cudaFree(ptr);
+#elif defined(SYMPIC_MAPU)
+  mapsFree(ptr);
+#endif
+}
+
 static inline void sympic_comm_get_unique_id(SymPIC_Device_UniqueId *id) {
 #ifdef SYMPIC_CUDA
   ncclGetUniqueId(id);

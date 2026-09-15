@@ -60,3 +60,51 @@ int mapu_field_halo_unpack_launch(double *dst_base, const double *src_base,
                                                 dst_off_d, len_d, nseg,
                                                 device_id);
 }
+
+static int mapu_sort_copy_segments_launch(void *dst_base, const void *src_base,
+                                          const long *src_off_d,
+                                          const long *dst_off_d,
+                                          const long *len_d, long nseg,
+                                          int is_int, int device_id)
+{
+    mapsSetDevice(device_id);
+    if (nseg == 0)
+    {
+        return 0;
+    }
+
+    int block = 4;
+    if (is_int)
+    {
+        mapu_sort_copy_segments_int<<<(int)nseg, block>>>(
+            (__DDR int *)dst_base, (__DDR const int *)src_base,
+            (__DDR const long *)src_off_d, (__DDR const long *)dst_off_d,
+            (__DDR const long *)len_d, nseg);
+    }
+    else
+    {
+        mapu_sort_copy_segments_double<<<(int)nseg, block>>>(
+            (__DDR double *)dst_base, (__DDR const double *)src_base,
+            (__DDR const long *)src_off_d, (__DDR const long *)dst_off_d,
+            (__DDR const long *)len_d, nseg);
+    }
+    return 0;
+}
+
+int mapu_sort_copy_int_launch(int *dst_base, const int *src_base,
+                              const long *src_off_d, const long *dst_off_d,
+                              const long *len_d, long nseg, int device_id)
+{
+    return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d,
+                                          dst_off_d, len_d, nseg, 1,
+                                          device_id);
+}
+
+int mapu_sort_copy_double_launch(double *dst_base, const double *src_base,
+                                 const long *src_off_d, const long *dst_off_d,
+                                 const long *len_d, long nseg, int device_id)
+{
+    return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d,
+                                          dst_off_d, len_d, nseg, 0,
+                                          device_id);
+}

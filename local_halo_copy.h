@@ -22,6 +22,16 @@ void launch_field_halo_unpack(double *dst_base, const double *src_base,
                               const long *src_off_d, const long *dst_off_d,
                               const long *len_d, long nseg);
 
+/* Packed particle-sort exchange: segment gather/scatter for meta rows (int)
+   and particle data (double). */
+void launch_sort_copy_int(int *dst_base, const int *src_base,
+                          const long *src_off_d, const long *dst_off_d,
+                          const long *len_d, long nseg);
+
+void launch_sort_copy_double(double *dst_base, const double *src_base,
+                             const long *src_off_d, const long *dst_off_d,
+                             const long *len_d, long nseg);
+
 #ifdef __cplusplus
 }
 #endif

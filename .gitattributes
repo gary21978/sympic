@@ -1,0 +1,21 @@
+# 文本文件统一 LF：脚本与 .ss/.scm 在 Linux 上运行/解析，禁止 autocrlf 转换
+*.sh      text eol=lf
+*.py      text eol=lf
+*.scm     text eol=lf
+*.ss      text eol=lf
+*.c       text eol=lf
+*.h       text eol=lf
+*.cu      text eol=lf
+*.cuh     text eol=lf
+*.inc     text eol=lf
+*.txt     text eol=lf
+*.md      text eol=lf
+*.cmake   text eol=lf
+CMakeLists.txt text eol=lf
+.gitattributes text eol=lf
+.gitignore     text eol=lf
+
+# 二进制：禁止任何换行符转换
+*.npy binary
+*.so  binary
+*.a   binary

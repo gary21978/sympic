@@ -1,6 +1,7 @@
 build/
+build-cuda/
+build-nvscale/
 .vscode/
 .cache/
 .venv/
 __pycache__
-scripts/

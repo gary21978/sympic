@@ -50,41 +50,40 @@ link_directories(/usr/local/cuda/lib64)
 # ============================================================
 include_directories(
     ${CMAKE_BINARY_DIR}
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/cgapsio
-    ${CMAKE_SOURCE_DIR}/cscheme
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/cgapsio
+    ${CMAKE_SOURCE_DIR}/src/cscheme
+    ${CMAKE_SOURCE_DIR}/src/cuda_
     /usr/local/cuda/include
 )
 
 # ============================================================
 # 5. 子目录
 # ============================================================
-add_subdirectory(smallmpi)
-add_subdirectory(cgapsio)
-add_subdirectory(cscheme)
-add_subdirectory(cuda_)
+add_subdirectory(src/smallmpi)
+add_subdirectory(src/cgapsio)
+add_subdirectory(src/cscheme)
+add_subdirectory(src/cuda_)
 
 # ============================================================
 # 6. 主机代码（根目录 .c 文件）
 # ============================================================
 set(HOST_SOURCES
-    space_filling_curve.c
-    init_adjoint_relation.c
-    init_field3d_mpi.c
-    genrand.c
-    init_particle.c
-    init_particle_gpu.cu
-    sort_particle.c
-    run_particle.c
-    run_particle_call_fun.c
-    mpifields.c
-    blas_shell.c
-    sync_fields.c
-    mpi_fieldio.c
-    seqfields.c
-    local_halo_copy.cu
-    main.c
-    cfgcst.c
+    src/space_filling_curve.c
+    src/init_adjoint_relation.c
+    src/init_field3d_mpi.c
+    src/genrand.c
+    src/init_particle.c
+    src/sort_particle.c
+    src/run_particle.c
+    src/run_particle_call_fun.c
+    src/mpifields.c
+    src/blas_shell.c
+    src/sync_fields.c
+    src/mpi_fieldio.c
+    src/seqfields.c
+    src/main.c
+    src/cfgcst.c
 )
 
 add_executable(sympic ${HOST_SOURCES})
@@ -112,10 +111,10 @@ if(CUDA_DUMP_CUBIN)
     add_custom_command(
         OUTPUT ${CUBIN_OUT}
         COMMAND nvcc -O3 -arch=${CUDA_ARCH} -lineinfo
-                -I${CMAKE_SOURCE_DIR} -I/usr/local/cuda/include
-                -cubin ${CMAKE_SOURCE_DIR}/cuda_/inner_split_pass.kernel.cu
+                -I${CMAKE_SOURCE_DIR}/src -I/usr/local/cuda/include
+                -cubin ${CMAKE_SOURCE_DIR}/src/cuda_/inner_split_pass.kernel.cu
                 -o ${CUBIN_OUT}
-        DEPENDS cuda_/inner_split_pass.kernel.cu
+        DEPENDS src/cuda_/inner_split_pass.kernel.cu
         COMMENT "Dumping cubin for inner_split_pass.kernel.cu"
     )
     add_custom_target(dump_cubin ALL DEPENDS ${CUBIN_OUT})

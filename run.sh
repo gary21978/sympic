@@ -1,71 +1,149 @@
 #!/bin/bash
-# run_test.sh — 一键准备测试环境并运行算例
-# 用法: bash run_test.sh
 
 set -euo pipefail
 
+
+# ---------- 默认值 ----------
+CASE_PATH=""          # 必填：算例路径
+
+# ---------- 用法说明 ----------
+usage() {
+    cat <<EOF
+用法: $0 <算例路径> [--build-dir <目录>]
+
+参数:
+  <算例路径>     必填，算例所在目录的路径
+  --build-dir   可选，指定 build 目录；默认使用最近一次 build.sh 记录的目录
+  -h, --help    显示本帮助信息
+
+示例:
+  $0 case/nh3
+  $0 case/nh3 --build-dir build
+EOF
+}
+
+# ---------- 参数解析 ----------
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --build-dir)
+            if [[ $# -lt 2 ]]; then
+                echo "错误: --build-dir 缺少参数" >&2
+                usage >&2
+                exit 1
+            fi
+            BUILD_DIR_ARG="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -*)
+            echo "错误: 未知选项 '$1'" >&2
+            usage >&2
+            exit 1
+            ;;
+        *)
+            if [[ -z "$CASE_PATH" ]]; then
+                CASE_PATH="$1"
+            else
+                echo "错误: 多余的参数 '$1'" >&2
+                usage >&2
+                exit 1
+            fi
+            shift
+            ;;
+    esac
+done
+
+# ---------- 必填参数校验 ----------
+if [[ -z "$CASE_PATH" ]]; then
+    echo "错误: 缺少必填参数 <算例路径>" >&2
+    usage >&2
+    exit 1
+fi
+
+if [[ ! -d "$CASE_PATH" ]]; then
+    echo "错误: 算例路径不存在或不是目录: $CASE_PATH" >&2
+    exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="${SCRIPT_DIR}/build"
+BUILD_DIR_ARG="${BUILD_DIR_ARG:-${SYMPIC_BUILD_DIR:-}}"
+if [[ -n "${BUILD_DIR_ARG}" ]]; then
+    if [[ "${BUILD_DIR_ARG}" = /* ]]; then
+        BUILD_DIR="${BUILD_DIR_ARG}"
+    else
+        BUILD_DIR="${SCRIPT_DIR}/${BUILD_DIR_ARG}"
+    fi
+elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
+    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
+elif [[ -d "${SCRIPT_DIR}/build" ]]; then
+    BUILD_DIR="${SCRIPT_DIR}/build"
+else
+    BUILD_DIR="${SCRIPT_DIR}/build-cuda"
+fi
 TEST_DIR="${BUILD_DIR}/test"
 
+# 解析算例目录：支持相对路径（基于 repo 根）或绝对路径
+if [[ "${CASE_PATH}" = /* ]]; then
+    CASE_DIR_ABS="${CASE_PATH}"
+else
+    CASE_DIR_ABS="${SCRIPT_DIR}/${CASE_PATH}"
+fi
+
+if [ ! -d "${CASE_DIR_ABS}" ]; then
+    echo "[fatal] case directory not found: ${CASE_DIR_ABS}"
+    exit 1
+fi
+if [ ! -f "${CASE_DIR_ABS}/test.ss" ]; then
+    echo "[fatal] test.ss not found in ${CASE_DIR_ABS}"
+    exit 1
+fi
+if [ ! -x "${BUILD_DIR}/bin/sympic" ] && [ ! -x "${BUILD_DIR}/bin/sympic.out" ]; then
+    echo "[fatal] sympic executable not found in ${BUILD_DIR}/bin"
+    echo "[hint ] run: bash ./build.sh"
+    exit 1
+fi
+if [ ! -x "${BUILD_DIR}/bin/gapsio2to0" ]; then
+    echo "[fatal] gapsio2to0 executable not found in ${BUILD_DIR}/bin"
+    echo "[hint ] run: bash ./build.sh"
+    exit 1
+fi
+
+echo "=== 使用算例目录: ${CASE_DIR_ABS} ==="
+echo "=== 使用构建目录: ${BUILD_DIR} ==="
+echo ""
 echo "=== 1. 创建并清空测试目录 ==="
 mkdir -p "${TEST_DIR}"
 rm -rf "${TEST_DIR:?}"/*
 
 echo "=== 2. 链接算例文件 ==="
-for f in "${SCRIPT_DIR}/runCases/template_cuda/"*; do
+for f in "${CASE_DIR_ABS}/"*; do
     [ -e "$f" ] || continue
-    ln -sf "$f" "${TEST_DIR}/$(basename "$f")"
+    name=$(basename "$f")
+    # 不链接参考结果目录和测试输出目录，run.sh 会自己生成 test_npy/
+    if [ "${name}" = "result_npy" ] || [ "${name}" = "test_npy" ]; then
+        continue
+    fi
+    ln -sf "$f" "${TEST_DIR}/${name}"
 done
 
 echo "=== 3. 链接可执行文件 ==="
-ln -sf "${BUILD_DIR}/bin/sympic"     "${TEST_DIR}/sympic"
+if [ -x "${BUILD_DIR}/bin/sympic.out" ]; then
+    ln -sf "${BUILD_DIR}/bin/sympic.out" "${TEST_DIR}/sympic.out"
+else
+    ln -sf "${BUILD_DIR}/bin/sympic" "${TEST_DIR}/sympic.out"
+fi
 ln -sf "${BUILD_DIR}/bin/gapsio2to0" "${TEST_DIR}/gapsio2to0"
 
 echo "=== 4. 链接 cscheme 标准库 ==="
-ln -sf "${SCRIPT_DIR}/stdlib.scm"    "${TEST_DIR}/stdlib.scm"
+ln -sf "${SCRIPT_DIR}/src/stdlib.scm"    "${TEST_DIR}/stdlib.scm"
 
 echo "=== 5. 链接 pygapsio3.py ==="
-ln -sf "${SCRIPT_DIR}/cgapsio/pygapsio3.py" "${TEST_DIR}/pygapsio3.py"
+ln -sf "${SCRIPT_DIR}/src/cgapsio/pygapsio3.py" "${TEST_DIR}/pygapsio3.py"
 
-echo "=== 6. 链接参考结果 results_ref ==="
-ln -sf "${SCRIPT_DIR}/runCases/results_ref" "${TEST_DIR}/results_ref"
 
-echo "=== 7. 重写 run_gpu.sh ==="
-cat > "${TEST_DIR}/run_gpu.sh" << 'EOF'
-#!/bin/bash
-set -euo pipefail
-DIR="$(cd "$(dirname "$0")" && pwd)"
-export STDLIB="${DIR}/stdlib.scm"
-export OMP_NUM_THREADS=1
-mpirun --oversubscribe -n 1 "${DIR}/sympic" test.ss 2>&1 | tee run.log
-EOF
-chmod +x "${TEST_DIR}/run_gpu.sh"
-
-echo "=== 8. 修改 merge_and_compare.py 路径（自包含） ==="
-python3 << PYEOF
-import os
-path = os.path.join("${TEST_DIR}", "merge_and_compare.py")
-with open(path, "r") as f:
-    text = f.read()
-
-# 让 CGAPSIO_DIR 和 MERGER 都指向 test 目录内部，实现自包含
-text = text.replace(
-    'REPO = os.path.abspath(os.path.join(HERE, os.pardir, os.pardir))',
-    'REPO = HERE'
-)
-text = text.replace(
-    'CGAPSIO_DIR = os.path.join(REPO, "cgapsio")',
-    'CGAPSIO_DIR = HERE'
-)
-text = text.replace(
-    'MERGER = os.path.join(CGAPSIO_DIR, "gapsio2to0")',
-    'MERGER = os.path.join(HERE, "gapsio2to0")'
-)
-
-with open(path, "w") as f:
-    f.write(text)
-PYEOF
 
 echo ""
 echo "=== 测试环境准备完成，开始运行测试 ==="
@@ -74,11 +152,30 @@ echo ""
 
 cd "${TEST_DIR}"
 echo "--- 运行 sympic ---"
-bash ./run_gpu.sh
+export STDLIB="${TEST_DIR}/stdlib.scm"
+export OMP_NUM_THREADS=1
+
+echo "[run.sh] 正常运行，算例路径: $CASE_DIR_ABS"
+mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/sympic.out" test.ss
 
 echo ""
-echo "--- 运行结果对比 ---"
-python3 ./merge_and_compare.py
+echo "--- 合并 GAPSIO 分片 ---"
+for var in tmpEB tmpEN tmpJ; do
+    if ls "${var}_PROC_"* 1>/dev/null 2>&1; then
+        rm -f "${var}"
+        mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/gapsio2to0" ${var}_PROC_* "${var}"
+    else
+        echo "[warn ] no PROC shards for ${var}"
+    fi
+done
 
 echo ""
-echo "=== 全部测试流程结束 ==="
+echo "--- 转换为 .npy ---"
+rm -f "${TEST_DIR}/test_npy"
+mkdir -p "${TEST_DIR}/test_npy"
+python3 "${SCRIPT_DIR}/scripts/gapsio_to_npy.py" --work-dir "${TEST_DIR}" --out-dir "${TEST_DIR}/test_npy"
+
+echo ""
+echo "=== 算例运行结束 ==="
+echo "输出分片目录: ${TEST_DIR}"
+echo "转换后的 .npy 目录: ${TEST_DIR}/test_npy"

@@ -4,6 +4,8 @@ set(CUDA_PSCMC_SRC cuda_pscmc.c)
 add_library(cuda_yeefdtd STATIC
     ${CUDA_RUNTIME_SRC}
     ${CUDA_PSCMC_SRC}
+    init_particle_gpu.cu
+    local_halo_copy.cu
 )
 set_target_properties(cuda_yeefdtd PROPERTIES
     CUDA_SEPARABLE_COMPILATION OFF

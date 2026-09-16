@@ -1,10 +1,12 @@
 *.o
 *.a
+.claude
+.codex
 .vscode
+CLAUDE.md
 /.vs
-build/
-/build-mapu/
-/build-nvscale/
+build*/
+case/*/result_npy/*
 /nvscale/
 __pycache__/
 .cache/

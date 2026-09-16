@@ -45,10 +45,10 @@ if [[ -n "${BUILD_DIR_ARG}" ]]; then
     else
         BUILD_DIR="${SCRIPT_DIR}/${BUILD_DIR_ARG}"
     fi
-elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
-    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
 elif [[ -d "${SCRIPT_DIR}/build" ]]; then
     BUILD_DIR="${SCRIPT_DIR}/build"
+elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
+    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
 else
     BUILD_DIR="${SCRIPT_DIR}/build-cuda"
 fi

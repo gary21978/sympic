@@ -76,10 +76,10 @@ if [[ -n "${BUILD_DIR_ARG}" ]]; then
     else
         BUILD_DIR="${SCRIPT_DIR}/${BUILD_DIR_ARG}"
     fi
-elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
-    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
 elif [[ -d "${SCRIPT_DIR}/build" ]]; then
     BUILD_DIR="${SCRIPT_DIR}/build"
+elif [[ -f "${SCRIPT_DIR}/.sympic-last-build" ]]; then
+    BUILD_DIR="$(head -n 1 "${SCRIPT_DIR}/.sympic-last-build")"
 else
     BUILD_DIR="${SCRIPT_DIR}/build-cuda"
 fi
@@ -154,6 +154,8 @@ cd "${TEST_DIR}"
 echo "--- 运行 sympic ---"
 export STDLIB="${TEST_DIR}/stdlib.scm"
 export OMP_NUM_THREADS=1
+# 参考数据均在 FAST_INIT_GPU 下生成（确定性路径），默认开启以保持可比
+export SYMPIC_INIT_PARTICLE_GPU_FAST=1
 
 echo "[run.sh] 正常运行，算例路径: $CASE_DIR_ABS"
 mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/sympic.out" test.ss
@@ -171,7 +173,7 @@ done
 
 echo ""
 echo "--- 转换为 .npy ---"
-rm -f "${TEST_DIR}/test_npy"
+rm -rf "${TEST_DIR}/test_npy"
 mkdir -p "${TEST_DIR}/test_npy"
 python3 "${SCRIPT_DIR}/scripts/gapsio_to_npy.py" --work-dir "${TEST_DIR}" --out-dir "${TEST_DIR}/test_npy"
 

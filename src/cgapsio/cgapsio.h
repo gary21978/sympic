@@ -23,7 +23,7 @@ typedef struct {
   int send_to_proc;
   int real_rank;
 } Gaps_IO_DataFile;
-typedef enum {
+enum {
   GAPS_IO_CONST_INT32,
   GAPS_IO_INT64,
   GAPS_IO_INT16,

@@ -670,9 +670,9 @@ int main(int argc, char **argv) {
       }
       // sort particle if it is the sort time-step
       if (((t % num_multi_step_sort) == 0)) {
-        call_particle_sort_mpi(ppis, 0, 0);
-        call_particle_sort_mpi(ppis, 1, 0);
-        call_particle_sort_mpi(ppis, 2, 0);
+        call_particle_sort_mpi((Field3D_MPI *)ppis,0, 0);
+        call_particle_sort_mpi((Field3D_MPI *)ppis,1, 0);
+        call_particle_sort_mpi((Field3D_MPI *)ppis,2, 0);
       }
 
       merge_ovlp_mpi_field(&(ppis->MPI_FoutJ));

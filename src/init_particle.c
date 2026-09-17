@@ -241,7 +241,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->inoutput, &(tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->inoutput, (void **)&(tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(double) * (6 * (grid_cache_len * (xlen * (ylen * (zlen * numvec)))))));
     }
@@ -250,7 +250,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->xyzw, &(tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->xyzw, (void **)&(tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (4 * (xlen * (ylen * (zlen * numvec))))));
     }
@@ -259,7 +259,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->cu_cache, &(tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->cu_cache, (void **)&(tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(double) * (6 * (cu_cache_length * numvec))));
     }
@@ -268,7 +268,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->cu_xyzw, &(tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->cu_xyzw, (void **)&(tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (numvec * 4)));
     }
@@ -277,7 +277,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->adjoint_vec_pids, &(tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->adjoint_vec_pids, (void **)&(tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(long) * (numvec * 6)));
     }
@@ -285,7 +285,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
       /* USENCCL */
       cuda_pscmc_mem_init(pe, pthis->swap_len_buf, PS_INT_NUM, numvec * 5);
       char *tmp_h_data;
-      cuda_pscmc_get_h_data(pthis->swap_len_buf, &tmp_h_data);
+      cuda_pscmc_get_h_data(pthis->swap_len_buf, (void **)&tmp_h_data);
       memset(tmp_h_data, 0, sizeof(int) * numvec * 5);
       /* USENCCL end */
     }

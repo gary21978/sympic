@@ -40,7 +40,7 @@ element *internal_bin_write(element *input) {
   input = cdr(input);
   FILE *out_port = (input == empty_list_process) ? stdout : car(input)->data.in_port.in_port;
   if (out_port != stdout && car(input)->data.in_port.isclose) {
-    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", car(input)->data.in_port.in_port);
+    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", (unsigned long)car(input)->data.in_port.in_port);
     ERR_REPORT(1);
     //exit(1);
   }
@@ -52,7 +52,7 @@ element *internal_bin_write32(element *input) {
   input = cdr(input);
   FILE *out_port = (input == empty_list_process) ? stdout : car(input)->data.in_port.in_port;
   if (out_port != stdout && car(input)->data.in_port.isclose) {
-    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", car(input)->data.in_port.in_port);
+    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", (unsigned long)car(input)->data.in_port.in_port);
     ERR_REPORT(1);
     //exit(1);
   }
@@ -64,7 +64,7 @@ element *internal_hex_write(element *input) {
   input = cdr(input);
   FILE *out_port = (input == empty_list_process) ? stdout : car(input)->data.in_port.in_port;
   if (out_port != stdout && car(input)->data.in_port.isclose) {
-    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", car(input)->data.in_port.in_port);
+    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", (unsigned long)car(input)->data.in_port.in_port);
     ERR_REPORT(1);
     //exit(1);
   }

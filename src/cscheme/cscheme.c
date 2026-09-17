@@ -792,10 +792,10 @@ void write_element(element *ele, FILE *out) {
     fprintf(out, "#<macro>");
     break;
   case INPUT_PORT:
-    fprintf(out, "#<input-port:0x%lx>", ele->data.in_port.in_port);
+    fprintf(out, "#<input-port:0x%lx>", (unsigned long)ele->data.in_port.in_port);
     break;
   case OUTPUT_PORT:
-    fprintf(out, "#<output-port:0x%lx>", ele->data.out_port.out_port);
+    fprintf(out, "#<output-port:0x%lx>", (unsigned long)ele->data.out_port.out_port);
     break;
   case ELSE:
     fprintf(out, "#<else>");
@@ -1992,7 +1992,7 @@ element *list2apply_args(element *input, element *env) {
 element *internal_read(element *input) {
   FILE *in_port = input == empty_list_process ? stdin : car(input)->data.out_port.out_port;
   if (in_port != stdin && car(input)->data.out_port.isclose) {
-    fprintf(stderr, "Error in read: input-port 0x%lx closed\n", car(input)->data.out_port.out_port);
+    fprintf(stderr, "Error in read: input-port 0x%lx closed\n", (unsigned long)car(input)->data.out_port.out_port);
     ERR_REPORT(1);
     //exit(1);
   }
@@ -2006,7 +2006,7 @@ element *internal_read(element *input) {
 element *internal_read_char(element *input) {
   FILE *in_port = input == empty_list_process ? stdin : car(input)->data.out_port.out_port;
   if (in_port != stdin && car(input)->data.out_port.isclose) {
-    fprintf(stderr, "Error in read-char: input-port 0x%lx closed\n", car(input)->data.out_port.out_port);
+    fprintf(stderr, "Error in read-char: input-port 0x%lx closed\n", (unsigned long)car(input)->data.out_port.out_port);
     ERR_REPORT(1);
     //exit(1);
   }
@@ -2023,7 +2023,7 @@ element *internal_read_char(element *input) {
 element *internal_peek_char(element *input) {
   FILE *in_port = input == empty_list_process ? stdin : car(input)->data.out_port.out_port;
   if (in_port != stdin && car(input)->data.out_port.isclose) {
-    fprintf(stderr, "Error in peek-char: input-port 0x%lx closed\n", car(input)->data.out_port.out_port);
+    fprintf(stderr, "Error in peek-char: input-port 0x%lx closed\n", (unsigned long)car(input)->data.out_port.out_port);
     ERR_REPORT(1);
   }
   input = alloc_element();
@@ -2042,7 +2042,7 @@ element *internal_write(element *input) {
   input = cdr(input);
   FILE *out_port = (input == empty_list_process) ? stdout : car(input)->data.in_port.in_port;
   if (out_port != stdout && car(input)->data.in_port.isclose) {
-    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", car(input)->data.in_port.in_port);
+    fprintf(stderr, "Error in write: output-port 0x%lx closed\n", (unsigned long)car(input)->data.in_port.in_port);
     ERR_REPORT(1);
     //exit(1);
   }
@@ -2054,7 +2054,7 @@ element *internal_write_string(element *input) {
   input = cdr(input);
   FILE *out_port = (input == empty_list_process) ? stdout : car(input)->data.in_port.in_port;
   if (out_port != stdout && car(input)->data.in_port.isclose) {
-    fprintf(stderr, "Error in write-string: output-port 0x%lx closed\n", car(input)->data.in_port.in_port);
+    fprintf(stderr, "Error in write-string: output-port 0x%lx closed\n", (unsigned long)car(input)->data.in_port.in_port);
     ERR_REPORT(1);
   }
   //write_element(etw,out_port);

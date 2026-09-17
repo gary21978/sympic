@@ -24,7 +24,7 @@ typedef struct {
   int send_to_proc;
   int real_rank;
 } Gaps_IO_DataFile;
-typedef enum {
+enum {
   GAPS_IO_CONST_INT32,
   GAPS_IO_INT64,
   GAPS_IO_INT16,
@@ -228,7 +228,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
   }
   if (((version < 2) || ((cur_rank == send_to_proc) || (!num_reduce_proc)))) {
     if ((timestep != -1)) {
-      (pfile = (((version >= 2)) ? (fopen((((version < 2)) ? (pName) : (pNameReal)), "r+")) : (({
+      (pfile = (((version >= 2)) ? ((void *)fopen((((version < 2)) ? (pName) : (pNameReal)), "r+")) : (({
          MPI_File *fp = malloc(sizeof(MPI_File));
          int ret =
              MPI_File_open(MPI_COMM_WORLD, (((version < 2)) ? (pName) : (pNameReal)), MPI_MODE_RDWR, MPI_INFO_NULL, fp);
@@ -238,10 +238,10 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
          } else {
            0;
          }
-         fp;
+         ((void *)fp);
        }))));
     } else {
-      (pfile = (((version >= 2)) ? (fopen((((version < 2)) ? (pName) : (pNameReal)), "w+")) : (({
+      (pfile = (((version >= 2)) ? ((void *)fopen((((version < 2)) ? (pName) : (pNameReal)), "w+")) : (({
          MPI_File *fp = malloc(sizeof(MPI_File));
          int ret = MPI_File_open(MPI_COMM_WORLD, (((version < 2)) ? (pName) : (pNameReal)),
                                  (MPI_MODE_RDWR | MPI_MODE_CREATE), MPI_INFO_NULL, fp);
@@ -252,7 +252,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
          } else {
            0;
          }
-         fp;
+         ((void *)fp);
        }))));
     }
     assert(pfile);
@@ -314,7 +314,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                                                                     fprintf(stderr, "unknown type length %lu\n",
                                                                             sizeof(int64_t));
                                                                     assert(0);
-                                                                    0;
+                                                                    MPI_DATATYPE_NULL;
                                                                   })))))))));
                   MPI_Status stat;
                   int64_t readed = 0;
@@ -345,7 +345,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                                                                     fprintf(stderr, "unknown type length %lu\n",
                                                                             sizeof(int64_t));
                                                                     assert(0);
-                                                                    0;
+                                                                    MPI_DATATYPE_NULL;
                                                                   })))))))));
                   MPI_Status stat;
                   int64_t readed = 0;
@@ -376,7 +376,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                                                                     fprintf(stderr, "unknown type length %lu\n",
                                                                             sizeof(int64_t));
                                                                     assert(0);
-                                                                    0;
+                                                                    MPI_DATATYPE_NULL;
                                                                   })))))))));
                   MPI_Status stat;
                   int64_t readed = 0;
@@ -407,7 +407,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                                                                     fprintf(stderr, "unknown type length %lu\n",
                                                                             sizeof(int64_t));
                                                                     assert(0);
-                                                                    0;
+                                                                    MPI_DATATYPE_NULL;
                                                                   })))))))));
                   MPI_Status stat;
                   int64_t readed = 0;
@@ -439,7 +439,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                                                                       fprintf(stderr, "unknown type length %lu\n",
                                                                               sizeof(int64_t));
                                                                       assert(0);
-                                                                      0;
+                                                                      MPI_DATATYPE_NULL;
                                                                     })))))))));
                     MPI_Status stat;
                     int64_t readed = 0;
@@ -498,7 +498,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
                           : ((((sizeof(int64_t) == 4)) ? (MPI_INT) : ((((sizeof(int64_t) == 8)) ? (MPI_LONG_LONG) : (({
                               fprintf(stderr, "unknown type length %lu\n", sizeof(int64_t));
                               assert(0);
-                              0;
+                              MPI_DATATYPE_NULL;
                             })))))))));
          MPI_Status stat;
          int readed;
@@ -518,7 +518,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
                           : ((((sizeof(int64_t) == 4)) ? (MPI_INT) : ((((sizeof(int64_t) == 8)) ? (MPI_LONG_LONG) : (({
                               fprintf(stderr, "unknown type length %lu\n", sizeof(int64_t));
                               assert(0);
-                              0;
+                              MPI_DATATYPE_NULL;
                             })))))))));
          MPI_Status stat;
          int readed;
@@ -538,7 +538,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
                           : ((((sizeof(int64_t) == 4)) ? (MPI_INT) : ((((sizeof(int64_t) == 8)) ? (MPI_LONG_LONG) : (({
                               fprintf(stderr, "unknown type length %lu\n", sizeof(int64_t));
                               assert(0);
-                              0;
+                              MPI_DATATYPE_NULL;
                             })))))))));
          MPI_Status stat;
          int readed;
@@ -561,7 +561,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
                           : ((((sizeof(int64_t) == 4)) ? (MPI_INT) : ((((sizeof(int64_t) == 8)) ? (MPI_LONG_LONG) : (({
                               fprintf(stderr, "unknown type length %lu\n", sizeof(int64_t));
                               assert(0);
-                              0;
+                              MPI_DATATYPE_NULL;
                             })))))))));
          MPI_Status stat;
          int readed;
@@ -581,7 +581,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
                            : ((((sizeof(int64_t) == 4)) ? (MPI_INT) : ((((sizeof(int64_t) == 8)) ? (MPI_LONG_LONG) : (({
                                fprintf(stderr, "unknown type length %lu\n", sizeof(int64_t));
                                assert(0);
-                               0;
+                               MPI_DATATYPE_NULL;
                              })))))))));
           MPI_Status stat;
           int readed;
@@ -620,7 +620,7 @@ int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pthis, char *pName, char *pNamePrefix,
   } else {
     0;
   }
-  (pfile = (((version >= 2)) ? (fopen(pNameReal, "r+")) : (({
+  (pfile = (((version >= 2)) ? ((void *)fopen(pNameReal, "r+")) : (({
      MPI_File *fp = malloc(sizeof(MPI_File));
      int ret = MPI_File_open(MPI_COMM_WORLD, pNameReal, MPI_MODE_RDWR, MPI_INFO_NULL, fp);
      if (ret) {
@@ -629,7 +629,7 @@ int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pthis, char *pName, char *pNamePrefix,
      } else {
        0;
      }
-     fp;
+     ((void *)fp);
    }))));
   assert(pfile);
   (ret = GAPS_IO_InitIFilePointer(pthis, pfile));
@@ -642,7 +642,7 @@ int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pthis, char *pName, char *pNamePrefix,
   ((pthis)->num_block_all_reduce_group = (pthis)->num_block_current_proc);
   fseek(pfile, 0, SEEK_SET);
   ((pthis)->locations = malloc(num_end));
-  fread((pthis)->locations, 1, num_end, pfile);
+  size_t nread = fread((pthis)->locations, 1, num_end, pfile);
   fclose(pfile);
   int64_t blklen = 1;
   {
@@ -659,7 +659,7 @@ int GAPS_IO_InitIFile(Gaps_IO_DataFile *pthis, char *pName) {
   FILE *pfile = (pthis)->pfile;
   (version = 0);
   ((pthis)->version = 0);
-  (pfile = (((version >= 2)) ? (fopen(pName, "r")) : (({
+  (pfile = (((version >= 2)) ? ((void *)fopen(pName, "r")) : (({
      MPI_File *fp = malloc(sizeof(MPI_File));
      int ret = MPI_File_open(MPI_COMM_WORLD, pName, MPI_MODE_RDONLY, MPI_INFO_NULL, fp);
      if (ret) {
@@ -668,7 +668,7 @@ int GAPS_IO_InitIFile(Gaps_IO_DataFile *pthis, char *pName) {
      } else {
        0;
      }
-     fp;
+     ((void *)fp);
    }))));
   assert(pfile);
   return GAPS_IO_InitIFilePointer(pthis, pfile);
@@ -700,7 +700,7 @@ int GAPS_IO_FRead(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                              : (((((GAPS_IO_GlobalTypeLen)[type] == 8)) ? (MPI_LONG_LONG) : (({
                                  fprintf(stderr, "unknown type length %d\n", (GAPS_IO_GlobalTypeLen)[type]);
                                  assert(0);
-                                 0;
+                                 MPI_DATATYPE_NULL;
                                })))))))));
     MPI_Status stat;
     int readed;
@@ -740,7 +740,7 @@ int64_t GAPS_IO_FWrite(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                                                fprintf(stderr, "unknown type length %d\n",
                                                        (GAPS_IO_GlobalTypeLen)[type]);
                                                assert(0);
-                                               0;
+                                               MPI_DATATYPE_NULL;
                                              })))))))));
                   MPI_Status stat;
                   int64_t readed = 0;

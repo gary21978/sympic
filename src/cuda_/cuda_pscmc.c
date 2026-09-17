@@ -14,7 +14,7 @@
 
 #include <cuda_runtime.h>
 
-typedef enum { PS_INT_NUM, PS_LONG_NUM, PS_FLOAT_NUM, PS_DOUBLE_NUM, PS_CHAR, PS_SHORT_NUM };
+enum { PS_INT_NUM, PS_LONG_NUM, PS_FLOAT_NUM, PS_DOUBLE_NUM, PS_CHAR, PS_SHORT_NUM };
 
 #define ERROPT(err, x)                                                                                                 \
   {                                                                                                                    \
@@ -112,7 +112,7 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *pe, cuda_pscmc_mem *pm, int type, size_t
   (pm->type_len = (datasize / len));
   (pm->h_data = malloc(datasize));
   if (pm->len > 0) {
-    cudaMalloc(&(pm->d_data), datasize);
+    cudaMalloc((void **)&(pm->d_data), datasize);
     (err = cudaGetLastError());
     ERROPT(err, "Failed to alloc cuda memory");
   }

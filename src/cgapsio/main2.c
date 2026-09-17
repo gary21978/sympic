@@ -23,7 +23,7 @@ int read_file(void **pptr, int64_t *plen, char *name) {
   ((pptr)[0] = malloc(l));
   ((plen)[0] = l);
   fseek(fp, 0, SEEK_SET);
-  fread((pptr)[0], 1, l, fp);
+  size_t nread = fread((pptr)[0], 1, l, fp);
   return 0;
 }
 int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int64_t ts,
@@ -32,7 +32,7 @@ int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int
   int64_t blk_len = ((pgid)->block_len * GAPS_IO_GetTypeLen((pgid)->type));
   int64_t offset_zero = (sizeof(int64_t) * (3 + ((pgid)->dim * 2)));
   fseek(fp, (offset_zero + (blk_len * (bid + (num_blocks_one_step_this_file * ts)))), SEEK_SET);
-  fread(ptr, 1, blk_len, fp);
+  size_t nread = fread(ptr, 1, blk_len, fp);
   fclose(fp);
   return 0;
 }
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
         }
       }
       memcpy((meta_file_name + sj), "META", 4);
-      read_file((meta_data + cur_i), (meta_data_len + cur_i), meta_file_name);
+      read_file((void **)(meta_data + cur_i), (meta_data_len + cur_i), meta_file_name);
       ((meta_data_len)[cur_i] = ((meta_data_len)[cur_i] / sizeof(int64_t)));
       {
         long j;
@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
   GAPS_IO_DataNumStepsAndResidue(pgi, &(numsteps), &(numresd));
   char *display_steps = "GAPS_IO_DISPLAY_NUM_STEPS";
   char *uds = getenv(display_steps);
-  fprintf(stderr, "0x%lx 0x%lx\n", display_steps, uds);
+  fprintf(stderr, "0x%lx 0x%lx\n", (unsigned long)display_steps, (unsigned long)uds);
   if ((uds && (strcmp(uds, "1") == 0))) {
     fprintf(stdout, "%ld\n", numsteps);
     exit(0);

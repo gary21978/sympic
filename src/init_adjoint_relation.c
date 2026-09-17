@@ -64,7 +64,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
   }
   if (fp) {
     fprintf(stderr, "found %s for input\n", cmplx_file_name);
-    fread(cplx_ori_array, sizeof(int64_t), num_thread, fp);
+    size_t nread = fread(cplx_ori_array, sizeof(int64_t), num_thread, fp);
     fclose(fp);
   }
 

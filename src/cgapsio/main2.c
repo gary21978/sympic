@@ -33,7 +33,7 @@ int read_one_block_stdio(Gaps_IO_DataFile *pgid,void *ptr,char *file_name,int64_
 	int64_t blk_len = ((pgid)->block_len * GAPS_IO_GetTypeLen((pgid)->type)) ;
 	int64_t offset_zero = (sizeof(int64_t) * (3 + ((pgid)->dim * 2))) ;
 	fseek(fp, (offset_zero + (blk_len * (bid + (num_blocks_one_step_this_file * ts)))), SEEK_SET);
-	fread(ptr, 1, blk_len, fp);
+	size_t nread = fread(ptr, 1, blk_len, fp);
 	fclose(fp);
 	return 0 ;
 }

@@ -56,6 +56,7 @@ int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm);
 int cuda_pscmc_mem_sync_h2d(cuda_pscmc_mem *pm);
 void *cuda_pscmc_get_h_data(cuda_pscmc_mem *pm, void **h_data);
 size_t cuda_pscmc_mem_get_num(cuda_pscmc_mem *pm);
+int cuda_pscmc_get_env_len(size_t *l);
 int cuda_pscmc_mem_destroy(cuda_pscmc_mem *pm);
 int cuda_pscmc_mem_init(cuda_pscmc_env *, cuda_pscmc_mem *pm, int type,
                         size_t len);

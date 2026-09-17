@@ -1,11 +1,7 @@
 #ifndef MAPU_SORT_ONE_GRID_6_DISPATCH_H
 #define MAPU_SORT_ONE_GRID_6_DISPATCH_H
 
-#ifndef MAPU_SORT_ONE_GRID_6_USE_GPU
-#define MAPU_SORT_ONE_GRID_6_USE_GPU
-#endif
-
-/* 1£ºmulti-thread mapu_gpu_sort_one_grid
+/* 1: multi-thread mapu_gpu_sort_one_grid
  * 0: serial mapu_sort_one_grid
  */
 #define MAPU_SORT_ONE_GRID_6_USE_GPU 1

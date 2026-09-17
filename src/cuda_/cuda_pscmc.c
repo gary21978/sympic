@@ -146,7 +146,7 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *pe, cuda_pscmc_mem *pm, int type,
   (pm->type_len = (datasize / len));
   (pm->h_data = malloc(datasize));
   if (pm->len > 0) {
-    cudaMalloc(&(pm->d_data), datasize);
+    cudaMalloc((void **)&(pm->d_data), datasize);
     (err = cudaGetLastError());
     ERROPT(err, "Failed to alloc cuda memory");
 

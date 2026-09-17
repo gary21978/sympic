@@ -4,9 +4,9 @@ nh=${1:?usage: ./run_case.sh <nh> <ngpu> [run_name]}
 ngpu=${2:?usage: ./run_case.sh <nh> <ngpu> [run_name]}
 run_name=${3:-nh${nh}_g${ngpu}}
 case "$nh" in
-  4) case_file=/data/chenli/perf/prof_nh4_s5_rt1_c2500.ss ;;
-  5) case_file=/data/chenli/perf/prof_nh5_s5_rt1_c5000.ss ;;
-  6) case_file=/data/chenli/perf/prof_nh6_s5_rt1_c10000.ss ;;
+  4) case_file=/data/chenli/perf/nh4.ss ;;
+  5) case_file=/data/chenli/perf/nh5.ss ;;
+  6) case_file=/data/chenli/perf/nh6.ss ;;
   *) echo "unsupported nh=$nh; supported: 4,5,6" >&2; exit 2 ;;
 esac
 gpus=$(seq -s, 0 $((ngpu - 1)))

@@ -30,8 +30,8 @@ cpus_per_task=${SYMPIC_SLURM_CPUS_PER_TASK:-2}
 
 case "$nh" in
   4) case_file=/data/chenli/perf/nh4.ss ;;
-  5) case_file=/data/chenli/perf/prof_nh5_s5_rt1_c5000.ss ;;
-  6) case_file=/data/chenli/perf/prof_nh6_s5_rt1_c10000.ss ;;
+  5) case_file=/data/chenli/perf/nh5.ss ;;
+  6) case_file=/data/chenli/perf/nh6.ss ;;
   *) echo "unsupported nh=$nh; supported: 4,5,6" >&2; exit 2 ;;
 esac
 

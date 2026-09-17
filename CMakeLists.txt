@@ -116,7 +116,7 @@ if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
         message(FATAL_ERROR "CUDA_ARCH must be like sm_75 or sm_86, got '${CUDA_ARCH}'")
     endif()
 
-    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -O3")
+    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -O2")
     if(CUDA_SOURCE_PROFILE)
         set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo")
     endif()

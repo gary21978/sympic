@@ -185,7 +185,7 @@
 	)
       ))
   (GET_GRID_CACHE_LEN (lambda (i) (case i (0 1280) (1 320) (else 0)) ))
-  (GET_CU_CACHE_LEN (lambda (i) 2500))
+  (GET_CU_CACHE_LEN (lambda (i) 10000))
   (GET_INIT_LOAD
     (lambda (i) (case i (0 NPG0) (1 NPG1) (else NPG0))))
   (rmin 60)

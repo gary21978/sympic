@@ -157,7 +157,7 @@ int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm) {
 int cuda_pscmc_env_init(cuda_pscmc_env *pe, int dev_num, void *fv) {
   int err;
 
-
+  cudaGetLastError();
   cudaSetDevice(dev_num);
   (pe->device_id = dev_num);
   (err = cudaGetLastError());

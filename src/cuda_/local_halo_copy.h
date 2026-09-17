@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-void launch_local_halo_copy(double *dst_base, const double *src_base,
+void launch_local_halo_copy(double *dst_base, const double *const *src_bases,
                             const long *dst_tid, const long *src_tid,
                             long ncopy, long sllen, long numvec,
                             size_t recv_offset);

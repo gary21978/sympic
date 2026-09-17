@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 __global__ static void local_halo_copy_kernel(double *dst_base,
-                                              const double *src_base,
+                                              const double *const *src_bases,
                                               const long *dst_tid,
                                               const long *src_tid,
                                               long ncopy,
@@ -21,10 +21,11 @@ __global__ static void local_halo_copy_kernel(double *dst_base,
   long dst = dst_tid[copy_id] * sllen + elem;
   long src = src_tid[copy_id] * sllen + elem;
   dst_base[-((long)recv_offset + sllen * numvec) + dst] =
-      src_base[(long)recv_offset + src];
+      src_bases[copy_id][src];
 }
 
-extern "C" void launch_local_halo_copy(double *dst_base, const double *src_base,
+extern "C" void launch_local_halo_copy(double *dst_base,
+                                        const double *const *src_bases,
                                         const long *dst_tid, const long *src_tid,
                                         long ncopy, long sllen, long numvec,
                                         size_t recv_offset) {
@@ -32,7 +33,7 @@ extern "C" void launch_local_halo_copy(double *dst_base, const double *src_base,
   if (total == 0) return;
   int block = 256;
   int grid = (int)((total + block - 1) / block);
-  local_halo_copy_kernel<<<grid, block>>>(dst_base, src_base, dst_tid, src_tid,
+  local_halo_copy_kernel<<<grid, block>>>(dst_base, src_bases, dst_tid, src_tid,
                                           ncopy, sllen, numvec, recv_offset);
 }
 

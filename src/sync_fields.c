@@ -312,62 +312,26 @@ static void build_field_halo_plan(Field3D_Seq *data,
 }
 /* USENCCL end */
 
-static void enqueue_local_recv_copies(Field3D_Seq *data, long data_id, int fieldid,
-                                      size_t *recv_offset, long numvec, long sllen,
-                                      double *swap_d_data, double *sync_d_data) {
-  long *lr_tid  = data[data_id].local_recv_tid[fieldid];
-  long *lr_src  = data[data_id].local_recv_src[fieldid];
-  int  *lr_peer = data[data_id].local_recv_peer[fieldid];
-  long  lr_n    = data[data_id].local_recv_count[fieldid];
-  long k = 0;
-  while (k < lr_n) {
-    long dst0 = lr_tid[k];
-    long src0 = lr_src[k];
-    int peer = lr_peer[k];
-    long run = 1;
-    while (k + run < lr_n &&
-           lr_peer[k + run] == peer &&
-           lr_tid[k + run] == dst0 + run &&
-           lr_src[k + run] == src0 + run) {
-      run++;
-    }
-
-    double *dst = swap_d_data - (recv_offset[data_id] + (sllen * numvec)) + dst0 * sllen;
-    size_t bytes = sizeof(double) * sllen * run;
-    cudaError_t err;
-    if (peer < 0) {
-      double *src = sync_d_data + recv_offset[data_id] + src0 * sllen;
-      err = cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToDevice, 0);
-    } else {
-      cuda_pscmc_mem *sm = (cuda_pscmc_mem *)(data[peer].sync_layer_pscmc[0]);
-      double *src = ((double *)(sm->d_data)) + recv_offset[peer] + src0 * sllen;
-      err = cudaMemcpyPeerAsync(dst, data[data_id].cuda_device,
-                                src, data[peer].cuda_device, bytes, 0);
-    }
-    if (err != cudaSuccess) {
-      fprintf(stderr, "local recv copy failed: err=%s dst_runtime=%ld peer=%d bytes=%zu\n",
-              cudaGetErrorString(err), data_id, peer, bytes);
-      assert(0);
-    }
-    k += run;
-  }
-}
-
 static void launch_local_recv_kernel(Field3D_Seq *data, long data_id, int fieldid,
                                      size_t *recv_offset, long numvec, long sllen,
-                                     double *swap_d_data, double *sync_d_data) {
+                                     double *swap_d_data) {
   long lr_n = data[data_id].local_recv_count[fieldid];
   if (lr_n <= 0) return;
-  launch_local_halo_copy(swap_d_data, sync_d_data,
+  launch_local_halo_copy(swap_d_data,
+                         (const double *const *)data[data_id].local_recv_base_d[fieldid],
                          data[data_id].local_recv_tid_d[fieldid],
                          data[data_id].local_recv_src_d[fieldid],
                          lr_n, sllen, numvec, recv_offset[data_id]);
 }
 
 /* USENCCL Precompute self/same-rank recv mapping.
-   adj_ids/adj_processes/adj_local_tid never change after init. */
-static void build_local_recv_cache(Field3D_Seq *data, long num_runtime,
-                                   long cur_rank, const long *sync_layer_len) {
+   adj_ids/adj_processes/adj_local_tid never change after init.
+   all_data = full per-runtime Field3D_Seq array; data = this runtime's entry
+   (used to reach same-rank peer runtimes' sync buffers for the base array). */
+static void build_local_recv_cache(Field3D_Seq *data, Field3D_Seq *all_data,
+                                   long num_runtime, long cur_rank,
+                                   const long *sync_layer_len) {
+  long data_id = data - all_data;
   long numvec = data->numvec;
   long *adjp = data->adj_processes;
   long *adji = data->adj_ids;
@@ -398,6 +362,19 @@ static void build_local_recv_cache(Field3D_Seq *data, long num_runtime,
       data->local_recv_tid[fid]  = (long *)malloc(n * sizeof(long));
       data->local_recv_src[fid]  = (long *)malloc(n * sizeof(long));
       data->local_recv_peer[fid] = (int  *)malloc(n * sizeof(int));
+      data->local_recv_base[fid] = (double **)malloc(n * sizeof(double *));
+    }
+    /* per-runtime sync buffers, pre-offset to this field (same offset
+       convention as enqueue_all_local_field_copies' recv_offset) */
+    double **peer_base = (double **)malloc((size_t)num_runtime * sizeof(double *));
+    for (long p = 0; p < num_runtime; p++) {
+      size_t off = 0;
+      for (int f2 = 0; f2 < fid; f2++) {
+        if (f2 == NUM_SYNC_LAYER / 2) continue;
+        off += (size_t)sync_layer_len[f2] * (size_t)all_data[p].numvec;
+      }
+      cuda_pscmc_mem *sm = (cuda_pscmc_mem *)(all_data[p].sync_layer_pscmc[0]);
+      peer_base[p] = ((double *)(sm->d_data)) + off;
     }
     if (ns > 0)
       data->remote_send_tid[fid] = (long *)malloc(ns * sizeof(long));
@@ -416,11 +393,13 @@ static void build_local_recv_cache(Field3D_Seq *data, long num_runtime,
         data->local_recv_tid[fid][k]  = tid;
         data->local_recv_src[fid][k]  = t0;
         data->local_recv_peer[fid][k] = -1;
+        data->local_recv_base[fid][k] = peer_base[data_id];
         k++;
       } else if (ap / num_runtime == cur_rank) {
         data->local_recv_tid[fid][k]  = tid;
         data->local_recv_src[fid][k]  = t0;
         data->local_recv_peer[fid][k] = (int)(ap % num_runtime);
+        data->local_recv_base[fid][k] = peer_base[ap % num_runtime];
         k++;
       }
 
@@ -479,7 +458,21 @@ static void build_local_recv_cache(Field3D_Seq *data, long num_runtime,
                 cudaGetErrorString(err), data->cuda_device, n);
         assert(0);
       }
+      err = cudaMalloc((void **)&data->local_recv_base_d[fid], n * sizeof(double *));
+      if (err != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc local_recv_base_d failed: err=%s dev=%d n=%ld\n",
+                cudaGetErrorString(err), data->cuda_device, n);
+        assert(0);
+      }
+      err = cudaMemcpy(data->local_recv_base_d[fid], data->local_recv_base[fid],
+                       n * sizeof(double *), cudaMemcpyHostToDevice);
+      if (err != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy local_recv_base_d failed: err=%s dev=%d n=%ld\n",
+                cudaGetErrorString(err), data->cuda_device, n);
+        assert(0);
+      }
     }
+    free(peer_base);
   }
   data->cache_valid = 1;
   build_field_halo_plan(data, sync_layer_len);
@@ -492,7 +485,6 @@ static void enqueue_all_local_field_copies(Field3D_MPI *pthis,
                                            const size_t *all_sync_len) {
   Field3D_Seq *data = pthis->data;
   long num_data = pthis->num_runtime;
-  long num_runtime = pthis->num_runtime;
   long *sync_layer_len = pthis->sync_layer_len;
 
   for (int fieldid = 0; fieldid < NUM_SYNC_LAYER; fieldid++) {
@@ -512,20 +504,13 @@ static void enqueue_all_local_field_copies(Field3D_MPI *pthis,
     for (long i = 0; i < num_data; i++) {
       cudaSetDevice(data[i].cuda_device);
       long numvec = data[i].numvec;
-      void **sync_layer_pscmc = data[i].sync_layer_pscmc;
       void **swap_layer_pscmc = data[i].swap_layer_pscmc;
-      cuda_pscmc_mem *sync_mem = (cuda_pscmc_mem *)(sync_layer_pscmc[0]);
       cuda_pscmc_mem *swap_mem = (cuda_pscmc_mem *)(swap_layer_pscmc[0]);
-      double *sync_d_data = (double *)(sync_mem->d_data);
       double *swap_d_data = ((double *)(swap_mem->d_data)) + all_sync_len[i];
       int fieldid1 = NUM_SYNC_LAYER - 1 - fieldid;
       long sllen1 = sync_layer_len[fieldid1];
-      if (num_runtime == 1)
-        launch_local_recv_kernel(data, i, fieldid, recv_offset, numvec,
-                                 sllen1, swap_d_data, sync_d_data);
-      else
-        enqueue_local_recv_copies(data, i, fieldid, recv_offset, numvec,
-                                  sllen1, swap_d_data, sync_d_data);
+      launch_local_recv_kernel(data, i, fieldid, recv_offset, numvec,
+                               sllen1, swap_d_data);
     }
     free(recv_offset);
   }
@@ -608,7 +593,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   /* USENCCL */
   for (i = 0; i < num_data; i++)
     if (!data[i].cache_valid)
-      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank,
+      build_local_recv_cache(&data[i], data, num_runtime, pthis->cur_rank,
                              sync_layer_len);
   /* USENCCL end */
   size_t all_sync_len[num_data];
@@ -668,7 +653,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   /* USENCCL */
   for (i = 0; i < num_data; i++)
     if (!data[i].cache_valid)
-      build_local_recv_cache(&data[i], num_runtime, pthis->cur_rank,
+      build_local_recv_cache(&data[i], data, num_runtime, pthis->cur_rank,
                              sync_layer_len);
   /* USENCCL end */
   size_t all_sync_len[num_data];

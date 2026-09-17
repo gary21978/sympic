@@ -81,6 +81,8 @@ typedef struct {
   int  *local_recv_peer[NUM_SYNC_LAYER];      /* src_runtime, -1 = self (same device) */
   long *local_recv_tid_d[NUM_SYNC_LAYER];
   long *local_recv_src_d[NUM_SYNC_LAYER];
+  double **local_recv_base[NUM_SYNC_LAYER];    /* per-entry source base ptr (pre-offset, may be on another GPU) */
+  double **local_recv_base_d[NUM_SYNC_LAYER];
   long  local_recv_count[NUM_SYNC_LAYER];
   long *remote_send_tid[NUM_SYNC_LAYER];      /* remote sends, preordered for NCCL matching */
   long  remote_send_count[NUM_SYNC_LAYER];

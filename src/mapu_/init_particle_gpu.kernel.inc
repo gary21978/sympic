@@ -1,7 +1,21 @@
 /* local_header.h 把 log 重定义为整数截断的 mapu_log_df；
- * Box-Muller 需要真实自然对数，这里恢复标准 log（floor 未使用）。 */
+ * Box-Muller 需要真实自然对数，这里恢复标准 log（floor 未使用）。
+ * 真实 scale 工具链：设备目标用 aurora 数学库的全局 log/cos（唯一），
+ * host 目标上 libm 与 aurora 头文件重复声明导致裸 log/cos 二义，
+ * 因此 host 侧走 std:: 命名空间。 */
 #ifdef log
 #undef log
+#endif
+#ifdef __SCALE_ARCH__
+#define INIT_LOG(x) log(x)
+#define INIT_COS(x) cos(x)
+#define INIT_SQRT(x) sqrt(x)
+#else
+/* host 侧 libstdc++ 与 aurora 头文件在 std 里注入了同签名 cos/log，
+ * 走 clang 内建函数绕过重载决议 */
+#define INIT_LOG(x) __builtin_log(x)
+#define INIT_COS(x) __builtin_cos(x)
+#define INIT_SQRT(x) __builtin_sqrt(x)
 #endif
 
 __device__ static unsigned long long init_particle_splitmix64(unsigned long long *state) {
@@ -19,7 +33,9 @@ __device__ static double init_particle_uniform01(unsigned long long *state) {
 __device__ static double init_particle_normal(unsigned long long *state, double mean, double sigma) {
   double u1 = init_particle_uniform01(state);
   double u2 = init_particle_uniform01(state);
-  return sigma * sqrt(-2.0 * log(u1)) * cos(6.28318530717958647692 * u2) + mean;
+  return sigma * INIT_SQRT(-2.0 * INIT_LOG(u1)) *
+             INIT_COS(6.28318530717958647692 * u2) +
+         mean;
 }
 
 __global__ void mapu_init_non_uni_particle_gpu(__DDR double *inoutput,
@@ -58,7 +74,7 @@ __global__ void mapu_init_non_uni_particle_gpu(__DDR double *inoutput,
   cell_offset += (size_t)(xyzx + xlen * (xyzy + ylen * xyzz));
   xyzw[4 * cell_offset] = grid_load;
 
-  double *xyzvs = inoutput + (size_t)cur_pcid * ((size_t)xlen * (size_t)ylen * (size_t)zlen) *
+  __DDR double *xyzvs = inoutput + (size_t)cur_pcid * ((size_t)xlen * (size_t)ylen * (size_t)zlen) *
                                  (size_t)(6 * grid_cache_len);
   xyzvs += (size_t)(6 * grid_cache_len) * (size_t)(xyzx + xlen * (xyzy + ylen * xyzz));
   xyzvs += (size_t)l * (size_t)ptlen;

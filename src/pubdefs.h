@@ -167,12 +167,15 @@ typedef struct {
   long remote_recv_count[NUM_SYNC_LAYER];
   int cache_valid;
 
-  /* self-copy metadata for the halo kernel: host lists + device copies.*/
-  long local_self_count[NUM_SYNC_LAYER];
-  long *local_self_tid[NUM_SYNC_LAYER];
-  long *local_self_src[NUM_SYNC_LAYER];
-  long *local_self_tid_d[NUM_SYNC_LAYER];
-  long *local_self_src_d[NUM_SYNC_LAYER];
+  /* local-copy metadata for the halo kernel: device copies of the tid/src
+     lists plus per-entry source base pointers (self entries point at this
+     runtime's sync buffer, same-rank entries at the peer runtime's — the
+     kernel reads each segment from its own base, so nruntime>1 needs no
+     per-segment memcpyPeer path). */
+  long *local_recv_tid_d[NUM_SYNC_LAYER];
+  long *local_recv_src_d[NUM_SYNC_LAYER];
+  double **local_recv_base[NUM_SYNC_LAYER];
+  double **local_recv_base_d[NUM_SYNC_LAYER];
 
   /* Aggregated field-halo P2P plan.  Particle exchange keeps its own path. */
   long field_halo_send_seg_count;

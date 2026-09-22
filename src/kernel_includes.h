@@ -133,21 +133,24 @@ static inline int sympic_copy_h2d(void *dst, const void *src, size_t bytes) {
 #endif
 }
 
-/* single-kernel gather for self halo copies; replaces per-segment
-   cudaMemcpyAsync/mapsMemcpyAsync enqueue (the old self_copy hotspot) */
+/* single-kernel gather for local halo copies (self + same-rank-different-
+   runtime); per-entry source base pointers let the kernel read each segment
+   from its own runtime's sync buffer, so nruntime>1 needs no memcpyPeer */
 static inline void sympic_launch_local_halo_copy(double *dst_base,
-                                                 const double *src_base,
+                                                 double *const *src_bases_d,
                                                  const long *dst_tid_d,
                                                  const long *src_tid_d,
                                                  long ncopy, long sllen,
                                                  long numvec, size_t recv_offset,
                                                  int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_local_halo_copy_launch(dst_base, src_base, dst_tid_d, src_tid_d, ncopy,
-                              sllen, numvec, recv_offset, device_id);
+  cuda_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d,
+                              dst_tid_d, src_tid_d, ncopy, sllen, numvec,
+                              recv_offset, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_local_halo_copy_launch(dst_base, src_base, dst_tid_d, src_tid_d, ncopy,
-                              sllen, numvec, recv_offset, device_id);
+  mapu_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d,
+                              dst_tid_d, src_tid_d, ncopy, sllen, numvec,
+                              recv_offset, device_id);
 #endif
 }
 

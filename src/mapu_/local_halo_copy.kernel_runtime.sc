@@ -6,7 +6,8 @@
 #include "local_halo_copy.kernel_runtime.h"
 #include "local_halo_copy.kernel.inc"
 
-int mapu_local_halo_copy_launch(double *dst_base, const double *src_base,
+int mapu_local_halo_copy_launch(double *dst_base,
+                                const double *const *src_bases_d,
                                 const long *dst_tid_d, const long *src_tid_d,
                                 long ncopy, long sllen, long numvec,
                                 size_t recv_offset, int device_id)
@@ -21,7 +22,8 @@ int mapu_local_halo_copy_launch(double *dst_base, const double *src_base,
     int block = 4;
     int grid = (int)((total + (size_t)block - 1) / (size_t)block);
     mapu_local_halo_copy<<<grid, block>>>(
-        (__DDR double *)dst_base, (__DDR const double *)src_base,
+        (__DDR double *)dst_base,
+        (__DDR const double *const *)src_bases_d,
         (__DDR const long *)dst_tid_d, (__DDR const long *)src_tid_d,
         ncopy, sllen, numvec, recv_offset);
     return 0;

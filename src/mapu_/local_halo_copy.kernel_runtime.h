@@ -5,7 +5,8 @@
 extern "C" {
 #endif
 
-int mapu_local_halo_copy_launch(double *dst_base, const double *src_base,
+int mapu_local_halo_copy_launch(double *dst_base,
+                                const double *const *src_bases_d,
                                 const long *dst_tid_d, const long *src_tid_d,
                                 long ncopy, long sllen, long numvec,
                                 size_t recv_offset, int device_id);

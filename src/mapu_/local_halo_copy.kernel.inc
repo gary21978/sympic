@@ -1,5 +1,5 @@
 __global__ void mapu_local_halo_copy(__DDR double *dst_base,
-                                     __DDR const double *src_base,
+                                     __DDR const double *const *src_bases,
                                      __DDR const long *dst_tid,
                                      __DDR const long *src_tid,
                                      long ncopy,
@@ -15,7 +15,7 @@ __global__ void mapu_local_halo_copy(__DDR double *dst_base,
   long dst = dst_tid[copy_id] * sllen + elem;
   long src = src_tid[copy_id] * sllen + elem;
   dst_base[-((long)recv_offset + sllen * numvec) + dst] =
-      src_base[(long)recv_offset + src];
+      src_bases[copy_id][src];
 }
 
 __global__ void mapu_field_halo_copy_segments(__DDR double *dst_base,

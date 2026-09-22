@@ -153,6 +153,7 @@ extern "C"
 	{
 		int err;
 		int *perr = &(err);
+		mapsGetLastError();
 		mapsSetDevice(dev_num);
 		(pe->device_id = dev_num);
 		return 0;

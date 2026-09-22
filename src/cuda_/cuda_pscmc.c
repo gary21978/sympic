@@ -201,6 +201,7 @@ int cuda_pscmc_env_init(cuda_pscmc_env *pe, int dev_num, void *fv) {
 
   int *perr = &(err);
 
+  cudaGetLastError();
   cudaSetDevice(dev_num);
   (pe->device_id = dev_num);
   (err = cudaGetLastError());

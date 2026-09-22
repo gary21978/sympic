@@ -79,11 +79,10 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_send_count[_li] = 0;
     pthis->remote_recv_tid[_li] = NULL;
     pthis->remote_recv_count[_li] = 0;
-    pthis->local_self_count[_li] = 0;
-    pthis->local_self_tid[_li] = NULL;
-    pthis->local_self_src[_li] = NULL;
-    pthis->local_self_tid_d[_li] = NULL;
-    pthis->local_self_src_d[_li] = NULL;
+    pthis->local_recv_tid_d[_li] = NULL;
+    pthis->local_recv_src_d[_li] = NULL;
+    pthis->local_recv_base[_li] = NULL;
+    pthis->local_recv_base_d[_li] = NULL;
   }
   pthis->field_halo_send_seg_count = 0;
   pthis->field_halo_recv_seg_count = 0;
@@ -1053,11 +1052,10 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
     pthis->remote_send_count[layer] = 0;
     pthis->remote_recv_tid[layer] = NULL;
     pthis->remote_recv_count[layer] = 0;
-    pthis->local_self_count[layer] = 0;
-    pthis->local_self_tid[layer] = NULL;
-    pthis->local_self_src[layer] = NULL;
-    pthis->local_self_tid_d[layer] = NULL;
-    pthis->local_self_src_d[layer] = NULL;
+    pthis->local_recv_tid_d[layer] = NULL;
+    pthis->local_recv_src_d[layer] = NULL;
+    pthis->local_recv_base[layer] = NULL;
+    pthis->local_recv_base_d[layer] = NULL;
   }
   pthis->field_halo_send_seg_count = 0;
   pthis->field_halo_recv_seg_count = 0;

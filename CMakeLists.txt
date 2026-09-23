@@ -32,6 +32,8 @@ endif()
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ============================================================
 # 1. 全局输出目录设置
@@ -68,19 +70,18 @@ elseif(SYMPIC_MAPU)
     if(DEFINED ENV{TOOLCHAIN_DIR})
         set(SCALE_TOOLCHAIN_PATH $ENV{TOOLCHAIN_DIR})
     elseif(DEFINED ENV{SCALE_TOOLCHAIN_ROOT})
-        message("SCALE_TOOLCHAIN_ROOT is defined ${SCALE_TOOLCHAIN_ROOT}")
+        message(STATUS "SCALE_TOOLCHAIN_ROOT is defined $ENV{SCALE_TOOLCHAIN_ROOT}")
         set(SCALE_TOOLCHAIN_PATH $ENV{SCALE_TOOLCHAIN_ROOT})
     elseif(DEFINED ENV{MAPU_ROOT})
         set(SCALE_TOOLCHAIN_PATH "$ENV{MAPU_ROOT}/toolchain")
     else()
         message(FATAL_ERROR "Scale toolchain is not set, please set ENV VAR \"TOOLCHAIN_DIR\", \"SCALE_TOOLCHAIN_ROOT\", or \"MAPU_ROOT\"")
-        return()
     endif()
 
     # The scale cmake module path must be appended before enabling scale language
     set(SCALE_CMAKE_PATH ${SCALE_TOOLCHAIN_PATH}/cmake)
     if(NOT EXISTS ${SCALE_CMAKE_PATH})
-        message(FATAL_ERROR "SCALE_CMAKE_PATH {SCALE_CMAKE_PATH} is not exists, please use toolchain version after 202507031905")
+        message(FATAL_ERROR "Scale cmake module path '${SCALE_CMAKE_PATH}' does not exist, please use toolchain version after 202507031905")
     endif()
     list(APPEND CMAKE_MODULE_PATH ${SCALE_CMAKE_PATH})
     set(SCALE_IGNORE_TOOLCHAIN_WARNING OFF)
@@ -149,15 +150,9 @@ if(SYMPIC_CUDA)
     add_compile_definitions(SYMPIC_CUDA)
     set(SYMPIC_BACKEND_LIB cuda_yeefdtd)
     set(SYMPIC_BACKEND_DIR cuda_)
-elseif(SYMPIC_MAPU)
-    add_compile_definitions(SYMPIC_MAPU)
-    set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
-    set(SYMPIC_BACKEND_DIR mapu_)
-endif()
-
-if(SYMPIC_NVSCALE)
-    # NVScale validates the MaPU kernels on CUDA while preserving MAPU-facing
-    # source interfaces. NVScale provides CUDA/NCCL-backed MAPS and MACCL shims.
+else()
+    # SYMPIC_MAPU 与 SYMPIC_NVSCALE 共用 mapu_ 源码：NVScale 在 CUDA 上验证
+    # MaPU kernel（保持 MAPU 侧源码接口，提供 CUDA/NCCL 后端的 MAPS/MACCL shim）
     add_compile_definitions(SYMPIC_MAPU)
     set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
     set(SYMPIC_BACKEND_DIR mapu_)

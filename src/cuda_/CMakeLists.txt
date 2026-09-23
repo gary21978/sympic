@@ -1,4 +1,4 @@
-file(GLOB CUDA_RUNTIME_SRC *.kernel_runtime.cu)
+file(GLOB CUDA_RUNTIME_SRC CONFIGURE_DEPENDS *.kernel_runtime.cu)
 set(CUDA_PSCMC_SRC cuda_pscmc.c)
 
 add_library(cuda_yeefdtd STATIC
@@ -11,18 +11,6 @@ set_target_properties(cuda_yeefdtd PROPERTIES
 )
 
 target_link_libraries(cuda_yeefdtd PRIVATE CUDA::cudart)
-
-# file(GLOB CUDA_HEADERS *.kernel_runtime.h)
-# list(APPEND CUDA_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/cuda_pscmc.h)
-# set(CUDA_YEEFDTD_H ${CMAKE_BINARY_DIR}/cuda_yeefdtd.h)
-# add_custom_command(
-#     OUTPUT ${CUDA_YEEFDTD_H}
-#     COMMAND cat ${CUDA_HEADERS} > ${CUDA_YEEFDTD_H}
-#     DEPENDS ${CUDA_HEADERS}
-#     COMMENT "Generating cuda_yeefdtd.h"
-# )
-# add_custom_target(cuda_yeefdtd_h DEPENDS ${CUDA_YEEFDTD_H})
-# add_dependencies(cuda_yeefdtd cuda_yeefdtd_h)
 
 # ============================================================
 # cubin dump 支持

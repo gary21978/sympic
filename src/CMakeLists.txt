@@ -20,7 +20,7 @@ add_subdirectory(${SYMPIC_BACKEND_DIR})
 # ============================================================
 # 6. 主机代码（src 目录 .c 文件）
 # ============================================================
-file(GLOB HOST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
+file(GLOB HOST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 
 add_executable(sympic ${HOST_SOURCES})
 
@@ -54,6 +54,10 @@ elseif(SYMPIC_MAPU)
         ${MAPS_LIBRARY}
         ${MACCL_LIBRARY}
         ${MAPU_LLVM_LIBS}
+    )
+
+    target_link_options(sympic PRIVATE
+        -Wl,-rpath-link,${SCALE_TOOLCHAIN_PATH}/lib/system
     )
 
 

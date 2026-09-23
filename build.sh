@@ -133,7 +133,9 @@ case "${MODE}" in
         ;;
     mapu)
         BUILD_DIR="${SCRIPT_DIR}/build-mapu"
-        export SCALE_TOOLCHAIN_ROOT="${SCALE_TOOLCHAIN_ROOT:-/home/cheney/Projects/MaPU/toolchain}"
+        default_toolchain="/opt/maps/toolchain"
+        [[ -d "${default_toolchain}" ]] || default_toolchain="/home/cheney/Projects/MaPU/toolchain"
+        export SCALE_TOOLCHAIN_ROOT="${SCALE_TOOLCHAIN_ROOT:-${default_toolchain}}"
         CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=ON"
 
         ;;

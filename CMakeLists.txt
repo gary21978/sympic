@@ -101,6 +101,21 @@ elseif(SYMPIC_MAPU)
             "${SCALE_TOOLCHAIN_PATH}/lib"
             "${SCALE_TOOLCHAIN_PATH}/../demo/build/lib"
         REQUIRED)
+    find_path(MAPS_INCLUDE_DIR maps_runtime.h
+        HINTS
+            "${MACCL_ROOT}/include"
+            "${MACCL_ROOT}/include/maps"
+            "${SCALE_TOOLCHAIN_PATH}/../include"
+            "${SCALE_TOOLCHAIN_PATH}/../include/maps"
+            "${SCALE_TOOLCHAIN_PATH}/include/maps_include"
+        REQUIRED)
+    find_library(MAPS_LIBRARY NAMES maps
+        HINTS
+            "${MACCL_ROOT}/lib"
+            "${SCALE_TOOLCHAIN_PATH}/../lib"
+            "${SCALE_TOOLCHAIN_PATH}/lib"
+            "${SCALE_TOOLCHAIN_PATH}/../maps-umd/lib"
+        REQUIRED)
 endif()
 
 # ============================================================

@@ -7,10 +7,11 @@ if(SYMPIC_NVSCALE)
   target_compile_definitions(mapu_pscmc PRIVATE __SCALE_ARCH__)
   target_link_libraries(mapu_pscmc PRIVATE CUDA::cudart)
 else()
-  target_include_directories(mapu_pscmc PRIVATE ${SCALE_TOOLCHAIN_PATH}/../include)
+  target_include_directories(mapu_pscmc PRIVATE ${MAPS_INCLUDE_DIR})
+  target_compile_options(mapu_pscmc PRIVATE -fPIC)
   target_link_libraries(mapu_pscmc PRIVATE
-    ${SCALE_TOOLCHAIN_PATH}/lib/scale/release/libscalehost.so
-    ${SCALE_TOOLCHAIN_PATH}/../lib/libmaps.so
+    ${SCALE_TOOLCHAIN_PATH}/lib/aurora/release/libscalehost.so
+    ${MAPS_LIBRARY}
   )
 endif()
 
@@ -68,11 +69,10 @@ else()
 
 target_link_libraries(mapu_yeefdtd PUBLIC
 	mapu_pscmc
-	${SCALE_TOOLCHAIN_PATH}/../lib/libmasight_core.a
 )
 
 set_target_properties(mapu_yeefdtd PROPERTIES LINKER_LANGUAGE "SCALE")
-target_link_options(mapu_yeefdtd PRIVATE --scale-link)
+target_link_options(mapu_yeefdtd PRIVATE --scale-link -L${SCALE_TOOLCHAIN_PATH}/lib)
 
 
 target_compile_options(mapu_yeefdtd PRIVATE
@@ -83,5 +83,3 @@ target_compile_options(mapu_yeefdtd PRIVATE
 	-O2
 )
 endif()
-
-

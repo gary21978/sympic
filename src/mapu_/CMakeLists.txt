@@ -37,8 +37,6 @@ target_link_options(mapu_yeefdtd PRIVATE --scale-link -L${SCALE_TOOLCHAIN_PATH}/
 target_compile_options(mapu_yeefdtd PRIVATE
 	-fPIC
   -w
-	-fscale-spu-masight
-	-fscale-mpu-masight
 	-O2
 )
 endif()

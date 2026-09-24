@@ -23,9 +23,10 @@ int mapu_local_halo_copy_launch(double *dst_base,
     int grid = (int)((total + (size_t)block - 1) / (size_t)block);
     mapu_local_halo_copy<<<grid, block>>>(
         (__DDR double *)dst_base,
-        (__DDR const double *const *)src_bases_d,
-        (__DDR const long *)dst_tid_d, (__DDR const long *)src_tid_d,
-        ncopy, sllen, numvec, recv_offset);
+        (__DDR const double *const __DDR *)src_bases_d,
+        (__DDR const long long *)dst_tid_d, (__DDR const long long *)src_tid_d,
+        (long long)ncopy, (long long)sllen, (long long)numvec,
+        (unsigned long long)recv_offset);
     return 0;
 }
 
@@ -40,8 +41,9 @@ static int mapu_field_halo_copy_segments_launch(
     int block = 4;
     mapu_field_halo_copy_segments<<<(int)nseg, block>>>(
         (__DDR double *)dst_base, (__DDR const double *)src_base,
-        (__DDR const long *)src_off_d, (__DDR const long *)dst_off_d,
-        (__DDR const long *)len_d, nseg);
+        (__DDR const long long *)src_off_d,
+        (__DDR const long long *)dst_off_d,
+        (__DDR const long long *)len_d, (long long)nseg);
     return 0;
 }
 
@@ -80,15 +82,17 @@ static int mapu_sort_copy_segments_launch(void *dst_base, const void *src_base,
     {
         mapu_sort_copy_segments_int<<<(int)nseg, block>>>(
             (__DDR int *)dst_base, (__DDR const int *)src_base,
-            (__DDR const long *)src_off_d, (__DDR const long *)dst_off_d,
-            (__DDR const long *)len_d, nseg);
+            (__DDR const long long *)src_off_d,
+            (__DDR const long long *)dst_off_d,
+            (__DDR const long long *)len_d, (long long)nseg);
     }
     else
     {
         mapu_sort_copy_segments_double<<<(int)nseg, block>>>(
             (__DDR double *)dst_base, (__DDR const double *)src_base,
-            (__DDR const long *)src_off_d, (__DDR const long *)dst_off_d,
-            (__DDR const long *)len_d, nseg);
+            (__DDR const long long *)src_off_d,
+            (__DDR const long long *)dst_off_d,
+            (__DDR const long long *)len_d, (long long)nseg);
     }
     return 0;
 }

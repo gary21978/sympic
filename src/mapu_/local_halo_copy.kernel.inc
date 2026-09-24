@@ -1,70 +1,76 @@
 __global__ void mapu_local_halo_copy(__DDR double *dst_base,
-                                     __DDR const double *const *src_bases,
-                                     __DDR const long *dst_tid,
-                                     __DDR const long *src_tid,
-                                     long ncopy,
-                                     long sllen,
-                                     long numvec,
-                                     size_t recv_offset) {
-  size_t idx = (size_t)blockIdx.x * (size_t)blockDim.x + (size_t)threadIdx.x;
-  size_t total = (size_t)ncopy * (size_t)sllen;
+                                     __DDR const double *const __DDR *src_bases,
+                                     __DDR const long long *dst_tid,
+                                     __DDR const long long *src_tid,
+                                     long long ncopy,
+                                     long long sllen,
+                                     long long numvec,
+                                     unsigned long long recv_offset) {
+  unsigned long long idx =
+      (unsigned long long)blockIdx.x * (unsigned long long)blockDim.x +
+      (unsigned long long)threadIdx.x;
+  unsigned long long total = (unsigned long long)ncopy * (unsigned long long)sllen;
   if (idx >= total) return;
 
-  long copy_id = (long)(idx / (size_t)sllen);
-  long elem = (long)(idx - (size_t)copy_id * (size_t)sllen);
-  long dst = dst_tid[copy_id] * sllen + elem;
-  long src = src_tid[copy_id] * sllen + elem;
-  dst_base[-((long)recv_offset + sllen * numvec) + dst] =
+  long long copy_id = (long long)(idx / (unsigned long long)sllen);
+  long long elem = (long long)(idx - (unsigned long long)copy_id *
+                                      (unsigned long long)sllen);
+  long long dst = dst_tid[copy_id] * sllen + elem;
+  long long src = src_tid[copy_id] * sllen + elem;
+  dst_base[-((long long)recv_offset + sllen * numvec) + dst] =
       src_bases[copy_id][src];
 }
 
 __global__ void mapu_field_halo_copy_segments(__DDR double *dst_base,
                                               __DDR const double *src_base,
-                                              __DDR const long *src_off,
-                                              __DDR const long *dst_off,
-                                              __DDR const long *len,
-                                              long nseg) {
-  long seg = (long)blockIdx.x;
+                                              __DDR const long long *src_off,
+                                              __DDR const long long *dst_off,
+                                              __DDR const long long *len,
+                                              long long nseg) {
+  long long seg = (long long)blockIdx.x;
   if (seg >= nseg) return;
 
-  long src0 = src_off[seg];
-  long dst0 = dst_off[seg];
-  long n = len[seg];
-  for (long elem = (long)threadIdx.x; elem < n; elem += (long)blockDim.x) {
+  long long src0 = src_off[seg];
+  long long dst0 = dst_off[seg];
+  long long n = len[seg];
+  for (long long elem = (long long)threadIdx.x; elem < n;
+       elem += (long long)blockDim.x) {
     dst_base[dst0 + elem] = src_base[src0 + elem];
   }
 }
 
 __global__ void mapu_sort_copy_segments_int(__DDR int *dst_base,
                                             __DDR const int *src_base,
-                                            __DDR const long *src_off,
-                                            __DDR const long *dst_off,
-                                            __DDR const long *len,
-                                            long nseg) {
-  long seg = (long)blockIdx.x;
+                                            __DDR const long long *src_off,
+                                            __DDR const long long *dst_off,
+                                            __DDR const long long *len,
+                                            long long nseg) {
+  long long seg = (long long)blockIdx.x;
   if (seg >= nseg) return;
 
-  long src0 = src_off[seg];
-  long dst0 = dst_off[seg];
-  long n = len[seg];
-  for (long elem = (long)threadIdx.x; elem < n; elem += (long)blockDim.x) {
+  long long src0 = src_off[seg];
+  long long dst0 = dst_off[seg];
+  long long n = len[seg];
+  for (long long elem = (long long)threadIdx.x; elem < n;
+       elem += (long long)blockDim.x) {
     dst_base[dst0 + elem] = src_base[src0 + elem];
   }
 }
 
 __global__ void mapu_sort_copy_segments_double(__DDR double *dst_base,
                                                __DDR const double *src_base,
-                                               __DDR const long *src_off,
-                                               __DDR const long *dst_off,
-                                               __DDR const long *len,
-                                               long nseg) {
-  long seg = (long)blockIdx.x;
+                                               __DDR const long long *src_off,
+                                               __DDR const long long *dst_off,
+                                               __DDR const long long *len,
+                                               long long nseg) {
+  long long seg = (long long)blockIdx.x;
   if (seg >= nseg) return;
 
-  long src0 = src_off[seg];
-  long dst0 = dst_off[seg];
-  long n = len[seg];
-  for (long elem = (long)threadIdx.x; elem < n; elem += (long)blockDim.x) {
+  long long src0 = src_off[seg];
+  long long dst0 = dst_off[seg];
+  long long n = len[seg];
+  for (long long elem = (long long)threadIdx.x; elem < n;
+       elem += (long long)blockDim.x) {
     dst_base[dst0 + elem] = src_base[src0 + elem];
   }
 }

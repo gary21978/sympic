@@ -16,7 +16,6 @@
 // #include "../pubdefs.h"
 #include "mapu_pscmc.h"
 
-
 typedef struct {
   mapu_pscmc_env *pe;
   mapu_pscmc_mem *inoutput;
@@ -54,21 +53,19 @@ typedef struct {
   mapu_pscmc_mem *zmid;
 } mapu_geo_nr_Bfield_pushJ_vlo_struct;
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int mapu_geo_nr_Bfield_pushJ_vlo_init(
-    mapu_pscmc_env *pe, mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr);
+int mapu_geo_nr_Bfield_pushJ_vlo_init(mapu_pscmc_env *pe,
+                                      mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr);
 
 long mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len(void);
 long mapu_geo_nr_Bfield_pushJ_vlo_get_xlen(void);
 long mapu_geo_nr_Bfield_pushJ_vlo_get_num_compute_units(void);
 
-int mapu_geo_nr_Bfield_pushJ_vlo_exec(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen);
+int mapu_geo_nr_Bfield_pushJ_vlo_exec(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
+                                      long scmc_internal_g_xlen, long scmc_internal_g_ylen);
 
 /* pointer parameters */
 int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_inoutput(
@@ -129,18 +126,17 @@ int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_Deltat(
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
 int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_Tori_X0(
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
-int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_r0(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
+int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_r0(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
+                                                       mapu_pscmc_mem *pm);
 int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_MIN_R0(
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
-int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_Q0(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
-int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_b0(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
+int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_Q0(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
+                                                       mapu_pscmc_mem *pm);
+int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_b0(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
+                                                       mapu_pscmc_mem *pm);
 int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_zmid(
     mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm);
 
 #ifdef __cplusplus
 } /* extern \"C\" */
 #endif
-

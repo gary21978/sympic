@@ -6,111 +6,84 @@
 #include "local_halo_copy.kernel_runtime.h"
 #include "local_halo_copy.kernel.inc"
 
-int mapu_local_halo_copy_launch(double *dst_base,
-                                const double *const *src_bases_d,
-                                const long *dst_tid_d, const long *src_tid_d,
-                                long ncopy, long sllen, long numvec,
-                                size_t recv_offset, int device_id)
-{
-    mapsSetDevice(device_id);
-    size_t total = (size_t)ncopy * (size_t)sllen;
-    if (total == 0)
-    {
-        return 0;
-    }
-
-    int block = 4;
-    int grid = (int)((total + (size_t)block - 1) / (size_t)block);
-    mapu_local_halo_copy<<<grid, block>>>(
-        (__DDR double *)dst_base,
-        (__DDR const double *const __DDR *)src_bases_d,
-        (__DDR const long long *)dst_tid_d, (__DDR const long long *)src_tid_d,
-        (long long)ncopy, (long long)sllen, (long long)numvec,
-        (unsigned long long)recv_offset);
+int mapu_local_halo_copy_launch(double *dst_base, const double *const *src_bases_d,
+                                const long *dst_tid_d, const long *src_tid_d, long ncopy,
+                                long sllen, long numvec, size_t recv_offset, int device_id) {
+  mapsSetDevice(device_id);
+  size_t total = (size_t)ncopy * (size_t)sllen;
+  if (total == 0) {
     return 0;
+  }
+
+  int block = 4;
+  int grid = (int)((total + (size_t)block - 1) / (size_t)block);
+  mapu_local_halo_copy<<<grid, block>>>(
+      (__DDR double *)dst_base, (__DDR const double *const __DDR *)src_bases_d,
+      (__DDR const long long *)dst_tid_d, (__DDR const long long *)src_tid_d, (long long)ncopy,
+      (long long)sllen, (long long)numvec, (unsigned long long)recv_offset);
+  return 0;
 }
 
-static int mapu_field_halo_copy_segments_launch(
-    double *dst_base, const double *src_base, const long *src_off_d,
-    const long *dst_off_d, const long *len_d, long nseg, int device_id) {
-    mapsSetDevice(device_id);
-    if (nseg == 0) {
-        return 0;
-    }
-
-    int block = 4;
-    mapu_field_halo_copy_segments<<<(int)nseg, block>>>(
-        (__DDR double *)dst_base, (__DDR const double *)src_base,
-        (__DDR const long long *)src_off_d,
-        (__DDR const long long *)dst_off_d,
-        (__DDR const long long *)len_d, (long long)nseg);
+static int mapu_field_halo_copy_segments_launch(double *dst_base, const double *src_base,
+                                                const long *src_off_d, const long *dst_off_d,
+                                                const long *len_d, long nseg, int device_id) {
+  mapsSetDevice(device_id);
+  if (nseg == 0) {
     return 0;
+  }
+
+  int block = 4;
+  mapu_field_halo_copy_segments<<<(int)nseg, block>>>(
+      (__DDR double *)dst_base, (__DDR const double *)src_base, (__DDR const long long *)src_off_d,
+      (__DDR const long long *)dst_off_d, (__DDR const long long *)len_d, (long long)nseg);
+  return 0;
 }
 
-int mapu_field_halo_pack_launch(double *dst_base, const double *src_base,
-                                const long *src_off_d, const long *dst_off_d,
-                                const long *len_d, long nseg,
+int mapu_field_halo_pack_launch(double *dst_base, const double *src_base, const long *src_off_d,
+                                const long *dst_off_d, const long *len_d, long nseg,
                                 int device_id) {
-    return mapu_field_halo_copy_segments_launch(dst_base, src_base, src_off_d,
-                                                dst_off_d, len_d, nseg,
-                                                device_id);
+  return mapu_field_halo_copy_segments_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg,
+                                              device_id);
 }
 
-int mapu_field_halo_unpack_launch(double *dst_base, const double *src_base,
-                                  const long *src_off_d, const long *dst_off_d,
-                                  const long *len_d, long nseg,
+int mapu_field_halo_unpack_launch(double *dst_base, const double *src_base, const long *src_off_d,
+                                  const long *dst_off_d, const long *len_d, long nseg,
                                   int device_id) {
-    return mapu_field_halo_copy_segments_launch(dst_base, src_base, src_off_d,
-                                                dst_off_d, len_d, nseg,
-                                                device_id);
+  return mapu_field_halo_copy_segments_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg,
+                                              device_id);
 }
 
 static int mapu_sort_copy_segments_launch(void *dst_base, const void *src_base,
-                                          const long *src_off_d,
-                                          const long *dst_off_d,
-                                          const long *len_d, long nseg,
-                                          int is_int, int device_id)
-{
-    mapsSetDevice(device_id);
-    if (nseg == 0)
-    {
-        return 0;
-    }
-
-    int block = 4;
-    if (is_int)
-    {
-        mapu_sort_copy_segments_int<<<(int)nseg, block>>>(
-            (__DDR int *)dst_base, (__DDR const int *)src_base,
-            (__DDR const long long *)src_off_d,
-            (__DDR const long long *)dst_off_d,
-            (__DDR const long long *)len_d, (long long)nseg);
-    }
-    else
-    {
-        mapu_sort_copy_segments_double<<<(int)nseg, block>>>(
-            (__DDR double *)dst_base, (__DDR const double *)src_base,
-            (__DDR const long long *)src_off_d,
-            (__DDR const long long *)dst_off_d,
-            (__DDR const long long *)len_d, (long long)nseg);
-    }
+                                          const long *src_off_d, const long *dst_off_d,
+                                          const long *len_d, long nseg, int is_int, int device_id) {
+  mapsSetDevice(device_id);
+  if (nseg == 0) {
     return 0;
+  }
+
+  int block = 4;
+  if (is_int) {
+    mapu_sort_copy_segments_int<<<(int)nseg, block>>>(
+        (__DDR int *)dst_base, (__DDR const int *)src_base, (__DDR const long long *)src_off_d,
+        (__DDR const long long *)dst_off_d, (__DDR const long long *)len_d, (long long)nseg);
+  } else {
+    mapu_sort_copy_segments_double<<<(int)nseg, block>>>(
+        (__DDR double *)dst_base, (__DDR const double *)src_base,
+        (__DDR const long long *)src_off_d, (__DDR const long long *)dst_off_d,
+        (__DDR const long long *)len_d, (long long)nseg);
+  }
+  return 0;
 }
 
-int mapu_sort_copy_int_launch(int *dst_base, const int *src_base,
-                              const long *src_off_d, const long *dst_off_d,
-                              const long *len_d, long nseg, int device_id)
-{
-    return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d,
-                                          dst_off_d, len_d, nseg, 1,
-                                          device_id);
+int mapu_sort_copy_int_launch(int *dst_base, const int *src_base, const long *src_off_d,
+                              const long *dst_off_d, const long *len_d, long nseg, int device_id) {
+  return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, 1,
+                                        device_id);
 }
 
-int mapu_sort_copy_double_launch(double *dst_base, const double *src_base,
-                                 const long *src_off_d, const long *dst_off_d,
-                                 const long *len_d, long nseg, int device_id)
-{
-    return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d,
-                                          dst_off_d, len_d, nseg, 0,
-                                          device_id);
+int mapu_sort_copy_double_launch(double *dst_base, const double *src_base, const long *src_off_d,
+                                 const long *dst_off_d, const long *len_d, long nseg,
+                                 int device_id) {
+  return mapu_sort_copy_segments_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, 0,
+                                        device_id);
 }

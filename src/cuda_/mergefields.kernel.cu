@@ -3,11 +3,8 @@
 #include <math.h>
 #include <stdio.h>
 #define IDX_OPT_MAX 32
-__global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
-                                   int ovlpindex, long numvec, int num_ele,
-                                   long xblock, long yblock, long zblock,
-                                   int ovlp) {
-
+__global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                   int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -16,7 +13,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   long i = 0;
 
@@ -36,7 +32,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   int xlo = (ovlpindex % 3);
@@ -65,7 +60,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
     if (xlo == 2) {
       (field_xmi = (xb - (ovlp + 0)));
       (field_xma = (xb - 0));
-
     }
   }
 
@@ -77,7 +71,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
     if (ylo == 2) {
       (field_ymi = (yb - (ovlp + 0)));
       (field_yma = (yb - 0));
-
     }
   }
 
@@ -89,7 +82,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
     if (zlo == 2) {
       (field_zmi = (zb - (ovlp + 0)));
       (field_zma = (zb - 0));
-
     }
   }
 
@@ -123,19 +115,15 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
                 if (0) {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     (lxyzx = ovlp);
-
                   }
 
                   if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                     (lxyzy = ovlp);
-
                   }
 
                   if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                     (lxyzz = ovlp);
-
                   }
-
                 }
 
                 {
@@ -145,14 +133,10 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                          (vecovlp)[((i * ovlpalllen) +
                                     (realidx +
-                                     (num_ele *
-                                      (xyzx + (ovlpxma *
-                                               (xyzy + (ovlpyma * xyzz)))))))]);
+                                     (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                   }
                 }
               }
@@ -163,11 +147,9 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp,
     }
   }
 }
-__global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
-                                              long numvec, int num_ele,
-                                              long xblock, long yblock,
-                                              long zblock, int ovlp) {
-
+__global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps, long numvec,
+                                              int num_ele, long xblock, long yblock, long zblock,
+                                              int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -176,7 +158,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   size_t v_offset = 0;
 
@@ -208,7 +189,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -237,7 +217,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + 0)));
             (field_xma = (xb - 0));
-
           }
         }
 
@@ -249,7 +228,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + 0)));
             (field_yma = (yb - 0));
-
           }
         }
 
@@ -261,7 +239,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + 0)));
             (field_zma = (zb - 0));
-
           }
         }
 
@@ -295,19 +272,15 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
                       if (0) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -318,15 +291,11 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
 
                           ((vecmain)[(
                                (i * blk_all_len) +
-                               (realidx +
-                                (num_ele *
-                                 (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                               (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                (vecovlp)[(
                                    (i * ovlpalllen) +
                                    (realidx +
-                                    (num_ele *
-                                     (xyzx + (ovlpxma *
-                                              (xyzy + (ovlpyma * xyzz)))))))]);
+                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                         }
                       }
                     }
@@ -341,16 +310,15 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
     }
   }
 }
-__global__ void cuda_sync_ovlp_o2m_once(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
-
+__global__ void
+cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
+                        double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
+                        double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
+                        double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
+                        double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+                        double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
+                        double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
+                        int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -359,7 +327,6 @@ __global__ void cuda_sync_ovlp_o2m_once(
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   double *vecovlps[27];
   ((vecovlps)[0] = vecovlp0);
@@ -417,7 +384,6 @@ __global__ void cuda_sync_ovlp_o2m_once(
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -446,7 +412,6 @@ __global__ void cuda_sync_ovlp_o2m_once(
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + 0)));
             (field_xma = (xb - 0));
-
           }
         }
 
@@ -458,7 +423,6 @@ __global__ void cuda_sync_ovlp_o2m_once(
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + 0)));
             (field_yma = (yb - 0));
-
           }
         }
 
@@ -470,7 +434,6 @@ __global__ void cuda_sync_ovlp_o2m_once(
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + 0)));
             (field_zma = (zb - 0));
-
           }
         }
 
@@ -504,19 +467,15 @@ __global__ void cuda_sync_ovlp_o2m_once(
                       if (0) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -527,15 +486,11 @@ __global__ void cuda_sync_ovlp_o2m_once(
 
                           ((vecmain)[(
                                (i * blk_all_len) +
-                               (realidx +
-                                (num_ele *
-                                 (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                               (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                (vecovlp)[(
                                    (i * ovlpalllen) +
                                    (realidx +
-                                    (num_ele *
-                                     (xyzx + (ovlpxma *
-                                              (xyzy + (ovlpyma * xyzz)))))))]);
+                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                         }
                       }
                     }
@@ -549,11 +504,8 @@ __global__ void cuda_sync_ovlp_o2m_once(
     }
   }
 }
-__global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
-                                   int ovlpindex, long numvec, int num_ele,
-                                   long xblock, long yblock, long zblock,
-                                   int ovlp) {
-
+__global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                   int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -562,7 +514,6 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   long i = 0;
 
@@ -582,7 +533,6 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   int xlo = (ovlpindex % 3);
@@ -611,7 +561,6 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
     if (xlo == 2) {
       (field_xmi = (xb - (ovlp + ovlp)));
       (field_xma = (xb - ovlp));
-
     }
   }
 
@@ -623,7 +572,6 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
     if (ylo == 2) {
       (field_ymi = (yb - (ovlp + ovlp)));
       (field_yma = (yb - ovlp));
-
     }
   }
 
@@ -635,7 +583,6 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
     if (zlo == 2) {
       (field_zmi = (zb - (ovlp + ovlp)));
       (field_zma = (zb - ovlp));
-
     }
   }
 
@@ -669,19 +616,15 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
                 if (1) {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     (lxyzx = ovlp);
-
                   }
 
                   if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                     (lxyzy = ovlp);
-
                   }
 
                   if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                     (lxyzz = ovlp);
-
                   }
-
                 }
 
                 {
@@ -692,14 +635,10 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
 
                     ((vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                          (vecmain)[(
                              (i * blk_all_len) +
-                             (realidx +
-                              (num_ele *
-                               (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                   }
                 }
               }
@@ -710,11 +649,9 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp,
     }
   }
 }
-__global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
-                                              long numvec, int num_ele,
-                                              long xblock, long yblock,
-                                              long zblock, int ovlp) {
-
+__global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps, long numvec,
+                                              int num_ele, long xblock, long yblock, long zblock,
+                                              int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -723,7 +660,6 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   size_t v_offset = 0;
 
@@ -755,7 +691,6 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -784,7 +719,6 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + ovlp)));
             (field_xma = (xb - ovlp));
-
           }
         }
 
@@ -796,7 +730,6 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + ovlp)));
             (field_yma = (yb - ovlp));
-
           }
         }
 
@@ -808,7 +741,6 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + ovlp)));
             (field_zma = (zb - ovlp));
-
           }
         }
 
@@ -842,19 +774,15 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
                       if (1) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -866,15 +794,10 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
                           ((vecovlp)[(
                                (i * ovlpalllen) +
                                (realidx +
-                                (num_ele *
-                                 (xyzx +
-                                  (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
-                               (vecmain)[(
-                                   (i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele *
-                                     (lxyzx +
-                                      (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                               (vecmain)[((i * blk_all_len) +
+                                          (realidx +
+                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                         }
                       }
                     }
@@ -889,16 +812,15 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
     }
   }
 }
-__global__ void cuda_sync_ovlp_m2o_once(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
-
+__global__ void
+cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
+                        double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
+                        double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
+                        double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
+                        double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+                        double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
+                        double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
+                        int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -907,7 +829,6 @@ __global__ void cuda_sync_ovlp_m2o_once(
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   double *vecovlps[27];
   ((vecovlps)[0] = vecovlp0);
@@ -965,7 +886,6 @@ __global__ void cuda_sync_ovlp_m2o_once(
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -994,7 +914,6 @@ __global__ void cuda_sync_ovlp_m2o_once(
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + ovlp)));
             (field_xma = (xb - ovlp));
-
           }
         }
 
@@ -1006,7 +925,6 @@ __global__ void cuda_sync_ovlp_m2o_once(
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + ovlp)));
             (field_yma = (yb - ovlp));
-
           }
         }
 
@@ -1018,7 +936,6 @@ __global__ void cuda_sync_ovlp_m2o_once(
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + ovlp)));
             (field_zma = (zb - ovlp));
-
           }
         }
 
@@ -1052,19 +969,15 @@ __global__ void cuda_sync_ovlp_m2o_once(
                       if (1) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -1076,15 +989,10 @@ __global__ void cuda_sync_ovlp_m2o_once(
                           ((vecovlp)[(
                                (i * ovlpalllen) +
                                (realidx +
-                                (num_ele *
-                                 (xyzx +
-                                  (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
-                               (vecmain)[(
-                                   (i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele *
-                                     (lxyzx +
-                                      (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                               (vecmain)[((i * blk_all_len) +
+                                          (realidx +
+                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                         }
                       }
                     }
@@ -1098,11 +1006,8 @@ __global__ void cuda_sync_ovlp_m2o_once(
     }
   }
 }
-__global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
-                                    int ovlpindex, long numvec, int num_ele,
-                                    long xblock, long yblock, long zblock,
-                                    int ovlp) {
-
+__global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -1111,7 +1016,6 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   long i = 0;
 
@@ -1131,7 +1035,6 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   int xlo = (ovlpindex % 3);
@@ -1160,7 +1063,6 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
     if (xlo == 2) {
       (field_xmi = (xb - (ovlp + ovlp)));
       (field_xma = (xb - ovlp));
-
     }
   }
 
@@ -1172,7 +1074,6 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
     if (ylo == 2) {
       (field_ymi = (yb - (ovlp + ovlp)));
       (field_yma = (yb - ovlp));
-
     }
   }
 
@@ -1184,7 +1085,6 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
     if (zlo == 2) {
       (field_zmi = (zb - (ovlp + ovlp)));
       (field_zma = (zb - ovlp));
-
     }
   }
 
@@ -1218,19 +1118,15 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
                 if (1) {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     (lxyzx = ovlp);
-
                   }
 
                   if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                     (lxyzy = ovlp);
-
                   }
 
                   if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                     (lxyzz = ovlp);
-
                   }
-
                 }
 
                 {
@@ -1240,20 +1136,14 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                          ((vecmain)[(
                               (i * blk_all_len) +
-                              (realidx +
-                               (num_ele *
-                                (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
+                              (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                           (vecovlp)[(
                               (i * ovlpalllen) +
                               (realidx +
-                               (num_ele *
-                                (xyzx +
-                                 (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
+                               (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                   }
                 }
               }
@@ -1264,12 +1154,9 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp,
     }
   }
 }
-__global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
-                                               double *vecovlps, long numvec,
-                                               int num_ele, long xblock,
-                                               long yblock, long zblock,
+__global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps, long numvec,
+                                               int num_ele, long xblock, long yblock, long zblock,
                                                int ovlp) {
-
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -1278,7 +1165,6 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   size_t v_offset = 0;
 
@@ -1310,7 +1196,6 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -1339,7 +1224,6 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + ovlp)));
             (field_xma = (xb - ovlp));
-
           }
         }
 
@@ -1351,7 +1235,6 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + ovlp)));
             (field_yma = (yb - ovlp));
-
           }
         }
 
@@ -1363,7 +1246,6 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + ovlp)));
             (field_zma = (zb - ovlp));
-
           }
         }
 
@@ -1397,19 +1279,15 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
                       if (1) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -1420,21 +1298,14 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
 
                           ((vecmain)[(
                                (i * blk_all_len) +
-                               (realidx +
-                                (num_ele *
-                                 (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
-                               ((vecmain)[(
-                                    (i * blk_all_len) +
-                                    (realidx +
-                                     (num_ele *
-                                      (lxyzx +
-                                       (xb * (lxyzy + (yb * lxyzz)))))))] +
+                               (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                               ((vecmain)[((i * blk_all_len) +
+                                           (realidx +
+                                            (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                                 (vecovlp)[((i * ovlpalllen) +
                                            (realidx +
                                             (num_ele *
-                                             (xyzx + (ovlpxma *
-                                                      (xyzy + (ovlpyma *
-                                                               xyzz)))))))]));
+                                             (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                         }
                       }
                     }
@@ -1449,16 +1320,15 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain,
     }
   }
 }
-__global__ void cuda_merge_ovlp_o2m_once(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
-
+__global__ void
+cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
+                         double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
+                         double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
+                         double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
+                         double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+                         double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
+                         double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
+                         int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -1467,7 +1337,6 @@ __global__ void cuda_merge_ovlp_o2m_once(
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   double *vecovlps[27];
   ((vecovlps)[0] = vecovlp0);
@@ -1525,7 +1394,6 @@ __global__ void cuda_merge_ovlp_o2m_once(
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -1554,7 +1422,6 @@ __global__ void cuda_merge_ovlp_o2m_once(
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + ovlp)));
             (field_xma = (xb - ovlp));
-
           }
         }
 
@@ -1566,7 +1433,6 @@ __global__ void cuda_merge_ovlp_o2m_once(
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + ovlp)));
             (field_yma = (yb - ovlp));
-
           }
         }
 
@@ -1578,7 +1444,6 @@ __global__ void cuda_merge_ovlp_o2m_once(
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + ovlp)));
             (field_zma = (zb - ovlp));
-
           }
         }
 
@@ -1612,19 +1477,15 @@ __global__ void cuda_merge_ovlp_o2m_once(
                       if (1) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -1635,21 +1496,14 @@ __global__ void cuda_merge_ovlp_o2m_once(
 
                           ((vecmain)[(
                                (i * blk_all_len) +
-                               (realidx +
-                                (num_ele *
-                                 (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
-                               ((vecmain)[(
-                                    (i * blk_all_len) +
-                                    (realidx +
-                                     (num_ele *
-                                      (lxyzx +
-                                       (xb * (lxyzy + (yb * lxyzz)))))))] +
+                               (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                               ((vecmain)[((i * blk_all_len) +
+                                           (realidx +
+                                            (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                                 (vecovlp)[((i * ovlpalllen) +
                                            (realidx +
                                             (num_ele *
-                                             (xyzx + (ovlpxma *
-                                                      (xyzy + (ovlpyma *
-                                                               xyzz)))))))]));
+                                             (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                         }
                       }
                     }
@@ -1663,11 +1517,8 @@ __global__ void cuda_merge_ovlp_o2m_once(
     }
   }
 }
-__global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
-                                    int ovlpindex, long numvec, int num_ele,
-                                    long xblock, long yblock, long zblock,
-                                    int ovlp) {
-
+__global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -1676,7 +1527,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   long i = 0;
 
@@ -1696,7 +1546,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   int xlo = (ovlpindex % 3);
@@ -1725,7 +1574,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
     if (xlo == 2) {
       (field_xmi = (xb - (ovlp + 0)));
       (field_xma = (xb - 0));
-
     }
   }
 
@@ -1737,7 +1585,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
     if (ylo == 2) {
       (field_ymi = (yb - (ovlp + 0)));
       (field_yma = (yb - 0));
-
     }
   }
 
@@ -1749,7 +1596,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
     if (zlo == 2) {
       (field_zmi = (zb - (ovlp + 0)));
       (field_zma = (zb - 0));
-
     }
   }
 
@@ -1783,19 +1629,15 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
                 if (0) {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     (lxyzx = ovlp);
-
                   }
 
                   if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                     (lxyzy = ovlp);
-
                   }
 
                   if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                     (lxyzz = ovlp);
-
                   }
-
                 }
 
                 {
@@ -1806,14 +1648,10 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
 
                     ((vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                          (vecmain)[(
                              (i * blk_all_len) +
-                             (realidx +
-                              (num_ele *
-                               (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                   }
                 }
               }
@@ -1824,12 +1662,9 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp,
     }
   }
 }
-__global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
-                                               double *vecovlps, long numvec,
-                                               int num_ele, long xblock,
-                                               long yblock, long zblock,
+__global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps, long numvec,
+                                               int num_ele, long xblock, long yblock, long zblock,
                                                int ovlp) {
-
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -1838,7 +1673,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   size_t v_offset = 0;
 
@@ -1870,7 +1704,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -1899,7 +1732,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + 0)));
             (field_xma = (xb - 0));
-
           }
         }
 
@@ -1911,7 +1743,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + 0)));
             (field_yma = (yb - 0));
-
           }
         }
 
@@ -1923,7 +1754,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + 0)));
             (field_zma = (zb - 0));
-
           }
         }
 
@@ -1957,19 +1787,15 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
                       if (0) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -1981,15 +1807,10 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
                           ((vecovlp)[(
                                (i * ovlpalllen) +
                                (realidx +
-                                (num_ele *
-                                 (xyzx +
-                                  (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
-                               (vecmain)[(
-                                   (i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele *
-                                     (lxyzx +
-                                      (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                               (vecmain)[((i * blk_all_len) +
+                                          (realidx +
+                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                         }
                       }
                     }
@@ -2004,16 +1825,15 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain,
     }
   }
 }
-__global__ void cuda_merge_ovlp_m2o_once(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp) {
-
+__global__ void
+cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
+                         double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
+                         double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
+                         double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
+                         double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+                         double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
+                         double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
+                         int num_ele, long xblock, long yblock, long zblock, int ovlp) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
@@ -2022,7 +1842,6 @@ __global__ void cuda_merge_ovlp_m2o_once(
   const long __xlen = (blockDim.x * blockDim.y);
 
   const long __ylen = (gridDim.x * gridDim.y);
-
 
   double *vecovlps[27];
   ((vecovlps)[0] = vecovlp0);
@@ -2080,7 +1899,6 @@ __global__ void cuda_merge_ovlp_m2o_once(
 
         if (local_ymax >= numvec) {
           (local_ymax = numvec);
-
         }
 
         int xlo = (ovlpindex % 3);
@@ -2109,7 +1927,6 @@ __global__ void cuda_merge_ovlp_m2o_once(
           if (xlo == 2) {
             (field_xmi = (xb - (ovlp + 0)));
             (field_xma = (xb - 0));
-
           }
         }
 
@@ -2121,7 +1938,6 @@ __global__ void cuda_merge_ovlp_m2o_once(
           if (ylo == 2) {
             (field_ymi = (yb - (ovlp + 0)));
             (field_yma = (yb - 0));
-
           }
         }
 
@@ -2133,7 +1949,6 @@ __global__ void cuda_merge_ovlp_m2o_once(
           if (zlo == 2) {
             (field_zmi = (zb - (ovlp + 0)));
             (field_zma = (zb - 0));
-
           }
         }
 
@@ -2167,19 +1982,15 @@ __global__ void cuda_merge_ovlp_m2o_once(
                       if (0) {
                         if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                           (lxyzx = ovlp);
-
                         }
 
                         if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                           (lxyzy = ovlp);
-
                         }
 
                         if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                           (lxyzz = ovlp);
-
                         }
-
                       }
 
                       {
@@ -2191,15 +2002,10 @@ __global__ void cuda_merge_ovlp_m2o_once(
                           ((vecovlp)[(
                                (i * ovlpalllen) +
                                (realidx +
-                                (num_ele *
-                                 (xyzx +
-                                  (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
-                               (vecmain)[(
-                                   (i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele *
-                                     (lxyzx +
-                                      (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                               (vecmain)[((i * blk_all_len) +
+                                          (realidx +
+                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                         }
                       }
                     }

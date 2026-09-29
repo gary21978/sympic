@@ -8,11 +8,9 @@
 #include <stdlib.h>
 #define IDX_OPT_MAX 1
 
-void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
-                                 int ovlpindex, long numvec, int num_ele,
-                                 long xblock, long yblock, long zblock,
-                                 int ovlp, long scmc_internal_g_idy,
-                                 long scmc_internal_g_ylen) {
+void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                 int num_ele, long xblock, long yblock, long zblock, int ovlp,
+                                 long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -34,9 +32,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
       (local_ymax = numvec);
     }
   } else {
-    {
-      0;
-    }
+    { 0; }
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -112,9 +108,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzx = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -122,9 +116,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzy = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -132,29 +124,21 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzz = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
                   }
                 } else {
-                  {
-                    0;
-                  }
+                  { 0; }
                 }
                 {
                   long g = 0;
                   for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                          (vecovlp)[((i * ovlpalllen) +
                                     (realidx +
-                                     (num_ele *
-                                      (xyzx + (ovlpxma *
-                                               (xyzy + (ovlpyma * xyzz)))))))]);
+                                     (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                   }
                 }
               }
@@ -165,11 +149,9 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
     }
   }
 }
-void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
-                                            long numvec, int num_ele,
-                                            long xblock, long yblock,
-                                            long zblock, int ovlp,
-                                            long scmc_internal_g_idy,
+void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, long numvec,
+                                            int num_ele, long xblock, long yblock, long zblock,
+                                            int ovlp, long scmc_internal_g_idy,
                                             long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
@@ -204,9 +186,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -282,9 +262,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -292,9 +270,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -302,15 +278,11 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -318,15 +290,11 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
-                                 (realidx +
-                                  (num_ele *
-                                   (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                  (vecovlp)[((i * ovlpalllen) +
                                             (realidx +
                                              (num_ele *
-                                              (xyzx + (ovlpxma *
-                                                       (xyzy + (ovlpyma *
-                                                                xyzz)))))))]);
+                                              (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                           }
                         }
                       }
@@ -343,15 +311,13 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
   }
 }
 void c_sync_ovlp_o2m_once_scmc_kernel(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp,
-    long scmc_internal_g_idy, long scmc_internal_g_ylen) {
+    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2, double *vecovlp3,
+    double *vecovlp4, double *vecovlp5, double *vecovlp6, double *vecovlp7, double *vecovlp8,
+    double *vecovlp9, double *vecovlp10, double *vecovlp11, double *vecovlp12, double *vecovlp14,
+    double *vecovlp15, double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23, double *vecovlp24,
+    double *vecovlp25, double *vecovlp26, long numvec, int num_ele, long xblock, long yblock,
+    long zblock, int ovlp, long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -412,9 +378,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -490,9 +454,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -500,9 +462,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -510,15 +470,11 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -526,15 +482,11 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
-                                 (realidx +
-                                  (num_ele *
-                                   (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                  (vecovlp)[((i * ovlpalllen) +
                                             (realidx +
                                              (num_ele *
-                                              (xyzx + (ovlpxma *
-                                                       (xyzy + (ovlpyma *
-                                                                xyzz)))))))]);
+                                              (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
                           }
                         }
                       }
@@ -549,11 +501,9 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
     }
   }
 }
-void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
-                                 int ovlpindex, long numvec, int num_ele,
-                                 long xblock, long yblock, long zblock,
-                                 int ovlp, long scmc_internal_g_idy,
-                                 long scmc_internal_g_ylen) {
+void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                 int num_ele, long xblock, long yblock, long zblock, int ovlp,
+                                 long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -575,9 +525,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
       (local_ymax = numvec);
     }
   } else {
-    {
-      0;
-    }
+    { 0; }
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -653,9 +601,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzx = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -663,9 +609,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzy = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -673,15 +617,11 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzz = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
                   }
                 } else {
-                  {
-                    0;
-                  }
+                  { 0; }
                 }
                 {
                   long g = 0;
@@ -689,14 +629,10 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                     long realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                          (vecmain)[(
                              (i * blk_all_len) +
-                             (realidx +
-                              (num_ele *
-                               (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                   }
                 }
               }
@@ -707,11 +643,9 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
     }
   }
 }
-void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
-                                            long numvec, int num_ele,
-                                            long xblock, long yblock,
-                                            long zblock, int ovlp,
-                                            long scmc_internal_g_idy,
+void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, long numvec,
+                                            int num_ele, long xblock, long yblock, long zblock,
+                                            int ovlp, long scmc_internal_g_idy,
                                             long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
@@ -746,9 +680,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -824,9 +756,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -834,9 +764,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -844,15 +772,11 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -861,15 +785,11 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
                                  (realidx +
-                                  (num_ele *
-                                   (xyzx +
-                                    (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                                  (vecmain)[(
                                      (i * blk_all_len) +
                                      (realidx +
-                                      (num_ele *
-                                       (lxyzx +
-                                        (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                           }
                         }
                       }
@@ -886,15 +806,13 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
   }
 }
 void c_sync_ovlp_m2o_once_scmc_kernel(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp,
-    long scmc_internal_g_idy, long scmc_internal_g_ylen) {
+    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2, double *vecovlp3,
+    double *vecovlp4, double *vecovlp5, double *vecovlp6, double *vecovlp7, double *vecovlp8,
+    double *vecovlp9, double *vecovlp10, double *vecovlp11, double *vecovlp12, double *vecovlp14,
+    double *vecovlp15, double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23, double *vecovlp24,
+    double *vecovlp25, double *vecovlp26, long numvec, int num_ele, long xblock, long yblock,
+    long zblock, int ovlp, long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -955,9 +873,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -1033,9 +949,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1043,9 +957,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1053,15 +965,11 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -1070,15 +978,11 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
                                  (realidx +
-                                  (num_ele *
-                                   (xyzx +
-                                    (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                                  (vecmain)[(
                                      (i * blk_all_len) +
                                      (realidx +
-                                      (num_ele *
-                                       (lxyzx +
-                                        (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                           }
                         }
                       }
@@ -1093,11 +997,9 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
     }
   }
 }
-void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
-                                  int ovlpindex, long numvec, int num_ele,
-                                  long xblock, long yblock, long zblock,
-                                  int ovlp, long scmc_internal_g_idy,
-                                  long scmc_internal_g_ylen) {
+void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                  int num_ele, long xblock, long yblock, long zblock, int ovlp,
+                                  long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -1119,9 +1021,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
       (local_ymax = numvec);
     }
   } else {
-    {
-      0;
-    }
+    { 0; }
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -1197,9 +1097,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzx = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1207,9 +1105,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzy = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1217,35 +1113,25 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzz = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
                   }
                 } else {
-                  {
-                    0;
-                  }
+                  { 0; }
                 }
                 {
                   long g = 0;
                   for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                          ((vecmain)[(
                               (i * blk_all_len) +
-                              (realidx +
-                               (num_ele *
-                                (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
+                              (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                           (vecovlp)[(
                               (i * ovlpalllen) +
                               (realidx +
-                               (num_ele *
-                                (xyzx +
-                                 (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
+                               (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                   }
                 }
               }
@@ -1256,11 +1142,9 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp,
     }
   }
 }
-void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
-                                             long numvec, int num_ele,
-                                             long xblock, long yblock,
-                                             long zblock, int ovlp,
-                                             long scmc_internal_g_idy,
+void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, long numvec,
+                                             int num_ele, long xblock, long yblock, long zblock,
+                                             int ovlp, long scmc_internal_g_idy,
                                              long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
@@ -1295,9 +1179,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -1373,9 +1255,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1383,9 +1263,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1393,15 +1271,11 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -1409,21 +1283,15 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
-                                 (realidx +
-                                  (num_ele *
-                                   (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                  ((vecmain)[(
                                       (i * blk_all_len) +
                                       (realidx +
-                                       (num_ele *
-                                        (lxyzx +
-                                         (xb * (lxyzy + (yb * lxyzz)))))))] +
+                                       (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                                   (vecovlp)[((i * ovlpalllen) +
                                              (realidx +
                                               (num_ele *
-                                               (xyzx + (ovlpxma *
-                                                        (xyzy + (ovlpyma *
-                                                                 xyzz)))))))]));
+                                               (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                           }
                         }
                       }
@@ -1440,15 +1308,13 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
   }
 }
 void c_merge_ovlp_o2m_once_scmc_kernel(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp,
-    long scmc_internal_g_idy, long scmc_internal_g_ylen) {
+    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2, double *vecovlp3,
+    double *vecovlp4, double *vecovlp5, double *vecovlp6, double *vecovlp7, double *vecovlp8,
+    double *vecovlp9, double *vecovlp10, double *vecovlp11, double *vecovlp12, double *vecovlp14,
+    double *vecovlp15, double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23, double *vecovlp24,
+    double *vecovlp25, double *vecovlp26, long numvec, int num_ele, long xblock, long yblock,
+    long zblock, int ovlp, long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -1509,9 +1375,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -1587,9 +1451,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1597,9 +1459,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1607,15 +1467,11 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -1623,21 +1479,15 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
-                                 (realidx +
-                                  (num_ele *
-                                   (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                                  ((vecmain)[(
                                       (i * blk_all_len) +
                                       (realidx +
-                                       (num_ele *
-                                        (lxyzx +
-                                         (xb * (lxyzy + (yb * lxyzz)))))))] +
+                                       (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                                   (vecovlp)[((i * ovlpalllen) +
                                              (realidx +
                                               (num_ele *
-                                               (xyzx + (ovlpxma *
-                                                        (xyzy + (ovlpyma *
-                                                                 xyzz)))))))]));
+                                               (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                           }
                         }
                       }
@@ -1652,11 +1502,9 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
     }
   }
 }
-void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
-                                  int ovlpindex, long numvec, int num_ele,
-                                  long xblock, long yblock, long zblock,
-                                  int ovlp, long scmc_internal_g_idy,
-                                  long scmc_internal_g_ylen) {
+void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex, long numvec,
+                                  int num_ele, long xblock, long yblock, long zblock, int ovlp,
+                                  long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -1678,9 +1526,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
       (local_ymax = numvec);
     }
   } else {
-    {
-      0;
-    }
+    { 0; }
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -1756,9 +1602,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzx = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1766,9 +1610,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzy = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1776,15 +1618,11 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                         (lxyzz = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
                   }
                 } else {
-                  {
-                    0;
-                  }
+                  { 0; }
                 }
                 {
                   long g = 0;
@@ -1792,14 +1630,10 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
                     long realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                          (vecmain)[(
                              (i * blk_all_len) +
-                             (realidx +
-                              (num_ele *
-                               (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                   }
                 }
               }
@@ -1810,11 +1644,9 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp,
     }
   }
 }
-void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
-                                             long numvec, int num_ele,
-                                             long xblock, long yblock,
-                                             long zblock, int ovlp,
-                                             long scmc_internal_g_idy,
+void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, long numvec,
+                                             int num_ele, long xblock, long yblock, long zblock,
+                                             int ovlp, long scmc_internal_g_idy,
                                              long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
@@ -1849,9 +1681,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -1927,9 +1757,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1937,9 +1765,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1947,15 +1773,11 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -1964,15 +1786,11 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
                                  (realidx +
-                                  (num_ele *
-                                   (xyzx +
-                                    (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                                  (vecmain)[(
                                      (i * blk_all_len) +
                                      (realidx +
-                                      (num_ele *
-                                       (lxyzx +
-                                        (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                           }
                         }
                       }
@@ -1989,15 +1807,13 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps,
   }
 }
 void c_merge_ovlp_m2o_once_scmc_kernel(
-    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2,
-    double *vecovlp3, double *vecovlp4, double *vecovlp5, double *vecovlp6,
-    double *vecovlp7, double *vecovlp8, double *vecovlp9, double *vecovlp10,
-    double *vecovlp11, double *vecovlp12, double *vecovlp14, double *vecovlp15,
-    double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
-    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23,
-    double *vecovlp24, double *vecovlp25, double *vecovlp26, long numvec,
-    int num_ele, long xblock, long yblock, long zblock, int ovlp,
-    long scmc_internal_g_idy, long scmc_internal_g_ylen) {
+    double *vecmain, double *vecovlp0, double *vecovlp1, double *vecovlp2, double *vecovlp3,
+    double *vecovlp4, double *vecovlp5, double *vecovlp6, double *vecovlp7, double *vecovlp8,
+    double *vecovlp9, double *vecovlp10, double *vecovlp11, double *vecovlp12, double *vecovlp14,
+    double *vecovlp15, double *vecovlp16, double *vecovlp17, double *vecovlp18, double *vecovlp19,
+    double *vecovlp20, double *vecovlp21, double *vecovlp22, double *vecovlp23, double *vecovlp24,
+    double *vecovlp25, double *vecovlp26, long numvec, int num_ele, long xblock, long yblock,
+    long zblock, int ovlp, long scmc_internal_g_idy, long scmc_internal_g_ylen) {
   const long pscmc_compute_unit_id = 0;
   const long pscmc_num_compute_units = 1;
   const long __idx = 0;
@@ -2058,9 +1874,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
               (local_ymax = numvec);
             }
           } else {
-            {
-              0;
-            }
+            { 0; }
           }
           int xlo = (ovlpindex % 3);
           int ylo = ((ovlpindex / 3) % 3);
@@ -2136,9 +1950,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                                 (lxyzx = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -2146,9 +1958,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                                 (lxyzy = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -2156,15 +1966,11 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                                 (lxyzz = ovlp);
                               }
                             } else {
-                              {
-                                0;
-                              }
+                              { 0; }
                             }
                           }
                         } else {
-                          {
-                            0;
-                          }
+                          { 0; }
                         }
                         {
                           long g = 0;
@@ -2173,15 +1979,11 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
                                  (realidx +
-                                  (num_ele *
-                                   (xyzx +
-                                    (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                                  (vecmain)[(
                                      (i * blk_all_len) +
                                      (realidx +
-                                      (num_ele *
-                                       (lxyzx +
-                                        (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                           }
                         }
                       }

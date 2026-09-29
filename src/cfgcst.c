@@ -92,7 +92,8 @@ double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2, double ar
 #ifdef CSCHEME_HEAD
 element *GET_INIT_DENSITY_DIST;
 #endif
-double (*GET_INIT_TEMPERATURE_DIST_inner_procedure)(long arg0, double arg1, double arg2, double arg3, long arg4);
+double (*GET_INIT_TEMPERATURE_DIST_inner_procedure)(long arg0, double arg1, double arg2,
+                                                    double arg3, long arg4);
 double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2, double arg3, long arg4);
 #ifdef CSCHEME_HEAD
 element *GET_INIT_TEMPERATURE_DIST;
@@ -168,7 +169,6 @@ element *makestring(char *str);
 element *makeint(long i);
 element *makefloat(double i);
 element *eval(element *input, element *env);
-
 
 int get_constants() {
   {
@@ -536,7 +536,8 @@ int get_constants() {
   }
   { GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID"), global_environment, 0);
+    element *tmpele =
+        find_var_in_env(makesymbol("GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_NUM_LOCAL_THREAD_FROM_GLOBAL_TID = tmpele;
     } else {
@@ -617,7 +618,8 @@ int get_constants() {
   }
   { GET_INIT_TEMPERATURE_DIST_inner_procedure = NULL; }
   {
-    element *tmpele = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
+    element *tmpele =
+        find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
     if (tmpele->type == LAMBDA_PROC) {
       GET_INIT_TEMPERATURE_DIST = tmpele;
     } else {
@@ -981,7 +983,8 @@ double call_GET_INIT_DENSITY_DIST(long arg0, double arg1, double arg2, double ar
   }
 
   element *arglst =
-      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+      cons(makeint(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_DENSITY_DIST"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1005,10 +1008,12 @@ double call_GET_INIT_TEMPERATURE_DIST(long arg0, double arg1, double arg2, doubl
     return GET_INIT_TEMPERATURE_DIST_inner_procedure(arg0, arg1, arg2, arg3, arg4);
   }
 
-  element *arglst =
-      cons(makeint(arg0), cons(makefloat(arg1),
-                               cons(makefloat(arg2), cons(makefloat(arg3), cons(makeint(arg4), empty_list_process)))));
-  element *fun_var = find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
+  element *arglst = cons(
+      makeint(arg0),
+      cons(makefloat(arg1),
+           cons(makefloat(arg2), cons(makefloat(arg3), cons(makeint(arg4), empty_list_process)))));
+  element *fun_var =
+      find_var_in_env(makesymbol("GET_INIT_TEMPERATURE_DIST"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
   element *ret = eval(final_arg, global_environment);
@@ -1032,7 +1037,8 @@ double call_GET_INIT_E(double arg0, double arg1, double arg2, long arg3) {
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_E"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1057,7 +1063,8 @@ double call_GET_INIT_B(double arg0, double arg1, double arg2, long arg3) {
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_B"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1082,7 +1089,8 @@ double call_GET_INIT_E0(double arg0, double arg1, double arg2, long arg3) {
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_E0"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1107,7 +1115,8 @@ double call_GET_INIT_B0(double arg0, double arg1, double arg2, long arg3) {
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_B0"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1156,7 +1165,8 @@ double call_GET_INIT_V0_x(long arg0, double arg1, double arg2, double arg3) {
   }
 
   element *arglst =
-      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+      cons(makeint(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_x"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1181,7 +1191,8 @@ double call_GET_INIT_V0_y(long arg0, double arg1, double arg2, double arg3) {
   }
 
   element *arglst =
-      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+      cons(makeint(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_y"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1206,7 +1217,8 @@ double call_GET_INIT_V0_z(long arg0, double arg1, double arg2, double arg3) {
   }
 
   element *arglst =
-      cons(makeint(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
+      cons(makeint(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makefloat(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_V0_z"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1231,7 +1243,8 @@ double call_GET_INIT_FILTER_E(double arg0, double arg1, double arg2, long arg3) 
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_FILTER_E"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);
@@ -1257,7 +1270,8 @@ double call_GET_INIT_FILTER_B(double arg0, double arg1, double arg2, long arg3) 
   }
 
   element *arglst =
-      cons(makefloat(arg0), cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
+      cons(makefloat(arg0),
+           cons(makefloat(arg1), cons(makefloat(arg2), cons(makeint(arg3), empty_list_process))));
   element *fun_var = find_var_in_env(makesymbol("GET_INIT_FILTER_B"), global_environment, 0);
   element *final_arg = cons(cons(quote_symbol, cons(fun_var, empty_list_process)), arglst);
   push_gc_stack(&final_arg);

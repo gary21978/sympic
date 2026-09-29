@@ -15,9 +15,8 @@
 #include <cooperative_groups.h>
 
 namespace SCALE {
-template <cuda::thread_scope Scope>
-using barrier = cuda::barrier<Scope>;
-}  // namespace SCALE
+template <cuda::thread_scope Scope> using barrier = cuda::barrier<Scope>;
+} // namespace SCALE
 
 template <cuda::thread_scope Scope>
 __device__ inline void init(cuda::barrier<Scope> *bar, std::size_t thread_count) {

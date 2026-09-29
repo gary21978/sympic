@@ -3,22 +3,17 @@
 #include <math.h>
 #include <stdio.h>
 #define IDX_OPT_MAX 32
-__global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
-                                    int *yoffset, int *zoffset, long y_cpu_core,
-                                    long numvec, long XLEN, long YLEN,
-                                    long ZLEN, int ovlp, long xblock,
-                                    long yblock, long zblock, int num_ele,
-                                    double DT, double DELTA_Z, double DELTA_Y,
-                                    double DELTA_X, double x0) {
-
+__global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset, int *yoffset,
+                                    int *zoffset, long y_cpu_core, long numvec, long XLEN,
+                                    long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
+                                    long zblock, int num_ele, double DT, double DELTA_Z,
+                                    double DELTA_Y, double DELTA_X, double x0) {
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
   const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
 
   const long __xlen = (blockDim.x * blockDim.y);
-
-
 
   long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
 
@@ -28,7 +23,6 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   long blk_all_len_nonele = (xblock * (yblock * zblock));
@@ -38,8 +32,6 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
     for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
       int gxoffset = (xoffset)[i];
-
-
 
       long allmax = (XLEN * (YLEN * ZLEN));
 
@@ -52,8 +44,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0);
-                 (inner_step < (blk_all_len_nonele * num_ele));
+            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
                  (inner_step = (inner_step + 1))) {
               {
                 long inner_g;
@@ -70,8 +61,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0);
-                 (inner_step < (blk_all_len_nonele * num_ele));
+            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
                  (inner_step = (inner_step + 1))) {
               {
                 long inner_g;
@@ -97,157 +87,72 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
                   for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    double vB11101 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((0 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB21101 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((0 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    double vB01011 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-                    double vB21011 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-                    double vB00111 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB10111 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-                    double vB01111 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB11111 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB21111 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    double vB11101 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21101 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB01011 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((0 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21011 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((0 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB00111 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((0 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB10111 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((0 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB01111 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB11111 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21111 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
 
                     double xo0 = (gxoffset + (xyzx + -1));
 
                     ((vwrt_tmp)[(
-                         0 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              0 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
+                         0 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(0 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
                           (DT *
                            (x0 *
                             ((1.0 / ({
-                                double tmppowvar =
-                                    (1.0 + (x0 + xo0));
+                                double tmppowvar = (1.0 + (x0 + xo0));
 
                                 tmppowvar;
                               })) *
@@ -267,59 +172,52 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
                                      tmppowvar;
                                    })) *
-                                  ((1.0 + (x0 + xo0)) *
-                                   ((1.0 / ({
-                                       double tmppowvar = DELTA_X;
+                                  ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                            double tmppowvar = DELTA_X;
 
-                                       tmppowvar;
-                                     })) *
-                                    (DELTA_Y * ((1.0 / ({
-                                                   double tmppowvar = DELTA_Z;
+                                                            tmppowvar;
+                                                          })) *
+                                                         (DELTA_Y * ((1.0 / ({
+                                                                        double tmppowvar = DELTA_Z;
 
-                                                   tmppowvar;
-                                                 })) *
-                                                vB10111))))) +
-                                 ((-1.0 *
-                                   ((1.0 / ({
-                                       double tmppowvar = x0;
-
-                                       tmppowvar;
-                                     })) *
-                                    ((1.0 + (x0 + xo0)) *
-                                     ((1.0 / ({
-                                         double tmppowvar = DELTA_X;
-
-                                         tmppowvar;
-                                       })) *
-                                      (DELTA_Y * ((1.0 / ({
-                                                     double tmppowvar = DELTA_Z;
-
-                                                     tmppowvar;
-                                                   })) *
-                                                  vB11111)))))) +
-                                  ((-1.0 *
-                                    (x0 * ((1.0 / ({
-                                              double tmppowvar =
-                                                  (1.0 +
-                                                   (x0 + xo0));
+                                                                        tmppowvar;
+                                                                      })) *
+                                                                     vB10111))))) +
+                                 ((-1.0 * ((1.0 / ({
+                                              double tmppowvar = x0;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_X;
+                                           ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                                     double tmppowvar = DELTA_X;
 
-                                               tmppowvar;
-                                             })) *
-                                            ((1.0 / ({
-                                                double tmppowvar = DELTA_Y;
+                                                                     tmppowvar;
+                                                                   })) *
+                                                                  (DELTA_Y * ((1.0 / ({
+                                                                                 double tmppowvar =
+                                                                                     DELTA_Z;
 
-                                                tmppowvar;
-                                              })) *
-                                             (DELTA_Z * vB21011)))))) +
+                                                                                 tmppowvar;
+                                                                               })) *
+                                                                              vB11111)))))) +
+                                  ((-1.0 * (x0 * ((1.0 / ({
+                                                     double tmppowvar = (1.0 + (x0 + xo0));
+
+                                                     tmppowvar;
+                                                   })) *
+                                                  ((1.0 / ({
+                                                      double tmppowvar = DELTA_X;
+
+                                                      tmppowvar;
+                                                    })) *
+                                                   ((1.0 / ({
+                                                       double tmppowvar = DELTA_Y;
+
+                                                       tmppowvar;
+                                                     })) *
+                                                    (DELTA_Z * vB21011)))))) +
                                    (x0 * ((1.0 / ({
-                                             double tmppowvar =
-                                                 (1.0 +
-                                                  (x0 + xo0));
+                                             double tmppowvar = (1.0 + (x0 + xo0));
 
                                              tmppowvar;
                                            })) *
@@ -335,15 +233,11 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                              })) *
                                             (DELTA_Z * vB21111))))))))))))))));
                     ((vwrt_tmp)[(
-                         1 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              1 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
+                         1 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(1 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
                           (DT *
                            ((1.0 / ({
                                double tmppowvar = x0;
@@ -356,191 +250,166 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
                                  tmppowvar;
                                })) *
-                              (DELTA_Y *
-                               ((1.0 / ({
-                                   double tmppowvar = DELTA_Z;
-
-                                   tmppowvar;
-                                 })) *
-                                ((-1.0 *
-                                  (x0 * ((1.0 / ({
-                                            double tmppowvar =
-                                                (1.0 +
-                                                 (x0 + xo0));
-
-                                            tmppowvar;
-                                          })) *
-                                         (DELTA_X *
-                                          ((1.0 / ({
-                                              double tmppowvar = DELTA_Y;
-
-                                              tmppowvar;
-                                            })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Z;
-
-                                               tmppowvar;
-                                             })) *
-                                            vB00111)))))) +
-                                 ((x0 * ((1.0 / ({
-                                            double tmppowvar =
-                                                (1.0 +
-                                                 (x0 + xo0));
-
-                                            tmppowvar;
-                                          })) *
-                                         (DELTA_X *
-                                          ((1.0 / ({
-                                              double tmppowvar = DELTA_Y;
-
-                                              tmppowvar;
-                                            })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Z;
-
-                                               tmppowvar;
-                                             })) *
-                                            vB01111))))) +
-                                  ((x0 * ((1.0 / ({
-                                             double tmppowvar = (x0 + xo0);
+                              (DELTA_Y * ((1.0 / ({
+                                             double tmppowvar = DELTA_Z;
 
                                              tmppowvar;
                                            })) *
-                                          ((1.0 / ({
-                                              double tmppowvar = DELTA_X;
+                                          ((-1.0 * (x0 * ((1.0 / ({
+                                                             double tmppowvar = (1.0 + (x0 + xo0));
 
-                                              tmppowvar;
-                                            })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Y;
+                                                             tmppowvar;
+                                                           })) *
+                                                          (DELTA_X * ((1.0 / ({
+                                                                         double tmppowvar = DELTA_Y;
 
-                                               tmppowvar;
-                                             })) *
-                                            (DELTA_Z * vB21101))))) +
-                                   (-1.0 *
-                                    (x0 *
-                                     ((1.0 / ({
-                                         double tmppowvar =
-                                             (1.0 +
-                                              (x0 + xo0));
+                                                                         tmppowvar;
+                                                                       })) *
+                                                                      ((1.0 / ({
+                                                                          double tmppowvar =
+                                                                              DELTA_Z;
 
-                                         tmppowvar;
-                                       })) *
-                                      ((1.0 / ({
-                                          double tmppowvar = DELTA_X;
-
-                                          tmppowvar;
-                                        })) *
-                                       ((1.0 / ({
-                                           double tmppowvar = DELTA_Y;
-
-                                           tmppowvar;
-                                         })) *
-                                        (DELTA_Z * vB21111)))))))))))))))));
-                    ((vwrt_tmp)[(
-                         2 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              2 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                          (DT *
-                           (x0 *
-                            ((1.0 / ({
-                                double tmppowvar =
-                                    (1.0 + (x0 + xo0));
-
-                                tmppowvar;
-                              })) *
-                             ((1.0 / ({
-                                 double tmppowvar = DELTA_X;
-
-                                 tmppowvar;
-                               })) *
-                              ((1.0 / ({
-                                  double tmppowvar = DELTA_Y;
-
-                                  tmppowvar;
-                                })) *
-                               (DELTA_Z *
-                                ((x0 * ((1.0 / ({
-                                           double tmppowvar =
-                                               (1.0 +
-                                                (x0 + xo0));
-
-                                           tmppowvar;
-                                         })) *
-                                        (DELTA_X *
-                                         ((1.0 / ({
-                                             double tmppowvar = DELTA_Y;
-
-                                             tmppowvar;
-                                           })) *
-                                          ((1.0 / ({
-                                              double tmppowvar = DELTA_Z;
-
-                                              tmppowvar;
-                                            })) *
-                                           vB01011))))) +
-                                 ((-1.0 *
-                                   (x0 * ((1.0 / ({
-                                             double tmppowvar =
-                                                 (1.0 +
-                                                  (x0 + xo0));
-
-                                             tmppowvar;
-                                           })) *
-                                          (DELTA_X *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Y;
-
-                                               tmppowvar;
-                                             })) *
-                                            ((1.0 / ({
-                                                double tmppowvar = DELTA_Z;
-
-                                                tmppowvar;
-                                              })) *
-                                             vB01111)))))) +
-                                  ((-1.0 *
-                                    ((1.0 / ({
-                                        double tmppowvar = x0;
-
-                                        tmppowvar;
-                                      })) *
-                                     ((x0 + xo0) *
-                                      ((1.0 / ({
-                                          double tmppowvar = DELTA_X;
-
-                                          tmppowvar;
-                                        })) *
-                                       (DELTA_Y * ((1.0 / ({
-                                                      double tmppowvar =
-                                                          DELTA_Z;
+                                                                          tmppowvar;
+                                                                        })) *
+                                                                       vB00111)))))) +
+                                           ((x0 * ((1.0 / ({
+                                                      double tmppowvar = (1.0 + (x0 + xo0));
 
                                                       tmppowvar;
                                                     })) *
-                                                   vB11101)))))) +
+                                                   (DELTA_X * ((1.0 / ({
+                                                                  double tmppowvar = DELTA_Y;
+
+                                                                  tmppowvar;
+                                                                })) *
+                                                               ((1.0 / ({
+                                                                   double tmppowvar = DELTA_Z;
+
+                                                                   tmppowvar;
+                                                                 })) *
+                                                                vB01111))))) +
+                                            ((x0 * ((1.0 / ({
+                                                       double tmppowvar = (x0 + xo0);
+
+                                                       tmppowvar;
+                                                     })) *
+                                                    ((1.0 / ({
+                                                        double tmppowvar = DELTA_X;
+
+                                                        tmppowvar;
+                                                      })) *
+                                                     ((1.0 / ({
+                                                         double tmppowvar = DELTA_Y;
+
+                                                         tmppowvar;
+                                                       })) *
+                                                      (DELTA_Z * vB21101))))) +
+                                             (-1.0 * (x0 * ((1.0 / ({
+                                                               double tmppowvar =
+                                                                   (1.0 + (x0 + xo0));
+
+                                                               tmppowvar;
+                                                             })) *
+                                                            ((1.0 / ({
+                                                                double tmppowvar = DELTA_X;
+
+                                                                tmppowvar;
+                                                              })) *
+                                                             ((1.0 / ({
+                                                                 double tmppowvar = DELTA_Y;
+
+                                                                 tmppowvar;
+                                                               })) *
+                                                              (DELTA_Z * vB21111)))))))))))))))));
+                    ((vwrt_tmp)[(
+                         2 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(2 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
+                          (DT *
+                           (x0 * ((1.0 / ({
+                                     double tmppowvar = (1.0 + (x0 + xo0));
+
+                                     tmppowvar;
+                                   })) *
+                                  ((1.0 / ({
+                                      double tmppowvar = DELTA_X;
+
+                                      tmppowvar;
+                                    })) *
                                    ((1.0 / ({
-                                       double tmppowvar = x0;
+                                       double tmppowvar = DELTA_Y;
 
                                        tmppowvar;
                                      })) *
-                                    ((1.0 + (x0 + xo0)) *
-                                     ((1.0 / ({
-                                         double tmppowvar = DELTA_X;
+                                    (DELTA_Z *
+                                     ((x0 * ((1.0 / ({
+                                                double tmppowvar = (1.0 + (x0 + xo0));
 
-                                         tmppowvar;
-                                       })) *
-                                      (DELTA_Y * ((1.0 / ({
-                                                     double tmppowvar = DELTA_Z;
+                                                tmppowvar;
+                                              })) *
+                                             (DELTA_X * ((1.0 / ({
+                                                            double tmppowvar = DELTA_Y;
 
-                                                     tmppowvar;
-                                                   })) *
-                                                  vB11111))))))))))))))));
+                                                            tmppowvar;
+                                                          })) *
+                                                         ((1.0 / ({
+                                                             double tmppowvar = DELTA_Z;
+
+                                                             tmppowvar;
+                                                           })) *
+                                                          vB01011))))) +
+                                      ((-1.0 * (x0 * ((1.0 / ({
+                                                         double tmppowvar = (1.0 + (x0 + xo0));
+
+                                                         tmppowvar;
+                                                       })) *
+                                                      (DELTA_X * ((1.0 / ({
+                                                                     double tmppowvar = DELTA_Y;
+
+                                                                     tmppowvar;
+                                                                   })) *
+                                                                  ((1.0 / ({
+                                                                      double tmppowvar = DELTA_Z;
+
+                                                                      tmppowvar;
+                                                                    })) *
+                                                                   vB01111)))))) +
+                                       ((-1.0 * ((1.0 / ({
+                                                    double tmppowvar = x0;
+
+                                                    tmppowvar;
+                                                  })) *
+                                                 ((x0 + xo0) * ((1.0 / ({
+                                                                   double tmppowvar = DELTA_X;
+
+                                                                   tmppowvar;
+                                                                 })) *
+                                                                (DELTA_Y * ((1.0 / ({
+                                                                               double tmppowvar =
+                                                                                   DELTA_Z;
+
+                                                                               tmppowvar;
+                                                                             })) *
+                                                                            vB11101)))))) +
+                                        ((1.0 / ({
+                                            double tmppowvar = x0;
+
+                                            tmppowvar;
+                                          })) *
+                                         ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                                   double tmppowvar = DELTA_X;
+
+                                                                   tmppowvar;
+                                                                 })) *
+                                                                (DELTA_Y * ((1.0 / ({
+                                                                               double tmppowvar =
+                                                                                   DELTA_Z;
+
+                                                                               tmppowvar;
+                                                                             })) *
+                                                                            vB11111))))))))))))))));
                   }
                 }
               }
@@ -574,145 +443,61 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
           long xyzz = (g / (XLEN * YLEN));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
           double vB11101 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21101 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB01011 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21011 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB00111 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((0 + (xyzz + -1)) + ovlp)))))))];
 
           double vB10111 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
+                                               (yblock * ((0 + (xyzz + -1)) + ovlp)))))))];
 
           double vB01111 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB11111 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21111 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double xo0 = (gxoffset + (xyzx + -1));
 
           (((inoutE1 + blk_offset))[(
                0 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     0 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
                 (DT * (x0 * ((1.0 / ({
-                                double tmppowvar =
-                                    (1.0 + (x0 + xo0));
+                                double tmppowvar = (1.0 + (x0 + xo0));
 
                                 tmppowvar;
                               })) *
@@ -732,59 +517,52 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
                                      tmppowvar;
                                    })) *
-                                  ((1.0 + (x0 + xo0)) *
-                                   ((1.0 / ({
-                                       double tmppowvar = DELTA_X;
+                                  ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                            double tmppowvar = DELTA_X;
 
-                                       tmppowvar;
-                                     })) *
-                                    (DELTA_Y * ((1.0 / ({
-                                                   double tmppowvar = DELTA_Z;
+                                                            tmppowvar;
+                                                          })) *
+                                                         (DELTA_Y * ((1.0 / ({
+                                                                        double tmppowvar = DELTA_Z;
 
-                                                   tmppowvar;
-                                                 })) *
-                                                vB10111))))) +
-                                 ((-1.0 *
-                                   ((1.0 / ({
-                                       double tmppowvar = x0;
-
-                                       tmppowvar;
-                                     })) *
-                                    ((1.0 + (x0 + xo0)) *
-                                     ((1.0 / ({
-                                         double tmppowvar = DELTA_X;
-
-                                         tmppowvar;
-                                       })) *
-                                      (DELTA_Y * ((1.0 / ({
-                                                     double tmppowvar = DELTA_Z;
-
-                                                     tmppowvar;
-                                                   })) *
-                                                  vB11111)))))) +
-                                  ((-1.0 *
-                                    (x0 * ((1.0 / ({
-                                              double tmppowvar =
-                                                  (1.0 +
-                                                   (x0 + xo0));
+                                                                        tmppowvar;
+                                                                      })) *
+                                                                     vB10111))))) +
+                                 ((-1.0 * ((1.0 / ({
+                                              double tmppowvar = x0;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_X;
+                                           ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                                     double tmppowvar = DELTA_X;
 
-                                               tmppowvar;
-                                             })) *
-                                            ((1.0 / ({
-                                                double tmppowvar = DELTA_Y;
+                                                                     tmppowvar;
+                                                                   })) *
+                                                                  (DELTA_Y * ((1.0 / ({
+                                                                                 double tmppowvar =
+                                                                                     DELTA_Z;
 
-                                                tmppowvar;
-                                              })) *
-                                             (DELTA_Z * vB21011)))))) +
+                                                                                 tmppowvar;
+                                                                               })) *
+                                                                              vB11111)))))) +
+                                  ((-1.0 * (x0 * ((1.0 / ({
+                                                     double tmppowvar = (1.0 + (x0 + xo0));
+
+                                                     tmppowvar;
+                                                   })) *
+                                                  ((1.0 / ({
+                                                      double tmppowvar = DELTA_X;
+
+                                                      tmppowvar;
+                                                    })) *
+                                                   ((1.0 / ({
+                                                       double tmppowvar = DELTA_Y;
+
+                                                       tmppowvar;
+                                                     })) *
+                                                    (DELTA_Z * vB21011)))))) +
                                    (x0 * ((1.0 / ({
-                                             double tmppowvar =
-                                                 (1.0 +
-                                                  (x0 + xo0));
+                                             double tmppowvar = (1.0 + (x0 + xo0));
 
                                              tmppowvar;
                                            })) *
@@ -801,214 +579,193 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                             (DELTA_Z * vB21111))))))))))))))));
           (((inoutE1 + blk_offset))[(
                1 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     1 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                (DT *
-                 ((1.0 / ({
-                     double tmppowvar = x0;
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
+                (DT * ((1.0 / ({
+                          double tmppowvar = x0;
 
-                     tmppowvar;
-                   })) *
-                  ((1.0 + (x0 + xo0)) *
-                   ((1.0 / ({
-                       double tmppowvar = DELTA_X;
+                          tmppowvar;
+                        })) *
+                       ((1.0 + (x0 + xo0)) *
+                        ((1.0 / ({
+                            double tmppowvar = DELTA_X;
 
-                       tmppowvar;
-                     })) *
-                    (DELTA_Y *
-                     ((1.0 / ({
-                         double tmppowvar = DELTA_Z;
+                            tmppowvar;
+                          })) *
+                         (DELTA_Y * ((1.0 / ({
+                                        double tmppowvar = DELTA_Z;
 
-                         tmppowvar;
-                       })) *
-                      ((-1.0 *
-                        (x0 * ((1.0 / ({
-                                  double tmppowvar =
-                                      (1.0 + (x0 + xo0));
+                                        tmppowvar;
+                                      })) *
+                                     ((-1.0 * (x0 * ((1.0 / ({
+                                                        double tmppowvar = (1.0 + (x0 + xo0));
 
-                                  tmppowvar;
-                                })) *
-                               (DELTA_X * ((1.0 / ({
-                                              double tmppowvar = DELTA_Y;
+                                                        tmppowvar;
+                                                      })) *
+                                                     (DELTA_X * ((1.0 / ({
+                                                                    double tmppowvar = DELTA_Y;
 
-                                              tmppowvar;
-                                            })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Z;
+                                                                    tmppowvar;
+                                                                  })) *
+                                                                 ((1.0 / ({
+                                                                     double tmppowvar = DELTA_Z;
 
-                                               tmppowvar;
-                                             })) *
-                                            vB00111)))))) +
-                       ((x0 * ((1.0 / ({
-                                  double tmppowvar =
-                                      (1.0 + (x0 + xo0));
+                                                                     tmppowvar;
+                                                                   })) *
+                                                                  vB00111)))))) +
+                                      ((x0 * ((1.0 / ({
+                                                 double tmppowvar = (1.0 + (x0 + xo0));
 
-                                  tmppowvar;
-                                })) *
-                               (DELTA_X * ((1.0 / ({
-                                              double tmppowvar = DELTA_Y;
+                                                 tmppowvar;
+                                               })) *
+                                              (DELTA_X * ((1.0 / ({
+                                                             double tmppowvar = DELTA_Y;
 
-                                              tmppowvar;
-                                            })) *
-                                           ((1.0 / ({
-                                               double tmppowvar = DELTA_Z;
+                                                             tmppowvar;
+                                                           })) *
+                                                          ((1.0 / ({
+                                                              double tmppowvar = DELTA_Z;
 
-                                               tmppowvar;
-                                             })) *
-                                            vB01111))))) +
-                        ((x0 * ((1.0 / ({
-                                   double tmppowvar = (x0 + xo0);
+                                                              tmppowvar;
+                                                            })) *
+                                                           vB01111))))) +
+                                       ((x0 * ((1.0 / ({
+                                                  double tmppowvar = (x0 + xo0);
 
-                                   tmppowvar;
-                                 })) *
-                                ((1.0 / ({
-                                    double tmppowvar = DELTA_X;
+                                                  tmppowvar;
+                                                })) *
+                                               ((1.0 / ({
+                                                   double tmppowvar = DELTA_X;
 
-                                    tmppowvar;
-                                  })) *
-                                 ((1.0 / ({
-                                     double tmppowvar = DELTA_Y;
+                                                   tmppowvar;
+                                                 })) *
+                                                ((1.0 / ({
+                                                    double tmppowvar = DELTA_Y;
 
-                                     tmppowvar;
-                                   })) *
-                                  (DELTA_Z * vB21101))))) +
-                         (-1.0 *
-                          (x0 * ((1.0 / ({
-                                    double tmppowvar =
-                                        (1.0 + (x0 + xo0));
+                                                    tmppowvar;
+                                                  })) *
+                                                 (DELTA_Z * vB21101))))) +
+                                        (-1.0 * (x0 * ((1.0 / ({
+                                                          double tmppowvar = (1.0 + (x0 + xo0));
 
-                                    tmppowvar;
-                                  })) *
-                                 ((1.0 / ({
-                                     double tmppowvar = DELTA_X;
+                                                          tmppowvar;
+                                                        })) *
+                                                       ((1.0 / ({
+                                                           double tmppowvar = DELTA_X;
 
-                                     tmppowvar;
-                                   })) *
-                                  ((1.0 / ({
-                                      double tmppowvar = DELTA_Y;
+                                                           tmppowvar;
+                                                         })) *
+                                                        ((1.0 / ({
+                                                            double tmppowvar = DELTA_Y;
 
-                                      tmppowvar;
-                                    })) *
-                                   (DELTA_Z * vB21111)))))))))))))))));
+                                                            tmppowvar;
+                                                          })) *
+                                                         (DELTA_Z * vB21111)))))))))))))))));
           (((inoutE1 + blk_offset))[(
                2 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     2 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
                 (DT *
-                 (x0 *
-                  ((1.0 / ({
-                      double tmppowvar = (1.0 + (x0 + xo0));
+                 (x0 * ((1.0 / ({
+                           double tmppowvar = (1.0 + (x0 + xo0));
 
-                      tmppowvar;
-                    })) *
-                   ((1.0 / ({
-                       double tmppowvar = DELTA_X;
+                           tmppowvar;
+                         })) *
+                        ((1.0 / ({
+                            double tmppowvar = DELTA_X;
 
-                       tmppowvar;
-                     })) *
-                    ((1.0 / ({
-                        double tmppowvar = DELTA_Y;
-
-                        tmppowvar;
-                      })) *
-                     (DELTA_Z *
-                      ((x0 * ((1.0 / ({
-                                 double tmppowvar =
-                                     (1.0 + (x0 + xo0));
-
-                                 tmppowvar;
-                               })) *
-                              (DELTA_X * ((1.0 / ({
-                                             double tmppowvar = DELTA_Y;
-
-                                             tmppowvar;
-                                           })) *
-                                          ((1.0 / ({
-                                              double tmppowvar = DELTA_Z;
-
-                                              tmppowvar;
-                                            })) *
-                                           vB01011))))) +
-                       ((-1.0 *
-                         (x0 * ((1.0 / ({
-                                   double tmppowvar =
-                                       (1.0 + (x0 + xo0));
-
-                                   tmppowvar;
-                                 })) *
-                                (DELTA_X * ((1.0 / ({
-                                               double tmppowvar = DELTA_Y;
-
-                                               tmppowvar;
-                                             })) *
-                                            ((1.0 / ({
-                                                double tmppowvar = DELTA_Z;
-
-                                                tmppowvar;
-                                              })) *
-                                             vB01111)))))) +
-                        ((-1.0 *
-                          ((1.0 / ({
-                              double tmppowvar = x0;
-
-                              tmppowvar;
-                            })) *
-                           ((x0 + xo0) *
-                            ((1.0 / ({
-                                double tmppowvar = DELTA_X;
-
-                                tmppowvar;
-                              })) *
-                             (DELTA_Y * ((1.0 / ({
-                                            double tmppowvar = DELTA_Z;
-
-                                            tmppowvar;
-                                          })) *
-                                         vB11101)))))) +
+                            tmppowvar;
+                          })) *
                          ((1.0 / ({
-                             double tmppowvar = x0;
+                             double tmppowvar = DELTA_Y;
 
                              tmppowvar;
                            })) *
-                          ((1.0 + (x0 + xo0)) *
-                           ((1.0 / ({
-                               double tmppowvar = DELTA_X;
+                          (DELTA_Z * ((x0 * ((1.0 / ({
+                                                double tmppowvar = (1.0 + (x0 + xo0));
 
-                               tmppowvar;
-                             })) *
-                            (DELTA_Y * ((1.0 / ({
-                                           double tmppowvar = DELTA_Z;
+                                                tmppowvar;
+                                              })) *
+                                             (DELTA_X * ((1.0 / ({
+                                                            double tmppowvar = DELTA_Y;
 
-                                           tmppowvar;
-                                         })) *
-                                        vB11111))))))))))))))));
+                                                            tmppowvar;
+                                                          })) *
+                                                         ((1.0 / ({
+                                                             double tmppowvar = DELTA_Z;
+
+                                                             tmppowvar;
+                                                           })) *
+                                                          vB01011))))) +
+                                      ((-1.0 * (x0 * ((1.0 / ({
+                                                         double tmppowvar = (1.0 + (x0 + xo0));
+
+                                                         tmppowvar;
+                                                       })) *
+                                                      (DELTA_X * ((1.0 / ({
+                                                                     double tmppowvar = DELTA_Y;
+
+                                                                     tmppowvar;
+                                                                   })) *
+                                                                  ((1.0 / ({
+                                                                      double tmppowvar = DELTA_Z;
+
+                                                                      tmppowvar;
+                                                                    })) *
+                                                                   vB01111)))))) +
+                                       ((-1.0 * ((1.0 / ({
+                                                    double tmppowvar = x0;
+
+                                                    tmppowvar;
+                                                  })) *
+                                                 ((x0 + xo0) * ((1.0 / ({
+                                                                   double tmppowvar = DELTA_X;
+
+                                                                   tmppowvar;
+                                                                 })) *
+                                                                (DELTA_Y * ((1.0 / ({
+                                                                               double tmppowvar =
+                                                                                   DELTA_Z;
+
+                                                                               tmppowvar;
+                                                                             })) *
+                                                                            vB11101)))))) +
+                                        ((1.0 / ({
+                                            double tmppowvar = x0;
+
+                                            tmppowvar;
+                                          })) *
+                                         ((1.0 + (x0 + xo0)) * ((1.0 / ({
+                                                                   double tmppowvar = DELTA_X;
+
+                                                                   tmppowvar;
+                                                                 })) *
+                                                                (DELTA_Y * ((1.0 / ({
+                                                                               double tmppowvar =
+                                                                                   DELTA_Z;
+
+                                                                               tmppowvar;
+                                                                             })) *
+                                                                            vB11111))))))))))))))));
         }
       }
     }
   }
 }
-__global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
-                                int *yoffset, int *zoffset, long y_cpu_core,
-                                long numvec, long XLEN, long YLEN, long ZLEN,
-                                int ovlp, long xblock, long yblock, long zblock,
+__global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int *yoffset,
+                                int *zoffset, long y_cpu_core, long numvec, long XLEN, long YLEN,
+                                long ZLEN, int ovlp, long xblock, long yblock, long zblock,
                                 int num_ele, double DT) {
-
 
   const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
 
   const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
 
   const long __xlen = (blockDim.x * blockDim.y);
-
-
 
   long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
 
@@ -1018,7 +775,6 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
 
   if (local_ymax >= numvec) {
     (local_ymax = numvec);
-
   }
 
   long blk_all_len_nonele = (xblock * (yblock * zblock));
@@ -1027,8 +783,6 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
     long i;
 
     for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
-
-
 
       long allmax = (XLEN * (YLEN * ZLEN));
 
@@ -1041,8 +795,7 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0);
-                 (inner_step < (blk_all_len_nonele * num_ele));
+            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
                  (inner_step = (inner_step + 1))) {
               {
                 long inner_g;
@@ -1059,8 +812,7 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0);
-                 (inner_step < (blk_all_len_nonele * num_ele));
+            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
                  (inner_step = (inner_step + 1))) {
               {
                 long inner_g;
@@ -1086,183 +838,81 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
 
                   for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    double vB01111 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB11111 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB21111 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB02111 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB12111 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-                    double vB01211 = (vread_tmp)[(
-                        (0 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-                    double vB21211 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    double vB11121 = (vread_tmp)[(
-                        (1 + 0) +
-                        (num_ele * (((2 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-                    double vB21121 = (vread_tmp)[(
-                        (2 + 0) +
-                        (num_ele * (((2 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    double vB01111 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB11111 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21111 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB02111 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((2 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB12111 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((2 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB01211 =
+                        (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((2 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21211 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((2 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB11121 =
+                        (vread_tmp)[((1 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
+
+                    double vB21121 =
+                        (vread_tmp)[((2 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
+                                                           (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                                      (yblock * ((1 + (xyzz + -1)) +
+                                                                                 ovlp)))))))];
 
                     ((vwrt_tmp)[(
-                         0 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              0 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                          (DT *
-                           ((-1.0 * vB11111) +
-                            (vB12111 + (vB21111 + (-1.0 *
-                                                   vB21211)))))));
+                         0 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(0 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
+                          (DT * ((-1.0 * vB11111) + (vB12111 + (vB21111 + (-1.0 * vB21211)))))));
                     ((vwrt_tmp)[(
-                         1 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              1 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                          (DT *
-                           (vB01111 + ((-1.0 * vB02111) +
-                                       ((-1.0 * vB21111) +
-                                        vB21121))))));
+                         1 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(1 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
+                          (DT * (vB01111 + ((-1.0 * vB02111) + ((-1.0 * vB21111) + vB21121))))));
                     ((vwrt_tmp)[(
-                         2 +
-                         (num_ele * ((xyzx + ovlp) +
-                                     (xblock * ((xyzy + ovlp) +
-                                                (yblock * (xyzz + ovlp)))))))] =
-                         ((vwrt_tmp)[(
-                              2 + (num_ele *
-                                   ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                          (DT *
-                           ((-1.0 * vB01111) +
-                            (vB01211 + (vB11111 + (-1.0 *
-                                                   vB11121)))))));
+                         2 + (num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                         ((vwrt_tmp)[(2 + (num_ele * ((xyzx + ovlp) +
+                                                      (xblock * ((xyzy + ovlp) +
+                                                                 (yblock * (xyzz + ovlp)))))))] +
+                          (DT * ((-1.0 * vB01111) + (vB01211 + (vB11111 + (-1.0 * vB11121)))))));
                   }
                 }
               }
@@ -1296,166 +946,72 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
 
           long xyzz = (g / (XLEN * YLEN));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           double vB01111 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB11111 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21111 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB02111 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((2 + (xyzz + -1)) + ovlp)))))))];
 
           double vB12111 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
+                                               (yblock * ((2 + (xyzz + -1)) + ovlp)))))))];
 
           double vB01211 = ((inB0 + blk_offset))[(
               (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21211 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB11121 = ((inB0 + blk_offset))[(
               (1 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double vB21121 = ((inB0 + blk_offset))[(
               (2 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
                                     (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) +
-                                                          ovlp)))))))];
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           (((inoutE1 + blk_offset))[(
                0 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     0 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                (DT * ((-1.0 * vB11111) +
-                       (vB12111 +
-                        (vB21111 + (-1.0 * vB21211)))))));
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
+                (DT * ((-1.0 * vB11111) + (vB12111 + (vB21111 + (-1.0 * vB21211)))))));
           (((inoutE1 + blk_offset))[(
                1 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     1 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                (DT * (vB01111 +
-                       ((-1.0 * vB02111) +
-                        ((-1.0 * vB21111) + vB21121))))));
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
+                (DT * (vB01111 + ((-1.0 * vB02111) + ((-1.0 * vB21111) + vB21121))))));
           (((inoutE1 + blk_offset))[(
                2 + (num_ele *
-                    ((xyzx + ovlp) +
-                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
+                    ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] =
                (((inoutE1 + blk_offset))[(
                     2 + (num_ele * ((xyzx + ovlp) +
-                                    (xblock * ((xyzy + ovlp) +
-                                               (yblock * (xyzz + ovlp)))))))] +
-                (DT * ((-1.0 * vB01111) +
-                       (vB01211 +
-                        (vB11111 + (-1.0 * vB11121)))))));
+                                    (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp)))))))] +
+                (DT * ((-1.0 * vB01111) + (vB01211 + (vB11111 + (-1.0 * vB11121)))))));
         }
       }
     }

@@ -3,14 +3,11 @@
 
 #include "mergefields.kernel.inc"
 
-
 // 启动函数
 static int dump_kernel_variables = 0;
 
-extern long _pscmc_mapu_global_dump_kernel_variables,
-    _pscmc_mapu_global_dump_times;
-int mapu_merge_ovlp_m2o_once_init(mapu_pscmc_env *pe,
-                                  mapu_merge_ovlp_m2o_once_struct *kerstr) {
+extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
+int mapu_merge_ovlp_m2o_once_init(mapu_pscmc_env *pe, mapu_merge_ovlp_m2o_once_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -18,13 +15,11 @@ void mapu_merge_ovlp_m2o_once_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_merge_ovlp_m2o_once_struct));
 }
 int mapu_merge_ovlp_m2o_once_get_xlen() { return 1; }
-int mapu_merge_ovlp_m2o_once_get_num_compute_units(
-    mapu_merge_ovlp_m2o_once_struct *kerstr) {
+int mapu_merge_ovlp_m2o_once_get_num_compute_units(mapu_merge_ovlp_m2o_once_struct *kerstr) {
   return 4;
 }
 int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
-                                  long scmc_internal_g_xlen,
-                                  long scmc_internal_g_ylen) {
+                                  long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
   if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
@@ -38,16 +33,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecmain_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecmain_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -59,8 +53,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp0_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp0_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp0)->len;
@@ -80,8 +73,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp1_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp1_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp1)->len;
@@ -101,8 +93,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp2_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp2_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp2)->len;
@@ -122,8 +113,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp3_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp3_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp3)->len;
@@ -143,8 +133,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp4_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp4_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp4)->len;
@@ -164,8 +153,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp5_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp5_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp5)->len;
@@ -185,8 +173,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp6_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp6_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp6)->len;
@@ -206,8 +193,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp7_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp7_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp7)->len;
@@ -227,8 +213,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp8_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp8_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp8)->len;
@@ -248,8 +233,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp9_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp9_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp9)->len;
@@ -269,8 +253,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp10_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp10_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp10)->len;
@@ -290,8 +273,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp11_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp11_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp11)->len;
@@ -311,8 +293,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp12_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp12_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp12)->len;
@@ -332,8 +313,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp14_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp14_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp14)->len;
@@ -353,8 +333,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp15_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp15_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp15)->len;
@@ -374,8 +353,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp16_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp16_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp16)->len;
@@ -395,8 +373,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp17_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp17_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp17)->len;
@@ -416,8 +393,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp18_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp18_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp18)->len;
@@ -437,8 +413,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp19_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp19_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp19)->len;
@@ -458,8 +433,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp20_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp20_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp20)->len;
@@ -479,8 +453,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp21_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp21_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp21)->len;
@@ -500,8 +473,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp22_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp22_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp22)->len;
@@ -521,8 +493,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp23_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp23_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp23)->len;
@@ -542,8 +513,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp24_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp24_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp24)->len;
@@ -563,8 +533,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp25_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp25_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp25)->len;
@@ -584,8 +553,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp26_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp26_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp26)->len;
@@ -605,16 +573,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_numvec_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_numvec_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -626,16 +593,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_num_ele_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_num_ele_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -647,16 +613,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_xblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_xblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -668,16 +633,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_yblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_yblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -689,16 +653,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_zblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_zblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -710,16 +673,14 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_ovlp_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_ovlp_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -730,172 +691,142 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       mapu_merge_ovlp_m2o_once<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp0->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp0->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp1->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp1->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp2->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp2->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp3->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp3->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp4->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp4->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp5->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp5->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp6->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp6->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp7->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp7->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp8->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp8->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp9->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp9->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp10->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp10->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp11->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp11->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp12->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp12->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp14->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp14->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp15->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp15->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp16->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp16->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp17->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp17->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp18->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp18->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp19->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp19->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp20->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp20->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp21->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp21->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp22->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp22->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp23->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp23->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp24->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp24->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp25->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp25->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   } else {
     {
@@ -912,179 +843,147 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
                   scmc_internal_g_ylen);
         }
       } else {
-        {
-          0;
-        }
+        { 0; }
       }
       mapu_merge_ovlp_m2o_once<<<multiylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp0->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp0->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp1->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp1->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp2->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp2->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp3->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp3->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp4->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp4->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp5->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp5->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp6->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp6->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp7->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp7->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp8->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp8->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp9->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp9->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp10->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp10->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp11->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp11->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp12->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp12->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp14->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp14->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp15->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp15->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp16->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp16->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp17->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp17->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp18->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp18->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp19->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp19->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp20->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp20->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp21->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp21->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp22->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp22->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp23->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp23->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp24->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp24->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp25->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp25->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   }
 
@@ -1099,16 +998,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecmain_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecmain_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1120,8 +1018,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp0_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp0_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp0)->len;
@@ -1141,8 +1038,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp1_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp1_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp1)->len;
@@ -1162,8 +1058,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp2_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp2_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp2)->len;
@@ -1183,8 +1078,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp3_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp3_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp3)->len;
@@ -1204,8 +1098,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp4_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp4_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp4)->len;
@@ -1225,8 +1118,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp5_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp5_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp5)->len;
@@ -1246,8 +1138,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp6_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp6_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp6)->len;
@@ -1267,8 +1158,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp7_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp7_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp7)->len;
@@ -1288,8 +1178,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp8_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp8_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp8)->len;
@@ -1309,8 +1198,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp9_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp9_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp9)->len;
@@ -1330,8 +1218,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp10_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp10_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp10)->len;
@@ -1351,8 +1238,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp11_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp11_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp11)->len;
@@ -1372,8 +1258,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp12_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp12_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp12)->len;
@@ -1393,8 +1278,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp14_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp14_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp14)->len;
@@ -1414,8 +1298,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp15_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp15_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp15)->len;
@@ -1435,8 +1318,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp16_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp16_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp16)->len;
@@ -1456,8 +1338,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp17_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp17_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp17)->len;
@@ -1477,8 +1358,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp18_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp18_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp18)->len;
@@ -1498,8 +1378,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp19_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp19_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp19)->len;
@@ -1519,8 +1398,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp20_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp20_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp20)->len;
@@ -1540,8 +1418,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp21_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp21_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp21)->len;
@@ -1561,8 +1438,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp22_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp22_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp22)->len;
@@ -1582,8 +1458,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp23_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp23_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp23)->len;
@@ -1603,8 +1478,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp24_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp24_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp24)->len;
@@ -1624,8 +1498,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp25_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp25_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp25)->len;
@@ -1645,8 +1518,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp26_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_vecovlp26_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlp26)->len;
@@ -1666,16 +1538,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_numvec_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_numvec_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1687,16 +1558,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_num_ele_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_num_ele_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1708,16 +1578,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_xblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_xblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1729,16 +1598,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_yblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_yblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1750,16 +1618,15 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_zblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_zblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -1771,16 +1638,14 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_once_ovlp_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_once_ovlp_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -1790,8 +1655,8 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
   return 0;
 }
 
-int mapu_merge_ovlp_m2o_all_in_one_init(
-    mapu_pscmc_env *pe, mapu_merge_ovlp_m2o_all_in_one_struct *kerstr) {
+int mapu_merge_ovlp_m2o_all_in_one_init(mapu_pscmc_env *pe,
+                                        mapu_merge_ovlp_m2o_all_in_one_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -1800,9 +1665,8 @@ void mapu_merge_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
 }
 int mapu_merge_ovlp_m2o_all_in_one_get_xlen() { return 1; }
 
-int mapu_merge_ovlp_m2o_all_in_one_exec(
-    mapu_merge_ovlp_m2o_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen) {
+int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *kerstr,
+                                        long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice(kerstr->pe->device_id);
 
   if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
@@ -1813,8 +1677,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecmain_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecmain_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->vecmain)->len;
@@ -1823,8 +1686,8 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         write_len = 1;
       }
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-             (kerstr->vecmain)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+             fp);
       fclose(fp);
     }
 
@@ -1834,8 +1697,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecovlps_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecovlps_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->vecovlps)->len;
@@ -1844,8 +1706,8 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         write_len = 1;
       }
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->vecovlps, NULL), write_len,
-             (kerstr->vecovlps)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->vecovlps, NULL), write_len, (kerstr->vecovlps)->type_len,
+             fp);
       fclose(fp);
     }
 
@@ -1856,8 +1718,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_numvec_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_numvec_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->numvec)->len;
@@ -1866,8 +1727,8 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         write_len = 1;
       }
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-             (kerstr->numvec)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+             fp);
       fclose(fp);
     }
     {
@@ -1876,8 +1737,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_num_ele_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_num_ele_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->num_ele)->len;
@@ -1886,8 +1746,8 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         write_len = 1;
       }
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-             (kerstr->num_ele)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+             fp);
       fclose(fp);
     }
     {
@@ -1897,16 +1757,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_xblock_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_xblock_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->xblock)->len;
 
       write_len = write_len <= 0 ? 1 : write_len;
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-             (kerstr->xblock)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+             fp);
       fclose(fp);
     }
     {
@@ -1916,16 +1775,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_yblock_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_yblock_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->yblock)->len;
 
       write_len = write_len <= 0 ? 1 : write_len;
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-             (kerstr->yblock)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+             fp);
       fclose(fp);
     }
     {
@@ -1935,16 +1793,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_zblock_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_zblock_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->zblock)->len;
 
       write_len = write_len <= 0 ? 1 : write_len;
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-             (kerstr->zblock)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+             fp);
       fclose(fp);
     }
     {
@@ -1954,42 +1811,34 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       }
 
       char fname[256];
-      snprintf(fname, 256,
-               "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_ovlp_before_exec",
+      snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_ovlp_before_exec",
                _pscmc_mapu_global_dump_times);
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->ovlp)->len;
 
       write_len = write_len <= 0 ? 1 : write_len;
 
-      fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-             (kerstr->ovlp)->type_len, fp);
+      fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
       fclose(fp);
     }
   }
 
   if ((scmc_internal_g_ylen < 65536)) {
     {
-      mapu_merge_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen,
-                                       scmc_internal_g_xlen>>>(
+      mapu_merge_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   } else {
     {
@@ -2009,22 +1858,17 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
       mapu_merge_ovlp_m2o_all_in_one<<<multiylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   }
 
@@ -2039,16 +1883,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecmain_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecmain_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2060,8 +1903,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecovlps_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_vecovlps_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -2081,16 +1923,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_numvec_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_numvec_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2102,16 +1943,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_num_ele_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_num_ele_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2123,16 +1963,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_xblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_xblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2144,16 +1983,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_yblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_yblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2165,16 +2003,15 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_zblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_zblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2186,16 +2023,14 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_ovlp_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_m2o_all_in_one_ovlp_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -2253,8 +2088,7 @@ int mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
   (kerstr->ovlp = pm);
   return 0;
 }
-int mapu_merge_ovlp_m2o_init(mapu_pscmc_env *pe,
-                             mapu_merge_ovlp_m2o_struct *kerstr) {
+int mapu_merge_ovlp_m2o_init(mapu_pscmc_env *pe, mapu_merge_ovlp_m2o_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2262,8 +2096,7 @@ void mapu_merge_ovlp_m2o_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_merge_ovlp_m2o_struct));
 }
 
-int mapu_merge_ovlp_o2m_once_init(mapu_pscmc_env *pe,
-                                  mapu_merge_ovlp_o2m_once_struct *kerstr) {
+int mapu_merge_ovlp_o2m_once_init(mapu_pscmc_env *pe, mapu_merge_ovlp_o2m_once_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2271,21 +2104,21 @@ void mapu_merge_ovlp_o2m_once_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_merge_ovlp_o2m_once_struct));
 }
 
-int mapu_merge_ovlp_o2m_once_scmc_set_parameter_yblock(
-    mapu_merge_ovlp_o2m_once_struct *kerstr, mapu_pscmc_mem *pm) {
+int mapu_merge_ovlp_o2m_once_scmc_set_parameter_yblock(mapu_merge_ovlp_o2m_once_struct *kerstr,
+                                                       mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
   (kerstr->yblock = pm);
   return 0;
 }
-int mapu_merge_ovlp_o2m_once_scmc_set_parameter_zblock(
-    mapu_merge_ovlp_o2m_once_struct *kerstr, mapu_pscmc_mem *pm) {
+int mapu_merge_ovlp_o2m_once_scmc_set_parameter_zblock(mapu_merge_ovlp_o2m_once_struct *kerstr,
+                                                       mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
   (kerstr->zblock = pm);
   return 0;
 }
 
-int mapu_merge_ovlp_o2m_all_in_one_init(
-    mapu_pscmc_env *pe, mapu_merge_ovlp_o2m_all_in_one_struct *kerstr) {
+int mapu_merge_ovlp_o2m_all_in_one_init(mapu_pscmc_env *pe,
+                                        mapu_merge_ovlp_o2m_all_in_one_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2294,9 +2127,8 @@ void mapu_merge_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
 }
 int mapu_merge_ovlp_o2m_all_in_one_get_xlen() { return 1; }
 
-int mapu_merge_ovlp_o2m_all_in_one_exec(
-    mapu_merge_ovlp_o2m_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen) {
+int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *kerstr,
+                                        long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
   if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
@@ -2310,16 +2142,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecmain_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecmain_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2331,8 +2162,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecovlps_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecovlps_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -2352,16 +2182,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_numvec_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_numvec_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2373,16 +2202,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_num_ele_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_num_ele_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2394,16 +2222,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_xblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_xblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2415,16 +2242,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_yblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_yblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2436,16 +2262,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_zblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_zblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2457,16 +2282,14 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_ovlp_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_ovlp_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -2474,26 +2297,20 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
 
   if ((scmc_internal_g_ylen < 65536)) {
     {
-      mapu_merge_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen,
-                                       scmc_internal_g_xlen>>>(
+      mapu_merge_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   } else {
     {
@@ -2510,29 +2327,22 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
                   scmc_internal_g_ylen);
         }
       } else {
-        {
-          0;
-        }
+        { 0; }
       }
       mapu_merge_ovlp_o2m_all_in_one<<<multiylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   }
 
@@ -2547,16 +2357,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecmain_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecmain_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2568,8 +2377,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecovlps_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_vecovlps_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -2589,16 +2397,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_numvec_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_numvec_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2610,16 +2417,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_num_ele_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_num_ele_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2631,16 +2437,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_xblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_xblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2652,16 +2457,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_yblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_yblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2673,16 +2477,15 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_zblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_zblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2694,16 +2497,14 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_ovlp_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_merge_ovlp_o2m_all_in_one_ovlp_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -2760,8 +2561,7 @@ int mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
   (kerstr->ovlp = pm);
   return 0;
 }
-int mapu_merge_ovlp_o2m_init(mapu_pscmc_env *pe,
-                             mapu_merge_ovlp_o2m_struct *kerstr) {
+int mapu_merge_ovlp_o2m_init(mapu_pscmc_env *pe, mapu_merge_ovlp_o2m_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2769,8 +2569,7 @@ void mapu_merge_ovlp_o2m_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_merge_ovlp_o2m_struct));
 }
 
-int mapu_sync_ovlp_m2o_once_init(mapu_pscmc_env *pe,
-                                 mapu_sync_ovlp_m2o_once_struct *kerstr) {
+int mapu_sync_ovlp_m2o_once_init(mapu_pscmc_env *pe, mapu_sync_ovlp_m2o_once_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2778,8 +2577,8 @@ void mapu_sync_ovlp_m2o_once_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_sync_ovlp_m2o_once_struct));
 }
 
-int mapu_sync_ovlp_m2o_all_in_one_init(
-    mapu_pscmc_env *pe, mapu_sync_ovlp_m2o_all_in_one_struct *kerstr) {
+int mapu_sync_ovlp_m2o_all_in_one_init(mapu_pscmc_env *pe,
+                                       mapu_sync_ovlp_m2o_all_in_one_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -2788,9 +2587,8 @@ void mapu_sync_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
 }
 int mapu_sync_ovlp_m2o_all_in_one_get_xlen() { return 1; }
 
-int mapu_sync_ovlp_m2o_all_in_one_exec(
-    mapu_sync_ovlp_m2o_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen) {
+int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *kerstr,
+                                       long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
   if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
@@ -2804,16 +2602,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecmain_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecmain_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2825,8 +2622,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecovlps_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecovlps_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -2846,16 +2642,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_numvec_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_numvec_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2867,16 +2662,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_num_ele_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_num_ele_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2888,16 +2682,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_xblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_xblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2909,16 +2702,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_yblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_yblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2930,16 +2722,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_zblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_zblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -2951,16 +2742,14 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_ovlp_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_ovlp_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -2968,26 +2757,20 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
 
   if ((scmc_internal_g_ylen < 65536)) {
     {
-      mapu_sync_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen,
-                                      scmc_internal_g_xlen>>>(
+      mapu_sync_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   } else {
     {
@@ -3004,29 +2787,22 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
                   scmc_internal_g_ylen);
         }
       } else {
-        {
-          0;
-        }
+        { 0; }
       }
       mapu_sync_ovlp_m2o_all_in_one<<<multiylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   }
 
@@ -3041,16 +2817,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecmain_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecmain_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3062,8 +2837,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecovlps_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_vecovlps_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -3083,16 +2857,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_numvec_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_numvec_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3104,16 +2877,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_num_ele_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_num_ele_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3125,16 +2897,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_xblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_xblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3146,16 +2917,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_yblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_yblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3167,16 +2937,15 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_zblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_zblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3188,16 +2957,14 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_ovlp_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_m2o_all_in_one_ovlp_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -3254,8 +3021,7 @@ int mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
   (kerstr->ovlp = pm);
   return 0;
 }
-int mapu_sync_ovlp_m2o_init(mapu_pscmc_env *pe,
-                            mapu_sync_ovlp_m2o_struct *kerstr) {
+int mapu_sync_ovlp_m2o_init(mapu_pscmc_env *pe, mapu_sync_ovlp_m2o_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -3263,8 +3029,7 @@ void mapu_sync_ovlp_m2o_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_sync_ovlp_m2o_struct));
 }
 
-int mapu_sync_ovlp_o2m_once_init(mapu_pscmc_env *pe,
-                                 mapu_sync_ovlp_o2m_once_struct *kerstr) {
+int mapu_sync_ovlp_o2m_once_init(mapu_pscmc_env *pe, mapu_sync_ovlp_o2m_once_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -3272,8 +3037,8 @@ void mapu_sync_ovlp_o2m_once_get_struct_len(size_t *len) {
   ((len)[0] = sizeof(mapu_sync_ovlp_o2m_once_struct));
 }
 
-int mapu_sync_ovlp_o2m_all_in_one_init(
-    mapu_pscmc_env *pe, mapu_sync_ovlp_o2m_all_in_one_struct *kerstr) {
+int mapu_sync_ovlp_o2m_all_in_one_init(mapu_pscmc_env *pe,
+                                       mapu_sync_ovlp_o2m_all_in_one_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }
@@ -3282,9 +3047,8 @@ void mapu_sync_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
 }
 int mapu_sync_ovlp_o2m_all_in_one_get_xlen() { return 1; }
 
-int mapu_sync_ovlp_o2m_all_in_one_exec(
-    mapu_sync_ovlp_o2m_all_in_one_struct *kerstr, long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen) {
+int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *kerstr,
+                                       long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
   if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
@@ -3298,16 +3062,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecmain_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecmain_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3319,8 +3082,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecovlps_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecovlps_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -3340,16 +3102,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_numvec_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_numvec_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3361,16 +3122,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_num_ele_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_num_ele_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3382,16 +3142,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_xblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_xblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3403,16 +3162,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_yblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_yblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3424,16 +3182,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_zblock_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_zblock_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3445,16 +3202,14 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_ovlp_before_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_ovlp_before_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -3462,26 +3217,20 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
 
   if ((scmc_internal_g_ylen < 65536)) {
     {
-      mapu_sync_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen,
-                                      scmc_internal_g_xlen>>>(
+      mapu_sync_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   } else {
     {
@@ -3498,29 +3247,22 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
                   scmc_internal_g_ylen);
         }
       } else {
-        {
-          0;
-        }
+        { 0; }
       }
       mapu_sync_ovlp_o2m_all_in_one<<<multiylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecmain->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
           ((__DDR double *)({
             uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data,
-                                         &(__d_data_address_tmp2));
+            mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0],
-          (((int *)kerstr->ovlp->h_data))[0]);
+          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
+          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
+          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
     }
   }
 
@@ -3535,16 +3277,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecmain_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecmain_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecmain)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len,
-               (kerstr->vecmain)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->vecmain, NULL), write_len, (kerstr->vecmain)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3556,8 +3297,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecovlps_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_vecovlps_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->vecovlps)->len;
@@ -3577,16 +3317,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_numvec_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_numvec_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len,
-               (kerstr->numvec)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3598,16 +3337,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_num_ele_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_num_ele_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len,
-               (kerstr->num_ele)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3619,16 +3357,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_xblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_xblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len,
-               (kerstr->xblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->xblock, NULL), write_len, (kerstr->xblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3640,16 +3377,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_yblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_yblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->yblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len,
-               (kerstr->yblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->yblock, NULL), write_len, (kerstr->yblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3661,16 +3397,15 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_zblock_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_zblock_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->zblock)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len,
-               (kerstr->zblock)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->zblock, NULL), write_len, (kerstr->zblock)->type_len,
+               fp);
         fclose(fp);
       }
       {
@@ -3682,16 +3417,14 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(
         }
 
         char fname[256];
-        snprintf(fname, 256,
-                 "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_ovlp_after_exec",
+        snprintf(fname, 256, "Debug_%d_mapu_sync_ovlp_o2m_all_in_one_ovlp_after_exec",
                  _pscmc_mapu_global_dump_times);
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
         write_len = write_len <= 0 ? 1 : write_len;
 
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len,
-               (kerstr->ovlp)->type_len, fp);
+        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
         fclose(fp);
       }
     }
@@ -3748,8 +3481,7 @@ int mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
   (kerstr->ovlp = pm);
   return 0;
 }
-int mapu_sync_ovlp_o2m_init(mapu_pscmc_env *pe,
-                            mapu_sync_ovlp_o2m_struct *kerstr) {
+int mapu_sync_ovlp_o2m_init(mapu_pscmc_env *pe, mapu_sync_ovlp_o2m_struct *kerstr) {
   ((kerstr)->pe = pe);
   return 0;
 }

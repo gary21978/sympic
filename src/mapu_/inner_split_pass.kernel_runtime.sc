@@ -19,7 +19,6 @@
 
 #include "inner_split_pass.kernel.inc"
 
-
 #ifndef MAPU_LONG
 #define MAPU_LONG long
 #endif
@@ -31,11 +30,11 @@
  * directly in d_data, compile this file with -DMAPU_RUNTIME_USE_DIRECT_D_DATA.
  */
 #ifndef MAPU_RUNTIME_USE_DIRECT_D_DATA
-#define MAPU_DDR_PTR(T, PM)                                                          \
-  ((__DDR T *)({                                                                      \
-    uint64_t __mapu_runtime_addr = 0;                                                 \
-    mapsMemobjGetPhysicalAddress((PM)->d_data, &__mapu_runtime_addr);                 \
-    __mapu_runtime_addr;                                                              \
+#define MAPU_DDR_PTR(T, PM)                                                                        \
+  ((__DDR T *)({                                                                                   \
+    uint64_t __mapu_runtime_addr = 0;                                                              \
+    mapsMemobjGetPhysicalAddress((PM)->d_data, &__mapu_runtime_addr);                              \
+    __mapu_runtime_addr;                                                                           \
   }))
 #else
 #define MAPU_DDR_PTR(T, PM) ((__DDR T *)((PM)->d_data))
@@ -44,25 +43,23 @@
 #define MAPU_HVAL(T, PM) (((T *)((PM)->h_data))[0])
 #define MAPU_HVAL_OR(T, PM, DEFAULT_VALUE) ((PM) ? MAPU_HVAL(T, (PM)) : (T)(DEFAULT_VALUE))
 
-static inline void mapu_geo_nr_Bfield_pushJ_vlo_set_device(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
+static inline void
+mapu_geo_nr_Bfield_pushJ_vlo_set_device(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
   if (kerstr != NULL && kerstr->pe != NULL) {
     mapsSetDevice((kerstr->pe)->device_id);
   }
 }
 
-#define MAPU_DEFINE_SET_PARAM(NAME)                                                   \
-  int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_##NAME(                         \
-      mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm) {              \
-    mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);                                  \
-    kerstr->NAME = pm;                                                                \
-    return 0;                                                                         \
+#define MAPU_DEFINE_SET_PARAM(NAME)                                                                \
+  int mapu_geo_nr_Bfield_pushJ_vlo_scmc_set_parameter_##NAME(                                      \
+      mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr, mapu_pscmc_mem *pm) {                           \
+    mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);                                               \
+    kerstr->NAME = pm;                                                                             \
+    return 0;                                                                                      \
   }
 
-
-int mapu_geo_nr_Bfield_pushJ_vlo_init(
-    mapu_pscmc_env *pe,
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
+int mapu_geo_nr_Bfield_pushJ_vlo_init(mapu_pscmc_env *pe,
+                                      mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr) {
   memset(kerstr, 0, sizeof(*kerstr));
   kerstr->pe = pe;
   mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);
@@ -73,13 +70,9 @@ long mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len(void) {
   return (long)sizeof(mapu_geo_nr_Bfield_pushJ_vlo_struct);
 }
 
-long mapu_geo_nr_Bfield_pushJ_vlo_get_xlen(void) {
-  return PUSHJ_VLO_REAL_PARALLEL_N;
-}
+long mapu_geo_nr_Bfield_pushJ_vlo_get_xlen(void) { return PUSHJ_VLO_REAL_PARALLEL_N; }
 
-long mapu_geo_nr_Bfield_pushJ_vlo_get_num_compute_units(void) {
-  return 64;
-}
+long mapu_geo_nr_Bfield_pushJ_vlo_get_num_compute_units(void) { return 64; }
 
 MAPU_DEFINE_SET_PARAM(inoutput)
 MAPU_DEFINE_SET_PARAM(xyzw)
@@ -115,10 +108,8 @@ MAPU_DEFINE_SET_PARAM(Q0)
 MAPU_DEFINE_SET_PARAM(b0)
 MAPU_DEFINE_SET_PARAM(zmid)
 
-int mapu_geo_nr_Bfield_pushJ_vlo_exec(
-    mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
-    long scmc_internal_g_xlen,
-    long scmc_internal_g_ylen) {
+int mapu_geo_nr_Bfield_pushJ_vlo_exec(mapu_geo_nr_Bfield_pushJ_vlo_struct *kerstr,
+                                      long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
 
   mapu_geo_nr_Bfield_pushJ_vlo_set_device(kerstr);
 
@@ -130,45 +121,38 @@ int mapu_geo_nr_Bfield_pushJ_vlo_exec(
 
   mapu_pscmc_mem *fieldE_ext_pm = kerstr->fieldE_ext ? kerstr->fieldE_ext : kerstr->fieldE;
 
-  MAPU_LONG XLEN_v            = (MAPU_LONG)MAPU_HVAL(long, kerstr->XLEN);
-  MAPU_LONG YLEN_v            = (MAPU_LONG)MAPU_HVAL(long, kerstr->YLEN);
-  MAPU_LONG ZLEN_v            = (MAPU_LONG)MAPU_HVAL(long, kerstr->ZLEN);
-  int       ovlp_v            = MAPU_HVAL(int, kerstr->ovlp);
-  MAPU_LONG numvec_v          = (MAPU_LONG)MAPU_HVAL(long, kerstr->numvec);
-  int       num_ele_v         = MAPU_HVAL(int, kerstr->num_ele);
-  MAPU_LONG grid_cache_len_v  = (MAPU_LONG)MAPU_HVAL(long, kerstr->grid_cache_len);
+  MAPU_LONG XLEN_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->XLEN);
+  MAPU_LONG YLEN_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->YLEN);
+  MAPU_LONG ZLEN_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->ZLEN);
+  int ovlp_v = MAPU_HVAL(int, kerstr->ovlp);
+  MAPU_LONG numvec_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->numvec);
+  int num_ele_v = MAPU_HVAL(int, kerstr->num_ele);
+  MAPU_LONG grid_cache_len_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->grid_cache_len);
   MAPU_LONG cu_cache_length_v = (MAPU_LONG)MAPU_HVAL(long, kerstr->cu_cache_length);
-  int       use_g_e_v         = MAPU_HVAL_OR(int, kerstr->use_g_e, 0);
-  double    DELTA_X_v         = MAPU_HVAL(double, kerstr->DELTA_X);
-  double    DELTA_Y_v         = MAPU_HVAL(double, kerstr->DELTA_Y);
-  double    DELTA_Z_v         = MAPU_HVAL(double, kerstr->DELTA_Z);
-  double    Mass0_v           = MAPU_HVAL(double, kerstr->Mass0);
-  double    Charge0_v         = MAPU_HVAL(double, kerstr->Charge0);
-  double    Deltat_v          = MAPU_HVAL(double, kerstr->Deltat);
-  double    Tori_X0_v         = MAPU_HVAL(double, kerstr->Tori_X0);
-  double    r0_v              = MAPU_HVAL(double, kerstr->r0);
-  double    MIN_R0_v          = MAPU_HVAL(double, kerstr->MIN_R0);
-  double    Q0_v              = MAPU_HVAL(double, kerstr->Q0);
-  double    b0_v              = MAPU_HVAL(double, kerstr->b0);
-  double    zmid_v            = MAPU_HVAL(double, kerstr->zmid);
+  int use_g_e_v = MAPU_HVAL_OR(int, kerstr->use_g_e, 0);
+  double DELTA_X_v = MAPU_HVAL(double, kerstr->DELTA_X);
+  double DELTA_Y_v = MAPU_HVAL(double, kerstr->DELTA_Y);
+  double DELTA_Z_v = MAPU_HVAL(double, kerstr->DELTA_Z);
+  double Mass0_v = MAPU_HVAL(double, kerstr->Mass0);
+  double Charge0_v = MAPU_HVAL(double, kerstr->Charge0);
+  double Deltat_v = MAPU_HVAL(double, kerstr->Deltat);
+  double Tori_X0_v = MAPU_HVAL(double, kerstr->Tori_X0);
+  double r0_v = MAPU_HVAL(double, kerstr->r0);
+  double MIN_R0_v = MAPU_HVAL(double, kerstr->MIN_R0);
+  double Q0_v = MAPU_HVAL(double, kerstr->Q0);
+  double b0_v = MAPU_HVAL(double, kerstr->b0);
+  double zmid_v = MAPU_HVAL(double, kerstr->zmid);
 
-#define MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS                                             \
-      MAPU_DDR_PTR(double, kerstr->inoutput),                                         \
-      MAPU_DDR_PTR(int,    kerstr->xyzw),                                             \
-      MAPU_DDR_PTR(double, kerstr->cu_cache),                                         \
-      MAPU_DDR_PTR(int,    kerstr->cu_xyzw),                                          \
-      MAPU_DDR_PTR(int,    kerstr->xoffset),                                          \
-      MAPU_DDR_PTR(int,    kerstr->yoffset),                                          \
-      MAPU_DDR_PTR(int,    kerstr->zoffset),                                          \
-      MAPU_DDR_PTR(double, kerstr->fieldE),                                           \
-      MAPU_DDR_PTR(double, fieldE_ext_pm),                                            \
-      MAPU_DDR_PTR(double, kerstr->fieldB),                                           \
-      MAPU_DDR_PTR(double, kerstr->fieldB1),                                          \
-      MAPU_DDR_PTR(double, kerstr->FoutJ),                                            \
-      XLEN_v, YLEN_v, ZLEN_v, ovlp_v, numvec_v, num_ele_v,                            \
-      grid_cache_len_v, cu_cache_length_v, use_g_e_v,                                 \
-      DELTA_X_v, DELTA_Y_v, DELTA_Z_v, Mass0_v, Charge0_v, Deltat_v,                  \
-      Tori_X0_v, r0_v, MIN_R0_v, Q0_v, b0_v, zmid_v
+#define MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS                                                          \
+  MAPU_DDR_PTR(double, kerstr->inoutput), MAPU_DDR_PTR(int, kerstr->xyzw),                         \
+      MAPU_DDR_PTR(double, kerstr->cu_cache), MAPU_DDR_PTR(int, kerstr->cu_xyzw),                  \
+      MAPU_DDR_PTR(int, kerstr->xoffset), MAPU_DDR_PTR(int, kerstr->yoffset),                      \
+      MAPU_DDR_PTR(int, kerstr->zoffset), MAPU_DDR_PTR(double, kerstr->fieldE),                    \
+      MAPU_DDR_PTR(double, fieldE_ext_pm), MAPU_DDR_PTR(double, kerstr->fieldB),                   \
+      MAPU_DDR_PTR(double, kerstr->fieldB1), MAPU_DDR_PTR(double, kerstr->FoutJ), XLEN_v, YLEN_v,  \
+      ZLEN_v, ovlp_v, numvec_v, num_ele_v, grid_cache_len_v, cu_cache_length_v, use_g_e_v,         \
+      DELTA_X_v, DELTA_Y_v, DELTA_Z_v, Mass0_v, Charge0_v, Deltat_v, Tori_X0_v, r0_v, MIN_R0_v,    \
+      Q0_v, b0_v, zmid_v
 
   if (scmc_internal_g_ylen < 65536) {
     mapu_geo_nr_Bfield_pushJ_vlo<<<scmc_internal_g_ylen, multi_xlen>>>(
@@ -176,15 +160,13 @@ int mapu_geo_nr_Bfield_pushJ_vlo_exec(
   } else {
     dim3 gridDim(65535, (unsigned int)((scmc_internal_g_ylen + 65534) / 65535), 1);
     dim3 blockDim((unsigned int)multi_xlen, 1, 1);
-    mapu_geo_nr_Bfield_pushJ_vlo<<<gridDim, blockDim>>>(
-        MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS);
+    mapu_geo_nr_Bfield_pushJ_vlo<<<gridDim, blockDim>>>(MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS);
   }
 
 #undef MAPU_GEO_NR_BFIELD_PUSHJ_VLO_ARGS
 
   return 0;
 }
-
 
 #undef MAPU_DEFINE_SET_PARAM
 #undef MAPU_HVAL_OR

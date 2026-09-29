@@ -50,15 +50,16 @@ static inline void sympic_enable_peer_access(int device_id, int peer_device_id) 
   int can_access = 0;
 #ifdef SYMPIC_CUDA
   cudaDeviceCanAccessPeer(&can_access, device_id, peer_device_id);
-  if (can_access) cudaDeviceEnablePeerAccess(peer_device_id, 0);
+  if (can_access)
+    cudaDeviceEnablePeerAccess(peer_device_id, 0);
 #elif defined(SYMPIC_MAPU)
   mapsDeviceCanAccessPeer(&can_access, device_id, peer_device_id);
-  if (can_access) mapsDeviceEnablePeerAccess(peer_device_id, 0);
+  if (can_access)
+    mapsDeviceEnablePeerAccess(peer_device_id, 0);
 #endif
 }
 
-static inline int sympic_copy_local_async(void *dst, const void *src,
-                                          size_t bytes) {
+static inline int sympic_copy_local_async(void *dst, const void *src, size_t bytes) {
 #ifdef SYMPIC_CUDA
   return (int)cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToDevice, 0);
 #elif defined(SYMPIC_MAPU)
@@ -66,8 +67,7 @@ static inline int sympic_copy_local_async(void *dst, const void *src,
 #endif
 }
 
-static inline int sympic_copy_peer_async(void *dst, int dst_device,
-                                         const void *src, int src_device,
+static inline int sympic_copy_peer_async(void *dst, int dst_device, const void *src, int src_device,
                                          size_t bytes) {
 #ifdef SYMPIC_CUDA
   return (int)cudaMemcpyPeerAsync(dst, dst_device, src, src_device, bytes, 0);
@@ -76,8 +76,8 @@ static inline int sympic_copy_peer_async(void *dst, int dst_device,
 #endif
 }
 
-static inline void sympic_copy_peer(void *dst, int dst_device, const void *src,
-                                    int src_device, size_t bytes) {
+static inline void sympic_copy_peer(void *dst, int dst_device, const void *src, int src_device,
+                                    size_t bytes) {
 #ifdef SYMPIC_CUDA
   cudaMemcpyPeer(dst, dst_device, src, src_device, bytes);
 #elif defined(SYMPIC_MAPU)
@@ -136,85 +136,58 @@ static inline int sympic_copy_h2d(void *dst, const void *src, size_t bytes) {
 /* single-kernel gather for local halo copies (self + same-rank-different-
    runtime); per-entry source base pointers let the kernel read each segment
    from its own runtime's sync buffer, so nruntime>1 needs no memcpyPeer */
-static inline void sympic_launch_local_halo_copy(double *dst_base,
-                                                 double *const *src_bases_d,
-                                                 const long *dst_tid_d,
-                                                 const long *src_tid_d,
-                                                 long ncopy, long sllen,
-                                                 long numvec, size_t recv_offset,
-                                                 int device_id) {
+static inline void sympic_launch_local_halo_copy(double *dst_base, double *const *src_bases_d,
+                                                 const long *dst_tid_d, const long *src_tid_d,
+                                                 long ncopy, long sllen, long numvec,
+                                                 size_t recv_offset, int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d,
-                              dst_tid_d, src_tid_d, ncopy, sllen, numvec,
-                              recv_offset, device_id);
+  cuda_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d, dst_tid_d, src_tid_d,
+                              ncopy, sllen, numvec, recv_offset, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d,
-                              dst_tid_d, src_tid_d, ncopy, sllen, numvec,
-                              recv_offset, device_id);
+  mapu_local_halo_copy_launch(dst_base, (const double *const *)src_bases_d, dst_tid_d, src_tid_d,
+                              ncopy, sllen, numvec, recv_offset, device_id);
 #endif
 }
 
-static inline void sympic_launch_field_halo_pack(double *dst_base,
-                                                 const double *src_base,
-                                                 const long *src_off_d,
-                                                 const long *dst_off_d,
-                                                 const long *len_d,
-                                                 long nseg,
-                                                 int device_id) {
+static inline void sympic_launch_field_halo_pack(double *dst_base, const double *src_base,
+                                                 const long *src_off_d, const long *dst_off_d,
+                                                 const long *len_d, long nseg, int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
-                              nseg, device_id);
+  cuda_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
-                              nseg, device_id);
+  mapu_field_halo_pack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #endif
 }
 
-static inline void sympic_launch_field_halo_unpack(double *dst_base,
-                                                   const double *src_base,
-                                                   const long *src_off_d,
-                                                   const long *dst_off_d,
-                                                   const long *len_d,
-                                                   long nseg,
-                                                   int device_id) {
+static inline void sympic_launch_field_halo_unpack(double *dst_base, const double *src_base,
+                                                   const long *src_off_d, const long *dst_off_d,
+                                                   const long *len_d, long nseg, int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d,
-                                len_d, nseg, device_id);
+  cuda_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d,
-                                len_d, nseg, device_id);
+  mapu_field_halo_unpack_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #endif
 }
 
 /* packed particle-sort exchange: segment gather/scatter for the meta rows
    (int) and particle data (double) */
-static inline void sympic_launch_sort_copy_int(int *dst_base,
-                                               const int *src_base,
-                                               const long *src_off_d,
-                                               const long *dst_off_d,
-                                               const long *len_d, long nseg,
-                                               int device_id) {
+static inline void sympic_launch_sort_copy_int(int *dst_base, const int *src_base,
+                                               const long *src_off_d, const long *dst_off_d,
+                                               const long *len_d, long nseg, int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
-                            nseg, device_id);
+  cuda_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d,
-                            nseg, device_id);
+  mapu_sort_copy_int_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #endif
 }
 
-static inline void sympic_launch_sort_copy_double(double *dst_base,
-                                                  const double *src_base,
-                                                  const long *src_off_d,
-                                                  const long *dst_off_d,
-                                                  const long *len_d,
-                                                  long nseg, int device_id) {
+static inline void sympic_launch_sort_copy_double(double *dst_base, const double *src_base,
+                                                  const long *src_off_d, const long *dst_off_d,
+                                                  const long *len_d, long nseg, int device_id) {
 #ifdef SYMPIC_CUDA
-  cuda_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d,
-                               len_d, nseg, device_id);
+  cuda_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #elif defined(SYMPIC_MAPU)
-  mapu_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d,
-                               len_d, nseg, device_id);
+  mapu_sort_copy_double_launch(dst_base, src_base, src_off_d, dst_off_d, len_d, nseg, device_id);
 #endif
 }
 
@@ -267,8 +240,8 @@ static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
 #endif
 }
 
-static inline void sympic_comm_send_int(const int *buffer, size_t count,
-                                        int peer, SymPIC_Device_Comm comm) {
+static inline void sympic_comm_send_int(const int *buffer, size_t count, int peer,
+                                        SymPIC_Device_Comm comm) {
 #ifdef SYMPIC_CUDA
   ncclSend(buffer, count, ncclInt, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
@@ -285,8 +258,8 @@ static inline void sympic_comm_recv_int(int *buffer, size_t count, int peer,
 #endif
 }
 
-static inline void sympic_comm_send_double(const double *buffer, size_t count,
-                                           int peer, SymPIC_Device_Comm comm) {
+static inline void sympic_comm_send_double(const double *buffer, size_t count, int peer,
+                                           SymPIC_Device_Comm comm) {
 #ifdef SYMPIC_CUDA
   ncclSend(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)
@@ -294,8 +267,8 @@ static inline void sympic_comm_send_double(const double *buffer, size_t count,
 #endif
 }
 
-static inline void sympic_comm_recv_double(double *buffer, size_t count,
-                                           int peer, SymPIC_Device_Comm comm) {
+static inline void sympic_comm_recv_double(double *buffer, size_t count, int peer,
+                                           SymPIC_Device_Comm comm) {
 #ifdef SYMPIC_CUDA
   ncclRecv(buffer, count, ncclDouble, peer, comm, 0);
 #elif defined(SYMPIC_MAPU)

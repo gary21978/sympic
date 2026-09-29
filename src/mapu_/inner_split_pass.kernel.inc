@@ -25,23 +25,18 @@
 // #define FULL_MASK 0xffffffffu
 // #endif
 
-
 /* Fused evaluator for positions that consume all three Whitney families.
  * omrx, rx2, the quadratic quarter terms and the shifted-index factors are
  * formed once for f0/f1/if1. */
-static __device__ KERNEL_M __noinline__ void
-eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
-                v8fp64 if1[5]) {
+static __device__ KERNEL_M __noinline__ void eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5],
+                                                            v8fp64 f1[5], v8fp64 if1[5]) {
   const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
   const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
-  const v8fp64 quarter_omrx2 =
-      (0.25 * (omrx * omrx));
+  const v8fp64 quarter_omrx2 = (0.25 * (omrx * omrx));
   const v8fp64 quarter_rx2 = (0.25 * rx2);
-  const v8fp64 linear =
-      (0.25 +
-       (0.5 * rx));
+  const v8fp64 linear = (0.25 + (0.5 * rx));
 
   const v8fp64 f0_b1 = quarter_omrx2;
   const v8fp64 f0_b2 = (0.5 - quarter_rx2);
@@ -64,8 +59,7 @@ eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
   f1[3] = (f1_b3 * dix_p1);
   f1[4] = (v8fp64){};
 
-  const v8fp64 if1_b1 =
-      (1.0 - quarter_omrx2);
+  const v8fp64 if1_b1 = (1.0 - quarter_omrx2);
   const v8fp64 if1_b2 = linear;
   const v8fp64 if1_b3 = quarter_rx2;
 
@@ -77,18 +71,15 @@ eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
 }
 
 /* Narrow fused evaluator used where only f0 and if1 survive downstream. */
-static __device__ KERNEL_M __noinline__ void
-eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
+static __device__ KERNEL_M __noinline__ void eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5],
+                                                         v8fp64 if1[5]) {
   const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
   const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
-  const v8fp64 quarter_omrx2 =
-      (0.25 * (omrx * omrx));
+  const v8fp64 quarter_omrx2 = (0.25 * (omrx * omrx));
   const v8fp64 quarter_rx2 = (0.25 * rx2);
-  const v8fp64 linear =
-      (0.25 +
-       (0.5 * rx));
+  const v8fp64 linear = (0.25 + (0.5 * rx));
 
   const v8fp64 f0_b1 = quarter_omrx2;
   const v8fp64 f0_b2 = (0.5 - quarter_rx2);
@@ -101,9 +92,7 @@ eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
   f0[3] = (f0_b3 * dix_p1) + (f0_b4 * neg_dix);
   f0[4] = (f0_b4 * dix_p1);
 
-  const v8fp64 if1_b1 =
-      (1.0 -
-       quarter_omrx2);
+  const v8fp64 if1_b1 = (1.0 - quarter_omrx2);
   const v8fp64 if1_b2 = linear;
   const v8fp64 if1_b3 = quarter_rx2;
 
@@ -115,18 +104,13 @@ eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
 }
 
 /* Single-family evaluator retained for narrow if1-only positions. */
-static __device__ KERNEL_M __noinline__ void
-eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
+static __device__ KERNEL_M __noinline__ void eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
   const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
   const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
-  const v8fp64 if1_b1 =
-      (1.0 -
-       (0.25 * (omrx * omrx)));
-  const v8fp64 if1_b2 =
-      (0.25 +
-       (0.5 * rx));
+  const v8fp64 if1_b1 = (1.0 - (0.25 * (omrx * omrx)));
+  const v8fp64 if1_b2 = (0.25 + (0.5 * rx));
   const v8fp64 if1_b3 = (0.25 * rx2);
 
   if1[0] = dix_p1 + (if1_b1 * neg_dix);
@@ -146,11 +130,7 @@ eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
 #define PUSHJ_WT_KIND_COUNT 3
 #define PUSHJ_WT_AXIS_SLOT_COUNT (PUSHJ_WT_POS_COUNT * PUSHJ_WT_KIND_COUNT)
 
-enum pushJ_wt_kind_t {
-  PUSHJ_WT_F0 = 0,
-  PUSHJ_WT_F1 = 1,
-  PUSHJ_WT_IF1 = 2
-};
+enum pushJ_wt_kind_t { PUSHJ_WT_F0 = 0, PUSHJ_WT_F1 = 1, PUSHJ_WT_IF1 = 2 };
 
 typedef struct {
   v8fp64 slot[PUSHJ_WT_AXIS_SLOT_COUNT][5];
@@ -167,28 +147,27 @@ typedef struct {
 
 /* SPU-only: bind the OPT-6 axis banks for the serial tile owner. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_wt_bank_bind(pushJ_weight_bank_t *bank, pushJ_wt_axis_bank_t *x,
-                   pushJ_wt_axis_bank_t *y, pushJ_wt_axis_bank_t *z) {
+pushJ_wt_bank_bind(pushJ_weight_bank_t *bank, pushJ_wt_axis_bank_t *x, pushJ_wt_axis_bank_t *y,
+                   pushJ_wt_axis_bank_t *z) {
   bank->x = x;
   bank->y = y;
   bank->z = z;
 }
 
-static __device__ KERNEL_M __attribute__((always_inline)) inline int
-pushJ_wt_axis_slot(int pos, int kind) {
+static __device__ KERNEL_M __attribute__((always_inline)) inline int pushJ_wt_axis_slot(int pos,
+                                                                                        int kind) {
   return (pos * PUSHJ_WT_KIND_COUNT) + kind;
 }
 
-#define PUSHJ_WT_AXIS_ACCESSORS(axis_name, member)                            \
-  static __device__ KERNEL_M __attribute__((always_inline)) inline v8fp64 *  \
-  pushJ_wt_##axis_name(pushJ_weight_bank_t *bank, int pos, int kind) {       \
-    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                \
-  }                                                                          \
-  static __device__ KERNEL_M __attribute__((always_inline)) inline           \
-      const v8fp64 *                                                         \
-      pushJ_wt_##axis_name##_c(const pushJ_weight_bank_t *bank, int pos,     \
-                               int kind) {                                    \
-    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                \
+#define PUSHJ_WT_AXIS_ACCESSORS(axis_name, member)                                                 \
+  static __device__ KERNEL_M __attribute__((always_inline)) inline v8fp64 *pushJ_wt_##axis_name(   \
+      pushJ_weight_bank_t *bank, int pos, int kind) {                                              \
+    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                                      \
+  }                                                                                                \
+  static __device__ KERNEL_M                                                                       \
+      __attribute__((always_inline)) inline const v8fp64 *pushJ_wt_##axis_name##_c(                \
+          const pushJ_weight_bank_t *bank, int pos, int kind) {                                    \
+    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                                      \
   }
 
 PUSHJ_WT_AXIS_ACCESSORS(x, x)
@@ -204,15 +183,15 @@ PUSHJ_WT_AXIS_ACCESSORS(z, z)
  *   y: pos0/f0, pos0/f1, pos3/f1 -> Y01, Y12, Y23
  *   z: pos0/f0, pos0/f1, pos0/if1 -> Z12, Z23, Z13
  */
-#define PUSHJ_PATH_ACCESSORS(path_name, member, pos, kind)                   \
-  static __device__ KERNEL_M __attribute__((always_inline)) inline v8fp64 * \
-  pushJ_path_##path_name(pushJ_weight_bank_t *bank) {                       \
-    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];               \
-  }                                                                          \
-  static __device__ KERNEL_M __attribute__((always_inline)) inline           \
-      const v8fp64 *                                                         \
-      pushJ_path_##path_name##_c(const pushJ_weight_bank_t *bank) {          \
-    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];               \
+#define PUSHJ_PATH_ACCESSORS(path_name, member, pos, kind)                                         \
+  static __device__ KERNEL_M __attribute__((always_inline)) inline v8fp64 *pushJ_path_##path_name( \
+      pushJ_weight_bank_t *bank) {                                                                 \
+    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                                      \
+  }                                                                                                \
+  static __device__ KERNEL_M                                                                       \
+      __attribute__((always_inline)) inline const v8fp64 *pushJ_path_##path_name##_c(              \
+          const pushJ_weight_bank_t *bank) {                                                       \
+    return bank->member->slot[pushJ_wt_axis_slot(pos, kind)];                                      \
   }
 
 PUSHJ_PATH_ACCESSORS(x01, x, 0, PUSHJ_WT_F1)
@@ -242,42 +221,35 @@ pushJ_path_fill(v8fp64 *dst, const v8fp64 *hi, const v8fp64 *lo) {
 
 /* Position 0: only slots consumed by downstream deposit/K2 helpers. */
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_wt_fill_pos0_deposit(pushJ_weight_bank_t *bank, v8fp64 rx_x,
-                           v8fp64 dix_x, v8fp64 rx_y, v8fp64 dix_y) {
-  eval_f0_if1(rx_x, dix_x, pushJ_wt_x(bank, 0, PUSHJ_WT_F0),
-               pushJ_wt_x(bank, 0, PUSHJ_WT_IF1));
+pushJ_wt_fill_pos0_deposit(pushJ_weight_bank_t *bank, v8fp64 rx_x, v8fp64 dix_x, v8fp64 rx_y,
+                           v8fp64 dix_y) {
+  eval_f0_if1(rx_x, dix_x, pushJ_wt_x(bank, 0, PUSHJ_WT_F0), pushJ_wt_x(bank, 0, PUSHJ_WT_IF1));
   eval_if1(rx_y, dix_y, pushJ_wt_y(bank, 0, PUSHJ_WT_IF1));
 }
 
 /* Position 1: all three families are consumed on all three axes. */
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_wt_fill_pos1_xyz(pushJ_weight_bank_t *bank, v8fp64 rx_x,
-                       v8fp64 dix_x, v8fp64 rx_y, v8fp64 dix_y,
-                       v8fp64 rx_z, v8fp64 dix_z) {
-  eval_f0_f1_if1(rx_x, dix_x, pushJ_wt_x(bank, 1, PUSHJ_WT_F0),
-                  pushJ_wt_x(bank, 1, PUSHJ_WT_F1),
-                  pushJ_wt_x(bank, 1, PUSHJ_WT_IF1));
-  eval_f0_f1_if1(rx_y, dix_y, pushJ_wt_y(bank, 1, PUSHJ_WT_F0),
-                  pushJ_wt_y(bank, 1, PUSHJ_WT_F1),
-                  pushJ_wt_y(bank, 1, PUSHJ_WT_IF1));
-  eval_f0_f1_if1(rx_z, dix_z, pushJ_wt_z(bank, 1, PUSHJ_WT_F0),
-                  pushJ_wt_z(bank, 1, PUSHJ_WT_F1),
-                  pushJ_wt_z(bank, 1, PUSHJ_WT_IF1));
+pushJ_wt_fill_pos1_xyz(pushJ_weight_bank_t *bank, v8fp64 rx_x, v8fp64 dix_x, v8fp64 rx_y,
+                       v8fp64 dix_y, v8fp64 rx_z, v8fp64 dix_z) {
+  eval_f0_f1_if1(rx_x, dix_x, pushJ_wt_x(bank, 1, PUSHJ_WT_F0), pushJ_wt_x(bank, 1, PUSHJ_WT_F1),
+                 pushJ_wt_x(bank, 1, PUSHJ_WT_IF1));
+  eval_f0_f1_if1(rx_y, dix_y, pushJ_wt_y(bank, 1, PUSHJ_WT_F0), pushJ_wt_y(bank, 1, PUSHJ_WT_F1),
+                 pushJ_wt_y(bank, 1, PUSHJ_WT_IF1));
+  eval_f0_f1_if1(rx_z, dix_z, pushJ_wt_z(bank, 1, PUSHJ_WT_F0), pushJ_wt_z(bank, 1, PUSHJ_WT_F1),
+                 pushJ_wt_z(bank, 1, PUSHJ_WT_IF1));
 }
 
 /* Position 2 fixed-axis helpers. */
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
 pushJ_wt_fill_pos2_x(pushJ_weight_bank_t *bank, v8fp64 rx, v8fp64 dix) {
-  eval_f0_f1_if1(rx, dix, pushJ_wt_x(bank, 2, PUSHJ_WT_F0),
-                  pushJ_wt_x(bank, 2, PUSHJ_WT_F1),
-                  pushJ_wt_x(bank, 2, PUSHJ_WT_IF1));
+  eval_f0_f1_if1(rx, dix, pushJ_wt_x(bank, 2, PUSHJ_WT_F0), pushJ_wt_x(bank, 2, PUSHJ_WT_F1),
+                 pushJ_wt_x(bank, 2, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
 pushJ_wt_fill_pos2_y(pushJ_weight_bank_t *bank, v8fp64 rx, v8fp64 dix) {
-  eval_f0_f1_if1(rx, dix, pushJ_wt_y(bank, 2, PUSHJ_WT_F0),
-                  pushJ_wt_y(bank, 2, PUSHJ_WT_F1),
-                  pushJ_wt_y(bank, 2, PUSHJ_WT_IF1));
+  eval_f0_f1_if1(rx, dix, pushJ_wt_y(bank, 2, PUSHJ_WT_F0), pushJ_wt_y(bank, 2, PUSHJ_WT_F1),
+                 pushJ_wt_y(bank, 2, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
@@ -292,28 +264,24 @@ pushJ_wt_fill_pos3_x_if1(pushJ_weight_bank_t *bank, v8fp64 rx, v8fp64 dix) {
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_wt_fill_pos3_y_f0_if1(pushJ_weight_bank_t *bank, v8fp64 rx,
-                            v8fp64 dix) {
-  eval_f0_if1(rx, dix, pushJ_wt_y(bank, 3, PUSHJ_WT_F0),
-               pushJ_wt_y(bank, 3, PUSHJ_WT_IF1));
+pushJ_wt_fill_pos3_y_f0_if1(pushJ_weight_bank_t *bank, v8fp64 rx, v8fp64 dix) {
+  eval_f0_if1(rx, dix, pushJ_wt_y(bank, 3, PUSHJ_WT_F0), pushJ_wt_y(bank, 3, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_wt_fill_pos3_z_f0_if1(pushJ_weight_bank_t *bank, v8fp64 rx,
-                            v8fp64 dix) {
-  eval_f0_if1(rx, dix, pushJ_wt_z(bank, 3, PUSHJ_WT_F0),
-               pushJ_wt_z(bank, 3, PUSHJ_WT_IF1));
+pushJ_wt_fill_pos3_z_f0_if1(pushJ_weight_bank_t *bank, v8fp64 rx, v8fp64 dix) {
+  eval_f0_if1(rx, dix, pushJ_wt_z(bank, 3, PUSHJ_WT_F0), pushJ_wt_z(bank, 3, PUSHJ_WT_IF1));
 }
 
 /* OPT-4: fused B-field integrals. Every mathematical output keeps its own
  * accumulator and the original z->y->x update order. Only loop control,
  * address generation, and common weight routing are shared. */
 
-static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBy_bank(
-    const pushJ_weight_bank_t *__restrict__ bank,
-    const double *__restrict__ shB0, const double *__restrict__ shB1,
-    int tile_xlen,
-    v8fp64 *__restrict__ term0_out, v8fp64 *__restrict__ term1_out) {
+static __device__ KERNEL_M __noinline__ void
+pushJ_B_fused_iBy_bank(const pushJ_weight_bank_t *__restrict__ bank,
+                       const double *__restrict__ shB0, const double *__restrict__ shB1,
+                       int tile_xlen, v8fp64 *__restrict__ term0_out,
+                       v8fp64 *__restrict__ term1_out) {
   const v8fp64 *wF0z = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *wF1y = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F1);
   const v8fp64 *difX01 = pushJ_path_x01_c(bank);
@@ -331,10 +299,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBy_bank(
 #pragma clang loop unroll(full)
       for (long x = 0; x < 5; x++) {
         const int allidx = x + tile_xlen * (y + 5 * z);
-        sum0 = sum0 +
-               (shB0[allidx * 3 + 2] * (wF0z[z] * tx01[x]));
-        sum1 = sum1 +
-               (shB1[allidx * 3 + 2] * (wF0z[z] * tx12[x]));
+        sum0 = sum0 + (shB0[allidx * 3 + 2] * (wF0z[z] * tx01[x]));
+        sum1 = sum1 + (shB1[allidx * 3 + 2] * (wF0z[z] * tx12[x]));
       }
     }
   }
@@ -344,12 +310,11 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBy_bank(
 
 /* One traversal for the comp0+comp1 pair belonging to one B snapshot.
  * Called once for shB0 and once for shB1: four old traversals -> two. */
-static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBz_pair_bank(
-    const pushJ_weight_bank_t *__restrict__ bank,
-    const double *__restrict__ field, int f0x_pos,
-    const v8fp64 *difY, const v8fp64 *difX,
-    int tile_xlen,
-    v8fp64 *__restrict__ comp0_out, v8fp64 *__restrict__ comp1_out) {
+static __device__ KERNEL_M __noinline__ void
+pushJ_B_fused_iBz_pair_bank(const pushJ_weight_bank_t *__restrict__ bank,
+                            const double *__restrict__ field, int f0x_pos, const v8fp64 *difY,
+                            const v8fp64 *difX, int tile_xlen, v8fp64 *__restrict__ comp0_out,
+                            v8fp64 *__restrict__ comp1_out) {
   const v8fp64 *wF0x = pushJ_wt_x_c(bank, f0x_pos, PUSHJ_WT_F0);
   const v8fp64 *wF0y = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *wF1z = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F1);
@@ -366,10 +331,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBz_pair_bank(
 #pragma clang loop unroll(full)
       for (long x = 0; x < 5; x++) {
         const int allidx = x + tile_xlen * (y + 5 * z);
-        sum0 = sum0 +
-               (field[allidx * 3 + 0] * (wF0x[x] * tyz));
-        sum1 = sum1 +
-               (field[allidx * 3 + 1] * (wF0y[y] * tx[x]));
+        sum0 = sum0 + (field[allidx * 3 + 0] * (wF0x[x] * tyz));
+        sum1 = sum1 + (field[allidx * 3 + 1] * (wF0y[y] * tx[x]));
       }
     }
   }
@@ -377,11 +340,10 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBz_pair_bank(
   *comp1_out = sum1;
 }
 
-static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBy23_bank(
-    const pushJ_weight_bank_t *__restrict__ bank,
-    const double *__restrict__ shB1, int tile_xlen,
-    v8fp64 *__restrict__ term0_out,
-    v8fp64 *__restrict__ term1_out) {
+static __device__ KERNEL_M __noinline__ void
+pushJ_B_fused_iBy23_bank(const pushJ_weight_bank_t *__restrict__ bank,
+                         const double *__restrict__ shB1, int tile_xlen,
+                         v8fp64 *__restrict__ term0_out, v8fp64 *__restrict__ term1_out) {
   const v8fp64 *wF0x = pushJ_wt_x_c(bank, 2, PUSHJ_WT_F0);
   const v8fp64 *wF1y = pushJ_wt_y_c(bank, 2, PUSHJ_WT_F1);
   const v8fp64 *difZ12 = pushJ_path_z12_c(bank);
@@ -407,12 +369,11 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBy23_bank(
 
 /* Four independent accumulators share one z/y/x traversal. Their individual
  * update sequence and multiplication nesting match the four old integrals. */
-static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBx_bank(
-    const pushJ_weight_bank_t *__restrict__ bank,
-    const double *__restrict__ shB1, int tile_xlen,
-    v8fp64 *__restrict__ z12_out,
-    v8fp64 *__restrict__ z23_out, v8fp64 *__restrict__ y12_out,
-    v8fp64 *__restrict__ y23_out) {
+static __device__ KERNEL_M __noinline__ void
+pushJ_B_fused_iBx_bank(const pushJ_weight_bank_t *__restrict__ bank,
+                       const double *__restrict__ shB1, int tile_xlen, v8fp64 *__restrict__ z12_out,
+                       v8fp64 *__restrict__ z23_out, v8fp64 *__restrict__ y12_out,
+                       v8fp64 *__restrict__ y23_out) {
   const v8fp64 *wF0y2 = pushJ_wt_y_c(bank, 2, PUSHJ_WT_F0);
   const v8fp64 *wF0z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *wF0z3 = pushJ_wt_z_c(bank, 3, PUSHJ_WT_F0);
@@ -459,9 +420,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_B_fused_iBx_bank(
 /* Bank-indexed E-field interpolation */
 
 /* Medium FMA: cache 2D weights per (idy,idz); keep f1*(f0*f0) nesting. */
-static __device__ KERNEL_M __noinline__ v8fp64
-pushJ_E_interp_Ex_bank(const pushJ_weight_bank_t *__restrict__ bank,
-                       const double *__restrict__ shE0, int tile_xlen) {
+static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ex_bank(
+    const pushJ_weight_bank_t *__restrict__ bank, const double *__restrict__ shE0, int tile_xlen) {
   const v8fp64 *f1_x1 = pushJ_wt_x_c(bank, 1, PUSHJ_WT_F1);
   const v8fp64 *f0_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
@@ -469,12 +429,10 @@ pushJ_E_interp_Ex_bank(const pushJ_weight_bank_t *__restrict__ bank,
   for (long idz = 0; idz < 5; idz = (idz + 1)) {
     for (long idy = 0; idy < 5; idy = (idy + 1)) {
       const v8fp64 wyz = ((f0_y1)[idy] * (f0_z1)[idz]);
-      #pragma clang loop unroll(full)
+#pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx = (idx + 1)) {
-        v8fp64 term =
-            ((((shE0)[(0 + (3 * (idx + (tile_xlen * (idy + (idz * 5))))))] +
-                         0)) *
-             ((f1_x1)[idx] * wyz));
+        v8fp64 term = ((((shE0)[(0 + (3 * (idx + (tile_xlen * (idy + (idz * 5))))))] + 0)) *
+                       ((f1_x1)[idx] * wyz));
         AllEx = (AllEx + term);
       }
     }
@@ -482,9 +440,8 @@ pushJ_E_interp_Ex_bank(const pushJ_weight_bank_t *__restrict__ bank,
   return AllEx;
 }
 
-static __device__ KERNEL_M __noinline__ v8fp64
-pushJ_E_interp_Ey_bank(const pushJ_weight_bank_t *__restrict__ bank,
-                       const double *__restrict__ shE0, int tile_xlen) {
+static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ey_bank(
+    const pushJ_weight_bank_t *__restrict__ bank, const double *__restrict__ shE0, int tile_xlen) {
   const v8fp64 *f1_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F1);
   const v8fp64 *f0_z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_x1 = pushJ_wt_x_c(bank, 1, PUSHJ_WT_F0);
@@ -492,12 +449,10 @@ pushJ_E_interp_Ey_bank(const pushJ_weight_bank_t *__restrict__ bank,
   for (long idz = 0; idz < 5; idz = (idz + 1)) {
     for (long idy = 0; idy < 5; idy = (idy + 1)) {
       const v8fp64 wzx = ((f0_z1)[idy] * (f0_x1)[idz]);
-      #pragma clang loop unroll(full)
+#pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx = (idx + 1)) {
-        v8fp64 term =
-            ((((shE0)[(1 + (3 * (idz + (tile_xlen * (idx + (idy * 5))))))] +
-                         0)) *
-             ((f1_y1)[idx] * wzx));
+        v8fp64 term = ((((shE0)[(1 + (3 * (idz + (tile_xlen * (idx + (idy * 5))))))] + 0)) *
+                       ((f1_y1)[idx] * wzx));
         AllEy = (AllEy + term);
       }
     }
@@ -505,9 +460,8 @@ pushJ_E_interp_Ey_bank(const pushJ_weight_bank_t *__restrict__ bank,
   return AllEy;
 }
 
-static __device__ KERNEL_M __noinline__ v8fp64
-pushJ_E_interp_Ez_bank(const pushJ_weight_bank_t *__restrict__ bank,
-                       const double *__restrict__ shE0, int tile_xlen) {
+static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ez_bank(
+    const pushJ_weight_bank_t *__restrict__ bank, const double *__restrict__ shE0, int tile_xlen) {
   const v8fp64 *f1_z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F1);
   const v8fp64 *f0_x1 = pushJ_wt_x_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
@@ -515,12 +469,10 @@ pushJ_E_interp_Ez_bank(const pushJ_weight_bank_t *__restrict__ bank,
   for (long idz = 0; idz < 5; idz = (idz + 1)) {
     for (long idy = 0; idy < 5; idy = (idy + 1)) {
       const v8fp64 wxy = ((f0_x1)[idy] * (f0_y1)[idz]);
-      #pragma clang loop unroll(full)
+#pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx = (idx + 1)) {
-        v8fp64 term =
-            ((((shE0)[(2 + (3 * (idy + (tile_xlen * (idz + (idx * 5))))))] +
-                         0)) *
-             ((f1_z1)[idx] * wxy));
+        v8fp64 term = ((((shE0)[(2 + (3 * (idy + (tile_xlen * (idz + (idx * 5))))))] + 0)) *
+                       ((f1_z1)[idx] * wxy));
         AllEz = (AllEz + term);
       }
     }
@@ -561,16 +513,13 @@ typedef struct {
 
 /* OPT-1: kernel-invariant fields — call once at kernel entry. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_ctx_init_const(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y,
-                         double DELTA_Z, double Deltat, double Tori_X0,
-                         double Charge0, double Mass0) {
+pushJ_vlo_ctx_init_const(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y, double DELTA_Z,
+                         double Deltat, double Tori_X0, double Charge0, double Mass0) {
   const double DELTA_X2 = (DELTA_X * DELTA_X);
   const double DELTA_Y2 = (DELTA_Y * DELTA_Y);
   const double DELTA_Z2 = (DELTA_Z * DELTA_Z);
-  const double INV_DELTA_X2 =
-      (1.0 / DELTA_X2);
-  const double INV_DELTA_Z2 =
-      (1.0 / DELTA_Z2);
+  const double INV_DELTA_X2 = (1.0 / DELTA_X2);
+  const double INV_DELTA_Z2 = (1.0 / DELTA_Z2);
   const double TX02 = (Tori_X0 * Tori_X0);
   const double INV_TX02 = (1.0 / TX02);
   const double QE_MASS = (Charge0 / Mass0);
@@ -581,29 +530,19 @@ pushJ_vlo_ctx_init_const(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y,
   ctx->Deltat = Deltat;
   ctx->TWO_DELTAT = (2.0 * Deltat);
   ctx->Tori_X0 = Tori_X0;
-  ctx->X_PUSH_SCALE =
-      INV_DELTA_X2 * (Deltat * QE_MASS);
-  ctx->Y_FORCE_SCALE =
-      TX02 *
-      (QE_MASS *
-       (Deltat * (1.0 / DELTA_Y2)));
-  ctx->Z_PUSH_SCALE =
-      INV_DELTA_Z2 * (Deltat * QE_MASS);
-  ctx->X_GEOMETRY_SCALE =
-      DELTA_Y2 * (INV_DELTA_X2 * INV_TX02);
-  ctx->J_GEO_X_SCALE =
-      grid_geo_x * (Tori_X0 * Charge0);
-  ctx->J_GEO_Y_SCALE =
-      grid_geo_y * (Charge0 / Tori_X0);
-  ctx->J_GEO_Z_SCALE =
-      grid_geo_z * (Tori_X0 * Charge0);
+  ctx->X_PUSH_SCALE = INV_DELTA_X2 * (Deltat * QE_MASS);
+  ctx->Y_FORCE_SCALE = TX02 * (QE_MASS * (Deltat * (1.0 / DELTA_Y2)));
+  ctx->Z_PUSH_SCALE = INV_DELTA_Z2 * (Deltat * QE_MASS);
+  ctx->X_GEOMETRY_SCALE = DELTA_Y2 * (INV_DELTA_X2 * INV_TX02);
+  ctx->J_GEO_X_SCALE = grid_geo_x * (Tori_X0 * Charge0);
+  ctx->J_GEO_Y_SCALE = grid_geo_y * (Charge0 / Tori_X0);
+  ctx->J_GEO_Z_SCALE = grid_geo_z * (Tori_X0 * Charge0);
 }
 
 /* OPT-1: per-tile fields only (XO/YO/ZO/Mid/bB). */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_ctx_init_tile(pushJ_ctx_t *ctx, double XO, double YO, double ZO,
-                        double zmid, double Midx, double Midy, double Midz,
-                        int bBidx, int bBidy, int bBidz) {
+pushJ_vlo_ctx_init_tile(pushJ_ctx_t *ctx, double XO, double YO, double ZO, double zmid, double Midx,
+                        double Midy, double Midz, int bBidx, int bBidy, int bBidz) {
   ctx->XO = XO;
   ctx->YO = YO;
   ctx->ZO = ZO;
@@ -629,20 +568,17 @@ pushJ_vlo_ctx_init_tile(pushJ_ctx_t *ctx, double XO, double YO, double ZO,
 }
 
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_ctx_init(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y,
-                   double DELTA_Z, double Deltat, double Tori_X0,
-                   double Charge0, double Mass0, double XO, double YO,
-                   double ZO, double zmid, double Midx, double Midy,
-                   double Midz, int bBidx, int bBidy, int bBidz) {
-  pushJ_vlo_ctx_init_const(ctx, DELTA_X, DELTA_Y, DELTA_Z, Deltat, Tori_X0,
-                           Charge0, Mass0);
-  pushJ_vlo_ctx_init_tile(ctx, XO, YO, ZO, zmid, Midx, Midy, Midz, bBidx, bBidy,
-                          bBidz);
+pushJ_vlo_ctx_init(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y, double DELTA_Z, double Deltat,
+                   double Tori_X0, double Charge0, double Mass0, double XO, double YO, double ZO,
+                   double zmid, double Midx, double Midy, double Midz, int bBidx, int bBidy,
+                   int bBidz) {
+  pushJ_vlo_ctx_init_const(ctx, DELTA_X, DELTA_Y, DELTA_Z, Deltat, Tori_X0, Charge0, Mass0);
+  pushJ_vlo_ctx_init_tile(ctx, XO, YO, ZO, zmid, Midx, Midy, Midz, bBidx, bBidy, bBidz);
 }
 
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_clamp_grid_idx(double *Midx, double *Midy, double *Midz,
-                         MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN) {
+pushJ_vlo_clamp_grid_idx(double *Midx, double *Midy, double *Midz, MAPU_LONG XLEN, MAPU_LONG YLEN,
+                         MAPU_LONG ZLEN) {
   if (*Midx < 0) {
     *Midx = 0;
   }
@@ -668,9 +604,8 @@ pushJ_vlo_clamp_grid_idx(double *Midx, double *Midy, double *Midz,
  * common Jy x term and combines its 12/23 yz terms before one accumulation;
  * this is algebraically equivalent but not IEEE-754 bitwise identical. */
 static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank,
-                     const pushJ_vlo_state_t *st, const pushJ_ctx_t *ctx,
-                     v8fp64 *__restrict__ shJ_incf, int full_batch) {
+pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank, const pushJ_vlo_state_t *st,
+                     const pushJ_ctx_t *ctx, v8fp64 *__restrict__ shJ_incf, int full_batch) {
   const v8fp64 *difX12 = pushJ_path_x12_c(bank);
   const v8fp64 *difX23 = pushJ_path_x23_c(bank);
   const v8fp64 *f0_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
@@ -703,7 +638,7 @@ pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank,
       const v8fp64 wyz12 = ((f0_y1)[xyzy] * (f0_z1)[xyzz]);
       const v8fp64 wyz23 = ((f0_y3)[xyzy] * (f0_z3)[xyzz]);
       long xyzx;
-      #pragma clang loop unroll(full)
+#pragma clang loop unroll(full)
       for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 accum = shJ_incf[((allidx * 3) + 0)];
@@ -719,10 +654,8 @@ pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank,
  * f0_x2[x].  Fuse their grid traversal while preserving each component's
  * original per-node arithmetic and accumulation order. */
 static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank,
-                       const pushJ_vlo_state_t *st,
-                       const pushJ_ctx_t *ctx,
-                       v8fp64 *__restrict__ shJ_incf, int full_batch) {
+pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank, const pushJ_vlo_state_t *st,
+                       const pushJ_ctx_t *ctx, v8fp64 *__restrict__ shJ_incf, int full_batch) {
   const v8fp64 *pathY12 = pushJ_path_y12_c(bank);
   const v8fp64 *pathY23 = pushJ_path_y23_c(bank);
   const v8fp64 *pathZ13 = pushJ_path_z13_c(bank);
@@ -753,9 +686,7 @@ pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank,
   for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
     long xyzy;
     for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
-      const v8fp64 yzFactorY =
-          (pathY12[xyzy] * f0_z1[xyzz]) +
-          (pathY23[xyzy] * f0_z3[xyzz]);
+      const v8fp64 yzFactorY = (pathY12[xyzy] * f0_z1[xyzz]) + (pathY23[xyzy] * f0_z3[xyzz]);
       const v8fp64 yzFactorZ = pathZ13[xyzz] * f0_y2[xyzy];
       long xyzx;
 #pragma clang loop unroll(full)
@@ -773,29 +704,22 @@ pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank,
 }
 
 static __device__ __attribute__((always_inline)) inline MAPU_LONG
-pushJ_vlo_field_ddr_elem_offset(MAPU_LONG __idy, int bBidx, int bBidy,
-                                int bBidz, int xyzy, int xyzz, MAPU_LONG XLEN,
-                                MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
+pushJ_vlo_field_ddr_elem_offset(MAPU_LONG __idy, int bBidx, int bBidy, int bBidz, int xyzy,
+                                int xyzz, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
                                 int num_ele) {
-  return ((num_ele * (__idy * ((XLEN + (2 * ovlp)) *
-                               ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-          (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                             (((xyzy + bBidy) + ovlp) +
-                                              ((YLEN + (2 * ovlp)) *
-                                               ((xyzz + bBidz) + ovlp))))))));
+  return (
+      (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+      (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                         (((xyzy + bBidy) + ovlp) +
+                                          ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp))))))));
 }
 
-static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_K1_load_shared_5x5x5(double *shE0, double *shB0, double *shB1,
-                               double *shJ0, __DDR double *fieldE,
-                               __DDR double *fieldB, __DDR double *fieldB1,
-                               __DDR double *FoutJ, MAPU_LONG __idy,
-                               MAPU_LONG __idx, MAPU_LONG __xlen, int bBidx,
-                               int bBidy, int bBidz, MAPU_LONG XLEN,
-                               MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
-                               int num_ele,
-                               cooperative_groups::thread_block block,
-                               scale::barrier<scale::thread_scope_block> &bar) {
+static __device__ __attribute__((always_inline)) inline void pushJ_vlo_K1_load_shared_5x5x5(
+    double *shE0, double *shB0, double *shB1, double *shJ0, __DDR double *fieldE,
+    __DDR double *fieldB, __DDR double *fieldB1, __DDR double *FoutJ, MAPU_LONG __idy,
+    MAPU_LONG __idx, MAPU_LONG __xlen, int bBidx, int bBidy, int bBidz, MAPU_LONG XLEN,
+    MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele, cooperative_groups::thread_block block,
+    scale::barrier<scale::thread_scope_block> &bar) {
   const size_t tile_bytes = (size_t)(3 * 5) * sizeof(double);
 
   /* OPT-2: issue all memcpy_async first; one barrier at end (targets disjoint).
@@ -807,50 +731,40 @@ pushJ_vlo_K1_load_shared_5x5x5(double *shE0, double *shB0, double *shB1,
     const int xyzz = line / 5;
     const int total_idx = 3 * 5 * line;
     const MAPU_LONG ddr_off = pushJ_vlo_field_ddr_elem_offset(
-        __idy, bBidx, bBidy, bBidz, xyzy, xyzz, XLEN, YLEN, ZLEN, ovlp,
-        num_ele);
+        __idy, bBidx, bBidy, bBidz, xyzy, xyzz, XLEN, YLEN, ZLEN, ovlp, num_ele);
 
-    memcpy_async(block, (unsigned *)(shE0 + total_idx),
-                 (__DDR unsigned *)(fieldE + ddr_off), (uint64_t)tile_bytes,
-                 bar);
-    memcpy_async(block, (unsigned *)(shB0 + total_idx),
-                 (__DDR unsigned *)(fieldB + ddr_off), (uint64_t)tile_bytes,
-                 bar);
-    memcpy_async(block, (unsigned *)(shB1 + total_idx),
-                 (__DDR unsigned *)(fieldB1 + ddr_off), (uint64_t)tile_bytes,
-                 bar);
-    memcpy_async(block, (unsigned *)(shJ0 + total_idx),
-                 (__DDR unsigned *)(FoutJ + ddr_off), (uint64_t)tile_bytes,
-                 bar);
+    memcpy_async(block, (unsigned *)(shE0 + total_idx), (__DDR unsigned *)(fieldE + ddr_off),
+                 (uint64_t)tile_bytes, bar);
+    memcpy_async(block, (unsigned *)(shB0 + total_idx), (__DDR unsigned *)(fieldB + ddr_off),
+                 (uint64_t)tile_bytes, bar);
+    memcpy_async(block, (unsigned *)(shB1 + total_idx), (__DDR unsigned *)(fieldB1 + ddr_off),
+                 (uint64_t)tile_bytes, bar);
+    memcpy_async(block, (unsigned *)(shJ0 + total_idx), (__DDR unsigned *)(FoutJ + ddr_off),
+                 (uint64_t)tile_bytes, bar);
   }
   bar.arrive_and_wait();
 }
 
 /* opt_stage55: four adjacent dense x cells share only the read-only fields.
  * FoutJ deliberately remains on the stage52 per-cell read/modify/write path. */
-static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_K1_load_fields_shared_8x5x5(
-    double *shE0, double *shB0, double *shB1,
-    __DDR double *fieldE, __DDR double *fieldB, __DDR double *fieldB1,
-    MAPU_LONG __idy, MAPU_LONG __idx, MAPU_LONG __xlen,
-    int bBidx, int bBidy, int bBidz,
-    MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele,
-    cooperative_groups::thread_block block,
-    scale::barrier<scale::thread_scope_block> &bar) {
+static __device__ __attribute__((always_inline)) inline void pushJ_vlo_K1_load_fields_shared_8x5x5(
+    double *shE0, double *shB0, double *shB1, __DDR double *fieldE, __DDR double *fieldB,
+    __DDR double *fieldB1, MAPU_LONG __idy, MAPU_LONG __idx, MAPU_LONG __xlen, int bBidx, int bBidy,
+    int bBidz, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele,
+    cooperative_groups::thread_block block, scale::barrier<scale::thread_scope_block> &bar) {
   const size_t row_bytes = (size_t)(3 * 8) * sizeof(double);
   for (int line = (int)__idx; line < 25; line += (int)__xlen) {
     const int y = line % 5;
     const int z = line / 5;
     const int local = 3 * 8 * line;
-    const MAPU_LONG ddr = pushJ_vlo_field_ddr_elem_offset(
-        __idy, bBidx, bBidy, bBidz, y, z, XLEN, YLEN, ZLEN, ovlp,
-        num_ele);
-    memcpy_async(block, (unsigned *)(shE0 + local),
-                 (__DDR unsigned *)(fieldE + ddr), (uint64_t)row_bytes, bar);
-    memcpy_async(block, (unsigned *)(shB0 + local),
-                 (__DDR unsigned *)(fieldB + ddr), (uint64_t)row_bytes, bar);
-    memcpy_async(block, (unsigned *)(shB1 + local),
-                 (__DDR unsigned *)(fieldB1 + ddr), (uint64_t)row_bytes, bar);
+    const MAPU_LONG ddr = pushJ_vlo_field_ddr_elem_offset(__idy, bBidx, bBidy, bBidz, y, z, XLEN,
+                                                          YLEN, ZLEN, ovlp, num_ele);
+    memcpy_async(block, (unsigned *)(shE0 + local), (__DDR unsigned *)(fieldE + ddr),
+                 (uint64_t)row_bytes, bar);
+    memcpy_async(block, (unsigned *)(shB0 + local), (__DDR unsigned *)(fieldB + ddr),
+                 (uint64_t)row_bytes, bar);
+    memcpy_async(block, (unsigned *)(shB1 + local), (__DDR unsigned *)(fieldB1 + ddr),
+                 (uint64_t)row_bytes, bar);
   }
   bar.arrive_and_wait();
 }
@@ -858,23 +772,20 @@ pushJ_vlo_K1_load_fields_shared_8x5x5(
 /* Keep the exact stage52 J transaction boundary: every active cell reloads
  * its current 5x5x5 J tile after the previous cell has completed its store. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_K1_load_J_shared_5x5x5(
-    double *shJ0, __DDR double *FoutJ, MAPU_LONG __idy,
-    MAPU_LONG __idx, MAPU_LONG __xlen,
-    int bBidx, int bBidy, int bBidz, MAPU_LONG XLEN, MAPU_LONG YLEN,
-    MAPU_LONG ZLEN, int ovlp, int num_ele,
-    cooperative_groups::thread_block block,
-    scale::barrier<scale::thread_scope_block> &bar) {
+pushJ_vlo_K1_load_J_shared_5x5x5(double *shJ0, __DDR double *FoutJ, MAPU_LONG __idy,
+                                 MAPU_LONG __idx, MAPU_LONG __xlen, int bBidx, int bBidy, int bBidz,
+                                 MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
+                                 int num_ele, cooperative_groups::thread_block block,
+                                 scale::barrier<scale::thread_scope_block> &bar) {
   const size_t row_bytes = (size_t)(3 * 5) * sizeof(double);
   for (int line = (int)__idx; line < 25; line += (int)__xlen) {
     const int y = line % 5;
     const int z = line / 5;
     const int local = 3 * 5 * line;
-    const MAPU_LONG ddr = pushJ_vlo_field_ddr_elem_offset(
-        __idy, bBidx, bBidy, bBidz, y, z, XLEN, YLEN, ZLEN, ovlp,
-        num_ele);
-    memcpy_async(block, (unsigned *)(shJ0 + local),
-                 (__DDR unsigned *)(FoutJ + ddr), (uint64_t)row_bytes, bar);
+    const MAPU_LONG ddr = pushJ_vlo_field_ddr_elem_offset(__idy, bBidx, bBidy, bBidz, y, z, XLEN,
+                                                          YLEN, ZLEN, ovlp, num_ele);
+    memcpy_async(block, (unsigned *)(shJ0 + local), (__DDR unsigned *)(FoutJ + ddr),
+                 (uint64_t)row_bytes, bar);
   }
   bar.arrive_and_wait();
 }
@@ -882,10 +793,10 @@ pushJ_vlo_K1_load_J_shared_5x5x5(
 /* SPU-visible MPU entry: keep external linkage (no static).
  * Geometry/time scalars come from pushJ_ctx_t; x0/x1 weight filling is MPU→MPU.
  */
-__device__ KERNEL_M __noinline__ void pushJ_vlo_K1_setup_weights_x0x1(
-    pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-    double *particle_dm /* DM staging, not DDR */, int g_inner, long load0,
-    const pushJ_ctx_t *ctx) {
+__device__ KERNEL_M __noinline__ void
+pushJ_vlo_K1_setup_weights_x0x1(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
+                                double *particle_dm /* DM staging, not DDR */, int g_inner,
+                                long load0, const pushJ_ctx_t *ctx) {
   __mem0__ v8fp64 head[6];
   double(*head_l)[8] = (double(*)[8])head;
   const int full_batch = ((g_inner + 8) <= load0);
@@ -957,24 +868,21 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K1_setup_weights_x0x1(
   /* Position 0 only feeds f0_x0, if1_x0 and if1_y0 downstream.  Keep the
    * state layout and coordinate setup unchanged, but avoid building the six
    * weight arrays that have no consumer. */
-  pushJ_wt_fill_pos0_deposit(bank, st->s_rx0x, st->s_dix0x, st->s_rx0y,
-                             st->s_dix0y);
-  pushJ_wt_fill_pos1_xyz(bank, st->s_rx1x, st->s_dix1x, st->s_rx1y,
-                         st->s_dix1y, st->s_rx1z, st->s_dix1z);
-  pushJ_path_fill(pushJ_path_x01(bank),
-                  pushJ_wt_x_c(bank, 1, PUSHJ_WT_IF1),
+  pushJ_wt_fill_pos0_deposit(bank, st->s_rx0x, st->s_dix0x, st->s_rx0y, st->s_dix0y);
+  pushJ_wt_fill_pos1_xyz(bank, st->s_rx1x, st->s_dix1x, st->s_rx1y, st->s_dix1y, st->s_rx1z,
+                         st->s_dix1z);
+  pushJ_path_fill(pushJ_path_x01(bank), pushJ_wt_x_c(bank, 1, PUSHJ_WT_IF1),
                   pushJ_wt_x_c(bank, 0, PUSHJ_WT_IF1));
-  pushJ_path_fill(pushJ_path_y01(bank),
-                  pushJ_wt_y_c(bank, 1, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_y01(bank), pushJ_wt_y_c(bank, 1, PUSHJ_WT_IF1),
                   pushJ_wt_y_c(bank, 0, PUSHJ_WT_IF1));
 }
 /* -------------------------------------------------------------------------- */
 /* K2 push split helpers (Step C) */
 /* -------------------------------------------------------------------------- */
 
-static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_x2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 x1,
-                     v8fp64 allincfvx, const pushJ_ctx_t *ctx) {
+static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_x2(pushJ_vlo_state_t *st, v8fp64 x0,
+                                                                  v8fp64 x1, v8fp64 allincfvx,
+                                                                  const pushJ_ctx_t *ctx) {
   const v8fp64 drift = (2.0 * x1) - x0;
   st->x2 = drift + (ctx->X_PUSH_SCALE * allincfvx);
 
@@ -985,9 +893,10 @@ pushJ_vlo_K2_push_x2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 x1,
   st->s_dix2x = (x2_floor - ctx->Midx);
 }
 
-static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 y0, v8fp64 y1,
-                     v8fp64 iBy, v8fp64 allincfvy, const pushJ_ctx_t *ctx) {
+static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0,
+                                                                  v8fp64 y0, v8fp64 y1, v8fp64 iBy,
+                                                                  v8fp64 allincfvy,
+                                                                  const pushJ_ctx_t *ctx) {
   const double TX0 = ctx->Tori_X0;
   const double cy_scale = ctx->Y_FORCE_SCALE;
 
@@ -1008,8 +917,7 @@ pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 y0, v8fp64 y1,
   const v8fp64 G = (1.0 / metric_x2);
   st->vy0 = (cy_scale * G);
 
-  const v8fp64 advect =
-      y1 + ((metric_x0 * G) * (y1 - y0));
+  const v8fp64 advect = y1 + ((metric_x0 * G) * (y1 - y0));
   const v8fp64 force = st->vy0 * (allincfvy - iBy);
   st->y2 = advect + force;
 
@@ -1019,9 +927,10 @@ pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 y0, v8fp64 y1,
   st->s_dix2y = (y2_floor - ctx->Midy);
 }
 
-static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st, v8fp64 z0, v8fp64 z1, v8fp64 iBz,
-                        v8fp64 allincfvz, const pushJ_ctx_t *ctx) {
+static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st,
+                                                                     v8fp64 z0, v8fp64 z1,
+                                                                     v8fp64 iBz, v8fp64 allincfvz,
+                                                                     const pushJ_ctx_t *ctx) {
   const v8fp64 drift_z2 = (2.0 * z1) - z0;
   st->z2 = drift_z2 + (ctx->Z_PUSH_SCALE * (allincfvz - iBz));
 
@@ -1041,12 +950,10 @@ pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st, v8fp64 z0, v8fp64 z1, v8fp64 iBz,
 }
 
 static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1, v8fp64 iBy,
-                     const pushJ_ctx_t *ctx) {
+pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1, v8fp64 iBy, const pushJ_ctx_t *ctx) {
   /* Reuse the Cy produced by pushJ_vlo_K2_push_y2.  No reciprocal or metric
    * reconstruction is needed in the y3 stage. */
-  st->y3 =
-      ((2.0 * st->y2) - y1) - (st->vy0 * iBy);
+  st->y3 = ((2.0 * st->y2) - y1) - (st->vy0 * iBy);
 
   const v8fp64 y3_rel = (st->y3 - ctx->YO);
   const v8fp64 y3_floor = geo_floor_simd(y3_rel);
@@ -1054,9 +961,9 @@ pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1, v8fp64 iBy,
   st->s_dix3y = (y3_floor - ctx->Midy);
 }
 
-static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1, v8fp64 y1, v8fp64 iBx,
-                     const pushJ_ctx_t *ctx) {
+static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1,
+                                                                  v8fp64 y1, v8fp64 iBx,
+                                                                  const pushJ_ctx_t *ctx) {
   const double TX0 = ctx->Tori_X0;
 
   /*
@@ -1067,8 +974,7 @@ pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1, v8fp64 y1, v8fp64 iBx,
   const v8fp64 dy23 = (st->y2 - st->y3);
   const v8fp64 y_geometry = (dy12 * dy12) + (dy23 * dy23);
   const v8fp64 drift = (2.0 * st->x2) - x1;
-  const v8fp64 geometry =
-      ctx->X_GEOMETRY_SCALE * ((TX0 + st->x2) * y_geometry);
+  const v8fp64 geometry = ctx->X_GEOMETRY_SCALE * ((TX0 + st->x2) * y_geometry);
   st->x3 = (drift + geometry) - (ctx->X_PUSH_SCALE * iBx);
 
   const v8fp64 x3_rel = (st->x3 - ctx->XO);
@@ -1083,40 +989,31 @@ pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1, v8fp64 y1, v8fp64 iBx,
 /* -------------------------------------------------------------------------- */
 
 static __device__ KERNEL_M __noinline__ v8fp64 pushJ_vlo_K2_compute_iBy(
-    const pushJ_weight_bank_t *bank, const double *shB0,
-    const double *shB1, int tile_xlen) {
+    const pushJ_weight_bank_t *bank, const double *shB0, const double *shB1, int tile_xlen) {
   v8fp64 iBy_term0, iBy_term1;
-  pushJ_B_fused_iBy_bank(bank, shB0, shB1, tile_xlen, &iBy_term0,
-                         &iBy_term1);
+  pushJ_B_fused_iBy_bank(bank, shB0, shB1, tile_xlen, &iBy_term0, &iBy_term1);
   return (iBy_term0 + iBy_term1);
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64 pushJ_vlo_K2_compute_iBz(
-    const pushJ_weight_bank_t *bank, const double *shB0,
-    const double *shB1, int tile_xlen) {
+    const pushJ_weight_bank_t *bank, const double *shB0, const double *shB1, int tile_xlen) {
   v8fp64 iBz_term1, iBz_term2, iBz_term3, iBz_term4;
-  pushJ_B_fused_iBz_pair_bank(
-      bank, shB0, 0, pushJ_path_y01_c(bank), pushJ_path_x01_c(bank),
-      tile_xlen,
-      &iBz_term1, &iBz_term2);
-  pushJ_B_fused_iBz_pair_bank(
-      bank, shB1, 2, pushJ_path_y12_c(bank), pushJ_path_x12_c(bank),
-      tile_xlen,
-      &iBz_term3, &iBz_term4);
+  pushJ_B_fused_iBz_pair_bank(bank, shB0, 0, pushJ_path_y01_c(bank), pushJ_path_x01_c(bank),
+                              tile_xlen, &iBz_term1, &iBz_term2);
+  pushJ_B_fused_iBz_pair_bank(bank, shB1, 2, pushJ_path_y12_c(bank), pushJ_path_x12_c(bank),
+                              tile_xlen, &iBz_term3, &iBz_term4);
   return ((iBz_term1 - iBz_term2) + (iBz_term3 - iBz_term4));
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64
-pushJ_vlo_K2_compute_iBy23(const pushJ_weight_bank_t *bank,
-                           const double *shB1, int tile_xlen) {
+pushJ_vlo_K2_compute_iBy23(const pushJ_weight_bank_t *bank, const double *shB1, int tile_xlen) {
   v8fp64 t0, t1;
   pushJ_B_fused_iBy23_bank(bank, shB1, tile_xlen, &t0, &t1);
   return (-1.0 * (t0 + t1));
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64
-pushJ_vlo_K2_compute_iBx(const pushJ_weight_bank_t *bank,
-                         const double *shB1, int tile_xlen) {
+pushJ_vlo_K2_compute_iBx(const pushJ_weight_bank_t *bank, const double *shB1, int tile_xlen) {
   v8fp64 z12, z23, y12, y23;
   pushJ_B_fused_iBx_bank(bank, shB1, tile_xlen, &z12, &z23, &y12, &y23);
   return ((z12 + z23) - (y12 + y23));
@@ -1127,11 +1024,9 @@ pushJ_vlo_K2_compute_iBx(const pushJ_weight_bank_t *bank,
 /* -------------------------------------------------------------------------- */
 
 static __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_stage1a_E(const pushJ_weight_bank_t *bank,
-                       const double *shE0, const pushJ_ctx_t *ctx,
-                       int tile_xlen,
-                       v8fp64 *allincfvx_out,
-                       v8fp64 *allincfvy_out, v8fp64 *allincfvz_out) {
+pushJ_vlo_K2_stage1a_E(const pushJ_weight_bank_t *bank, const double *shE0, const pushJ_ctx_t *ctx,
+                       int tile_xlen, v8fp64 *allincfvx_out, v8fp64 *allincfvy_out,
+                       v8fp64 *allincfvz_out) {
   const v8fp64 AllEx = pushJ_E_interp_Ex_bank(bank, shE0, tile_xlen);
   const v8fp64 AllEy = pushJ_E_interp_Ey_bank(bank, shE0, tile_xlen);
   const v8fp64 AllEz = pushJ_E_interp_Ez_bank(bank, shE0, tile_xlen);
@@ -1141,100 +1036,84 @@ pushJ_vlo_K2_stage1a_E(const pushJ_weight_bank_t *bank,
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage1b_x2y2(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                          const double *shB0, const double *shB1, v8fp64 x0,
-                          v8fp64 x1, v8fp64 y0, v8fp64 y1, v8fp64 allincfvx,
-                          v8fp64 allincfvy, const pushJ_ctx_t *ctx,
+pushJ_vlo_K2_stage1b_x2y2(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shB0,
+                          const double *shB1, v8fp64 x0, v8fp64 x1, v8fp64 y0, v8fp64 y1,
+                          v8fp64 allincfvx, v8fp64 allincfvy, const pushJ_ctx_t *ctx,
                           int tile_xlen) {
   pushJ_vlo_K2_push_x2(st, x0, x1, allincfvx, ctx);
   pushJ_wt_fill_pos2_x(bank, st->s_rx2x, st->s_dix2x);
-  pushJ_path_fill(pushJ_path_x12(bank),
-                  pushJ_wt_x_c(bank, 2, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_x12(bank), pushJ_wt_x_c(bank, 2, PUSHJ_WT_IF1),
                   pushJ_wt_x_c(bank, 1, PUSHJ_WT_IF1));
 
   const v8fp64 iBy = pushJ_vlo_K2_compute_iBy(bank, shB0, shB1, tile_xlen);
 
   pushJ_vlo_K2_push_y2(st, x0, y0, y1, iBy, allincfvy, ctx);
   pushJ_wt_fill_pos2_y(bank, st->s_rx2y, st->s_dix2y);
-  pushJ_path_fill(pushJ_path_y12(bank),
-                  pushJ_wt_y_c(bank, 2, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_y12(bank), pushJ_wt_y_c(bank, 2, PUSHJ_WT_IF1),
                   pushJ_wt_y_c(bank, 1, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage2_z2z3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                         const double *shB0, const double *shB1, v8fp64 z0,
-                         v8fp64 z1, v8fp64 allincfvz, const pushJ_ctx_t *ctx,
-                         int tile_xlen) {
+pushJ_vlo_K2_stage2_z2z3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shB0,
+                         const double *shB1, v8fp64 z0, v8fp64 z1, v8fp64 allincfvz,
+                         const pushJ_ctx_t *ctx, int tile_xlen) {
   const v8fp64 iBz = pushJ_vlo_K2_compute_iBz(bank, shB0, shB1, tile_xlen);
 
   pushJ_vlo_K2_push_z2_z3(st, z0, z1, iBz, allincfvz, ctx);
   pushJ_wt_fill_pos2_z_if1(bank, st->s_rx2z, st->s_dix2z);
   pushJ_wt_fill_pos3_z_f0_if1(bank, st->s_rx3z, st->s_dix3z);
-  pushJ_path_fill(pushJ_path_z12(bank),
-                  pushJ_wt_z_c(bank, 2, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_z12(bank), pushJ_wt_z_c(bank, 2, PUSHJ_WT_IF1),
                   pushJ_wt_z_c(bank, 1, PUSHJ_WT_IF1));
-  pushJ_path_fill(pushJ_path_z23(bank),
-                  pushJ_wt_z_c(bank, 3, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_z23(bank), pushJ_wt_z_c(bank, 3, PUSHJ_WT_IF1),
                   pushJ_wt_z_c(bank, 2, PUSHJ_WT_IF1));
-  pushJ_path_fill(pushJ_path_z13(bank),
-                  pushJ_wt_z_c(bank, 3, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_z13(bank), pushJ_wt_z_c(bank, 3, PUSHJ_WT_IF1),
                   pushJ_wt_z_c(bank, 1, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage3a_y3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                        const double *shB1, v8fp64 y1, const pushJ_ctx_t *ctx,
-                        int tile_xlen) {
+pushJ_vlo_K2_stage3a_y3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shB1,
+                        v8fp64 y1, const pushJ_ctx_t *ctx, int tile_xlen) {
   const v8fp64 iBy23 = pushJ_vlo_K2_compute_iBy23(bank, shB1, tile_xlen);
 
   pushJ_vlo_K2_push_y3(st, y1, iBy23, ctx);
   pushJ_wt_fill_pos3_y_f0_if1(bank, st->s_rx3y, st->s_dix3y);
-  pushJ_path_fill(pushJ_path_y23(bank),
-                  pushJ_wt_y_c(bank, 3, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_y23(bank), pushJ_wt_y_c(bank, 3, PUSHJ_WT_IF1),
                   pushJ_wt_y_c(bank, 2, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage3b_x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                        const double *shB1, v8fp64 x1, v8fp64 y1,
-                        const pushJ_ctx_t *ctx, int tile_xlen) {
+pushJ_vlo_K2_stage3b_x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shB1,
+                        v8fp64 x1, v8fp64 y1, const pushJ_ctx_t *ctx, int tile_xlen) {
   const v8fp64 iBx = pushJ_vlo_K2_compute_iBx(bank, shB1, tile_xlen);
 
   pushJ_vlo_K2_push_x3(st, x1, y1, iBx, ctx);
   pushJ_wt_fill_pos3_x_if1(bank, st->s_rx3x, st->s_dix3x);
-  pushJ_path_fill(pushJ_path_x23(bank),
-                  pushJ_wt_x_c(bank, 3, PUSHJ_WT_IF1),
+  pushJ_path_fill(pushJ_path_x23(bank), pushJ_wt_x_c(bank, 3, PUSHJ_WT_IF1),
                   pushJ_wt_x_c(bank, 2, PUSHJ_WT_IF1));
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage1_E_x2y2(
-    pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shE0,
-    const double *shB0, const double *shB1, v8fp64 x0, v8fp64 x1, v8fp64 y0,
-    v8fp64 y1, const pushJ_ctx_t *ctx, int tile_xlen,
-    v8fp64 *allincfvz_out) {
+pushJ_vlo_K2_stage1_E_x2y2(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shE0,
+                           const double *shB0, const double *shB1, v8fp64 x0, v8fp64 x1, v8fp64 y0,
+                           v8fp64 y1, const pushJ_ctx_t *ctx, int tile_xlen,
+                           v8fp64 *allincfvz_out) {
   v8fp64 allincfvx, allincfvy;
-  pushJ_vlo_K2_stage1a_E(bank, shE0, ctx, tile_xlen,
-                         &allincfvx, &allincfvy,
-                         allincfvz_out);
-  pushJ_vlo_K2_stage1b_x2y2(bank, st, shB0, shB1, x0, x1, y0, y1, allincfvx,
-                            allincfvy, ctx, tile_xlen);
+  pushJ_vlo_K2_stage1a_E(bank, shE0, ctx, tile_xlen, &allincfvx, &allincfvy, allincfvz_out);
+  pushJ_vlo_K2_stage1b_x2y2(bank, st, shB0, shB1, x0, x1, y0, y1, allincfvx, allincfvy, ctx,
+                            tile_xlen);
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
-pushJ_vlo_K2_stage3_y3x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                         const double *shB1, v8fp64 x1, v8fp64 y1,
-                         const pushJ_ctx_t *ctx, int tile_xlen) {
+pushJ_vlo_K2_stage3_y3x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shB1,
+                         v8fp64 x1, v8fp64 y1, const pushJ_ctx_t *ctx, int tile_xlen) {
   pushJ_vlo_K2_stage3a_y3(bank, st, shB1, y1, ctx, tile_xlen);
   pushJ_vlo_K2_stage3b_x3(bank, st, shB1, x1, y1, ctx, tile_xlen);
 }
 
 /* SPU-visible MPU entry: keep external linkage (no static). */
 __device__ KERNEL_M __noinline__ void
-pushJ_vlo_K2_push_weights_x2x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
-                               const double *shE0, const double *shB0,
-                               const double *shB1, const pushJ_ctx_t *ctx,
+pushJ_vlo_K2_push_weights_x2x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st, const double *shE0,
+                               const double *shB0, const double *shB1, const pushJ_ctx_t *ctx,
                                int tile_xlen) {
   const v8fp64 x0 = (st->xx0 + (ctx->XO));
   const v8fp64 y0 = (st->xy0 + (ctx->YO));
@@ -1244,18 +1123,17 @@ pushJ_vlo_K2_push_weights_x2x3(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st,
   const v8fp64 z1 = (st->xz1 + (ctx->ZO - ctx->zmid));
 
   v8fp64 allincfvz;
-  pushJ_vlo_K2_stage1_E_x2y2(bank, st, shE0, shB0, shB1, x0, x1, y0, y1, ctx,
-                             tile_xlen, &allincfvz);
-  pushJ_vlo_K2_stage2_z2z3(bank, st, shB0, shB1, z0, z1, allincfvz, ctx,
-                           tile_xlen);
+  pushJ_vlo_K2_stage1_E_x2y2(bank, st, shE0, shB0, shB1, x0, x1, y0, y1, ctx, tile_xlen,
+                             &allincfvz);
+  pushJ_vlo_K2_stage2_z2z3(bank, st, shB0, shB1, z0, z1, allincfvz, ctx, tile_xlen);
   pushJ_vlo_K2_stage3_y3x3(bank, st, shB1, x1, y1, ctx, tile_xlen);
 }
 
 /* SPU-visible MPU entry: keep external linkage (no static). */
 __device__ KERNEL_M __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
-    const pushJ_weight_bank_t *__restrict__ bank, pushJ_vlo_state_t *st,
-    const pushJ_ctx_t *ctx, v8fp64 *__restrict__ shJ_incf,
-    double *particle_dm /* DM staging, not DDR */, int g_inner, long load0) {
+    const pushJ_weight_bank_t *__restrict__ bank, pushJ_vlo_state_t *st, const pushJ_ctx_t *ctx,
+    v8fp64 *__restrict__ shJ_incf, double *particle_dm /* DM staging, not DDR */, int g_inner,
+    long load0) {
   const int full_batch = ((g_inner + 8) <= load0);
   pushJ_vlo_deposit_Jx(bank, st, ctx, shJ_incf, full_batch);
   pushJ_vlo_deposit_JyJz(bank, st, ctx, shJ_incf, full_batch);
@@ -1331,9 +1209,8 @@ pushJ_vlo_zero_shJ_incf(v8fp64 *__restrict__ shJ_incf) {
 
 /* Collapse the eight SIMD lanes of the one logical J accumulator. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_collapse_shJ_incf_to_shJ0(double *shJ0,
-                                    const v8fp64 *shJ_incf) {
-  const double (*shJ_incf_l)[8] = (const double (*)[8])shJ_incf;
+pushJ_vlo_collapse_shJ_incf_to_shJ0(double *shJ0, const v8fp64 *shJ_incf) {
+  const double(*shJ_incf_l)[8] = (const double(*)[8])shJ_incf;
   for (int k = 0; k < 375; k++) {
     double sum = 0.0;
 #pragma unroll
@@ -1349,16 +1226,14 @@ pushJ_vlo_collapse_shJ_incf_to_shJ0(double *shJ0,
  * which keeps the floating-point order closer to the serial SIMD8 path than
  * the former round-robin batch assignment. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_reduce_privJ_to_shJ0(
-    double *shJ0, const v8fp64 (*shJ_incf_priv)[375]) {
+pushJ_vlo_reduce_privJ_to_shJ0(double *shJ0, const v8fp64 (*shJ_incf_priv)[375]) {
   for (int k = 0; k < 375; ++k) {
     double sum = 0.0;
 #pragma unroll
     for (int simd_lane = 0; simd_lane < 8; ++simd_lane) {
 #pragma unroll
       for (int thread = 0; thread < PUSHJ_VLO_REAL_PARALLEL_N; ++thread) {
-        const double *simd_values =
-            (const double *)&shJ_incf_priv[thread][k];
+        const double *simd_values = (const double *)&shJ_incf_priv[thread][k];
         sum += simd_values[simd_lane];
       }
     }
@@ -1367,12 +1242,11 @@ pushJ_vlo_reduce_privJ_to_shJ0(
 }
 
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_K3_write_FoutJ_from_shared(
-    double *shJ0, __DDR double *FoutJ, MAPU_LONG __idy, MAPU_LONG __idx,
-    MAPU_LONG __xlen, int bBidx, int bBidy, int bBidz, MAPU_LONG XLEN,
-    MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele,
-    cooperative_groups::thread_block block,
-    scale::barrier<scale::thread_scope_block> &bar) {
+pushJ_vlo_K3_write_FoutJ_from_shared(double *shJ0, __DDR double *FoutJ, MAPU_LONG __idy,
+                                     MAPU_LONG __idx, MAPU_LONG __xlen, int bBidx, int bBidy,
+                                     int bBidz, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN,
+                                     int ovlp, int num_ele, cooperative_groups::thread_block block,
+                                     scale::barrier<scale::thread_scope_block> &bar) {
   const size_t tile_bytes = (size_t)(3 * 5) * sizeof(double);
 
   /* OPT-2 store: issue all memcpy_async first; one barrier at end
@@ -1382,11 +1256,10 @@ pushJ_vlo_K3_write_FoutJ_from_shared(
     const int xyzz = line / 5;
     const int total_idx = 3 * 5 * line;
     const MAPU_LONG ddr_off = pushJ_vlo_field_ddr_elem_offset(
-        __idy, bBidx, bBidy, bBidz, xyzy, xyzz, XLEN, YLEN, ZLEN, ovlp,
-        num_ele);
+        __idy, bBidx, bBidy, bBidz, xyzy, xyzz, XLEN, YLEN, ZLEN, ovlp, num_ele);
 
-    memcpy_async(block, (__DDR unsigned *)(FoutJ + ddr_off),
-                 (unsigned *)(shJ0 + total_idx), (uint64_t)tile_bytes, bar);
+    memcpy_async(block, (__DDR unsigned *)(FoutJ + ddr_off), (unsigned *)(shJ0 + total_idx),
+                 (uint64_t)tile_bytes, bar);
   }
   bar.arrive_and_wait();
 }
@@ -1398,15 +1271,14 @@ pushJ_vlo_K3_write_FoutJ_from_shared(
  * All threads execute the same number of barrier phases.  A thread with no
  * batch in the current wave submits no DMA but still arrives at the barrier. */
 static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_process_particle_batches_multi(
-    pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y,
-    pushJ_wt_axis_bank_t *bank_z, pushJ_vlo_state_t *st,
-    v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx,
-    double *shE0, double *shB0, double *shB1, int tile_xlen, double *shJ0,
-    double *shParticle, __DDR double *particle_buf, int load0,
-    MAPU_LONG __idx, MAPU_LONG __xlen,
-    cooperative_groups::thread_block block,
-    scale::barrier<scale::thread_scope_block> &bar) {
+pushJ_vlo_process_particle_batches_multi(pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y,
+                                         pushJ_wt_axis_bank_t *bank_z, pushJ_vlo_state_t *st,
+                                         v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx,
+                                         double *shE0, double *shB0, double *shB1, int tile_xlen,
+                                         double *shJ0, double *shParticle,
+                                         __DDR double *particle_buf, int load0, MAPU_LONG __idx,
+                                         MAPU_LONG __xlen, cooperative_groups::thread_block block,
+                                         scale::barrier<scale::thread_scope_block> &bar) {
   (void)__xlen;
   pushJ_weight_bank_t bank;
   pushJ_wt_bank_bind(&bank, bank_x, bank_y, bank_z);
@@ -1414,16 +1286,12 @@ pushJ_vlo_process_particle_batches_multi(
   __syncthreads();
 
   const int num_batches = (load0 + 7) / 8;
-  const int batches_per_thread =
-      num_batches / PUSHJ_VLO_REAL_PARALLEL_N;
-  const int batch_remainder =
-      num_batches % PUSHJ_VLO_REAL_PARALLEL_N;
+  const int batches_per_thread = num_batches / PUSHJ_VLO_REAL_PARALLEL_N;
+  const int batch_remainder = num_batches % PUSHJ_VLO_REAL_PARALLEL_N;
   const int thread = (int)__idx;
-  const int prefix_extra =
-      (thread < batch_remainder) ? thread : batch_remainder;
+  const int prefix_extra = (thread < batch_remainder) ? thread : batch_remainder;
   const int first_batch = thread * batches_per_thread + prefix_extra;
-  const int local_batches =
-      batches_per_thread + ((thread < batch_remainder) ? 1 : 0);
+  const int local_batches = batches_per_thread + ((thread < batch_remainder) ? 1 : 0);
   const int max_waves = batches_per_thread + (batch_remainder != 0);
   double *const particle_dm = shParticle + thread * 48;
 
@@ -1438,8 +1306,7 @@ pushJ_vlo_process_particle_batches_multi(
     const size_t particle_bytes = (size_t)numcp * 6u * sizeof(double);
 
     if (active) {
-      memcpy_async(block, (unsigned *)particle_dm,
-                   (__DDR unsigned *)(particle_buf + (g_inner * 6)),
+      memcpy_async(block, (unsigned *)particle_dm, (__DDR unsigned *)(particle_buf + (g_inner * 6)),
                    (uint64_t)particle_bytes, bar);
     }
     bar.arrive_and_wait();
@@ -1447,17 +1314,16 @@ pushJ_vlo_process_particle_batches_multi(
     if (active) {
       pushJ_vlo_K1_setup_weights_x0x1(&bank, st, particle_dm, 0, numcp, ctx);
       MPU_SYNC();
-      pushJ_vlo_K2_push_weights_x2x3(
-          &bank, st, shE0, shB0, shB1, ctx, tile_xlen);
+      pushJ_vlo_K2_push_weights_x2x3(&bank, st, shE0, shB0, shB1, ctx, tile_xlen);
       MPU_SYNC();
-      pushJ_vlo_K3_deposit_writeback_particle(
-          &bank, st, ctx, shJ_incf_priv[__idx], particle_dm, 0, numcp);
+      pushJ_vlo_K3_deposit_writeback_particle(&bank, st, ctx, shJ_incf_priv[__idx], particle_dm, 0,
+                                              numcp);
       MPU_SYNC();
     }
 
     if (active) {
-      memcpy_async(block, (__DDR unsigned *)(particle_buf + (g_inner * 6)),
-                   (unsigned *)particle_dm, (uint64_t)particle_bytes, bar);
+      memcpy_async(block, (__DDR unsigned *)(particle_buf + (g_inner * 6)), (unsigned *)particle_dm,
+                   (uint64_t)particle_bytes, bar);
     }
     bar.arrive_and_wait();
   }
@@ -1472,52 +1338,40 @@ pushJ_vlo_process_particle_batches_multi(
  * normal contiguous stride-5 tile loaded and stored by the caller. */
 static __device__ __attribute__((always_inline)) inline void
 pushJ_vlo_process_loaded_fields_x8_cell_multi(
-    pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y,
-    pushJ_wt_axis_bank_t *bank_z, pushJ_vlo_state_t *st,
-    v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx,
-    double *shE0, double *shB0, double *shB1, double *shJ0,
-    double *shParticle, __DDR double *particle_buf, int load0, int cell_x,
-    MAPU_LONG __idx, MAPU_LONG __xlen,
-    cooperative_groups::thread_block block,
-    scale::barrier<scale::thread_scope_block> &bar) {
+    pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y, pushJ_wt_axis_bank_t *bank_z,
+    pushJ_vlo_state_t *st, v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx, double *shE0,
+    double *shB0, double *shB1, double *shJ0, double *shParticle, __DDR double *particle_buf,
+    int load0, int cell_x, MAPU_LONG __idx, MAPU_LONG __xlen,
+    cooperative_groups::thread_block block, scale::barrier<scale::thread_scope_block> &bar) {
   pushJ_vlo_process_particle_batches_multi(
-      bank_x, bank_y, bank_z, st, shJ_incf_priv, ctx,
-      shE0 + 3 * cell_x, shB0 + 3 * cell_x, shB1 + 3 * cell_x, 8, shJ0,
-      shParticle, particle_buf, load0, __idx, __xlen, block, bar);
+      bank_x, bank_y, bank_z, st, shJ_incf_priv, ctx, shE0 + 3 * cell_x, shB0 + 3 * cell_x,
+      shB1 + 3 * cell_x, 8, shJ0, shParticle, particle_buf, load0, __idx, __xlen, block, bar);
 }
 
 /* Standard stride-5 field/J tile path with true particle-batch parallelism. */
-static __device__ __attribute__((always_inline)) inline void
-pushJ_vlo_process_tile_multi(
-    pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y,
-    pushJ_wt_axis_bank_t *bank_z, pushJ_vlo_state_t *st,
-    v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx,
-    double *shE0, double *shB0, double *shB1, double *shJ0,
-    double *shParticle, __DDR double *particle_buf, int load0,
-    double Midx, double Midy, double Midz, double Deltat,
-    int bBidx, int bBidy, int bBidz,
-    __DDR double *fieldE, __DDR double *fieldB, __DDR double *fieldB1,
-    __DDR double *FoutJ, MAPU_LONG __idy, MAPU_LONG __idx, MAPU_LONG __xlen,
-    MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele,
-    cooperative_groups::thread_block block,
+static __device__ __attribute__((always_inline)) inline void pushJ_vlo_process_tile_multi(
+    pushJ_wt_axis_bank_t *bank_x, pushJ_wt_axis_bank_t *bank_y, pushJ_wt_axis_bank_t *bank_z,
+    pushJ_vlo_state_t *st, v8fp64 (*shJ_incf_priv)[375], pushJ_ctx_t *ctx, double *shE0,
+    double *shB0, double *shB1, double *shJ0, double *shParticle, __DDR double *particle_buf,
+    int load0, double Midx, double Midy, double Midz, double Deltat, int bBidx, int bBidy,
+    int bBidz, __DDR double *fieldE, __DDR double *fieldB, __DDR double *fieldB1,
+    __DDR double *FoutJ, MAPU_LONG __idy, MAPU_LONG __idx, MAPU_LONG __xlen, MAPU_LONG XLEN,
+    MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, int num_ele, cooperative_groups::thread_block block,
     scale::barrier<scale::thread_scope_block> &bar) {
   (void)Midx;
   (void)Midy;
   (void)Midz;
   (void)Deltat;
-  pushJ_vlo_K1_load_shared_5x5x5(
-      shE0, shB0, shB1, shJ0, fieldE, fieldB, fieldB1, FoutJ, __idy, __idx,
-      __xlen, bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp, num_ele, block,
-      bar);
+  pushJ_vlo_K1_load_shared_5x5x5(shE0, shB0, shB1, shJ0, fieldE, fieldB, fieldB1, FoutJ, __idy,
+                                 __idx, __xlen, bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp,
+                                 num_ele, block, bar);
 
-  pushJ_vlo_process_particle_batches_multi(
-      bank_x, bank_y, bank_z, st, shJ_incf_priv, ctx,
-      shE0, shB0, shB1, 5, shJ0, shParticle, particle_buf, load0,
-      __idx, __xlen, block, bar);
+  pushJ_vlo_process_particle_batches_multi(bank_x, bank_y, bank_z, st, shJ_incf_priv, ctx, shE0,
+                                           shB0, shB1, 5, shJ0, shParticle, particle_buf, load0,
+                                           __idx, __xlen, block, bar);
 
-  pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen, bBidx,
-                                       bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp,
-                                       num_ele, block, bar);
+  pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy, bBidz, XLEN,
+                                       YLEN, ZLEN, ovlp, num_ele, block, bar);
 }
 
 /*
@@ -1541,17 +1395,13 @@ pushJ_vlo_process_tile_multi(
  *   __mem4__ __fix4__:     pushJ_vlo_state_t
  */
 __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
-    __DDR double *inoutput, __DDR int *xyzw, __DDR double *cu_cache,
-    __DDR int *cu_xyzw, __DDR int *xoffset, __DDR int *yoffset,
-    __DDR int *zoffset, __DDR double *fieldE,
-    __DDR double *fieldE_ext, __DDR double *fieldB,
-    __DDR double *fieldB1, __DDR double *FoutJ, MAPU_LONG XLEN, MAPU_LONG YLEN,
-    MAPU_LONG ZLEN, int ovlp, MAPU_LONG numvec, int num_ele,
-    MAPU_LONG grid_cache_len, MAPU_LONG cu_cache_length, int use_g_e,
-    double DELTA_X,
-    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat,
-    double Tori_X0, double r0, double MIN_R0, double Q0, double b0,
-    double zmid) {
+    __DDR double *inoutput, __DDR int *xyzw, __DDR double *cu_cache, __DDR int *cu_xyzw,
+    __DDR int *xoffset, __DDR int *yoffset, __DDR int *zoffset, __DDR double *fieldE,
+    __DDR double *fieldE_ext, __DDR double *fieldB, __DDR double *fieldB1, __DDR double *FoutJ,
+    MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp, MAPU_LONG numvec, int num_ele,
+    MAPU_LONG grid_cache_len, MAPU_LONG cu_cache_length, int use_g_e, double DELTA_X,
+    double DELTA_Y, double DELTA_Z, double Mass0, double Charge0, double Deltat, double Tori_X0,
+    double r0, double MIN_R0, double Q0, double b0, double zmid) {
 
   /* Keep the generated runtime ABI even though these arguments are unused. */
   (void)fieldE_ext;
@@ -1564,11 +1414,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   const MAPU_LONG __physical_idx =
       threadIdx.x + blockDim.x * (threadIdx.y + blockDim.y * threadIdx.z);
 
-  const MAPU_LONG __idy =
-      blockIdx.x + gridDim.x * (blockIdx.y + gridDim.y * blockIdx.z);
+  const MAPU_LONG __idy = blockIdx.x + gridDim.x * (blockIdx.y + gridDim.y * blockIdx.z);
 
-  const MAPU_LONG __block_threads =
-      blockDim.x * blockDim.y * blockDim.z;
+  const MAPU_LONG __block_threads = blockDim.x * blockDim.y * blockDim.z;
   const MAPU_LONG __idx = __physical_idx;
   const MAPU_LONG __xlen = __block_threads;
 
@@ -1576,10 +1424,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
    * safe.  The __idy guard also handles the runtime's padded 2-D grid when
    * numvec exceeds the x-dimension launch limit. */
   if ((__xlen != PUSHJ_VLO_REAL_PARALLEL_N) || (__idy >= numvec)) {
-    if ((__idy == 0) && (__idx == 0) &&
-        (__xlen != PUSHJ_VLO_REAL_PARALLEL_N)) {
-      printf("multi launch mismatch: block_threads=%lld compile_N=%d\n",
-             (long long)__xlen, PUSHJ_VLO_REAL_PARALLEL_N);
+    if ((__idy == 0) && (__idx == 0) && (__xlen != PUSHJ_VLO_REAL_PARALLEL_N)) {
+      printf("multi launch mismatch: block_threads=%lld compile_N=%d\n", (long long)__xlen,
+             PUSHJ_VLO_REAL_PARALLEL_N);
     }
     return;
   }
@@ -1609,10 +1456,8 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   __shared__ __fix5__ double shB0[600];
   __shared__ __fix5__ double shB1[600];
   __shared__ __fix5__ double shJ0[375];
-  __shared__ __fix5__
-      v8fp64 shJ_incf_priv[PUSHJ_VLO_REAL_PARALLEL_N][375];
-  __shared__ __fix5__
-      double shParticle[PUSHJ_VLO_REAL_PARALLEL_N * 48];
+  __shared__ __fix5__ v8fp64 shJ_incf_priv[PUSHJ_VLO_REAL_PARALLEL_N][375];
+  __shared__ __fix5__ double shParticle[PUSHJ_VLO_REAL_PARALLEL_N * 48];
   __shared__ __fix5__ pushJ_ctx_t pushJ_ctx;
 
   /* Private per-thread/per-APE cohorts — no shared array is required. */
@@ -1625,8 +1470,8 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   __shared__ __fix5__ barrier_t bar;
   if (__idx == 0) {
     init(&bar, __block_threads);
-    pushJ_vlo_ctx_init_const(&pushJ_ctx, DELTA_X, DELTA_Y, DELTA_Z, Deltat,
-                             Tori_X0, Charge0, Mass0);
+    pushJ_vlo_ctx_init_const(&pushJ_ctx, DELTA_X, DELTA_Y, DELTA_Z, Deltat, Tori_X0, Charge0,
+                             Mass0);
   }
   __syncthreads();
   auto block = cooperative_groups::this_thread_block();
@@ -1644,12 +1489,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
         __DDR double *const particle_base =
             (cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)));
 
-        double Midx =
-            ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
-        double Midy =
-            ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));
-        double Midz =
-            ((use_local_particle_position) ? (floor(particle_base[2])) : (mdz));
+        double Midx = ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
+        double Midy = ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));
+        double Midz = ((use_local_particle_position) ? (floor(particle_base[2])) : (mdz));
 
         pushJ_vlo_clamp_grid_idx(&Midx, &Midy, &Midz, XLEN, YLEN, ZLEN);
 
@@ -1658,17 +1500,15 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
         const int bBidz = (Midz - 2);
 
         if (__idx == 0) {
-          pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx, Midy,
-                                  Midz, bBidx, bBidy, bBidz);
+          pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx, Midy, Midz, bBidx, bBidy,
+                                  bBidz);
         }
         __syncthreads();
-        pushJ_vlo_process_tile_multi(
-            &pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st,
-            shJ_incf_priv, &pushJ_ctx, shE0, shB0, shB1, shJ0, shParticle,
-            particle_base,
-            load0, Midx, Midy, Midz, Deltat, bBidx, bBidy, bBidz, fieldE,
-            fieldB, fieldB1, FoutJ, __idy, __idx, __xlen, XLEN, YLEN, ZLEN,
-            ovlp, num_ele, block, bar);
+        pushJ_vlo_process_tile_multi(&pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st,
+                                     shJ_incf_priv, &pushJ_ctx, shE0, shB0, shB1, shJ0, shParticle,
+                                     particle_base, load0, Midx, Midy, Midz, Deltat, bBidx, bBidy,
+                                     bBidz, fieldE, fieldB, fieldB1, FoutJ, __idy, __idx, __xlen,
+                                     XLEN, YLEN, ZLEN, ovlp, num_ele, block, bar);
       }
     }
   }
@@ -1702,10 +1542,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
           const int base_by = mdy - 2;
           const int base_bz = mdz - 2;
 
-          pushJ_vlo_K1_load_fields_shared_8x5x5(
-              shE0, shB0, shB1, fieldE, fieldB, fieldB1, __idy,
-              __idx, __xlen, base_bx, base_by, base_bz, XLEN, YLEN, ZLEN,
-              ovlp, num_ele, block, bar);
+          pushJ_vlo_K1_load_fields_shared_8x5x5(shE0, shB0, shB1, fieldE, fieldB, fieldB1, __idy,
+                                                __idx, __xlen, base_bx, base_by, base_bz, XLEN,
+                                                YLEN, ZLEN, ovlp, num_ele, block, bar);
 
           const int loads[4] = {load0, load1, load2, load3};
           for (int cell = 0; cell < 4; ++cell) {
@@ -1716,29 +1555,25 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
             const int bBidy = (int)Midy - 2;
             const int bBidz = (int)Midz - 2;
             __DDR double *const particle_base =
-                inoutput + grid_base_offset +
-                6 * ((allgid + cell) * grid_cache_len);
+                inoutput + grid_base_offset + 6 * ((allgid + cell) * grid_cache_len);
 
-            pushJ_vlo_K1_load_J_shared_5x5x5(
-                shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy, bBidz,
-                XLEN, YLEN, ZLEN, ovlp, num_ele, block, bar);
+            pushJ_vlo_K1_load_J_shared_5x5x5(shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy, bBidz,
+                                             XLEN, YLEN, ZLEN, ovlp, num_ele, block, bar);
 
             if (__idx == 0) {
-              pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx,
-                                      Midy, Midz, bBidx, bBidy, bBidz);
+              pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx, Midy, Midz, bBidx, bBidy,
+                                      bBidz);
             }
             __syncthreads();
 
             pushJ_vlo_process_loaded_fields_x8_cell_multi(
-                &pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st,
-                shJ_incf_priv, &pushJ_ctx, shE0, shB0, shB1, shJ0,
-                shParticle, particle_base, loads[cell], cell,
-                __idx, __xlen, block, bar);
-
-            pushJ_vlo_K3_write_FoutJ_from_shared(
-                shJ0, FoutJ, __idy, __idx, __xlen,
-                bBidx, bBidy, bBidz, XLEN, YLEN, ZLEN, ovlp, num_ele,
+                &pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st, shJ_incf_priv, &pushJ_ctx,
+                shE0, shB0, shB1, shJ0, shParticle, particle_base, loads[cell], cell, __idx, __xlen,
                 block, bar);
+
+            pushJ_vlo_K3_write_FoutJ_from_shared(shJ0, FoutJ, __idy, __idx, __xlen, bBidx, bBidy,
+                                                 bBidz, XLEN, YLEN, ZLEN, ovlp, num_ele, block,
+                                                 bar);
           }
           allgid += 3;
           continue;
@@ -1752,12 +1587,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
         __DDR double *const particle_base =
             (inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))));
 
-        double Midx =
-            ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
-        double Midy =
-            ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));
-        double Midz =
-            ((use_local_particle_position) ? (floor(particle_base[2])) : (mdz));
+        double Midx = ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
+        double Midy = ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));
+        double Midz = ((use_local_particle_position) ? (floor(particle_base[2])) : (mdz));
 
         pushJ_vlo_clamp_grid_idx(&Midx, &Midy, &Midz, XLEN, YLEN, ZLEN);
 
@@ -1766,17 +1598,15 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
         const int bBidz = (Midz - 2);
 
         if (__idx == 0) {
-          pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx, Midy,
-                                  Midz, bBidx, bBidy, bBidz);
+          pushJ_vlo_ctx_init_tile(&pushJ_ctx, XO, YO, ZO, zmid, Midx, Midy, Midz, bBidx, bBidy,
+                                  bBidz);
         }
         __syncthreads();
-        pushJ_vlo_process_tile_multi(
-            &pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st,
-            shJ_incf_priv, &pushJ_ctx, shE0, shB0, shB1, shJ0, shParticle,
-            particle_base,
-            load0, Midx, Midy, Midz, Deltat, bBidx, bBidy, bBidz, fieldE,
-            fieldB, fieldB1, FoutJ, __idy, __idx, __xlen, XLEN, YLEN, ZLEN,
-            ovlp, num_ele, block, bar);
+        pushJ_vlo_process_tile_multi(&pushJ_bank_x, &pushJ_bank_y, &pushJ_bank_z, &pushJ_st,
+                                     shJ_incf_priv, &pushJ_ctx, shE0, shB0, shB1, shJ0, shParticle,
+                                     particle_base, load0, Midx, Midy, Midz, Deltat, bBidx, bBidy,
+                                     bBidz, fieldE, fieldB, fieldB1, FoutJ, __idy, __idx, __xlen,
+                                     XLEN, YLEN, ZLEN, ovlp, num_ele, block, bar);
       }
     }
   }
@@ -1790,5 +1620,3 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   //          (long long)__idx, c);
   // }
 }
-
-

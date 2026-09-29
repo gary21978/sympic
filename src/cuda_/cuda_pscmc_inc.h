@@ -22,34 +22,25 @@ typedef enum {
 
 #endif
 
-#define ERROPT(err, x)                                                         \
-  {                                                                            \
-    if (err != cudaSuccess) {                                                  \
-      fprintf(stderr, "Error:%s\n%s\n", cudaGetErrorString(err), x);           \
-      assert(0);                                                               \
-    }                                                                          \
+#define ERROPT(err, x)                                                                             \
+  {                                                                                                \
+    if (err != cudaSuccess) {                                                                      \
+      fprintf(stderr, "Error:%s\n%s\n", cudaGetErrorString(err), x);                               \
+      assert(0);                                                                                   \
+    }                                                                                              \
   }
 typedef struct {
   int device_id;
-
   int num_dev;
-
 } cuda_pscmc_env;
 typedef struct {
   char *h_data;
-
   char *d_data;
-
   char *d_one_mem;
-
   int type;
-
   size_t len;
-
   cuda_pscmc_env *pe;
-
   int type_len;
-
 } cuda_pscmc_mem;
 int cuda_pscmc_env_init(cuda_pscmc_env *pe, int dev_num, void *fv);
 int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm);
@@ -58,8 +49,7 @@ void *cuda_pscmc_get_h_data(cuda_pscmc_mem *pm, void **h_data);
 size_t cuda_pscmc_mem_get_num(cuda_pscmc_mem *pm);
 int cuda_pscmc_get_env_len(size_t *l);
 int cuda_pscmc_mem_destroy(cuda_pscmc_mem *pm);
-int cuda_pscmc_mem_init(cuda_pscmc_env *, cuda_pscmc_mem *pm, int type,
-                        size_t len);
+int cuda_pscmc_mem_init(cuda_pscmc_env *, cuda_pscmc_mem *pm, int type, size_t len);
 
 #else
 

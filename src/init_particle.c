@@ -21,7 +21,8 @@ extern long srand_seed;
 
 static int init_particle_gpu_fast_enabled(void) {
   const char *env = getenv("SYMPIC_INIT_PARTICLE_GPU_FAST");
-  return !(env && (strcmp(env, "0") == 0 || strcmp(env, "false") == 0 || strcmp(env, "FALSE") == 0));
+  return !(env &&
+           (strcmp(env, "0") == 0 || strcmp(env, "false") == 0 || strcmp(env, "FALSE") == 0));
 }
 long find_vec_id(long id, long *adj_ids, long numvec) {
   long num_id_min = (adj_ids)[(NUM_SYNC_LAYER / 2)];
@@ -62,12 +63,9 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
     long zlen = (pfield)->zlen;
 
-
     long numvec = (pfield)->numvec;
 
-
     long *adj_ids = (pfield)->adj_ids;
-
 
     //====================Field3D_Seq
     void **sort_kernel = (pthis)->sort_kernel;
@@ -206,16 +204,17 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->inoutput, (void**)(&tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->inoutput, (void **)(&tmp_h_data));
 
-      memset(tmp_h_data, 0, (sizeof(double) * (6 * (grid_cache_len * (xlen * (ylen * (zlen * numvec)))))));
+      memset(tmp_h_data, 0,
+             (sizeof(double) * (6 * (grid_cache_len * (xlen * (ylen * (zlen * numvec)))))));
     }
     {
       cuda_pscmc_mem_init(pe, (pthis)->xyzw, PS_INT_NUM, (4 * (xlen * (ylen * (zlen * numvec)))));
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->xyzw, (void**)(&tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->xyzw, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (4 * (xlen * (ylen * (zlen * numvec))))));
     }
@@ -224,7 +223,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->cu_cache, (void**)(&tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->cu_cache, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(double) * (6 * (cu_cache_length * numvec))));
     }
@@ -233,7 +232,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->cu_xyzw, (void**)(&tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->cu_xyzw, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (numvec * 4)));
     }
@@ -242,7 +241,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      cuda_pscmc_get_h_data((pthis)->adjoint_vec_pids, (void**)(&tmp_h_data));
+      cuda_pscmc_get_h_data((pthis)->adjoint_vec_pids, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(long) * (numvec * 6)));
     }
@@ -282,7 +281,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     {
       size_t structlen = mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len();
 
-      //mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len(&(structlen));
+      // mapu_geo_nr_Bfield_pushJ_vlo_get_struct_len(&(structlen));
 
       (((pthis)->nonrel_test_kernel)[0] = malloc(structlen));
       mapu_geo_nr_Bfield_pushJ_vlo_init(pe, ((pthis)->nonrel_test_kernel)[0]);
@@ -387,16 +386,17 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      mapu_pscmc_get_h_data((pthis)->inoutput, (void**)(&tmp_h_data));
+      mapu_pscmc_get_h_data((pthis)->inoutput, (void **)(&tmp_h_data));
 
-      memset(tmp_h_data, 0, (sizeof(double) * (6 * (grid_cache_len * (xlen * (ylen * (zlen * numvec)))))));
+      memset(tmp_h_data, 0,
+             (sizeof(double) * (6 * (grid_cache_len * (xlen * (ylen * (zlen * numvec)))))));
     }
     {
       mapu_pscmc_mem_init(pe, (pthis)->xyzw, PS_INT_NUM, (4 * (xlen * (ylen * (zlen * numvec)))));
 
       char *tmp_h_data;
 
-      mapu_pscmc_get_h_data((pthis)->xyzw, (void**)(&tmp_h_data));
+      mapu_pscmc_get_h_data((pthis)->xyzw, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (4 * (xlen * (ylen * (zlen * numvec))))));
     }
@@ -405,7 +405,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      mapu_pscmc_get_h_data((pthis)->cu_cache, (void**)(&tmp_h_data));
+      mapu_pscmc_get_h_data((pthis)->cu_cache, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(double) * (6 * (cu_cache_length * numvec))));
     }
@@ -414,7 +414,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      mapu_pscmc_get_h_data((pthis)->cu_xyzw, (void**)(&tmp_h_data));
+      mapu_pscmc_get_h_data((pthis)->cu_xyzw, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(int) * (numvec * 4)));
     }
@@ -423,7 +423,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       char *tmp_h_data;
 
-      mapu_pscmc_get_h_data((pthis)->adjoint_vec_pids, (void**)(&tmp_h_data));
+      mapu_pscmc_get_h_data((pthis)->adjoint_vec_pids, (void **)(&tmp_h_data));
 
       memset(tmp_h_data, 0, (sizeof(long) * (numvec * 6)));
     }
@@ -437,7 +437,6 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     {
 
       // defined from class One_Particle_Collection
-
 
       void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
 
@@ -459,17 +458,23 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
                   long *cur_adj_id = (adjoint_vec_pids_host + (6 * xyzx));
 
                   ((cur_adj_id)[0] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (0 + (3 * (1 + (3 * 1)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (0 + (3 * (1 + (3 * 1)))))))],
+                       adj_ids, numvec));
                   ((cur_adj_id)[1] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (2 + (3 * (1 + (3 * 1)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (2 + (3 * (1 + (3 * 1)))))))],
+                       adj_ids, numvec));
                   ((cur_adj_id)[2] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (0 + (3 * 1)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (0 + (3 * 1)))))))],
+                       adj_ids, numvec));
                   ((cur_adj_id)[3] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (2 + (3 * 1)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (2 + (3 * 1)))))))],
+                       adj_ids, numvec));
                   ((cur_adj_id)[4] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (1 + (3 * 0)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (1 + (3 * 0)))))))],
+                       adj_ids, numvec));
                   ((cur_adj_id)[5] = find_vec_id(
-                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (1 + (3 * 2)))))))], adj_ids, numvec));
+                       (adj_ids)[((xyzx * NUM_SYNC_LAYER) + (0 + (1 * (1 + (3 * (1 + (3 * 2)))))))],
+                       adj_ids, numvec));
                 }
               }
             }
@@ -488,7 +493,8 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 }
 
 int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Charge,
-                      double *Number_particle_per_marker, long *grid_cache_len, long *cu_cache_length) {
+                      double *Number_particle_per_marker, long *grid_cache_len,
+                      long *cu_cache_length) {
   ((pthis)->num_spec = num_spec);
   long num_runtime = (pthis)->num_runtime;
 
@@ -502,16 +508,13 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
 
       // defined from class Field3D_Seq
 
-
       long numvec = (((pthis)->data + j))->numvec;
-
 
       long *global_id = (((pthis)->data + j))->global_id;
 
-
       //====================Field3D_Seq
-      init_particle(((pthis)->particles + ((i * num_runtime) + j)), ((pthis)->data + j), (Mass)[i], (Charge)[i],
-                    (Number_particle_per_marker)[i],
+      init_particle(((pthis)->particles + ((i * num_runtime) + j)), ((pthis)->data + j), (Mass)[i],
+                    (Charge)[i], (Number_particle_per_marker)[i],
                     ((grid_cache_len)[i] * ((USE_NON_UNI_CACHE_DIST) ? (({
                        double cplx = 0.0;
 
@@ -551,8 +554,8 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
   return 0;
 }
 
-int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, int cur_sp, double VT, double vmax,
-                              int ptlen) {
+int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, int cur_sp, double VT,
+                              double vmax, int ptlen) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = (pthis)->pfield;
@@ -563,9 +566,12 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
   //====================One_Particle_Collection
   if (init_particle_gpu_fast_enabled()) {
     if (ptlen != 6) {
-      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped for ptlen=%d\n", ptlen);
+      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped for ptlen=%d\n",
+              ptlen);
     } else if (tgrid_load > (pthis)->grid_cache_len) {
-      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped, grid_load=%d grid_cache_len=%ld\n",
+      fprintf(stderr,
+              "info init_non_uni_particle_opc: GPU fast path skipped, grid_load=%d "
+              "grid_cache_len=%ld\n",
               tgrid_load, (pthis)->grid_cache_len);
     } else {
       double vx0 = 0;
@@ -588,20 +594,18 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                                 (unsigned long long)(cur_sp + 1);
       int launch_rc = -1;
 #ifdef SYMPIC_CUDA
-      launch_rc = launch_init_non_uni_particle_gpu((double *)((cuda_pscmc_mem *)inoutput)->d_data,
-                                                   (int *)((cuda_pscmc_mem *)xyzw)->d_data,
-                                                   (int *)((cuda_pscmc_mem *)cu_xyzw)->d_data, pfield->xlen, pfield->ylen,
-                                                   pfield->zlen, pfield->numvec, (pthis)->grid_cache_len, tgrid_load,
-                                                   ptlen, VT, vmax, vx0, vy0, vz0, tempx, tempy, tempz, seed,
-                                                   ((cuda_pscmc_env *)pfield->pe)->device_id);
+      launch_rc = launch_init_non_uni_particle_gpu(
+          (double *)((cuda_pscmc_mem *)inoutput)->d_data, (int *)((cuda_pscmc_mem *)xyzw)->d_data,
+          (int *)((cuda_pscmc_mem *)cu_xyzw)->d_data, pfield->xlen, pfield->ylen, pfield->zlen,
+          pfield->numvec, (pthis)->grid_cache_len, tgrid_load, ptlen, VT, vmax, vx0, vy0, vz0,
+          tempx, tempy, tempz, seed, ((cuda_pscmc_env *)pfield->pe)->device_id);
 #endif
 #ifdef SYMPIC_MAPU
-      launch_rc = mapu_init_non_uni_particle_gpu_launch((mapu_pscmc_mem *)inoutput,
-                                                        (mapu_pscmc_mem *)xyzw,
-                                                        (mapu_pscmc_mem *)cu_xyzw, pfield->xlen, pfield->ylen,
-                                                        pfield->zlen, pfield->numvec, (pthis)->grid_cache_len, tgrid_load,
-                                                        ptlen, VT, vmax, vx0, vy0, vz0, tempx, tempy, tempz, seed,
-                                                        ((mapu_pscmc_env *)pfield->pe)->device_id);
+      launch_rc = mapu_init_non_uni_particle_gpu_launch(
+          (mapu_pscmc_mem *)inoutput, (mapu_pscmc_mem *)xyzw, (mapu_pscmc_mem *)cu_xyzw,
+          pfield->xlen, pfield->ylen, pfield->zlen, pfield->numvec, (pthis)->grid_cache_len,
+          tgrid_load, ptlen, VT, vmax, vx0, vy0, vz0, tempx, tempy, tempz, seed,
+          ((mapu_pscmc_env *)pfield->pe)->device_id);
 #endif
       if (launch_rc == 0) {
         fprintf(stderr,
@@ -610,7 +614,8 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                 cur_sp, tgrid_load);
         return 0;
       }
-      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path unavailable, fallback to host init\n");
+      fprintf(stderr,
+              "info init_non_uni_particle_opc: GPU fast path unavailable, fallback to host init\n");
     }
   }
   {
@@ -653,7 +658,9 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                 long xyzx;
 
                 for ((xyzx = 0); (xyzx < xlen); (xyzx = (xyzx + 1))) {
-                  double *grid_r = (grid_r_0 + (0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))))));
+                  double *grid_r =
+                      (grid_r_0 +
+                       (0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))))));
                   int *grid_xyzw = (xyzw_0 + (0 + (4 * (xyzx + (xlen * (xyzy + (ylen * xyzz)))))));
 
                   long l = 0;
@@ -664,8 +671,8 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                                     tgrid_load);
 
                   if ((grid_load > grid_cache_len)) {
-                    fprintf(stderr, "Error, gl=%ld gcl=%ld global_id=%ld cur_picid=%ld\n", grid_load, grid_cache_len,
-                            (global_id)[cur_pcid], cur_pcid);
+                    fprintf(stderr, "Error, gl=%ld gcl=%ld global_id=%ld cur_picid=%ld\n",
+                            grid_load, grid_cache_len, (global_id)[cur_pcid], cur_pcid);
                   }
 
                   assert((grid_load <= grid_cache_len));
@@ -766,9 +773,7 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
 
   long num_runtime = (pthis)->num_runtime;
 
-
   int num_spec = (pthis)->num_spec;
-
 
   //====================Field3D_MPI
   int i;
@@ -787,26 +792,25 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
     if ((((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[i] != 1)) {
       fprintf(stderr, "info init_non_uni_particle_fmpi: spec=%d\n", i);
       for (j = 0; (j < num_runtime); j++) {
-        init_non_uni_particle_opc(((pthis)->particles + ((i * num_runtime) + j)), call_GET_INIT_LOAD(i), i,
-                                  call_GET_INIT_VT(i), vmax, ptlen);
+        init_non_uni_particle_opc(((pthis)->particles + ((i * num_runtime) + j)),
+                                  call_GET_INIT_LOAD(i), i, call_GET_INIT_VT(i), vmax, ptlen);
       }
     }
   }
   return 0;
 }
 
-void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D_MPI *fE2x, Field3D_MPI *fEN,
-                           int use_small_num_grids, int pml_abc_dir, int pml_level, double pml_sigma_max, double deltat,
-                           int num_spec, long *allxyzmax, double *massp, double *chargep, double *npm,
-                           long *grid_cache_len, long *cu_cache_len, int *particle_types, int reduce_dim,
-                           double r_x_rat, double r_y_rat, double r_z_rat, double random_rate, int use_vlo_o,
-                           int use_rel_ncr1) {
+void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D_MPI *fE2x,
+                           Field3D_MPI *fEN, int use_small_num_grids, int pml_abc_dir,
+                           int pml_level, double pml_sigma_max, double deltat, int num_spec,
+                           long *allxyzmax, double *massp, double *chargep, double *npm,
+                           long *grid_cache_len, long *cu_cache_len, int *particle_types,
+                           int reduce_dim, double r_x_rat, double r_y_rat, double r_z_rat,
+                           double random_rate, int use_vlo_o, int use_rel_ncr1) {
 
   // defined from class Particle_in_Cell_MPI
 
-
   int use_rel_ncr = (pthis)->use_rel_ncr;
-
 
   //====================Particle_in_Cell_MPI
   init_Field3D_MPI_from(&((pthis)->MPI_fieldE), fE);
@@ -879,15 +883,17 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   }
 
   if (USE_INIT_EXT_EB) {
-    init_external_field3d_E_2d_extend(&((pthis)->MPI_fieldE_ext), reduce_dim, r_x_rat, r_y_rat, r_z_rat);
-    init_external_field3d_B_2d_extend(&((pthis)->MPI_fieldB_ext), reduce_dim, (r_y_rat * r_z_rat), (r_x_rat * r_z_rat),
-                                      (r_x_rat * r_y_rat));
+    init_external_field3d_E_2d_extend(&((pthis)->MPI_fieldE_ext), reduce_dim, r_x_rat, r_y_rat,
+                                      r_z_rat);
+    init_external_field3d_B_2d_extend(&((pthis)->MPI_fieldB_ext), reduce_dim, (r_y_rat * r_z_rat),
+                                      (r_x_rat * r_z_rat), (r_x_rat * r_y_rat));
     sync_main_data_h2d(&((pthis)->MPI_fieldE_ext));
     sync_main_data_h2d(&((pthis)->MPI_fieldB_ext));
   }
 
   if (USE_INIT_EB0) {
-    init_external_field3d_E0_2d_extend_rand(&((pthis)->MPI_fieldE), reduce_dim, r_x_rat, r_y_rat, r_z_rat, random_rate);
+    init_external_field3d_E0_2d_extend_rand(&((pthis)->MPI_fieldE), reduce_dim, r_x_rat, r_y_rat,
+                                            r_z_rat, random_rate);
     init_external_field3d_B0_2d_extend_rand(&((pthis)->MPI_fieldB), reduce_dim, (r_y_rat * r_z_rat),
                                             (r_x_rat * r_z_rat), (r_x_rat * r_y_rat), random_rate);
 
@@ -905,23 +911,29 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
     blas_yiszero_synced_Field3D_MPI(&((pthis)->MPI_fieldB0_2x), &((pthis)->MPI_fieldB0_2x));
     blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldE), &((pthis)->MPI_fieldE01_2x), 1.0,
                                    &((pthis)->MPI_fieldE));
-    blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldB), &((pthis)->MPI_fieldB0_2x), 1, &((pthis)->MPI_fieldB));
+    blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldB), &((pthis)->MPI_fieldB0_2x), 1,
+                                   &((pthis)->MPI_fieldB));
   }
 
   ((pthis)->pMPI_FoutJ = &((pthis)->MPI_FoutJ));
-  init_particle_mpi(&((pthis)->MPI_fieldE), num_spec, massp, chargep, npm, grid_cache_len, cu_cache_len);
+  init_particle_mpi(&((pthis)->MPI_fieldE), num_spec, massp, chargep, npm, grid_cache_len,
+                    cu_cache_len);
   int num_runtime = ((pthis)->MPI_fieldE).num_runtime;
 
   {
     long i;
 
     for ((i = 0); (i < (num_spec * num_runtime)); (i = (i + 1))) {
-      (((((pthis)->MPI_fieldE).particles + i))->pfieldE = (((pthis)->MPI_fieldE).data + (i % num_runtime)));
-      (((((pthis)->MPI_fieldE).particles + i))->pfieldB = (((pthis)->MPI_fieldB).data + (i % num_runtime)));
-      (((((pthis)->MPI_fieldE).particles + i))->pFoutJ = (((pthis)->MPI_FoutJ).data + (i % num_runtime)));
+      (((((pthis)->MPI_fieldE).particles + i))->pfieldE =
+           (((pthis)->MPI_fieldE).data + (i % num_runtime)));
+      (((((pthis)->MPI_fieldE).particles + i))->pfieldB =
+           (((pthis)->MPI_fieldB).data + (i % num_runtime)));
+      (((((pthis)->MPI_fieldE).particles + i))->pFoutJ =
+           (((pthis)->MPI_FoutJ).data + (i % num_runtime)));
       (((((pthis)->MPI_fieldE).particles + i))->pLFoutJ =
            ((use_small_num_grids) ? ((((pthis)->MPI_LFoutJ).data + (i % num_runtime))) : (NULL)));
-      (((((pthis)->MPI_fieldE).particles + i))->pFoutEN = (((pthis)->pMPI_FoutEN)->data + (i % num_runtime)));
+      (((((pthis)->MPI_fieldE).particles + i))->pFoutEN =
+           (((pthis)->pMPI_FoutEN)->data + (i % num_runtime)));
     }
   }
   ((pthis)->dt = deltat);

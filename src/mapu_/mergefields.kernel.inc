@@ -7,10 +7,9 @@
 4. main->overlap: 表示mirror单元中的数据拷贝到发送缓冲区中
 */
 
-__global__ void mapu_sync_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp,
-                                   int ovlpindex, MAPU_LONG numvec, int num_ele,
-                                   MAPU_LONG xblock, MAPU_LONG yblock,
-                                   MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_sync_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp, int ovlpindex,
+                                   MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                   MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -116,12 +115,9 @@ __global__ void mapu_sync_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp,
             __mem1__ MAPU_LONG realidx;
             realidx = __idx + g * __xlen;
             vecmain[i * blk_all_len +
-                    (realidx +
-                     (num_ele * (lxyzx + (xb * (lxyzy + yb * lxyzz)))))] =
+                    (realidx + (num_ele * (lxyzx + (xb * (lxyzy + yb * lxyzz)))))] =
                 vecovlp[((i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))];
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))];
           }
         }
       }
@@ -130,10 +126,9 @@ __global__ void mapu_sync_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp,
 #endif
 }
 
-__global__ void
-mapu_sync_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
-                              MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
-                              MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_sync_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
+                                              MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                              MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
 
@@ -284,12 +279,9 @@ mapu_sync_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
                 // realidx(一个单元的第几个数据分量) + num_ele * (lxyzx + xb *
                 // (lxyzy + yb * lxyzz));
                 vecmain[(i * blk_all_len) +
-                        (realidx +
-                         (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                        (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
                     vecovlp[(i * ovlpalllen) +
-                            (realidx +
-                             (num_ele *
-                              (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))];
+                            (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))];
               }
             }
           }
@@ -302,17 +294,15 @@ mapu_sync_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
 }
 
 __global__ void mapu_sync_ovlp_o2m_once(
-    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1,
-    __DDR double *vecovlp2, __DDR double *vecovlp3, __DDR double *vecovlp4,
-    __DDR double *vecovlp5, __DDR double *vecovlp6, __DDR double *vecovlp7,
-    __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
+    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1, __DDR double *vecovlp2,
+    __DDR double *vecovlp3, __DDR double *vecovlp4, __DDR double *vecovlp5, __DDR double *vecovlp6,
+    __DDR double *vecovlp7, __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
     __DDR double *vecovlp11, __DDR double *vecovlp12, __DDR double *vecovlp14,
     __DDR double *vecovlp15, __DDR double *vecovlp16, __DDR double *vecovlp17,
     __DDR double *vecovlp18, __DDR double *vecovlp19, __DDR double *vecovlp20,
     __DDR double *vecovlp21, __DDR double *vecovlp22, __DDR double *vecovlp23,
-    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26,
-    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock, MAPU_LONG yblock,
-    MAPU_LONG zblock, int ovlp) {
+    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26, MAPU_LONG numvec,
+    int num_ele, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -457,15 +447,11 @@ __global__ void mapu_sync_ovlp_o2m_once(
               for (g = 0; __idx + g * __xlen < num_ele; g++) {
                 __mem1__ MAPU_LONG realidx;
                 realidx = (__idx + (g * __xlen));
-                ((vecmain)[(
-                     (i * blk_all_len) +
-                     (realidx +
-                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                ((vecmain)[((i * blk_all_len) +
+                            (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                      (vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]);
               }
             }
           }
@@ -477,10 +463,9 @@ __global__ void mapu_sync_ovlp_o2m_once(
 #endif
 }
 
-__global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
-                                   int ovlpindex, MAPU_LONG numvec, int num_ele,
-                                   MAPU_LONG xblock, MAPU_LONG yblock,
-                                   MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp, int ovlpindex,
+                                   MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                   MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
 
@@ -596,13 +581,9 @@ __global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
             __mem1__ MAPU_LONG realidx;
             realidx = (__idx + (g * __xlen));
             ((vecovlp)[((i * ovlpalllen) +
-                        (realidx +
-                         (num_ele *
-                          (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
-                 (vecmain)[(
-                     (i * blk_all_len) +
-                     (realidx +
-                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                        (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                 (vecmain)[((i * blk_all_len) +
+                            (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
           }
         }
       }
@@ -611,10 +592,9 @@ __global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
 #endif
 }
 
-__global__ void
-mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
-                              MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
-                              MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
+                                              MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                              MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -728,14 +708,10 @@ mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
                   realidx = (__idx + (g * __xlen));
                   ((vecovlp)[(
                        (i * ovlpalllen) +
-                       (realidx +
-                        (num_ele *
-                         (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                        (vecmain)[(
                            (i * blk_all_len) +
-                           (realidx +
-                            (num_ele *
-                             (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                 }
               }
             }
@@ -748,17 +724,15 @@ mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
 #endif
 }
 __global__ void mapu_sync_ovlp_m2o_once(
-    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1,
-    __DDR double *vecovlp2, __DDR double *vecovlp3, __DDR double *vecovlp4,
-    __DDR double *vecovlp5, __DDR double *vecovlp6, __DDR double *vecovlp7,
-    __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
+    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1, __DDR double *vecovlp2,
+    __DDR double *vecovlp3, __DDR double *vecovlp4, __DDR double *vecovlp5, __DDR double *vecovlp6,
+    __DDR double *vecovlp7, __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
     __DDR double *vecovlp11, __DDR double *vecovlp12, __DDR double *vecovlp14,
     __DDR double *vecovlp15, __DDR double *vecovlp16, __DDR double *vecovlp17,
     __DDR double *vecovlp18, __DDR double *vecovlp19, __DDR double *vecovlp20,
     __DDR double *vecovlp21, __DDR double *vecovlp22, __DDR double *vecovlp23,
-    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26,
-    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock, MAPU_LONG yblock,
-    MAPU_LONG zblock, int ovlp) {
+    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26, MAPU_LONG numvec,
+    int num_ele, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -900,14 +874,10 @@ __global__ void mapu_sync_ovlp_m2o_once(
                   realidx = (__idx + (g * __xlen));
                   ((vecovlp)[(
                        (i * ovlpalllen) +
-                       (realidx +
-                        (num_ele *
-                         (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                        (vecmain)[(
                            (i * blk_all_len) +
-                           (realidx +
-                            (num_ele *
-                             (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                 }
               }
             }
@@ -919,11 +889,9 @@ __global__ void mapu_sync_ovlp_m2o_once(
 #endif
 }
 
-__global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain,
-                                    __DDR double *vecovlp, int ovlpindex,
-                                    MAPU_LONG numvec, int num_ele,
-                                    MAPU_LONG xblock, MAPU_LONG yblock,
-                                    MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp, int ovlpindex,
+                                    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                    MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1022,19 +990,13 @@ __global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain,
           for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
             __mem1__ MAPU_LONG realidx;
             realidx = (__idx + (g * __xlen));
-            ((vecmain)[(
-                 (i * blk_all_len) +
-                 (realidx +
-                  (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
-                 ((vecmain)[(
-                      (i * blk_all_len) +
-                      (realidx +
-                       (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
+            ((vecmain)[((i * blk_all_len) +
+                        (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                 ((vecmain)[((i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                   (vecovlp)[(
                       (i * ovlpalllen) +
-                      (realidx +
-                       (num_ele *
-                        (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
+                      (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
           }
         }
       }
@@ -1043,10 +1005,9 @@ __global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain,
 #endif
 }
 
-__global__ void
-mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
-                               MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
-                               MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
+                                               MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                               MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1161,20 +1122,14 @@ mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
                     __mem1__ MAPU_LONG realidx;
                     realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                          ((vecmain)[(
                               (i * blk_all_len) +
-                              (realidx +
-                               (num_ele *
-                                (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
+                              (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                           (vecovlp)[(
                               (i * ovlpalllen) +
                               (realidx +
-                               (num_ele *
-                                (xyzx +
-                                 (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
+                               (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                   }
                 }
               }
@@ -1189,17 +1144,15 @@ mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
 }
 
 __global__ void mapu_merge_ovlp_o2m_once(
-    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1,
-    __DDR double *vecovlp2, __DDR double *vecovlp3, __DDR double *vecovlp4,
-    __DDR double *vecovlp5, __DDR double *vecovlp6, __DDR double *vecovlp7,
-    __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
+    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1, __DDR double *vecovlp2,
+    __DDR double *vecovlp3, __DDR double *vecovlp4, __DDR double *vecovlp5, __DDR double *vecovlp6,
+    __DDR double *vecovlp7, __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
     __DDR double *vecovlp11, __DDR double *vecovlp12, __DDR double *vecovlp14,
     __DDR double *vecovlp15, __DDR double *vecovlp16, __DDR double *vecovlp17,
     __DDR double *vecovlp18, __DDR double *vecovlp19, __DDR double *vecovlp20,
     __DDR double *vecovlp21, __DDR double *vecovlp22, __DDR double *vecovlp23,
-    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26,
-    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock, MAPU_LONG yblock,
-    MAPU_LONG zblock, int ovlp) {
+    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26, MAPU_LONG numvec,
+    int num_ele, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1334,20 +1287,14 @@ __global__ void mapu_merge_ovlp_o2m_once(
                 for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
                   __mem1__ MAPU_LONG realidx;
                   realidx = (__idx + (g * __xlen));
-                  ((vecmain)[(
-                       (i * blk_all_len) +
-                       (realidx +
-                        (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
+                  ((vecmain)[((i * blk_all_len) +
+                              (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
                        ((vecmain)[(
                             (i * blk_all_len) +
-                            (realidx +
-                             (num_ele *
-                              (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
+                            (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] +
                         (vecovlp)[((i * ovlpalllen) +
                                    (realidx +
-                                    (num_ele *
-                                     (xyzx + (ovlpxma *
-                                              (xyzy + (ovlpyma * xyzz)))))))]));
+                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))]));
                 }
               }
             }
@@ -1359,11 +1306,9 @@ __global__ void mapu_merge_ovlp_o2m_once(
 #endif
 }
 
-__global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
-                                    __DDR double *vecovlp, int ovlpindex,
-                                    MAPU_LONG numvec, int num_ele,
-                                    MAPU_LONG xblock, MAPU_LONG yblock,
-                                    MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp, int ovlpindex,
+                                    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                    MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1473,9 +1418,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
                         (lxyzx = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
@@ -1483,9 +1426,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
                         (lxyzy = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
@@ -1493,15 +1434,11 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
                         (lxyzz = ovlp);
                       }
                     } else {
-                      {
-                        0;
-                      }
+                      { 0; }
                     }
                   }
                 } else {
-                  {
-                    0;
-                  }
+                  { 0; }
                 }
                 {
                   __mem1__ MAPU_LONG g;
@@ -1511,14 +1448,10 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
                     realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
                          (i * ovlpalllen) +
-                         (realidx +
-                          (num_ele *
-                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                         (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                          (vecmain)[(
                              (i * blk_all_len) +
-                             (realidx +
-                              (num_ele *
-                               (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
                   }
                 }
               }
@@ -1531,10 +1464,9 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain,
 #endif
 }
 
-__global__ void
-mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
-                               MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
-                               MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
+__global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
+                                               MAPU_LONG numvec, int num_ele, MAPU_LONG xblock,
+                                               MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1641,13 +1573,9 @@ mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
                 realidx = (__idx + (g * __xlen));
                 ((vecovlp)[(
                      (i * ovlpalllen) +
-                     (realidx +
-                      (num_ele *
-                       (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                     (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                      (vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
               }
             }
           }
@@ -1660,17 +1588,15 @@ mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR double *vecovlps,
 }
 
 __global__ void mapu_merge_ovlp_m2o_once(
-    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1,
-    __DDR double *vecovlp2, __DDR double *vecovlp3, __DDR double *vecovlp4,
-    __DDR double *vecovlp5, __DDR double *vecovlp6, __DDR double *vecovlp7,
-    __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
+    __DDR double *vecmain, __DDR double *vecovlp0, __DDR double *vecovlp1, __DDR double *vecovlp2,
+    __DDR double *vecovlp3, __DDR double *vecovlp4, __DDR double *vecovlp5, __DDR double *vecovlp6,
+    __DDR double *vecovlp7, __DDR double *vecovlp8, __DDR double *vecovlp9, __DDR double *vecovlp10,
     __DDR double *vecovlp11, __DDR double *vecovlp12, __DDR double *vecovlp14,
     __DDR double *vecovlp15, __DDR double *vecovlp16, __DDR double *vecovlp17,
     __DDR double *vecovlp18, __DDR double *vecovlp19, __DDR double *vecovlp20,
     __DDR double *vecovlp21, __DDR double *vecovlp22, __DDR double *vecovlp23,
-    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26,
-    MAPU_LONG numvec, int num_ele, MAPU_LONG xblock, MAPU_LONG yblock,
-    MAPU_LONG zblock, int ovlp) {
+    __DDR double *vecovlp24, __DDR double *vecovlp25, __DDR double *vecovlp26, MAPU_LONG numvec,
+    int num_ele, MAPU_LONG xblock, MAPU_LONG yblock, MAPU_LONG zblock, int ovlp) {
 
 #ifdef __SCALE_ARCH__
   const MAPU_LONG __idx = 0;
@@ -1807,13 +1733,9 @@ __global__ void mapu_merge_ovlp_m2o_once(
                 realidx = (__idx + (g * __xlen));
                 ((vecovlp)[(
                      (i * ovlpalllen) +
-                     (realidx +
-                      (num_ele *
-                       (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
+                     (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz)))))))] =
                      (vecmain)[((i * blk_all_len) +
-                                (realidx +
-                                 (num_ele *
-                                  (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
+                                (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))]);
               }
             }
           }

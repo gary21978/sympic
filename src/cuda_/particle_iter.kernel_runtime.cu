@@ -12,47 +12,50 @@
 
 #include "pscmc_runtime_macros.h"
 
-#define CUDA_DUMP_ENE_NUM_ARGS                                                                                         \
-  ((double *)kerstr->inoutput->d_data), ((int *)kerstr->xyzw->d_data), ((double *)kerstr->cu_cache->d_data),           \
-      ((int *)kerstr->cu_xyzw->d_data), ((double *)kerstr->fieldE->d_data), ((double *)kerstr->fieldB->d_data),        \
-      ((double *)kerstr->FoutJ->d_data), ((double *)kerstr->FoutEN->d_data), (((long *)kerstr->XLEN->h_data))[0],      \
-      (((long *)kerstr->YLEN->h_data))[0], (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],    \
-      (((long *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],                                    \
-      (((long *)kerstr->grid_cache_len->h_data))[0], (((long *)kerstr->cu_cache_length->h_data))[0],                   \
-      (((double *)kerstr->Mass->h_data))[0], (((double *)kerstr->Charge->h_data))[0],                                  \
-      (((int *)kerstr->SPEC->h_data))[0], (((int *)kerstr->NUM_SPEC->h_data))[0],                                      \
-      (((double *)kerstr->DELTA_X->h_data))[0], (((double *)kerstr->DELTA_Y->h_data))[0],                              \
-      (((double *)kerstr->DELTA_Z->h_data))[0], (((double *)kerstr->Deltat->h_data))[0]
+#define CUDA_DUMP_ENE_NUM_ARGS                                                                     \
+  ((double *)kerstr->inoutput->d_data), ((int *)kerstr->xyzw->d_data),                             \
+      ((double *)kerstr->cu_cache->d_data), ((int *)kerstr->cu_xyzw->d_data),                      \
+      ((double *)kerstr->fieldE->d_data), ((double *)kerstr->fieldB->d_data),                      \
+      ((double *)kerstr->FoutJ->d_data), ((double *)kerstr->FoutEN->d_data),                       \
+      (((long *)kerstr->XLEN->h_data))[0], (((long *)kerstr->YLEN->h_data))[0],                    \
+      (((long *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],                     \
+      (((long *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],                \
+      (((long *)kerstr->grid_cache_len->h_data))[0],                                               \
+      (((long *)kerstr->cu_cache_length->h_data))[0], (((double *)kerstr->Mass->h_data))[0],       \
+      (((double *)kerstr->Charge->h_data))[0], (((int *)kerstr->SPEC->h_data))[0],                 \
+      (((int *)kerstr->NUM_SPEC->h_data))[0], (((double *)kerstr->DELTA_X->h_data))[0],            \
+      (((double *)kerstr->DELTA_Y->h_data))[0], (((double *)kerstr->DELTA_Z->h_data))[0],          \
+      (((double *)kerstr->Deltat->h_data))[0]
 
-#define DEFINE_CUDA_DUMP_ENE_NUM_KERNEL(P)                                                                             \
-  PSCMC_DEFINE_KERNEL_INIT(P)                                                                                          \
-  PSCMC_DEFINE_KERNEL_GET_STRUCT_LEN(P)                                                                                \
-  PSCMC_DEFINE_KERNEL_GET_XLEN(P, IDX_OPT_MAX)                                                                         \
-  PSCMC_DEFINE_KERNEL_GET_NUM_COMPUTE_UNITS(P, 64)                                                                     \
-  PSCMC_DEFINE_KERNEL_EXEC(P, CUDA_DUMP_ENE_NUM_ARGS)                                                                  \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, inoutput)                                                                           \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, xyzw)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_cache)                                                                           \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_xyzw)                                                                            \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, fieldE)                                                                             \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, fieldB)                                                                             \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, FoutJ)                                                                              \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, FoutEN)                                                                             \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, XLEN)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, YLEN)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ZLEN)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ovlp)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, numvec)                                                                             \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, num_ele)                                                                            \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, grid_cache_len)                                                                     \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_cache_length)                                                                    \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, Mass)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, Charge)                                                                             \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, SPEC)                                                                               \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, NUM_SPEC)                                                                           \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_X)                                                                            \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_Y)                                                                            \
-  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_Z)                                                                            \
+#define DEFINE_CUDA_DUMP_ENE_NUM_KERNEL(P)                                                         \
+  PSCMC_DEFINE_KERNEL_INIT(P)                                                                      \
+  PSCMC_DEFINE_KERNEL_GET_STRUCT_LEN(P)                                                            \
+  PSCMC_DEFINE_KERNEL_GET_XLEN(P, IDX_OPT_MAX)                                                     \
+  PSCMC_DEFINE_KERNEL_GET_NUM_COMPUTE_UNITS(P, 64)                                                 \
+  PSCMC_DEFINE_KERNEL_EXEC(P, CUDA_DUMP_ENE_NUM_ARGS)                                              \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, inoutput)                                                       \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, xyzw)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_cache)                                                       \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_xyzw)                                                        \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, fieldE)                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, fieldB)                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, FoutJ)                                                          \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, FoutEN)                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, XLEN)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, YLEN)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ZLEN)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, ovlp)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, numvec)                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, num_ele)                                                        \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, grid_cache_len)                                                 \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, cu_cache_length)                                                \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, Mass)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, Charge)                                                         \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, SPEC)                                                           \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, NUM_SPEC)                                                       \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_X)                                                        \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_Y)                                                        \
+  PSCMC_DEFINE_KERNEL_SET_PARAM(P, DELTA_Z)                                                        \
   PSCMC_DEFINE_KERNEL_SET_PARAM(P, Deltat)
 
 extern "C" {
@@ -62,26 +65,28 @@ DEFINE_CUDA_DUMP_ENE_NUM_KERNEL(cuda_dump_ene_num)
 #undef DEFINE_CUDA_DUMP_ENE_NUM_KERNEL
 #undef CUDA_DUMP_ENE_NUM_ARGS
 /* Device-side coordinate fixup after particle payload exchange. */
-__global__ static void sympic_particle_shift_kernel(
-    double *cu_cache, int *cu_xyzw, const int *frl,
-    long cu_cache_length, int dir, long xyz_len, int ptlen) {
+__global__ static void sympic_particle_shift_kernel(double *cu_cache, int *cu_xyzw, const int *frl,
+                                                    long cu_cache_length, int dir, long xyz_len,
+                                                    int ptlen) {
   long j = blockIdx.x;
   int cur_len = cu_xyzw[4 * j];
   int n = frl[j];
-  if (n <= 0) return;
+  if (n <= 0)
+    return;
   long base = j * cu_cache_length * 6;
   for (int i = threadIdx.x; i < n; i += blockDim.x)
     cu_cache[base + (cur_len + i) * ptlen + dir] += xyz_len;
-  if (threadIdx.x == 0) cu_xyzw[4 * j] = cur_len + n;
+  if (threadIdx.x == 0)
+    cu_xyzw[4 * j] = cur_len + n;
 }
 
-extern "C" int cuda_particle_shift_launch(
-    double *cu_cache, int *cu_xyzw, const int *frl,
-    long cu_cache_length, long numvec, int dir, long xyz_len,
-    int ptlen, int device_id) {
+extern "C" int cuda_particle_shift_launch(double *cu_cache, int *cu_xyzw, const int *frl,
+                                          long cu_cache_length, long numvec, int dir, long xyz_len,
+                                          int ptlen, int device_id) {
   cudaError_t err = cudaSetDevice(device_id);
-  if (err != cudaSuccess) return 1;
-  sympic_particle_shift_kernel<<<numvec, 256>>>(
-      cu_cache, cu_xyzw, frl, cu_cache_length, dir, xyz_len, ptlen);
+  if (err != cudaSuccess)
+    return 1;
+  sympic_particle_shift_kernel<<<numvec, 256>>>(cu_cache, cu_xyzw, frl, cu_cache_length, dir,
+                                                xyz_len, ptlen);
   return cudaGetLastError() == cudaSuccess ? 0 : 2;
 }

@@ -30,37 +30,24 @@ __device__ static double init_particle_uniform01(unsigned long long *state) {
   return ((x >> 11) + 1.0) * (1.0 / 9007199254740993.0);
 }
 
-__device__ static double init_particle_normal(unsigned long long *state, double mean, double sigma) {
+__device__ static double init_particle_normal(unsigned long long *state, double mean,
+                                              double sigma) {
   double u1 = init_particle_uniform01(state);
   double u2 = init_particle_uniform01(state);
-  return sigma * INIT_SQRT(-2.0 * INIT_LOG(u1)) *
-             INIT_COS(6.28318530717958647692 * u2) +
-         mean;
+  return sigma * INIT_SQRT(-2.0 * INIT_LOG(u1)) * INIT_COS(6.28318530717958647692 * u2) + mean;
 }
 
-__global__ void mapu_init_non_uni_particle_gpu(__DDR double *inoutput,
-                                               __DDR int *xyzw,
-                                               __DDR int *cu_xyzw,
-                                               long xlen,
-                                               long ylen,
-                                               long zlen,
-                                               long numvec,
-                                               long grid_cache_len,
-                                               int grid_load,
-                                               int ptlen,
-                                               double vt,
-                                               double vmax,
-                                               double vx0,
-                                               double vy0,
-                                               double vz0,
-                                               double tempx,
-                                               double tempy,
-                                               double tempz,
-                                               unsigned long long seed) {
+__global__ void mapu_init_non_uni_particle_gpu(__DDR double *inoutput, __DDR int *xyzw,
+                                               __DDR int *cu_xyzw, long xlen, long ylen, long zlen,
+                                               long numvec, long grid_cache_len, int grid_load,
+                                               int ptlen, double vt, double vmax, double vx0,
+                                               double vy0, double vz0, double tempx, double tempy,
+                                               double tempz, unsigned long long seed) {
   size_t idx = (size_t)blockIdx.x * (size_t)blockDim.x + (size_t)threadIdx.x;
   size_t cells = (size_t)xlen * (size_t)ylen * (size_t)zlen * (size_t)numvec;
   size_t total = cells * (size_t)grid_load;
-  if (idx >= total) return;
+  if (idx >= total)
+    return;
 
   long l = (long)(idx % (size_t)grid_load);
   size_t cell_id = idx / (size_t)grid_load;
@@ -75,7 +62,7 @@ __global__ void mapu_init_non_uni_particle_gpu(__DDR double *inoutput,
   xyzw[4 * cell_offset] = grid_load;
 
   __DDR double *xyzvs = inoutput + (size_t)cur_pcid * ((size_t)xlen * (size_t)ylen * (size_t)zlen) *
-                                 (size_t)(6 * grid_cache_len);
+                                       (size_t)(6 * grid_cache_len);
   xyzvs += (size_t)(6 * grid_cache_len) * (size_t)(xyzx + xlen * (xyzy + ylen * xyzz));
   xyzvs += (size_t)l * (size_t)ptlen;
 

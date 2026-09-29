@@ -11,7 +11,6 @@ int build_Field_compute_unit_from_seq_field(Field3D_Seq *pthis, Field3D_Seq *inp
 
   // defined from class Field3D_Seq
 
-
   //====================Field3D_Seq
 #ifdef SYMPIC_CUDA
   int num_cu = (cuda_blas_sum_get_num_compute_units(NULL));
@@ -30,7 +29,6 @@ int build_Field_compute_unit_from_seq_field(Field3D_Seq *pthis, Field3D_Seq *inp
 int build_Field_compute_unit_from_mpi_field(Field3D_MPI *pthis, Field3D_MPI *input_E) {
 
   // defined from class Field3D_MPI
-
 
   //====================Field3D_MPI
   ((pthis)[0] = (input_E)[0]);

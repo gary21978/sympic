@@ -2,8 +2,9 @@
 
 static size_t cid;
 
-int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, long s, long x, long y, long z, long dx,
-                          long dy, long dz, long dx2, long dy2, long dz2, long dx3, long dy3, long dz3) {
+int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, long s, long x,
+                          long y, long z, long dx, long dy, long dz, long dx2, long dy2, long dz2,
+                          long dx3, long dy3, long dz3) {
   if ((s == 1)) {
     long rid = (x + (xlen * (y + (ylen * z))));
 
@@ -49,28 +50,34 @@ int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, 
       (z = (z - (s * dz3)));
     }
 
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, x, y, z, dx2, dy2, dz2, dx3, dy3, dz3, dx, dy, dz);
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx)), (y + (s * dy)), (z + (s * dz)), dx3, dy3,
-                          dz3, dx, dy, dz, dx2, dy2, dz2);
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx + dx2))), (y + (s * (dy + dy2))),
-                          (z + (s * (dz + dz2))), dx3, dy3, dz3, dx, dy, dz, dx2, dy2, dz2);
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx2)), (y + (s * dy2)), (z + (s * dz2)), -(dx),
-                          -(dy), -(dz), -(dx2), -(dy2), -(dz2), dx3, dy3, dz3);
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx2 + dx3))), (y + (s * (dy2 + dy3))),
-                          (z + (s * (dz2 + dz3))), -(dx), -(dy), -(dz), -(dx2), -(dy2), -(dz2), dx3, dy3, dz3);
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, x, y, z, dx2, dy2, dz2, dx3, dy3, dz3,
+                          dx, dy, dz);
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx)), (y + (s * dy)),
+                          (z + (s * dz)), dx3, dy3, dz3, dx, dy, dz, dx2, dy2, dz2);
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx + dx2))),
+                          (y + (s * (dy + dy2))), (z + (s * (dz + dz2))), dx3, dy3, dz3, dx, dy, dz,
+                          dx2, dy2, dz2);
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx2)), (y + (s * dy2)),
+                          (z + (s * dz2)), -(dx), -(dy), -(dz), -(dx2), -(dy2), -(dz2), dx3, dy3,
+                          dz3);
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx2 + dx3))),
+                          (y + (s * (dy2 + dy3))), (z + (s * (dz2 + dz3))), -(dx), -(dy), -(dz),
+                          -(dx2), -(dy2), -(dz2), dx3, dy3, dz3);
     hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx + (dx2 + dx3)))),
-                          (y + (s * (dy + (dy2 + dy3)))), (z + (s * (dz + (dz2 + dz3)))), -(dx3), -(dy3), -(dz3), dx,
-                          dy, dz, -(dx2), -(dy2), -(dz2));
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx + dx3))), (y + (s * (dy + dy3))),
-                          (z + (s * (dz + dz3))), -(dx3), -(dy3), -(dz3), dx, dy, dz, -(dx2), -(dy2), -(dz2));
-    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx3)), (y + (s * dy3)), (z + (s * dz3)), dx2,
-                          dy2, dz2, -(dx3), -(dy3), -(dz3), -(dx), -(dy), -(dz));
+                          (y + (s * (dy + (dy2 + dy3)))), (z + (s * (dz + (dz2 + dz3)))), -(dx3),
+                          -(dy3), -(dz3), dx, dy, dz, -(dx2), -(dy2), -(dz2));
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * (dx + dx3))),
+                          (y + (s * (dy + dy3))), (z + (s * (dz + dz3))), -(dx3), -(dy3), -(dz3),
+                          dx, dy, dz, -(dx2), -(dy2), -(dz2));
+    hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, (x + (s * dx3)), (y + (s * dy3)),
+                          (z + (s * dz3)), dx2, dy2, dz2, -(dx3), -(dy3), -(dz3), -(dx), -(dy),
+                          -(dz));
   }
 
   return 0;
 }
-int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y, long xi, long xj, long yi, long yj,
-                          long xlen) {
+int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y, long xi, long xj,
+                          long yi, long yj, long xlen) {
   if ((n == 0)) {
     long realx = (((x + ((xi + xj) / 2)) - 1) / 2);
 
@@ -88,16 +95,18 @@ int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y,
     (y = (y * 2));
     hilbert_curve_2d_core(modifiedid, ori_id, n, x, y, yi, yj, xi, xj, xlen);
     hilbert_curve_2d_core(modifiedid, ori_id, n, (x + xi), (y + xj), xi, xj, yi, yj, xlen);
-    hilbert_curve_2d_core(modifiedid, ori_id, n, ((x + xi) + yi), (y + (xj + yj)), xi, xj, yi, yj, xlen);
-    hilbert_curve_2d_core(modifiedid, ori_id, n, (x + (xi + (2 * yi))), (y + (xj + (2 * yj))), -(yi), -(yj), -(xi),
-                          -(xj), xlen);
+    hilbert_curve_2d_core(modifiedid, ori_id, n, ((x + xi) + yi), (y + (xj + yj)), xi, xj, yi, yj,
+                          xlen);
+    hilbert_curve_2d_core(modifiedid, ori_id, n, (x + (xi + (2 * yi))), (y + (xj + (2 * yj))),
+                          -(yi), -(yj), -(xi), -(xj), xlen);
   }
 
   return 0;
 }
 int hilbert_curve_3d(long *modifiedid, long *ori_id, int n, size_t xlen, size_t ylen) {
   (cid = 0);
-  return hilbert_curve_3d_core(modifiedid, ori_id, (1 << n), xlen, ylen, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+  return hilbert_curve_3d_core(modifiedid, ori_id, (1 << n), xlen, ylen, 0, 0, 0, 1, 0, 0, 0, 1, 0,
+                               0, 0, 1);
 }
 int hilbert_curve_2d(long *modifiedid, long *ori_id, int n, size_t xlen) {
   (cid = 0);

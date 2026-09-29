@@ -10,8 +10,9 @@
 #include "kernel_includes.h"
 #include "space_filling_curve.h"
 
-int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t *ori_vec, long *num_thread_array,
-                        int64_t *local_tid_array, int *cd_performances, int num_cds_per_mpi_proc) {
+int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t *ori_vec,
+                        long *num_thread_array, int64_t *local_tid_array, int *cd_performances,
+                        int num_cds_per_mpi_proc) {
   long *cplx_array = malloc((sizeof(long) * num_thread));
 
   long *cplx_ori_array = malloc((sizeof(long) * num_thread));
@@ -45,8 +46,9 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
     long i;
 
     for ((i = 0); (i < num_thread); (i = (i + 1))) {
-      ((cplx_array)[i] = ((fp) ? ((cplx_ori_array)[(ori_vec)[i]])
-                               : (floor(call_CAL_FUN_ONE_PARA("get_thread_complexity", (ori_vec)[i])))));
+      ((cplx_array)[i] =
+           ((fp) ? ((cplx_ori_array)[(ori_vec)[i]])
+                 : (floor(call_CAL_FUN_ONE_PARA("get_thread_complexity", (ori_vec)[i])))));
       assert(((cplx_array)[i] >= 0));
       (total_complexity = (total_complexity + (cplx_array)[i]));
     }
@@ -76,7 +78,8 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
           (current_perf_all = (current_perf_all + (cd_performances)[j]));
         }
       }
-      if (((global_cplx * ((num_proc / num_cds_per_mpi_proc) * total_perf)) >= (current_perf_all * total_complexity))) {
+      if (((global_cplx * ((num_proc / num_cds_per_mpi_proc) * total_perf)) >=
+           (current_perf_all * total_complexity))) {
         if ((current_pid < num_proc)) {
           ((num_thread_array)[current_pid] = i);
         }
@@ -97,8 +100,8 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
   free(cplx_ori_array);
   return 0;
 }
-int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num_thread_array, long *local_tid_array,
-                     int *cd_performances, int num_cds_per_mpi_proc) {
+int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num_thread_array,
+                     long *local_tid_array, int *cd_performances, int num_cds_per_mpi_proc) {
   unsigned long num_mpi_proc = (num_proc / num_cds_per_mpi_proc);
 
   long i = 0;
@@ -140,8 +143,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
             ((1.0 * ((cd_performances)[k] * num_t_one_mpi_proc)) / total_perf);
 
         long cur_proc_num_threads =
-            floor((cur_proc_num_threads_f +
-                   ((1 - (1.0 / num_cds_per_mpi_proc)) + 0.01)));
+            floor((cur_proc_num_threads_f + ((1 - (1.0 / num_cds_per_mpi_proc)) + 0.01)));
 
         if ((k == (num_cds_per_mpi_proc - 1))) {
           (global_tid = (tid_min + num_t_one_mpi_proc));
@@ -188,12 +190,14 @@ long find_the_proc_id(long tid, unsigned long num_proc, long *num_thread_array) 
       return find_the_proc_id(tid, (num_proc / 2), num_thread_array);
 
     } else {
-      return ((num_proc / 2) + find_the_proc_id(tid, (num_proc - (num_proc / 2)), (num_thread_array + (num_proc / 2))));
+      return ((num_proc / 2) + find_the_proc_id(tid, (num_proc - (num_proc / 2)),
+                                                (num_thread_array + (num_proc / 2))));
     }
   }
 }
-int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type, long num_proc, long *ovvec,
-                           long *ori_vec, long *num_thread_array, long *local_tid_array) {
+int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type, long num_proc,
+                           long *ovvec, long *ori_vec, long *num_thread_array,
+                           long *local_tid_array) {
 
   // defined from class Field3D_Seq
 
@@ -203,7 +207,6 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
 
   long zlen = (pthis)->zlen;
 
-
   long numvec = (pthis)->numvec;
 
   long x_num_thread_block = (pthis)->x_num_thread_block;
@@ -211,7 +214,6 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
   long y_num_thread_block = (pthis)->y_num_thread_block;
 
   long z_num_thread_block = (pthis)->z_num_thread_block;
-
 
   void *cur_rankx_pscmc = (pthis)->cur_rankx_pscmc;
 
@@ -240,7 +242,6 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
   long *adj_processes = (pthis)->adj_processes;
 
   long *adj_local_tid = (pthis)->adj_local_tid;
-
 
   //====================Field3D_Seq
   long onen = (1 << n);
@@ -345,9 +346,10 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
                 long adj_id_pre =
                     (0 +
                      (1 * ((((bxyzx + (xyzx - 1)) + x_num_thread_block) % x_num_thread_block) +
-                           (x_num_thread_block * ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
-                                                  (y_num_thread_block * (((bxyzz + (xyzz - 1)) + z_num_thread_block) %
-                                                                         z_num_thread_block)))))));
+                           (x_num_thread_block *
+                            ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
+                             (y_num_thread_block * (((bxyzz + (xyzz - 1)) + z_num_thread_block) %
+                                                    z_num_thread_block)))))));
 
                 long cur_adj_id = (ovvec)[adj_id_pre];
 
@@ -355,7 +357,8 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
                 long cur_adj_pid = find_the_proc_id(cur_adj_id, num_proc, num_thread_array);
 
                 ((adj_processes)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = cur_adj_pid);
-                ((adj_local_tid)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = (local_tid_array)[cur_adj_id]);
+                ((adj_local_tid)[((i * NUM_SYNC_LAYER) + xyzlocalall)] =
+                     (local_tid_array)[cur_adj_id]);
               }
             }
           }

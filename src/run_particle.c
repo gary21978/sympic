@@ -23,17 +23,13 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   Field3D_Seq *pfieldB = (pthis)->pfieldB;
 
-
   Field3D_Seq *pFoutJ = (pthis)->pFoutJ;
 
-
   Field3D_Seq *pFoutEN = (pthis)->pFoutEN;
-
 
   double Mass = (pthis)->Mass;
 
   double Charge = (pthis)->Charge;
-
 
   long grid_cache_len = (pthis)->grid_cache_len;
 
@@ -49,7 +45,6 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   void *cu_xyzw = (pthis)->cu_xyzw;
 
-
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
@@ -61,21 +56,17 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   long zlen = (pfield)->zlen;
 
-
   long numvec = (pfield)->numvec;
-
 
   int ovlp = (pfield)->ovlp;
 
   int num_ele = (pfield)->num_ele;
-
 
   double delta_x = (pfield)->delta_x;
 
   double delta_y = (pfield)->delta_y;
 
   double delta_z = (pfield)->delta_z;
-
 
   //====================Field3D_Seq
   long the_xlen = (cuda_dump_ene_num_get_xlen());
@@ -97,7 +88,6 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
   void *fieldB = (pfieldB)->main_data;
 
   void *FoutJ = (pFoutJ)->main_data;
-
 
   void *FoutEN = (pFoutEN)->main_data;
 
@@ -153,12 +143,14 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
-  cuda_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel, &(cuda_alloc_prefix_cu_cache_length));
+  cuda_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel,
+                                                       &(cuda_alloc_prefix_cu_cache_length));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
-  cuda_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel, &(cuda_alloc_prefix_grid_cache_len));
+  cuda_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel,
+                                                      &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -220,17 +212,13 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   Field3D_Seq *pfieldB = (pthis)->pfieldB;
 
-
   Field3D_Seq *pFoutJ = (pthis)->pFoutJ;
 
-
   Field3D_Seq *pFoutEN = (pthis)->pFoutEN;
-
 
   double Mass = (pthis)->Mass;
 
   double Charge = (pthis)->Charge;
-
 
   long grid_cache_len = (pthis)->grid_cache_len;
 
@@ -246,7 +234,6 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   void *cu_xyzw = (pthis)->cu_xyzw;
 
-
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
@@ -258,21 +245,17 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   long zlen = (pfield)->zlen;
 
-
   long numvec = (pfield)->numvec;
-
 
   int ovlp = (pfield)->ovlp;
 
   int num_ele = (pfield)->num_ele;
-
 
   double delta_x = (pfield)->delta_x;
 
   double delta_y = (pfield)->delta_y;
 
   double delta_z = (pfield)->delta_z;
-
 
   //====================Field3D_Seq
   long the_xlen = (mapu_dump_ene_num_get_xlen());
@@ -294,7 +277,6 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
   void *fieldB = (pfieldB)->main_data;
 
   void *FoutJ = (pFoutJ)->main_data;
-
 
   void *FoutEN = (pFoutEN)->main_data;
 
@@ -350,12 +332,14 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
-  mapu_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel, &(mapu_alloc_prefix_cu_cache_length));
+  mapu_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel,
+                                                       &(mapu_alloc_prefix_cu_cache_length));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
-  mapu_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel, &(mapu_alloc_prefix_grid_cache_len));
+  mapu_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel,
+                                                      &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -411,11 +395,9 @@ int dump_ene_num_all(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, dou
 
   // defined from class One_Particle_Collection
 
-
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-
 
   //====================Field3D_Seq
 #ifdef SYMPIC_CUDA
@@ -432,9 +414,7 @@ int dump_ene_num_mpi(Particle_in_Cell_MPI *pthis, double dt0) {
   // defined from class Particle_in_Cell_MPI
   Field3D_MPI MPI_fieldE = (pthis)->MPI_fieldE;
 
-
   int *o_particle_type = (pthis)->o_particle_type;
-
 
   //====================Particle_in_Cell_MPI
   int num_spec = (MPI_fieldE).num_spec;

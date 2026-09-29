@@ -1,40 +1,34 @@
 #pragma once
 
-typedef enum
-{
-	PS_INT_NUM,
-	PS_LONG_NUM,
-	PS_FLOAT_NUM,
-	PS_DOUBLE_NUM,
-	PS_CHAR,
-	PS_SHORT_NUM
+typedef enum {
+  PS_INT_NUM,
+  PS_LONG_NUM,
+  PS_FLOAT_NUM,
+  PS_DOUBLE_NUM,
+  PS_CHAR,
+  PS_SHORT_NUM
 } pscmc_data_types;
 
-
-#define ERROPT(err, x)                                                     \
-	{                                                                      \
-		if (err != cudaSuccess)                                            \
-		{                                                                  \
-			fprintf(stderr, "Error:%s\n%s\n", cudaGetErrorString(err), x); \
-			assert(0);                                                     \
-		}                                                                  \
-	}
-typedef struct
-{
-	int device_id;
-	int num_dev;
+#define ERROPT(err, x)                                                                             \
+  {                                                                                                \
+    if (err != cudaSuccess) {                                                                      \
+      fprintf(stderr, "Error:%s\n%s\n", cudaGetErrorString(err), x);                               \
+      assert(0);                                                                                   \
+    }                                                                                              \
+  }
+typedef struct {
+  int device_id;
+  int num_dev;
 } mapu_pscmc_env;
-typedef struct
-{
-	char *h_data;
-	char *d_data;
-	char *d_one_mem;
-	int type;
-	size_t len;
-	mapu_pscmc_env *pe;
-	int type_len;
+typedef struct {
+  char *h_data;
+  char *d_data;
+  char *d_one_mem;
+  int type;
+  size_t len;
+  mapu_pscmc_env *pe;
+  int type_len;
 } mapu_pscmc_mem;
-
 
 #ifdef __cplusplus
 extern "C" {

@@ -9,10 +9,9 @@
 #include "space_filling_curve.h"
 #include "sync_fields.h"
 
-int set_Field3D_Seq(Field3D_Seq *pthis, void *pe, double delta_x,
-                    double delta_y, double delta_z, long xlen, long ylen,
-                    long zlen, long numvec, int ovlp, int num_ele, int CD_type,
-                    long x_num_thread_block, long y_num_thread_block,
+int set_Field3D_Seq(Field3D_Seq *pthis, void *pe, double delta_x, double delta_y, double delta_z,
+                    long xlen, long ylen, long zlen, long numvec, int ovlp, int num_ele,
+                    int CD_type, long x_num_thread_block, long y_num_thread_block,
                     long z_num_thread_block, long global_pid) {
   ((pthis)->pe = pe);
   ((pthis)->delta_x = delta_x);
@@ -107,12 +106,10 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   int i;
 
   if (is_init_kernels) {
-    ((pthis)->blas_yiszero_synced_kernel =
-         malloc((sizeof(cuda_blas_yiszero_synced_struct))));
+    ((pthis)->blas_yiszero_synced_kernel = malloc((sizeof(cuda_blas_yiszero_synced_struct))));
     cuda_blas_yiszero_synced_init(pe, (pthis)->blas_yiszero_synced_kernel);
 
-    ((pthis)->blas_mulxy_numele3_kernel =
-         malloc((sizeof(cuda_blas_mulxy_numele3_struct))));
+    ((pthis)->blas_mulxy_numele3_kernel = malloc((sizeof(cuda_blas_mulxy_numele3_struct))));
     cuda_blas_mulxy_numele3_init(pe, (pthis)->blas_mulxy_numele3_kernel);
 
     ((pthis)->blas_yiszero_kernel = malloc((sizeof(cuda_blas_yiszero_struct))));
@@ -120,61 +117,51 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
     ((pthis)->blas_yiszero_full_block_kernel =
          malloc((sizeof(cuda_blas_yiszero_full_block_struct))));
-    cuda_blas_yiszero_full_block_init(pe,
-                                      (pthis)->blas_yiszero_full_block_kernel);
+    cuda_blas_yiszero_full_block_init(pe, (pthis)->blas_yiszero_full_block_kernel);
 
-    ((pthis)->blas_yisconst_kernel =
-         malloc((sizeof(cuda_blas_yisconst_struct))));
+    ((pthis)->blas_yisconst_kernel = malloc((sizeof(cuda_blas_yisconst_struct))));
     cuda_blas_yisconst_init(pe, (pthis)->blas_yisconst_kernel);
 
     ((pthis)->blas_yisconst_full_block_kernel =
          malloc((sizeof(cuda_blas_yisconst_full_block_struct))));
-    cuda_blas_yisconst_full_block_init(
-        pe, (pthis)->blas_yisconst_full_block_kernel);
+    cuda_blas_yisconst_full_block_init(pe, (pthis)->blas_yisconst_full_block_kernel);
 
-    ((pthis)->blas_get_ITG_Potential_kernel =
-         malloc((sizeof(cuda_blas_get_ITG_Potential_struct))));
-    cuda_blas_get_ITG_Potential_init(pe,
-                                     (pthis)->blas_get_ITG_Potential_kernel);
+    ((pthis)->blas_get_ITG_Potential_kernel = malloc((sizeof(cuda_blas_get_ITG_Potential_struct))));
+    cuda_blas_get_ITG_Potential_init(pe, (pthis)->blas_get_ITG_Potential_kernel);
 
     ((pthis)->blas_get_ITG_Potential_full_block_kernel =
          malloc((sizeof(cuda_blas_get_ITG_Potential_full_block_struct))));
-    cuda_blas_get_ITG_Potential_full_block_init(
-        pe, (pthis)->blas_get_ITG_Potential_full_block_kernel);
+    cuda_blas_get_ITG_Potential_full_block_init(pe,
+                                                (pthis)->blas_get_ITG_Potential_full_block_kernel);
 
     ((pthis)->blas_invy_kernel = malloc((sizeof(cuda_blas_invy_struct))));
     cuda_blas_invy_init(pe, (pthis)->blas_invy_kernel);
 
-    ((pthis)->blas_invy_full_block_kernel =
-         malloc((sizeof(cuda_blas_invy_full_block_struct))));
+    ((pthis)->blas_invy_full_block_kernel = malloc((sizeof(cuda_blas_invy_full_block_struct))));
     cuda_blas_invy_full_block_init(pe, (pthis)->blas_invy_full_block_kernel);
 
     ((pthis)->blas_axpby_kernel = malloc((sizeof(cuda_blas_axpby_struct))));
     cuda_blas_axpby_init(pe, (pthis)->blas_axpby_kernel);
 
-    ((pthis)->blas_axpby_full_block_kernel =
-         malloc((sizeof(cuda_blas_axpby_full_block_struct))));
+    ((pthis)->blas_axpby_full_block_kernel = malloc((sizeof(cuda_blas_axpby_full_block_struct))));
     cuda_blas_axpby_full_block_init(pe, (pthis)->blas_axpby_full_block_kernel);
 
     ((pthis)->blas_axpy_kernel = malloc((sizeof(cuda_blas_axpy_struct))));
     cuda_blas_axpy_init(pe, (pthis)->blas_axpy_kernel);
 
-    ((pthis)->blas_axpy_full_block_kernel =
-         malloc((sizeof(cuda_blas_axpy_full_block_struct))));
+    ((pthis)->blas_axpy_full_block_kernel = malloc((sizeof(cuda_blas_axpy_full_block_struct))));
     cuda_blas_axpy_full_block_init(pe, (pthis)->blas_axpy_full_block_kernel);
 
     ((pthis)->blas_yisax_kernel = malloc((sizeof(cuda_blas_yisax_struct))));
     cuda_blas_yisax_init(pe, (pthis)->blas_yisax_kernel);
 
-    ((pthis)->blas_yisax_full_block_kernel =
-         malloc((sizeof(cuda_blas_yisax_full_block_struct))));
+    ((pthis)->blas_yisax_full_block_kernel = malloc((sizeof(cuda_blas_yisax_full_block_struct))));
     cuda_blas_yisax_full_block_init(pe, (pthis)->blas_yisax_full_block_kernel);
 
     ((pthis)->blas_mulxy_kernel = malloc((sizeof(cuda_blas_mulxy_struct))));
     cuda_blas_mulxy_init(pe, (pthis)->blas_mulxy_kernel);
 
-    ((pthis)->blas_mulxy_full_block_kernel =
-         malloc((sizeof(cuda_blas_mulxy_full_block_struct))));
+    ((pthis)->blas_mulxy_full_block_kernel = malloc((sizeof(cuda_blas_mulxy_full_block_struct))));
     cuda_blas_mulxy_full_block_init(pe, (pthis)->blas_mulxy_full_block_kernel);
 
     ((pthis)->blas_findmax_kernel = malloc((sizeof(cuda_blas_findmax_struct))));
@@ -182,45 +169,36 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
     ((pthis)->blas_findmax_full_block_kernel =
          malloc((sizeof(cuda_blas_findmax_full_block_struct))));
-    cuda_blas_findmax_full_block_init(pe,
-                                      (pthis)->blas_findmax_full_block_kernel);
+    cuda_blas_findmax_full_block_init(pe, (pthis)->blas_findmax_full_block_kernel);
 
     ((pthis)->blas_dot_kernel = malloc((sizeof(cuda_blas_dot_struct))));
     cuda_blas_dot_init(pe, (pthis)->blas_dot_kernel);
 
-    ((pthis)->blas_dot_full_block_kernel =
-         malloc((sizeof(cuda_blas_dot_full_block_struct))));
+    ((pthis)->blas_dot_full_block_kernel = malloc((sizeof(cuda_blas_dot_full_block_struct))));
     cuda_blas_dot_full_block_init(pe, (pthis)->blas_dot_full_block_kernel);
 
     ((pthis)->blas_sum_kernel = malloc((sizeof(cuda_blas_sum_struct))));
     cuda_blas_sum_init(pe, (pthis)->blas_sum_kernel);
 
-    ((pthis)->blas_sum_full_block_kernel =
-         malloc((sizeof(cuda_blas_sum_full_block_struct))));
+    ((pthis)->blas_sum_full_block_kernel = malloc((sizeof(cuda_blas_sum_full_block_struct))));
     cuda_blas_sum_full_block_init(pe, (pthis)->blas_sum_full_block_kernel);
 
-    ((pthis)->blas_yisax_shrink_kernel =
-         malloc((sizeof(cuda_blas_yisax_shrink_struct))));
+    ((pthis)->blas_yisax_shrink_kernel = malloc((sizeof(cuda_blas_yisax_shrink_struct))));
     cuda_blas_yisax_shrink_init(pe, (pthis)->blas_yisax_shrink_kernel);
 
-    ((pthis)->blas_yisax_enlarge_kernel =
-         malloc((sizeof(cuda_blas_yisax_enlarge_struct))));
+    ((pthis)->blas_yisax_enlarge_kernel = malloc((sizeof(cuda_blas_yisax_enlarge_struct))));
     cuda_blas_yisax_enlarge_init(pe, (pthis)->blas_yisax_enlarge_kernel);
 
-    ((pthis)->blas_axpy_shrink_kernel =
-         malloc((sizeof(cuda_blas_axpy_shrink_struct))));
+    ((pthis)->blas_axpy_shrink_kernel = malloc((sizeof(cuda_blas_axpy_shrink_struct))));
     cuda_blas_axpy_shrink_init(pe, (pthis)->blas_axpy_shrink_kernel);
 
-    ((pthis)->blas_axpy_enlarge_kernel =
-         malloc((sizeof(cuda_blas_axpy_enlarge_struct))));
+    ((pthis)->blas_axpy_enlarge_kernel = malloc((sizeof(cuda_blas_axpy_enlarge_struct))));
     cuda_blas_axpy_enlarge_init(pe, (pthis)->blas_axpy_enlarge_kernel);
 
-    ((pthis)->blas_axpby_shrink_kernel =
-         malloc((sizeof(cuda_blas_axpby_shrink_struct))));
+    ((pthis)->blas_axpby_shrink_kernel = malloc((sizeof(cuda_blas_axpby_shrink_struct))));
     cuda_blas_axpby_shrink_init(pe, (pthis)->blas_axpby_shrink_kernel);
 
-    ((pthis)->blas_axpby_enlarge_kernel =
-         malloc((sizeof(cuda_blas_axpby_enlarge_struct))));
+    ((pthis)->blas_axpby_enlarge_kernel = malloc((sizeof(cuda_blas_axpby_enlarge_struct))));
     cuda_blas_axpby_enlarge_init(pe, (pthis)->blas_axpby_enlarge_kernel);
   }
 
@@ -261,8 +239,7 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
       (ovlpzmax = zblock);
     }
 
-    size_t ovlp_all_len =
-        (ovlpxmax * (ovlpymax * (ovlpzmax * (num_ele * numvec))));
+    size_t ovlp_all_len = (ovlpxmax * (ovlpymax * (ovlpzmax * (num_ele * numvec))));
 
     (((pthis)->sync_layer_pscmc)[i] = malloc((sizeof(cuda_pscmc_mem) * 1)));
     (((pthis)->swap_layer_pscmc)[i] = malloc((sizeof(cuda_pscmc_mem) * 1)));
@@ -270,16 +247,12 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
       (ovleal_aio = (ovleal_aio + ovlp_all_len));
 
     } else {
-      cuda_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[i], PS_DOUBLE_NUM,
-                          ovlp_all_len);
-      cuda_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[i], PS_DOUBLE_NUM,
-                          ovlp_all_len);
+      cuda_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[i], PS_DOUBLE_NUM, ovlp_all_len);
+      cuda_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[i], PS_DOUBLE_NUM, ovlp_all_len);
     }
   }
-  cuda_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[0], PS_DOUBLE_NUM,
-                      ovleal_aio);
-  cuda_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[0], PS_DOUBLE_NUM,
-                      ovleal_aio);
+  cuda_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[0], PS_DOUBLE_NUM, ovleal_aio);
+  cuda_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[0], PS_DOUBLE_NUM, ovleal_aio);
   ((pthis)->main_data = ((pthis)->sync_layer_pscmc)[(NUM_SYNC_LAYER / 2)]);
   ((pthis)->rdcd = malloc((sizeof(cuda_pscmc_mem) * 1)));
   cuda_pscmc_mem_init(pe, (pthis)->rdcd, PS_DOUBLE_NUM, numvec);
@@ -400,8 +373,7 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   return 0;
 }
 
-int cuda_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                                    int is_sync_layer) {
+int cuda_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -428,48 +400,46 @@ int cuda_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[2],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[2],
-                                                            main_data);
+      (sync_kernels)[2], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[2], main_data);
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[2], &(cuda_alloc_prefix_numvec));
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec((sync_kernels)[2],
+                                                           &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[2], &(cuda_alloc_prefix_num_ele));
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[2],
+                                                            &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[2], &(cuda_alloc_prefix_xblock));
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock((sync_kernels)[2],
+                                                           &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[2], &(cuda_alloc_prefix_yblock));
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock((sync_kernels)[2],
+                                                           &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[2], &(cuda_alloc_prefix_zblock));
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock((sync_kernels)[2],
+                                                           &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[2], &(cuda_alloc_prefix_ovlp));
-  cuda_merge_ovlp_m2o_all_in_one_exec(
-      (sync_kernels)[2], cuda_merge_ovlp_m2o_all_in_one_get_xlen(), numvec);
+  cuda_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[2],
+                                                         &(cuda_alloc_prefix_ovlp));
+  cuda_merge_ovlp_m2o_all_in_one_exec((sync_kernels)[2], cuda_merge_ovlp_m2o_all_in_one_get_xlen(),
+                                      numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_xblock));
@@ -478,8 +448,7 @@ int cuda_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ovlp));
 }
 
-int cuda_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                                    int is_sync_layer) {
+int cuda_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -506,48 +475,46 @@ int cuda_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[5],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[5],
-                                                            main_data);
+      (sync_kernels)[5], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[5], main_data);
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[5], &(cuda_alloc_prefix_numvec));
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec((sync_kernels)[5],
+                                                           &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[5], &(cuda_alloc_prefix_num_ele));
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[5],
+                                                            &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[5], &(cuda_alloc_prefix_xblock));
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock((sync_kernels)[5],
+                                                           &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[5], &(cuda_alloc_prefix_yblock));
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock((sync_kernels)[5],
+                                                           &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[5], &(cuda_alloc_prefix_zblock));
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock((sync_kernels)[5],
+                                                           &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[5], &(cuda_alloc_prefix_ovlp));
-  cuda_merge_ovlp_o2m_all_in_one_exec(
-      (sync_kernels)[5], cuda_merge_ovlp_o2m_all_in_one_get_xlen(), numvec);
+  cuda_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[5],
+                                                         &(cuda_alloc_prefix_ovlp));
+  cuda_merge_ovlp_o2m_all_in_one_exec((sync_kernels)[5], cuda_merge_ovlp_o2m_all_in_one_get_xlen(),
+                                      numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_xblock));
@@ -556,8 +523,7 @@ int cuda_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ovlp));
 }
 
-int cuda_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                                   int is_sync_layer) {
+int cuda_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -584,48 +550,46 @@ int cuda_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[8],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[8],
-                                                           main_data);
+      (sync_kernels)[8], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[8], main_data);
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[8], &(cuda_alloc_prefix_numvec));
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec((sync_kernels)[8],
+                                                          &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[8], &(cuda_alloc_prefix_num_ele));
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[8],
+                                                           &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[8], &(cuda_alloc_prefix_xblock));
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock((sync_kernels)[8],
+                                                          &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[8], &(cuda_alloc_prefix_yblock));
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock((sync_kernels)[8],
+                                                          &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[8], &(cuda_alloc_prefix_zblock));
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock((sync_kernels)[8],
+                                                          &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[8], &(cuda_alloc_prefix_ovlp));
-  cuda_sync_ovlp_m2o_all_in_one_exec(
-      (sync_kernels)[8], cuda_sync_ovlp_m2o_all_in_one_get_xlen(), numvec);
+  cuda_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[8],
+                                                        &(cuda_alloc_prefix_ovlp));
+  cuda_sync_ovlp_m2o_all_in_one_exec((sync_kernels)[8], cuda_sync_ovlp_m2o_all_in_one_get_xlen(),
+                                     numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_xblock));
@@ -634,8 +598,7 @@ int cuda_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ovlp));
 }
 
-int cuda_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                                   int is_sync_layer) {
+int cuda_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -662,48 +625,46 @@ int cuda_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[11],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[11],
-                                                           main_data);
+      (sync_kernels)[11], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[11], main_data);
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[11], &(cuda_alloc_prefix_numvec));
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec((sync_kernels)[11],
+                                                          &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[11], &(cuda_alloc_prefix_num_ele));
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[11],
+                                                           &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[11], &(cuda_alloc_prefix_xblock));
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock((sync_kernels)[11],
+                                                          &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[11], &(cuda_alloc_prefix_yblock));
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock((sync_kernels)[11],
+                                                          &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[11], &(cuda_alloc_prefix_zblock));
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock((sync_kernels)[11],
+                                                          &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[11], &(cuda_alloc_prefix_ovlp));
-  cuda_sync_ovlp_o2m_all_in_one_exec(
-      (sync_kernels)[11], cuda_sync_ovlp_o2m_all_in_one_get_xlen(), numvec);
+  cuda_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[11],
+                                                        &(cuda_alloc_prefix_ovlp));
+  cuda_sync_ovlp_o2m_all_in_one_exec((sync_kernels)[11], cuda_sync_ovlp_o2m_all_in_one_get_xlen(),
+                                     numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_xblock));
@@ -712,8 +673,7 @@ int cuda_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ovlp));
 }
 
-int cuda_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
-                                double DT) {
+int cuda_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0, double DT) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -747,10 +707,8 @@ int cuda_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
   void *main_data = (pthis)->main_data;
 
   //====================Field3D_Seq
-  cuda_YEE_CURL_R_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[0],
-                                             main_data);
-  cuda_YEE_CURL_R_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[0],
-                                          (inB0)->main_data);
+  cuda_YEE_CURL_R_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[0], main_data);
+  cuda_YEE_CURL_R_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[0], (inB0)->main_data);
   cuda_YEE_CURL_R_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[0], xoffset);
   cuda_YEE_CURL_R_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[0], yoffset);
   cuda_YEE_CURL_R_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[0], zoffset);
@@ -772,64 +730,54 @@ int cuda_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
-  cuda_YEE_CURL_R_scmc_set_parameter_y_cpu_core(
-      (geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_y_cpu_core));
+  cuda_YEE_CURL_R_scmc_set_parameter_y_cpu_core((geo_yeefdtd_kernels)[0],
+                                                &(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
-  cuda_YEE_CURL_R_scmc_set_parameter_numvec((geo_yeefdtd_kernels)[0],
-                                            &(cuda_alloc_prefix_numvec));
+  cuda_YEE_CURL_R_scmc_set_parameter_numvec((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
-  cuda_YEE_CURL_R_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[0],
-                                          &(cuda_alloc_prefix_XLEN));
+  cuda_YEE_CURL_R_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
-  cuda_YEE_CURL_R_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[0],
-                                          &(cuda_alloc_prefix_YLEN));
+  cuda_YEE_CURL_R_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
-  cuda_YEE_CURL_R_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[0],
-                                          &(cuda_alloc_prefix_ZLEN));
+  cuda_YEE_CURL_R_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_YEE_CURL_R_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[0],
-                                          &(cuda_alloc_prefix_ovlp));
+  cuda_YEE_CURL_R_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
-  cuda_YEE_CURL_R_scmc_set_parameter_xblock((geo_yeefdtd_kernels)[0],
-                                            &(cuda_alloc_prefix_xblock));
+  cuda_YEE_CURL_R_scmc_set_parameter_xblock((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
-  cuda_YEE_CURL_R_scmc_set_parameter_yblock((geo_yeefdtd_kernels)[0],
-                                            &(cuda_alloc_prefix_yblock));
+  cuda_YEE_CURL_R_scmc_set_parameter_yblock((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
-  cuda_YEE_CURL_R_scmc_set_parameter_zblock((geo_yeefdtd_kernels)[0],
-                                            &(cuda_alloc_prefix_zblock));
+  cuda_YEE_CURL_R_scmc_set_parameter_zblock((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_DT;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DT), PS_DOUBLE_NUM, 0);
   ((((double *)(cuda_alloc_prefix_DT).h_data))[0] = DT);
-  cuda_YEE_CURL_R_scmc_set_parameter_DT((geo_yeefdtd_kernels)[0],
-                                        &(cuda_alloc_prefix_DT));
-  cuda_YEE_CURL_R_exec((geo_yeefdtd_kernels)[0], cuda_YEE_CURL_R_get_xlen(),
-                       numvec);
+  cuda_YEE_CURL_R_scmc_set_parameter_DT((geo_yeefdtd_kernels)[0], &(cuda_alloc_prefix_DT));
+  cuda_YEE_CURL_R_exec((geo_yeefdtd_kernels)[0], cuda_YEE_CURL_R_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
@@ -844,9 +792,8 @@ int cuda_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
   return 0;
 }
 
-int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
-                                    double x0, double DELTA_X, double DELTA_Y,
-                                    double DELTA_Z, double DT) {
+int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0, double x0,
+                                    double DELTA_X, double DELTA_Y, double DELTA_Z, double DT) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -880,16 +827,11 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
   void *main_data = (pthis)->main_data;
 
   //====================Field3D_Seq
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[1],
-                                                 main_data);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[1],
-                                              (inB0)->main_data);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[1],
-                                                 xoffset);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[1],
-                                                 yoffset);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[1],
-                                                 zoffset);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[1], main_data);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[1], (inB0)->main_data);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[1], xoffset);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[1], yoffset);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[1], zoffset);
   long XLEN = xlen;
 
   long YLEN = ylen;
@@ -908,8 +850,8 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_y_cpu_core(
-      (geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_y_cpu_core));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_y_cpu_core((geo_yeefdtd_kernels)[1],
+                                                    &(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
@@ -920,26 +862,22 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[1],
-                                              &(cuda_alloc_prefix_XLEN));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[1],
-                                              &(cuda_alloc_prefix_YLEN));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[1],
-                                              &(cuda_alloc_prefix_ZLEN));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[1],
-                                              &(cuda_alloc_prefix_ovlp));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
@@ -962,8 +900,7 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_x0), PS_DOUBLE_NUM, 0);
   ((((double *)(cuda_alloc_prefix_x0).h_data))[0] = x0);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_x0((geo_yeefdtd_kernels)[1],
-                                            &(cuda_alloc_prefix_x0));
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_x0((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_x0));
   cuda_pscmc_mem cuda_alloc_prefix_DELTA_X;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DELTA_X), PS_DOUBLE_NUM, 0);
@@ -986,10 +923,8 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DT), PS_DOUBLE_NUM, 0);
   ((((double *)(cuda_alloc_prefix_DT).h_data))[0] = DT);
-  cuda_GEO_YEE_CURL_L_scmc_set_parameter_DT((geo_yeefdtd_kernels)[1],
-                                            &(cuda_alloc_prefix_DT));
-  cuda_GEO_YEE_CURL_L_exec((geo_yeefdtd_kernels)[1],
-                           cuda_GEO_YEE_CURL_L_get_xlen(), numvec);
+  cuda_GEO_YEE_CURL_L_scmc_set_parameter_DT((geo_yeefdtd_kernels)[1], &(cuda_alloc_prefix_DT));
+  cuda_GEO_YEE_CURL_L_exec((geo_yeefdtd_kernels)[1], cuda_GEO_YEE_CURL_L_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
@@ -1008,7 +943,6 @@ int cuda_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
   return 0;
 }
 #endif
-
 
 #ifdef SYMPIC_MAPU
 int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
@@ -1234,8 +1168,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
       (ovlpzmax = zblock);
     }
 
-    size_t ovlp_all_len =
-        (ovlpxmax * (ovlpymax * (ovlpzmax * (num_ele * numvec))));
+    size_t ovlp_all_len = (ovlpxmax * (ovlpymax * (ovlpzmax * (num_ele * numvec))));
 
     (((pthis)->sync_layer_pscmc)[i] = malloc((sizeof(mapu_pscmc_mem) * 1)));
     (((pthis)->swap_layer_pscmc)[i] = malloc((sizeof(mapu_pscmc_mem) * 1)));
@@ -1243,16 +1176,12 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
       (ovleal_aio = (ovleal_aio + ovlp_all_len));
 
     } else {
-      mapu_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[i], PS_DOUBLE_NUM,
-                          ovlp_all_len);
-      mapu_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[i], PS_DOUBLE_NUM,
-                          ovlp_all_len);
+      mapu_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[i], PS_DOUBLE_NUM, ovlp_all_len);
+      mapu_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[i], PS_DOUBLE_NUM, ovlp_all_len);
     }
   }
-  mapu_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[0], PS_DOUBLE_NUM,
-                      ovleal_aio);
-  mapu_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[0], PS_DOUBLE_NUM,
-                      ovleal_aio);
+  mapu_pscmc_mem_init(pe, ((pthis)->sync_layer_pscmc)[0], PS_DOUBLE_NUM, ovleal_aio);
+  mapu_pscmc_mem_init(pe, ((pthis)->swap_layer_pscmc)[0], PS_DOUBLE_NUM, ovleal_aio);
   ((pthis)->main_data = ((pthis)->sync_layer_pscmc)[(NUM_SYNC_LAYER / 2)]);
   ((pthis)->rdcd = malloc((sizeof(mapu_pscmc_mem) * 1)));
   mapu_pscmc_mem_init(pe, (pthis)->rdcd, PS_DOUBLE_NUM, numvec);
@@ -1373,8 +1302,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   return 0;
 }
 
-int mapu_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                                    int is_sync_layer) {
+int mapu_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1401,48 +1329,46 @@ int mapu_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[2],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[2],
-                                                            main_data);
+      (sync_kernels)[2], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[2], main_data);
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[2], &(mapu_alloc_prefix_numvec));
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec((sync_kernels)[2],
+                                                           &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[2], &(mapu_alloc_prefix_num_ele));
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[2],
+                                                            &(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_xblock).h_data))[0] = xblock);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[2], &(mapu_alloc_prefix_xblock));
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock((sync_kernels)[2],
+                                                           &(mapu_alloc_prefix_xblock));
   mapu_pscmc_mem mapu_alloc_prefix_yblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_yblock).h_data))[0] = yblock);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[2], &(mapu_alloc_prefix_yblock));
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock((sync_kernels)[2],
+                                                           &(mapu_alloc_prefix_yblock));
   mapu_pscmc_mem mapu_alloc_prefix_zblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_zblock).h_data))[0] = zblock);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[2], &(mapu_alloc_prefix_zblock));
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock((sync_kernels)[2],
+                                                           &(mapu_alloc_prefix_zblock));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[2], &(mapu_alloc_prefix_ovlp));
-  mapu_merge_ovlp_m2o_all_in_one_exec(
-      (sync_kernels)[2], mapu_merge_ovlp_m2o_all_in_one_get_xlen(), numvec);
+  mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[2],
+                                                         &(mapu_alloc_prefix_ovlp));
+  mapu_merge_ovlp_m2o_all_in_one_exec((sync_kernels)[2], mapu_merge_ovlp_m2o_all_in_one_get_xlen(),
+                                      numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_xblock));
@@ -1451,8 +1377,7 @@ int mapu_Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ovlp));
 }
 
-int mapu_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                                    int is_sync_layer) {
+int mapu_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1479,48 +1404,46 @@ int mapu_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[5],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[5],
-                                                            main_data);
+      (sync_kernels)[5], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[5], main_data);
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[5], &(mapu_alloc_prefix_numvec));
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec((sync_kernels)[5],
+                                                           &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[5], &(mapu_alloc_prefix_num_ele));
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[5],
+                                                            &(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_xblock).h_data))[0] = xblock);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[5], &(mapu_alloc_prefix_xblock));
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock((sync_kernels)[5],
+                                                           &(mapu_alloc_prefix_xblock));
   mapu_pscmc_mem mapu_alloc_prefix_yblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_yblock).h_data))[0] = yblock);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[5], &(mapu_alloc_prefix_yblock));
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock((sync_kernels)[5],
+                                                           &(mapu_alloc_prefix_yblock));
   mapu_pscmc_mem mapu_alloc_prefix_zblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_zblock).h_data))[0] = zblock);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[5], &(mapu_alloc_prefix_zblock));
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock((sync_kernels)[5],
+                                                           &(mapu_alloc_prefix_zblock));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[5], &(mapu_alloc_prefix_ovlp));
-  mapu_merge_ovlp_o2m_all_in_one_exec(
-      (sync_kernels)[5], mapu_merge_ovlp_o2m_all_in_one_get_xlen(), numvec);
+  mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[5],
+                                                         &(mapu_alloc_prefix_ovlp));
+  mapu_merge_ovlp_o2m_all_in_one_exec((sync_kernels)[5], mapu_merge_ovlp_o2m_all_in_one_get_xlen(),
+                                      numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_xblock));
@@ -1529,8 +1452,7 @@ int mapu_Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ovlp));
 }
 
-int mapu_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                                   int is_sync_layer) {
+int mapu_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1557,48 +1479,46 @@ int mapu_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[8],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[8],
-                                                           main_data);
+      (sync_kernels)[8], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[8], main_data);
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[8], &(mapu_alloc_prefix_numvec));
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec((sync_kernels)[8],
+                                                          &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[8], &(mapu_alloc_prefix_num_ele));
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[8],
+                                                           &(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_xblock).h_data))[0] = xblock);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[8], &(mapu_alloc_prefix_xblock));
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock((sync_kernels)[8],
+                                                          &(mapu_alloc_prefix_xblock));
   mapu_pscmc_mem mapu_alloc_prefix_yblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_yblock).h_data))[0] = yblock);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[8], &(mapu_alloc_prefix_yblock));
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock((sync_kernels)[8],
+                                                          &(mapu_alloc_prefix_yblock));
   mapu_pscmc_mem mapu_alloc_prefix_zblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_zblock).h_data))[0] = zblock);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[8], &(mapu_alloc_prefix_zblock));
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock((sync_kernels)[8],
+                                                          &(mapu_alloc_prefix_zblock));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[8], &(mapu_alloc_prefix_ovlp));
-  mapu_sync_ovlp_m2o_all_in_one_exec(
-      (sync_kernels)[8], mapu_sync_ovlp_m2o_all_in_one_get_xlen(), numvec);
+  mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[8],
+                                                        &(mapu_alloc_prefix_ovlp));
+  mapu_sync_ovlp_m2o_all_in_one_exec((sync_kernels)[8], mapu_sync_ovlp_m2o_all_in_one_get_xlen(),
+                                     numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_xblock));
@@ -1607,8 +1527,7 @@ int mapu_Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ovlp));
 }
 
-int mapu_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                                   int is_sync_layer) {
+int mapu_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1635,48 +1554,46 @@ int mapu_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
 
   //====================Field3D_Seq
   mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
-      (sync_kernels)[11],
-      (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[11],
-                                                           main_data);
+      (sync_kernels)[11], (((is_sync_layer) ? (sync_layer_pscmc) : (swap_layer_pscmc)))[0]);
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain((sync_kernels)[11], main_data);
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
-      (sync_kernels)[11], &(mapu_alloc_prefix_numvec));
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec((sync_kernels)[11],
+                                                          &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_num_ele).h_data))[0] = num_ele);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
-      (sync_kernels)[11], &(mapu_alloc_prefix_num_ele));
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele((sync_kernels)[11],
+                                                           &(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_xblock).h_data))[0] = xblock);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
-      (sync_kernels)[11], &(mapu_alloc_prefix_xblock));
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock((sync_kernels)[11],
+                                                          &(mapu_alloc_prefix_xblock));
   mapu_pscmc_mem mapu_alloc_prefix_yblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_yblock).h_data))[0] = yblock);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
-      (sync_kernels)[11], &(mapu_alloc_prefix_yblock));
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock((sync_kernels)[11],
+                                                          &(mapu_alloc_prefix_yblock));
   mapu_pscmc_mem mapu_alloc_prefix_zblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_zblock).h_data))[0] = zblock);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
-      (sync_kernels)[11], &(mapu_alloc_prefix_zblock));
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock((sync_kernels)[11],
+                                                          &(mapu_alloc_prefix_zblock));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
-      (sync_kernels)[11], &(mapu_alloc_prefix_ovlp));
-  mapu_sync_ovlp_o2m_all_in_one_exec(
-      (sync_kernels)[11], mapu_sync_ovlp_o2m_all_in_one_get_xlen(), numvec);
+  mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp((sync_kernels)[11],
+                                                        &(mapu_alloc_prefix_ovlp));
+  mapu_sync_ovlp_o2m_all_in_one_exec((sync_kernels)[11], mapu_sync_ovlp_o2m_all_in_one_get_xlen(),
+                                     numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_xblock));
@@ -1685,8 +1602,7 @@ int mapu_Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ovlp));
 }
 
-int mapu_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
-                                double DT) {
+int mapu_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0, double DT) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1720,10 +1636,8 @@ int mapu_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
   void *main_data = (pthis)->main_data;
 
   //====================Field3D_Seq
-  mapu_YEE_CURL_R_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[0],
-                                             main_data);
-  mapu_YEE_CURL_R_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[0],
-                                          (inB0)->main_data);
+  mapu_YEE_CURL_R_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[0], main_data);
+  mapu_YEE_CURL_R_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[0], (inB0)->main_data);
   mapu_YEE_CURL_R_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[0], xoffset);
   mapu_YEE_CURL_R_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[0], yoffset);
   mapu_YEE_CURL_R_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[0], zoffset);
@@ -1745,64 +1659,54 @@ int mapu_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
-  mapu_YEE_CURL_R_scmc_set_parameter_y_cpu_core(
-      (geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_y_cpu_core));
+  mapu_YEE_CURL_R_scmc_set_parameter_y_cpu_core((geo_yeefdtd_kernels)[0],
+                                                &(mapu_alloc_prefix_y_cpu_core));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
-  mapu_YEE_CURL_R_scmc_set_parameter_numvec((geo_yeefdtd_kernels)[0],
-                                            &(mapu_alloc_prefix_numvec));
+  mapu_YEE_CURL_R_scmc_set_parameter_numvec((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
-  mapu_YEE_CURL_R_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[0],
-                                          &(mapu_alloc_prefix_XLEN));
+  mapu_YEE_CURL_R_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
-  mapu_YEE_CURL_R_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[0],
-                                          &(mapu_alloc_prefix_YLEN));
+  mapu_YEE_CURL_R_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
-  mapu_YEE_CURL_R_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[0],
-                                          &(mapu_alloc_prefix_ZLEN));
+  mapu_YEE_CURL_R_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_YEE_CURL_R_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[0],
-                                          &(mapu_alloc_prefix_ovlp));
+  mapu_YEE_CURL_R_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_xblock).h_data))[0] = xblock);
-  mapu_YEE_CURL_R_scmc_set_parameter_xblock((geo_yeefdtd_kernels)[0],
-                                            &(mapu_alloc_prefix_xblock));
+  mapu_YEE_CURL_R_scmc_set_parameter_xblock((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_xblock));
   mapu_pscmc_mem mapu_alloc_prefix_yblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_yblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_yblock).h_data))[0] = yblock);
-  mapu_YEE_CURL_R_scmc_set_parameter_yblock((geo_yeefdtd_kernels)[0],
-                                            &(mapu_alloc_prefix_yblock));
+  mapu_YEE_CURL_R_scmc_set_parameter_yblock((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_yblock));
   mapu_pscmc_mem mapu_alloc_prefix_zblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_zblock), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_zblock).h_data))[0] = zblock);
-  mapu_YEE_CURL_R_scmc_set_parameter_zblock((geo_yeefdtd_kernels)[0],
-                                            &(mapu_alloc_prefix_zblock));
+  mapu_YEE_CURL_R_scmc_set_parameter_zblock((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_zblock));
   mapu_pscmc_mem mapu_alloc_prefix_DT;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DT), PS_DOUBLE_NUM, 0);
   ((((double *)(mapu_alloc_prefix_DT).h_data))[0] = DT);
-  mapu_YEE_CURL_R_scmc_set_parameter_DT((geo_yeefdtd_kernels)[0],
-                                        &(mapu_alloc_prefix_DT));
-  mapu_YEE_CURL_R_exec((geo_yeefdtd_kernels)[0], mapu_YEE_CURL_R_get_xlen(),
-                       numvec);
+  mapu_YEE_CURL_R_scmc_set_parameter_DT((geo_yeefdtd_kernels)[0], &(mapu_alloc_prefix_DT));
+  mapu_YEE_CURL_R_exec((geo_yeefdtd_kernels)[0], mapu_YEE_CURL_R_get_xlen(), numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_y_cpu_core));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
@@ -1817,9 +1721,8 @@ int mapu_Field3D_Seq_YEE_CURL_R(Field3D_Seq *pthis, Field3D_Seq *inB0,
   return 0;
 }
 
-int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
-                                    double x0, double DELTA_X, double DELTA_Y,
-                                    double DELTA_Z, double DT) {
+int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0, double x0,
+                                    double DELTA_X, double DELTA_Y, double DELTA_Z, double DT) {
 
   // defined from class Field3D_Seq
   void *pe = (pthis)->pe;
@@ -1853,16 +1756,11 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
   void *main_data = (pthis)->main_data;
 
   //====================Field3D_Seq
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[1],
-                                                 main_data);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[1],
-                                              (inB0)->main_data);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[1],
-                                                 xoffset);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[1],
-                                                 yoffset);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[1],
-                                                 zoffset);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1((geo_yeefdtd_kernels)[1], main_data);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_inB0((geo_yeefdtd_kernels)[1], (inB0)->main_data);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_xoffset((geo_yeefdtd_kernels)[1], xoffset);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_yoffset((geo_yeefdtd_kernels)[1], yoffset);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_zoffset((geo_yeefdtd_kernels)[1], zoffset);
   long XLEN = xlen;
 
   long YLEN = ylen;
@@ -1881,8 +1779,8 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_y_cpu_core(
-      (geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_y_cpu_core));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_y_cpu_core((geo_yeefdtd_kernels)[1],
+                                                    &(mapu_alloc_prefix_y_cpu_core));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
@@ -1893,26 +1791,22 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[1],
-                                              &(mapu_alloc_prefix_XLEN));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_XLEN((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[1],
-                                              &(mapu_alloc_prefix_YLEN));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_YLEN((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[1],
-                                              &(mapu_alloc_prefix_ZLEN));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_ZLEN((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[1],
-                                              &(mapu_alloc_prefix_ovlp));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_ovlp((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_xblock;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_xblock), PS_LONG_NUM, 0);
@@ -1935,8 +1829,7 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_x0), PS_DOUBLE_NUM, 0);
   ((((double *)(mapu_alloc_prefix_x0).h_data))[0] = x0);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_x0((geo_yeefdtd_kernels)[1],
-                                            &(mapu_alloc_prefix_x0));
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_x0((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_x0));
   mapu_pscmc_mem mapu_alloc_prefix_DELTA_X;
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DELTA_X), PS_DOUBLE_NUM, 0);
@@ -1959,10 +1852,8 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DT), PS_DOUBLE_NUM, 0);
   ((((double *)(mapu_alloc_prefix_DT).h_data))[0] = DT);
-  mapu_GEO_YEE_CURL_L_scmc_set_parameter_DT((geo_yeefdtd_kernels)[1],
-                                            &(mapu_alloc_prefix_DT));
-  mapu_GEO_YEE_CURL_L_exec((geo_yeefdtd_kernels)[1],
-                           mapu_GEO_YEE_CURL_L_get_xlen(), numvec);
+  mapu_GEO_YEE_CURL_L_scmc_set_parameter_DT((geo_yeefdtd_kernels)[1], &(mapu_alloc_prefix_DT));
+  mapu_GEO_YEE_CURL_L_exec((geo_yeefdtd_kernels)[1], mapu_GEO_YEE_CURL_L_get_xlen(), numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_y_cpu_core));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
@@ -1982,7 +1873,6 @@ int mapu_Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0,
 }
 #endif
 
-
 int alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
   // defined from class Field3D_Seq
@@ -1999,8 +1889,7 @@ int alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   return 0;
 }
 
-int Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                               int is_sync_layer) {
+int Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
 
@@ -2016,8 +1905,7 @@ int Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   return 0;
 }
 
-int Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                               int is_sync_layer) {
+int Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
 
@@ -2033,8 +1921,7 @@ int Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
   return 0;
 }
 
-int Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
-                                              int is_sync_layer) {
+int Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
   // defined from class Field3D_Seq
 
   //====================Field3D_Seq
@@ -2049,8 +1936,7 @@ int Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one(Field3D_Seq *pthis,
   return 0;
 }
 
-int Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis,
-                                              int is_sync_layer) {
+int Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one(Field3D_Seq *pthis, int is_sync_layer) {
 
   // defined from class Field3D_Seq
 
@@ -2097,28 +1983,24 @@ int MPI_YEE_CURL_R(Field3D_MPI *pthis, Field3D_MPI *inB0, double DT) {
   }
   return 0;
 }
-int Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0, double x0,
-                               double DELTA_X, double DELTA_Y, double DELTA_Z,
-                               double DT) {
+int Field3D_Seq_GEO_YEE_CURL_L(Field3D_Seq *pthis, Field3D_Seq *inB0, double x0, double DELTA_X,
+                               double DELTA_Y, double DELTA_Z, double DT) {
 
   // defined from class Field3D_Seq
 
   //====================Field3D_Seq
 #ifdef SYMPIC_CUDA
-  cuda_Field3D_Seq_GEO_YEE_CURL_L(pthis, inB0, x0, DELTA_X, DELTA_Y, DELTA_Z,
-                                  DT);
+  cuda_Field3D_Seq_GEO_YEE_CURL_L(pthis, inB0, x0, DELTA_X, DELTA_Y, DELTA_Z, DT);
 #endif
 
 #ifdef SYMPIC_MAPU
-  mapu_Field3D_Seq_GEO_YEE_CURL_L(pthis, inB0, x0, DELTA_X, DELTA_Y, DELTA_Z,
-                                  DT);
+  mapu_Field3D_Seq_GEO_YEE_CURL_L(pthis, inB0, x0, DELTA_X, DELTA_Y, DELTA_Z, DT);
 #endif
 
   return 0;
 }
-int MPI_GEO_YEE_CURL_L(Field3D_MPI *pthis, Field3D_MPI *inB0, double x0,
-                       double DELTA_X, double DELTA_Y, double DELTA_Z,
-                       double DT) {
+int MPI_GEO_YEE_CURL_L(Field3D_MPI *pthis, Field3D_MPI *inB0, double x0, double DELTA_X,
+                       double DELTA_Y, double DELTA_Z, double DT) {
 
   // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
@@ -2130,8 +2012,7 @@ int MPI_GEO_YEE_CURL_L(Field3D_MPI *pthis, Field3D_MPI *inB0, double x0,
 
   sync_ovlp_mpi_field(inB0);
   for (i = 0; (i < num_runtime); i++) {
-    Field3D_Seq_GEO_YEE_CURL_L((data + i), ((inB0)->data + i), x0, DELTA_X,
-                               DELTA_Y, DELTA_Z, DT);
+    Field3D_Seq_GEO_YEE_CURL_L((data + i), ((inB0)->data + i), x0, DELTA_X, DELTA_Y, DELTA_Z, DT);
   }
   return 0;
 }

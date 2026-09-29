@@ -2,591 +2,591 @@
 
 #include "pscmc_runtime_macros.h"
 
-#define DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL(P)                                                                         \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL(P)                                                     \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPBY_SHRINK_KERNEL(P)                                                                          \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPBY_SHRINK_KERNEL(P)                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPY_ENLARGE_KERNEL(P)                                                                          \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPY_ENLARGE_KERNEL(P)                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPY_SHRINK_KERNEL(P)                                                                           \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPY_SHRINK_KERNEL(P)                                                       \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISAX_ENLARGE_KERNEL(P)                                                                         \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISAX_ENLARGE_KERNEL(P)                                                     \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISAX_SHRINK_KERNEL(P)                                                                          \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISAX_SHRINK_KERNEL(P)                                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_SUM_FULL_BLOCK_KERNEL(P)                                                                        \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_SUM_FULL_BLOCK_KERNEL(P)                                                    \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_SUM_KERNEL(P)                                                                                   \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_SUM_KERNEL(P)                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_DOT_FULL_BLOCK_KERNEL(P)                                                                        \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_DOT_FULL_BLOCK_KERNEL(P)                                                    \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_DOT_KERNEL(P)                                                                                   \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_DOT_KERNEL(P)                                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_sum)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_FINDMAX_FULL_BLOCK_KERNEL(P)                                                                    \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_FINDMAX_FULL_BLOCK_KERNEL(P)                                                \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_FINDMAX_KERNEL(P)                                                                               \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                                             \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_FINDMAX_KERNEL(P)                                                           \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, rdcd_max)                                                         \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_MULXY_FULL_BLOCK_KERNEL(P)                                                                      \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_MULXY_FULL_BLOCK_KERNEL(P)                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_MULXY_KERNEL(P)                                                                                 \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_MULXY_KERNEL(P)                                                             \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPBY_FULL_BLOCK_KERNEL(P)                                                                      \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPBY_FULL_BLOCK_KERNEL(P)                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPBY_KERNEL(P)                                                                                 \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPBY_KERNEL(P)                                                             \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, b)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPY_FULL_BLOCK_KERNEL(P)                                                                       \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPY_FULL_BLOCK_KERNEL(P)                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_AXPY_KERNEL(P)                                                                                  \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_AXPY_KERNEL(P)                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISAX_FULL_BLOCK_KERNEL(P)                                                                      \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISAX_FULL_BLOCK_KERNEL(P)                                                  \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISAX_KERNEL(P)                                                                                 \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISAX_KERNEL(P)                                                             \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_INVY_FULL_BLOCK_KERNEL(P)                                                                       \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_INVY_FULL_BLOCK_KERNEL(P)                                                   \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_INVY_KERNEL(P)                                                                                  \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_INVY_KERNEL(P)                                                              \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_FULL_BLOCK_KERNEL(P)                                                          \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                                       \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_FULL_BLOCK_KERNEL(P)                                      \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_KERNEL(P)                                                                     \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                                       \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_GET_ITG_POTENTIAL_KERNEL(P)                                                 \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, u)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, minus_over_q_e)                                                   \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISCONST_FULL_BLOCK_KERNEL(P)                                                                   \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISCONST_FULL_BLOCK_KERNEL(P)                                               \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISCONST_KERNEL(P)                                                                              \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISCONST_KERNEL(P)                                                          \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, a)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISZERO_FULL_BLOCK_KERNEL(P)                                                                    \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISZERO_FULL_BLOCK_KERNEL(P)                                                \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISZERO_KERNEL(P)                                                                               \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISZERO_KERNEL(P)                                                           \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_MULXY_NUMELE3_KERNEL(P)                                                                         \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_MULXY_NUMELE3_KERNEL(P)                                                     \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, x)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
-#define DECL_CUDA_BLAS_YISZERO_SYNCED_KERNEL(P)                                                                        \
-  PSCMC_DECL_KERNEL_INIT(P)                                                                                            \
-  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                                                  \
-  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                                        \
-  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                                           \
-  PSCMC_DECL_KERNEL_EXEC(P)                                                                                            \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                                    \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                                           \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                                                 \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                                               \
-  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                                               \
+#define DECL_CUDA_BLAS_YISZERO_SYNCED_KERNEL(P)                                                    \
+  PSCMC_DECL_KERNEL_INIT(P)                                                                        \
+  PSCMC_DECL_KERNEL_GET_STRUCT_LEN(P)                                                              \
+  PSCMC_DECL_KERNEL_GET_XLEN(P)                                                                    \
+  PSCMC_DECL_KERNEL_GET_NUM_COMPUTE_UNITS(P)                                                       \
+  PSCMC_DECL_KERNEL_EXEC(P)                                                                        \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y)                                                                \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, y_cpu_core)                                                       \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, numvec)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, XLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, YLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ZLEN)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, ovlp)                                                             \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, xblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, yblock)                                                           \
+  PSCMC_DECL_KERNEL_SET_PARAM(P, zblock)                                                           \
   PSCMC_DECL_KERNEL_SET_PARAM(P, num_ele)
 
 DECL_CUDA_BLAS_AXPBY_ENLARGE_KERNEL(cuda_blas_axpby_enlarge)

@@ -63,30 +63,14 @@ __device__ __forceinline__ v8fp64 operator-(const v8fp64 &a) {
   return r;
 }
 
-__device__ __forceinline__ v8fp64 operator+(const v8fp64 &a, double b) {
-  return a + vbroadcast(b);
-}
-__device__ __forceinline__ v8fp64 operator+(double a, const v8fp64 &b) {
-  return vbroadcast(a) + b;
-}
-__device__ __forceinline__ v8fp64 operator-(const v8fp64 &a, double b) {
-  return a - vbroadcast(b);
-}
-__device__ __forceinline__ v8fp64 operator-(double a, const v8fp64 &b) {
-  return vbroadcast(a) - b;
-}
-__device__ __forceinline__ v8fp64 operator*(const v8fp64 &a, double b) {
-  return a * vbroadcast(b);
-}
-__device__ __forceinline__ v8fp64 operator*(double a, const v8fp64 &b) {
-  return vbroadcast(a) * b;
-}
-__device__ __forceinline__ v8fp64 operator/(const v8fp64 &a, double b) {
-  return a / vbroadcast(b);
-}
-__device__ __forceinline__ v8fp64 operator/(double a, const v8fp64 &b) {
-  return vbroadcast(a) / b;
-}
+__device__ __forceinline__ v8fp64 operator+(const v8fp64 &a, double b) { return a + vbroadcast(b); }
+__device__ __forceinline__ v8fp64 operator+(double a, const v8fp64 &b) { return vbroadcast(a) + b; }
+__device__ __forceinline__ v8fp64 operator-(const v8fp64 &a, double b) { return a - vbroadcast(b); }
+__device__ __forceinline__ v8fp64 operator-(double a, const v8fp64 &b) { return vbroadcast(a) - b; }
+__device__ __forceinline__ v8fp64 operator*(const v8fp64 &a, double b) { return a * vbroadcast(b); }
+__device__ __forceinline__ v8fp64 operator*(double a, const v8fp64 &b) { return vbroadcast(a) * b; }
+__device__ __forceinline__ v8fp64 operator/(const v8fp64 &a, double b) { return a / vbroadcast(b); }
+__device__ __forceinline__ v8fp64 operator/(double a, const v8fp64 &b) { return vbroadcast(a) / b; }
 
 __device__ __forceinline__ v8fp64 geo_floor_simd(v8fp64 a) {
   v8fp64 r;

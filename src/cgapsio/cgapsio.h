@@ -37,39 +37,30 @@ typedef enum {
   GAPS_IO_UINT8
 } Gaps_IO_Type;
 
-int GAPS_IO_TruncateFile(Gaps_IO_DataFile *pOutfile, int64_t NumSteps,
-                         int64_t NumData);
+int GAPS_IO_TruncateFile(Gaps_IO_DataFile *pOutfile, int64_t NumSteps, int64_t NumData);
 int GAPS_IO_DeleteDataInfo(Gaps_IO_DataFile *pOutfile);
-int GAPS_IO_DataNumStepsAndResidue(Gaps_IO_DataFile *pOutfile,
-                                   int64_t *pNumsteps, int64_t *pResidue);
+int GAPS_IO_DataNumStepsAndResidue(Gaps_IO_DataFile *pOutfile, int64_t *pNumsteps,
+                                   int64_t *pResidue);
 int GAPS_IO_FWriteALL(Gaps_IO_DataFile *pOutfile, void *pData, int64_t NumData);
-int64_t GAPS_IO_FWrite(Gaps_IO_DataFile *pOutfile, void *pData,
-                       int64_t NumData);
+int64_t GAPS_IO_FWrite(Gaps_IO_DataFile *pOutfile, void *pData, int64_t NumData);
 int GAPS_IO_FRead(Gaps_IO_DataFile *pOutfile, void *pData, int64_t NumData);
 int GAPS_IO_InitIFile(Gaps_IO_DataFile *pOutfile, char *pName);
-int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pOutfile, char *pName,
-                        char *pNamePrefix, int rank);
+int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pOutfile, char *pName, char *pNamePrefix, int rank);
 int GAPS_IO_FileGotoBegin(Gaps_IO_DataFile *pOutfile);
 int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pOutfile, FILE *fp);
 int GAPS_IO_GetTypeLen(int type);
 int GAPS_IO_InitOFile(Gaps_IO_DataFile *pOutfile, char *pName);
-int GAPS_IO_InitOFile_with_TimeStep(Gaps_IO_DataFile *pOutfile, char *pName,
-                                    int64_t timestep);
-int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pOutfile,
-                                               char *pName, char *pNamePrefix,
-                                               int64_t timestep, long rank);
-int GAPS_IO_InitOFile_with_TimeStepV2(Gaps_IO_DataFile *pOutfile, char *pName,
-                                      char *pNamePrefix, int64_t timestep);
+int GAPS_IO_InitOFile_with_TimeStep(Gaps_IO_DataFile *pOutfile, char *pName, int64_t timestep);
+int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pOutfile, char *pName,
+                                               char *pNamePrefix, int64_t timestep, long rank);
+int GAPS_IO_InitOFile_with_TimeStepV2(Gaps_IO_DataFile *pOutfile, char *pName, char *pNamePrefix,
+                                      int64_t timestep);
 int GAPS_IO_DataSeek(Gaps_IO_DataFile *pOutfile, int64_t Step, int64_t Offset);
 int GAPS_IO_FileFlush(Gaps_IO_DataFile *pOutfile);
-int GAPS_IO_InitDataInfo(Gaps_IO_DataFile *pOutfile, int64_t Type, int64_t Dim,
-                         int64_t *pDimarray);
-int GAPS_IO_InitDataInfoV1(Gaps_IO_DataFile *pOutfile, int64_t Type,
-                           int64_t Dim, int64_t *pDimarray,
-                           int64_t *pBlockarray);
-int GAPS_IO_InitDataInfoV2(Gaps_IO_DataFile *pOutfile, char *Prefix,
-                           int64_t Type, int64_t Dim, int64_t *pDimarray,
-                           int64_t *pBlockarray, int64_t *pLocationarray,
-                           int64_t Num_block_current_proc,
-                           int64_t time_step_current);
+int GAPS_IO_InitDataInfo(Gaps_IO_DataFile *pOutfile, int64_t Type, int64_t Dim, int64_t *pDimarray);
+int GAPS_IO_InitDataInfoV1(Gaps_IO_DataFile *pOutfile, int64_t Type, int64_t Dim,
+                           int64_t *pDimarray, int64_t *pBlockarray);
+int GAPS_IO_InitDataInfoV2(Gaps_IO_DataFile *pOutfile, char *Prefix, int64_t Type, int64_t Dim,
+                           int64_t *pDimarray, int64_t *pBlockarray, int64_t *pLocationarray,
+                           int64_t Num_block_current_proc, int64_t time_step_current);
 int GAPS_IO_SetNumReduceProc(Gaps_IO_DataFile *pOutfile, int Num_reduce_proc);

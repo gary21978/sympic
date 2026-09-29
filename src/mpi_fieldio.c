@@ -9,8 +9,8 @@
 #include "space_filling_curve.h"
 #include <cgapsio.h>
 
-int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid, char *pName, int64_t time_step,
-                                      int version, int num_reduce_proc) {
+int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid, char *pName,
+                                      int64_t time_step, int version, int num_reduce_proc) {
 
   // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
@@ -18,7 +18,6 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
   long num_runtime = (pthis)->num_runtime;
 
   PS_MPI_Comm comm = (pthis)->comm;
-
 
   //====================Field3D_MPI
   int64_t pdimarr[4];
@@ -34,16 +33,13 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
       long zlen = (data)->zlen;
 
-
       long x_num_thread_block = (data)->x_num_thread_block;
 
       long y_num_thread_block = (data)->y_num_thread_block;
 
       long z_num_thread_block = (data)->z_num_thread_block;
 
-
       int num_ele = (data)->num_ele;
-
 
       //====================Field3D_Seq
       ((pdimarr)[0] = num_ele);
@@ -63,16 +59,13 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
       long zlen = (data)->zlen;
 
-
       long x_num_thread_block = (data)->x_num_thread_block;
 
       long y_num_thread_block = (data)->y_num_thread_block;
 
       long z_num_thread_block = (data)->z_num_thread_block;
 
-
       int num_ele = (data)->num_ele;
-
 
       //====================Field3D_Seq
       ((pdimarr)[0] = num_ele);
@@ -97,9 +90,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
               // defined from class Field3D_Seq
 
-
               long numvec = ((data + i))->numvec;
-
 
               //====================Field3D_Seq
               (numvec_total = (numvec_total + numvec));
@@ -122,20 +113,17 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
               long zlen = ((data + r))->zlen;
 
-
               long numvec = ((data + r))->numvec;
 
               long x_num_thread_block = ((data + r))->x_num_thread_block;
 
               long y_num_thread_block = ((data + r))->y_num_thread_block;
 
-
               long *global_x_offset = ((data + r))->global_x_offset;
 
               long *global_y_offset = ((data + r))->global_y_offset;
 
               long *global_z_offset = ((data + r))->global_z_offset;
-
 
               //====================Field3D_Seq
               {
@@ -145,13 +133,15 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
                   ((plocations)[(i + numvec_offset)] =
                        (((global_x_offset)[i] / xlen) +
                         (x_num_thread_block *
-                         (((global_y_offset)[i] / ylen) + (y_num_thread_block * ((global_z_offset)[i] / zlen))))));
+                         (((global_y_offset)[i] / ylen) +
+                          (y_num_thread_block * ((global_z_offset)[i] / zlen))))));
                 }
               }
               (numvec_offset = (numvec_offset + numvec));
             }
           }
-          GAPS_IO_InitDataInfoV2(gid, "", GAPS_IO_FLOAT64, 4, pdimarr, pblkarr, plocations, numvec_total, 0);
+          GAPS_IO_InitDataInfoV2(gid, "", GAPS_IO_FLOAT64, 4, pdimarr, pblkarr, plocations,
+                                 numvec_total, 0);
           if (num_reduce_proc) {
             GAPS_IO_SetNumReduceProc(gid, num_reduce_proc);
           }
@@ -174,16 +164,15 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
   return 0;
 }
 
-int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid, int64_t timestep) {
+int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
+                                       int64_t timestep) {
 
   // defined from class Field3D_MPI
   Field3D_Seq *data = (pthis)->data;
 
   long num_runtime = (pthis)->num_runtime;
 
-
   long cur_rank = (pthis)->cur_rank;
-
 
   //====================Field3D_MPI
   long i = 0;
@@ -216,11 +205,9 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     long y_num_thread_block = ((data + i))->y_num_thread_block;
 
-
     int ovlp = ((data + i))->ovlp;
 
     int num_ele = ((data + i))->num_ele;
-
 
     long *global_x_offset = ((data + i))->global_x_offset;
 
@@ -228,9 +215,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     long *global_z_offset = ((data + i))->global_z_offset;
 
-
     void *main_data = ((data + i))->main_data;
-
 
     //====================Field3D_Seq
     double *odata = (((double **)main_data))[0];
@@ -270,13 +255,16 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
                          ((global_x_offset)[vid] +
                           (0 + (xlen * (x_num_thread_block *
                                         (xyzy + ((global_y_offset)[vid] +
-                                                 (ylen * (y_num_thread_block * (xyzz + (global_z_offset)[vid]))))))))));
+                                                 (ylen * (y_num_thread_block *
+                                                          (xyzz + (global_z_offset)[vid]))))))))));
 
                     GAPS_IO_DataSeek(gid, timestep, offsetlen);
                     GAPS_IO_FWrite(
                         gid,
-                        (odata + ((oneblocklen * vid) +
-                                  (num_ele * (ovlp + (xblock * (xyzy + (ovlp + (yblock * (ovlp + xyzz))))))))),
+                        (odata +
+                         ((oneblocklen * vid) +
+                          (num_ele *
+                           (ovlp + (xblock * (xyzy + (ovlp + (yblock * (ovlp + xyzz))))))))),
                         (num_ele * xlen));
                   }
                 }
@@ -288,8 +276,9 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
         int64_t offsetlen =
             ((((gid)->version == 1))
                  ? ((realoneblklen * (((global_x_offset)[vid] / xlen) +
-                                      (x_num_thread_block * (((global_y_offset)[vid] / ylen) +
-                                                             (y_num_thread_block * ((global_z_offset)[vid] / zlen)))))))
+                                      (x_num_thread_block *
+                                       (((global_y_offset)[vid] / ylen) +
+                                        (y_num_thread_block * ((global_z_offset)[vid] / zlen)))))))
                  : ((realoneblklen * vid)));
 
         if (((gid)->version == 1)) {
@@ -312,10 +301,14 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
                       long l;
 
                       for ((l = 0); (l < num_ele); (l = (l + 1))) {
-                        ((write_buffer)[(l + (num_ele * (xyzx + (xlen * (xyzy + (ylen * xyzz))))))] = (odata)[(
-                             (oneblocklen * vid) +
-                             (l +
-                              (num_ele * (xyzx + (ovlp + (xblock * (xyzy + (ovlp + (yblock * (ovlp + xyzz))))))))))]);
+                        ((write_buffer)[(l +
+                                         (num_ele * (xyzx + (xlen * (xyzy + (ylen * xyzz))))))] =
+                             (odata)[(
+                                 (oneblocklen * vid) +
+                                 (l + (num_ele *
+                                       (xyzx +
+                                        (ovlp + (xblock *
+                                                 (xyzy + (ovlp + (yblock * (ovlp + xyzz))))))))))]);
                       }
                     }
                   }
@@ -330,7 +323,8 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
           PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(cur_rank));
           if (((gid)->cur_rank != (gid)->send_to_proc)) {
-            PS_MPI_Send(write_buffer, realoneblklen, PS_MPI_DOUBLE, (gid)->send_to_proc, cur_rank, PS_MPI_COMM_WORLD);
+            PS_MPI_Send(write_buffer, realoneblklen, PS_MPI_DOUBLE, (gid)->send_to_proc, cur_rank,
+                        PS_MPI_COMM_WORLD);
           }
         }
       }
@@ -346,12 +340,9 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     long zlen = ((data + i))->zlen;
 
-
     int num_ele = ((data + i))->num_ele;
 
-
     //====================Field3D_Seq
-
 
     size_t realoneblklen = (xlen * (ylen * (zlen * num_ele)));
 
@@ -389,7 +380,8 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
                 long g;
 
                 for ((g = 0); (g < remote_numvec); (g = (g + 1))) {
-                  PS_MPI_Recv(write_buffer, realoneblklen, PS_MPI_DOUBLE, n, n, PS_MPI_COMM_WORLD, &(s1));
+                  PS_MPI_Recv(write_buffer, realoneblklen, PS_MPI_DOUBLE, n, n, PS_MPI_COMM_WORLD,
+                              &(s1));
                   GAPS_IO_FWrite(gid, write_buffer, realoneblklen);
                 }
               }
@@ -407,9 +399,7 @@ int mpi_field_write_to_file(Field3D_MPI *pthis, Gaps_IO_DataFile *pgid, long num
 
   // defined from class Field3D_MPI
 
-
   PS_MPI_Comm comm = (pthis)->comm;
-
 
   //====================Field3D_MPI
 

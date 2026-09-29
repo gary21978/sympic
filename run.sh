@@ -5,16 +5,18 @@ set -euo pipefail
 
 # ---------- 默认值 ----------
 ENABLE_MASIGHT=0
+MPI_RANKS=1          # mpirun 进程数（2 device 模式用 2）
 CASE_PATH=""          # 必填：算例路径
 
 # ---------- 用法说明 ----------
 usage() {
     cat <<EOF
-用法: $0 <算例路径> [--masight] [--build-dir <目录>]
+用法: $0 <算例路径> [--masight] [--np <N>] [--build-dir <目录>]
 
 参数:
   <算例路径>     必填，算例所在目录的路径
   --masight     可选，启用 masight 性能分析工具
+  --np <N>      可选，mpirun 进程数，默认 1；双 device 模式用 --np 2
   --build-dir   可选，指定 build 目录；默认使用最近一次 build.sh 记录的目录
   -h, --help    显示本帮助信息
 
@@ -31,6 +33,20 @@ while [[ $# -gt 0 ]]; do
         --masight)
             ENABLE_MASIGHT=1
             shift
+            ;;
+        --np)
+            if [[ $# -lt 2 ]]; then
+                echo "错误: --np 缺少参数" >&2
+                usage >&2
+                exit 1
+            fi
+            if [[ ! "$2" =~ ^[1-9][0-9]*$ ]]; then
+                echo "错误: --np 需要正整数" >&2
+                usage >&2
+                exit 1
+            fi
+            MPI_RANKS="$2"
+            shift 2
             ;;
         --build-dir)
             if [[ $# -lt 2 ]]; then
@@ -75,9 +91,11 @@ if [[ ! -d "$CASE_PATH" ]]; then
     exit 1
 fi
 
+# SCALE host runtime logging uses module-qualified levels.  Plain "error"
+# does not match the scalehost module and falls back to verbose info logs.
 export MALOG_STDOUT_LEVEL="error"
-export MALOG_SIMPLE_FILE_LEVEL="error"
-export MALOG_LEVEL="error"
+export MALOG_SIMPLE_FILE_LEVEL="scalehost=off"
+export MALOG_LEVEL="scalehost=off"
 export MAPS_API_LOG_ALWAYS=0
 export SCALE_TOOLCHAIN_ROOT=/opt/maps/toolchain
 
@@ -175,7 +193,7 @@ if [[ $ENABLE_MASIGHT -eq 1 ]]; then
     macu -w 0 --spu --mpu --mpu-reserved-count 16 --output test_perf.json ${TEST_DIR}/sympic.out test.ss -G 8 -B 4 -N 65536
 else
     echo "[run.sh] 正常运行，算例路径: $CASE_DIR_ABS"
-    mpirun --allow-run-as-root --oversubscribe -n 1 "${TEST_DIR}/sympic.out" test.ss
+    mpirun --allow-run-as-root --oversubscribe -n "${MPI_RANKS}" "${TEST_DIR}/sympic.out" test.ss
 fi
 
 echo ""

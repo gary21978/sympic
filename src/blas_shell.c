@@ -50,67 +50,67 @@ int cuda_blas_yisax_enlarge_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, doub
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
+  (((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele;
   cuda_blas_yisax_enlarge_scmc_set_parameter_num_ele(blas_yisax_enlarge_kernel,
                                                      &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
+  (((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock;
   cuda_blas_yisax_enlarge_scmc_set_parameter_zblock(blas_yisax_enlarge_kernel,
                                                     &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
+  (((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock;
   cuda_blas_yisax_enlarge_scmc_set_parameter_yblock(blas_yisax_enlarge_kernel,
                                                     &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
+  (((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock;
   cuda_blas_yisax_enlarge_scmc_set_parameter_xblock(blas_yisax_enlarge_kernel,
                                                     &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_blas_yisax_enlarge_scmc_set_parameter_ovlp(blas_yisax_enlarge_kernel,
                                                   &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_blas_yisax_enlarge_scmc_set_parameter_ZLEN(blas_yisax_enlarge_kernel,
                                                   &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_blas_yisax_enlarge_scmc_set_parameter_YLEN(blas_yisax_enlarge_kernel,
                                                   &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_blas_yisax_enlarge_scmc_set_parameter_XLEN(blas_yisax_enlarge_kernel,
                                                   &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_blas_yisax_enlarge_scmc_set_parameter_numvec(blas_yisax_enlarge_kernel,
                                                     &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_y_cpu_core;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
+  (((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core;
   cuda_blas_yisax_enlarge_scmc_set_parameter_y_cpu_core(blas_yisax_enlarge_kernel,
                                                         &(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem cuda_alloc_prefix_a;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_a), PS_DOUBLE_NUM, 0);
-  ((((double *)(cuda_alloc_prefix_a).h_data))[0] = a);
+  (((double *)(cuda_alloc_prefix_a).h_data))[0] = a;
   cuda_blas_yisax_enlarge_scmc_set_parameter_a(blas_yisax_enlarge_kernel, &(cuda_alloc_prefix_a));
   cuda_blas_yisax_enlarge_exec(blas_yisax_enlarge_kernel, 1, numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
@@ -179,57 +179,57 @@ int cuda_blas_axpy_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Fie
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
+  (((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele;
   cuda_blas_axpy_scmc_set_parameter_num_ele(blas_axpy_kernel, &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
+  (((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock;
   cuda_blas_axpy_scmc_set_parameter_zblock(blas_axpy_kernel, &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
+  (((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock;
   cuda_blas_axpy_scmc_set_parameter_yblock(blas_axpy_kernel, &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
+  (((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock;
   cuda_blas_axpy_scmc_set_parameter_xblock(blas_axpy_kernel, &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_blas_axpy_scmc_set_parameter_ovlp(blas_axpy_kernel, &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_blas_axpy_scmc_set_parameter_ZLEN(blas_axpy_kernel, &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_blas_axpy_scmc_set_parameter_YLEN(blas_axpy_kernel, &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_blas_axpy_scmc_set_parameter_XLEN(blas_axpy_kernel, &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_blas_axpy_scmc_set_parameter_numvec(blas_axpy_kernel, &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_y_cpu_core;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
+  (((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core;
   cuda_blas_axpy_scmc_set_parameter_y_cpu_core(blas_axpy_kernel, &(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem cuda_alloc_prefix_a;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_a), PS_DOUBLE_NUM, 0);
-  ((((double *)(cuda_alloc_prefix_a).h_data))[0] = a);
+  (((double *)(cuda_alloc_prefix_a).h_data))[0] = a;
   cuda_blas_axpy_scmc_set_parameter_a(blas_axpy_kernel, &(cuda_alloc_prefix_a));
   cuda_blas_axpy_exec(blas_axpy_kernel, 1, numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
@@ -298,57 +298,57 @@ int cuda_blas_yisax_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Fi
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
+  (((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele;
   cuda_blas_yisax_scmc_set_parameter_num_ele(blas_yisax_kernel, &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
+  (((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock;
   cuda_blas_yisax_scmc_set_parameter_zblock(blas_yisax_kernel, &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
+  (((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock;
   cuda_blas_yisax_scmc_set_parameter_yblock(blas_yisax_kernel, &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
+  (((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock;
   cuda_blas_yisax_scmc_set_parameter_xblock(blas_yisax_kernel, &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_blas_yisax_scmc_set_parameter_ovlp(blas_yisax_kernel, &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_blas_yisax_scmc_set_parameter_ZLEN(blas_yisax_kernel, &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_blas_yisax_scmc_set_parameter_YLEN(blas_yisax_kernel, &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_blas_yisax_scmc_set_parameter_XLEN(blas_yisax_kernel, &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_blas_yisax_scmc_set_parameter_numvec(blas_yisax_kernel, &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_y_cpu_core;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
+  (((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core;
   cuda_blas_yisax_scmc_set_parameter_y_cpu_core(blas_yisax_kernel, &(cuda_alloc_prefix_y_cpu_core));
   cuda_pscmc_mem cuda_alloc_prefix_a;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_a), PS_DOUBLE_NUM, 0);
-  ((((double *)(cuda_alloc_prefix_a).h_data))[0] = a);
+  (((double *)(cuda_alloc_prefix_a).h_data))[0] = a;
   cuda_blas_yisax_scmc_set_parameter_a(blas_yisax_kernel, &(cuda_alloc_prefix_a));
   cuda_blas_yisax_exec(blas_yisax_kernel, 1, numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
@@ -417,52 +417,52 @@ int cuda_blas_yiszero_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
+  (((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele;
   cuda_blas_yiszero_scmc_set_parameter_num_ele(blas_yiszero_kernel, &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
+  (((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock;
   cuda_blas_yiszero_scmc_set_parameter_zblock(blas_yiszero_kernel, &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
+  (((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock;
   cuda_blas_yiszero_scmc_set_parameter_yblock(blas_yiszero_kernel, &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
+  (((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock;
   cuda_blas_yiszero_scmc_set_parameter_xblock(blas_yiszero_kernel, &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_blas_yiszero_scmc_set_parameter_ovlp(blas_yiszero_kernel, &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_blas_yiszero_scmc_set_parameter_ZLEN(blas_yiszero_kernel, &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_blas_yiszero_scmc_set_parameter_YLEN(blas_yiszero_kernel, &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_blas_yiszero_scmc_set_parameter_XLEN(blas_yiszero_kernel, &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_blas_yiszero_scmc_set_parameter_numvec(blas_yiszero_kernel, &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_y_cpu_core;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
+  (((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core;
   cuda_blas_yiszero_scmc_set_parameter_y_cpu_core(blas_yiszero_kernel,
                                                   &(cuda_alloc_prefix_y_cpu_core));
   cuda_blas_yiszero_exec(blas_yiszero_kernel, 1, numvec);
@@ -531,61 +531,61 @@ int cuda_blas_yiszero_synced_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele);
+  (((int *)(cuda_alloc_prefix_num_ele).h_data))[0] = num_ele;
   cuda_blas_yiszero_synced_scmc_set_parameter_num_ele(blas_yiszero_synced_kernel,
                                                       &(cuda_alloc_prefix_num_ele));
   cuda_pscmc_mem cuda_alloc_prefix_zblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_zblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock);
+  (((long *)(cuda_alloc_prefix_zblock).h_data))[0] = zblock;
   cuda_blas_yiszero_synced_scmc_set_parameter_zblock(blas_yiszero_synced_kernel,
                                                      &(cuda_alloc_prefix_zblock));
   cuda_pscmc_mem cuda_alloc_prefix_yblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_yblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock);
+  (((long *)(cuda_alloc_prefix_yblock).h_data))[0] = yblock;
   cuda_blas_yiszero_synced_scmc_set_parameter_yblock(blas_yiszero_synced_kernel,
                                                      &(cuda_alloc_prefix_yblock));
   cuda_pscmc_mem cuda_alloc_prefix_xblock;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_xblock), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock);
+  (((long *)(cuda_alloc_prefix_xblock).h_data))[0] = xblock;
   cuda_blas_yiszero_synced_scmc_set_parameter_xblock(blas_yiszero_synced_kernel,
                                                      &(cuda_alloc_prefix_xblock));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_blas_yiszero_synced_scmc_set_parameter_ovlp(blas_yiszero_synced_kernel,
                                                    &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_blas_yiszero_synced_scmc_set_parameter_ZLEN(blas_yiszero_synced_kernel,
                                                    &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_blas_yiszero_synced_scmc_set_parameter_YLEN(blas_yiszero_synced_kernel,
                                                    &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_blas_yiszero_synced_scmc_set_parameter_XLEN(blas_yiszero_synced_kernel,
                                                    &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_blas_yiszero_synced_scmc_set_parameter_numvec(blas_yiszero_synced_kernel,
                                                      &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_y_cpu_core;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_y_cpu_core), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core);
+  (((long *)(cuda_alloc_prefix_y_cpu_core).h_data))[0] = y_cpu_core;
   cuda_blas_yiszero_synced_scmc_set_parameter_y_cpu_core(blas_yiszero_synced_kernel,
                                                          &(cuda_alloc_prefix_y_cpu_core));
   cuda_blas_yiszero_synced_exec(blas_yiszero_synced_kernel, 1, numvec);

@@ -42,10 +42,10 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
       int num_ele = (data)->num_ele;
 
       //====================Field3D_Seq
-      ((pdimarr)[0] = num_ele);
-      ((pdimarr)[1] = (xlen * x_num_thread_block));
-      ((pdimarr)[2] = (ylen * y_num_thread_block));
-      ((pdimarr)[3] = (zlen * z_num_thread_block));
+      (pdimarr)[0] = num_ele;
+      (pdimarr)[1] = (xlen * x_num_thread_block);
+      (pdimarr)[2] = (ylen * y_num_thread_block);
+      (pdimarr)[3] = (zlen * z_num_thread_block);
       GAPS_IO_InitDataInfo(gid, GAPS_IO_FLOAT64, 4, pdimarr);
     }
   } else {
@@ -68,14 +68,14 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
       int num_ele = (data)->num_ele;
 
       //====================Field3D_Seq
-      ((pdimarr)[0] = num_ele);
-      ((pdimarr)[1] = xlen);
-      ((pdimarr)[2] = ylen);
-      ((pdimarr)[3] = zlen);
-      ((pblkarr)[0] = 1);
-      ((pblkarr)[1] = x_num_thread_block);
-      ((pblkarr)[2] = y_num_thread_block);
-      ((pblkarr)[3] = z_num_thread_block);
+      (pdimarr)[0] = num_ele;
+      (pdimarr)[1] = xlen;
+      (pdimarr)[2] = ylen;
+      (pdimarr)[3] = zlen;
+      (pblkarr)[0] = 1;
+      (pblkarr)[1] = x_num_thread_block;
+      (pblkarr)[2] = y_num_thread_block;
+      (pblkarr)[3] = z_num_thread_block;
       if (version == 1) {
         GAPS_IO_InitDataInfoV1(gid, GAPS_IO_FLOAT64, 4, pdimarr, pblkarr);
 
@@ -93,7 +93,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
               long numvec = ((data + i))->numvec;
 
               //====================Field3D_Seq
-              (numvec_total = (numvec_total + numvec));
+              numvec_total = (numvec_total + numvec);
             }
           }
           int64_t *plocations = malloc((sizeof(int64_t) * numvec_total));
@@ -137,7 +137,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
                           (y_num_thread_block * ((global_z_offset)[i] / zlen))))));
                 }
               }
-              (numvec_offset = (numvec_offset + numvec));
+              numvec_offset = (numvec_offset + numvec);
             }
           }
           GAPS_IO_InitDataInfoV2(gid, "", GAPS_IO_FLOAT64, 4, pdimarr, pblkarr, plocations,
@@ -225,7 +225,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
     size_t realoneblklen = (xlen * (ylen * (zlen * num_ele)));
 
     if ((!write_buffer)) {
-      (write_buffer = malloc((sizeof(double) * realoneblklen)));
+      write_buffer = malloc((sizeof(double) * realoneblklen));
     }
 
     long vid = 0;

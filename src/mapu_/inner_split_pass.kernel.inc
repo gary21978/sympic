@@ -1481,13 +1481,12 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
     for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
       const int load0 = 1;
 
-      (use_local_particle_position = 1);
+      use_local_particle_position = 1;
       if (load0) {
         const double XO = (xoffset)[__idy];
         const double YO = (yoffset)[__idy];
         const double ZO = (zoffset)[__idy];
-        __DDR double *const particle_base =
-            (cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)));
+        __DDR double *const particle_base = cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6));
 
         double Midx = ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
         double Midy = ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));
@@ -1521,10 +1520,10 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
       const int new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
       const MAPU_LONG c_gid = allgid;
 
-      (use_local_particle_position = 0);
-      (mdx = (c_gid % XLEN));
-      (mdy = ((c_gid / XLEN) % YLEN));
-      (mdz = (c_gid / (XLEN * YLEN)));
+      use_local_particle_position = 0;
+      mdx = (c_gid % XLEN);
+      mdy = ((c_gid / XLEN) % YLEN);
+      mdz = (c_gid / (XLEN * YLEN));
       const int load0 = new_load_tmp;
 
       /* Accuracy-first supertile: reuse only immutable field inputs.  Each
@@ -1585,7 +1584,7 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
         const double YO = (yoffset)[__idy];
         const double ZO = (zoffset)[__idy];
         __DDR double *const particle_base =
-            (inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))));
+            inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)));
 
         double Midx = ((use_local_particle_position) ? (floor(particle_base[0])) : (mdx));
         double Midy = ((use_local_particle_position) ? (floor(particle_base[1])) : (mdy));

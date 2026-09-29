@@ -61,7 +61,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
           if (gridload < grid_cache_len) {
             long grid_load_end = (gridload + 1);
 
-            ((xyzw)[(4 * allid_grid)] = grid_load_end);
+            (xyzw)[(4 * allid_grid)] = grid_load_end;
             {
               long inner_step;
 
@@ -77,7 +77,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
                 }
               }
             }
-            (wrted_grid = 1);
+            wrted_grid = 1;
           }
         }
 
@@ -97,13 +97,13 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
               }
             }
           }
-          (cur_cu_load = (cur_cu_load + 1));
+          cur_cu_load = (cur_cu_load + 1);
         }
       }
     }
   }
   if (__idx == 0) {
-    ((cu_xyzw)[(__idy * 4)] = cur_cu_load);
+    (cu_xyzw)[(__idy * 4)] = cur_cu_load;
   }
 }
 __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_cache, int *cu_xyzw,
@@ -163,7 +163,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
           if (gridload < grid_cache_len) {
             long grid_load_end = (gridload + 1);
 
-            ((xyzw)[(4 * allid_grid)] = grid_load_end);
+            (xyzw)[(4 * allid_grid)] = grid_load_end;
             {
               long inner_step;
 
@@ -179,7 +179,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
                 }
               }
             }
-            (wrted_grid = 1);
+            wrted_grid = 1;
           }
         }
 
@@ -199,12 +199,12 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
               }
             }
           }
-          (cur_cu_load = (cur_cu_load + 1));
+          cur_cu_load = (cur_cu_load + 1);
         }
       }
     }
   }
   if (__idx == 0) {
-    ((cu_xyzw)[(__idy * 4)] = cur_cu_load);
+    (cu_xyzw)[(__idy * 4)] = cur_cu_load;
   }
 }

@@ -21,7 +21,7 @@ void init_Field3D_MPI_from_new_num_ele(Field3D_MPI *pthis, Field3D_MPI *f, int n
   // defined from class Field3D_MPI
 
   //====================Field3D_MPI
-  ((pthis)[0] = (f)[0]);
+  (pthis)[0] = (f)[0];
   reinit_Field3D_MPI(pthis, new_num_ele);
 }
 void init_Field3D_MPI_from(Field3D_MPI *pthis, Field3D_MPI *f) {
@@ -41,8 +41,8 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
   {
     Field3D_Seq *tmpdata = pthis->data;
 
-    ((pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime)));
-    ((pthis)->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime)));
+    (pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime));
+    (pthis)->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
     if (new_num_ele) {
       {
         long xyzz;
@@ -75,15 +75,15 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
                   long rzlen = ovlp;
 
                   if ((xyzx == 1)) {
-                    (rxlen = xlen);
+                    rxlen = xlen;
                   }
 
                   if ((xyzy == 1)) {
-                    (rylen = ylen);
+                    rylen = ylen;
                   }
 
                   if ((xyzz == 1)) {
-                    (rzlen = zlen);
+                    rzlen = zlen;
                   }
 
                   ((pthis->sync_layer_len)[(0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz))))))] =
@@ -100,9 +100,9 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
       long i;
 
       for ((i = 0); (i < num_runtime); (i = (i + 1))) {
-        ((pthis->data)[i] = (tmpdata)[i]);
+        (pthis->data)[i] = (tmpdata)[i];
         if (new_num_ele) {
-          (((pthis->data + i))->num_ele = new_num_ele);
+          ((pthis->data + i))->num_ele = new_num_ele;
         }
 
         {
@@ -111,12 +111,12 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
 
           sympic_set_device(pthis->data[i].cuda_device);
           alloc_Field3D_Seq((pthis->data + i), 0);
-          (((pthis->data + i))->cur_rankx_pscmc = ((tmpdata + i))->cur_rankx_pscmc);
-          (((pthis->data + i))->cur_ranky_pscmc = ((tmpdata + i))->cur_ranky_pscmc);
-          (((pthis->data + i))->cur_rankz_pscmc = ((tmpdata + i))->cur_rankz_pscmc);
-          (((pthis->data + i))->xoffset = ((tmpdata + i))->xoffset);
-          (((pthis->data + i))->yoffset = ((tmpdata + i))->yoffset);
-          (((pthis->data + i))->zoffset = ((tmpdata + i))->zoffset);
+          ((pthis->data + i))->cur_rankx_pscmc = ((tmpdata + i))->cur_rankx_pscmc;
+          ((pthis->data + i))->cur_ranky_pscmc = ((tmpdata + i))->cur_ranky_pscmc;
+          ((pthis->data + i))->cur_rankz_pscmc = ((tmpdata + i))->cur_rankz_pscmc;
+          ((pthis->data + i))->xoffset = ((tmpdata + i))->xoffset;
+          ((pthis->data + i))->yoffset = ((tmpdata + i))->yoffset;
+          ((pthis->data + i))->zoffset = ((tmpdata + i))->zoffset;
 
           memcpy(((pthis->data + i))->global_id, ((tmpdata + i))->global_id,
                  (sizeof(long) * (1 * numvec)));
@@ -143,16 +143,16 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
                          int adjoint_type, long *tids, int64_t *local_tid_array, int *cd_types,
                          int *dev_nums, int *cd_performances, long num_runtime, PS_MPI_Comm comm,
                          long cur_rank, long num_mpi_process) {
-  ((pthis)->num_runtime = num_runtime);
-  ((pthis)->comm = comm);
-  ((pthis)->cur_rank = cur_rank);
-  ((pthis)->num_mpi_process = num_mpi_process);
+  (pthis)->num_runtime = num_runtime;
+  (pthis)->comm = comm;
+  (pthis)->cur_rank = cur_rank;
+  (pthis)->num_mpi_process = num_mpi_process;
   {
     double G_DAMP_RATIO = call_GET_VAR("DAMP_RATIO");
 
-    ((pthis)->damp_vars = G_DAMP_RATIO);
+    (pthis)->damp_vars = G_DAMP_RATIO;
   }
-  ((pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime)));
+  (pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime));
   long i = 0;
 
   long onedim_len = (1 << n_hilbert);
@@ -175,7 +175,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     long g;
 
     for ((g = 0); (g < ndim); (g = (g + 1))) {
-      (alllen = (alllen * onen));
+      alllen = (alllen * onen);
     }
   }
   size_t *ovvec = malloc((sizeof(size_t) * alllen));
@@ -218,10 +218,10 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
                        num_runtime);
     }
   }
-  (pthis->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime)));
+  pthis->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
   for (i = 0; (i < num_runtime); i++) {
-    ((pthis->data)[i] = (sample_field)[0]);
-    (((pthis->data + i))->CD_type = (cd_types)[i]);
+    (pthis->data)[i] = (sample_field)[0];
+    ((pthis->data + i))->CD_type = (cd_types)[i];
     (((pthis->data + i))->numvec = get_cur_num_tid(((num_runtime * cur_rank) + i), numallthreads,
                                                    (num_runtime * num_mpi_process), tids));
     size_t pelen;
@@ -233,7 +233,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     mapu_pscmc_get_env_len(&(pelen));
 #endif
 
-    (((pthis->data + i))->pe = malloc(pelen));
+    ((pthis->data + i))->pe = malloc(pelen);
 #ifdef SYMPIC_CUDA
     cuda_pscmc_env_init(((pthis->data + i))->pe, (dev_nums)[i], NULL);
 #endif
@@ -241,7 +241,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     mapu_pscmc_env_init(((pthis->data + i))->pe, (dev_nums)[i], NULL);
 #endif
     pthis->data[i].cuda_device = dev_nums[i];
-    (((pthis->data + i))->global_pid = ((cur_rank * num_runtime) + i));
+    ((pthis->data + i))->global_pid = ((cur_rank * num_runtime) + i);
     alloc_Field3D_Seq((pthis->data + i), 1);
     pthis->rqst[i] = malloc(sizeof(PS_MPI_Request) * NUM_SYNC_LAYER * pthis->data[i].numvec);
     init_adjoint_relations((pthis->data + i), n_hilbert, ndim, adjoint_type,
@@ -280,15 +280,15 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
               long rzlen = ovlp;
 
               if ((xyzx == 1)) {
-                (rxlen = xlen);
+                rxlen = xlen;
               }
 
               if ((xyzy == 1)) {
-                (rylen = ylen);
+                rylen = ylen;
               }
 
               if ((xyzz == 1)) {
-                (rzlen = zlen);
+                rzlen = zlen;
               }
 
               ((pthis->sync_layer_len)[(0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz))))))] =
@@ -320,9 +320,9 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "E_file";
 
   FILE *fp = fopen(nm, "r");
@@ -598,9 +598,9 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "B_file";
 
   FILE *fp = fopen(nm, "r");
@@ -876,9 +876,9 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "E0_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1146,9 +1146,9 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "B0_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1417,9 +1417,9 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "FILTER_E_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1703,9 +1703,9 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  ((r_r_r)[0] = r_x_rat);
-  ((r_r_r)[1] = r_y_rat);
-  ((r_r_r)[2] = r_z_rat);
+  (r_r_r)[0] = r_x_rat;
+  (r_r_r)[1] = r_y_rat;
+  (r_r_r)[2] = r_z_rat;
   char *nm = "FILTER_B_file";
 
   FILE *fp = fopen(nm, "r");

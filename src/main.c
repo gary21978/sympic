@@ -60,7 +60,7 @@ double TEMPERATURE_DIST_global_procedure(long cursp, double z, double y, double 
     if (((TEMPERATURE_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
       GAPS_IO_DataSeek(pTEMPERATURE_DIST_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pTEMPERATURE_DIST_gid_global_var, TEMPERATURE_DIST_gid_cache_var, 64);
-      (TEMPERATURE_DIST_gid_cache_pos = current_cache_pos);
+      TEMPERATURE_DIST_gid_cache_pos = current_cache_pos;
       return (TEMPERATURE_DIST_gid_cache_var)[0];
 
     } else {
@@ -91,7 +91,7 @@ double DENSITY_DIST_global_procedure(long cursp, double z, double y, double x) {
     if (((DENSITY_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
       GAPS_IO_DataSeek(pDENSITY_DIST_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pDENSITY_DIST_gid_global_var, DENSITY_DIST_gid_cache_var, 64);
-      (DENSITY_DIST_gid_cache_pos = current_cache_pos);
+      DENSITY_DIST_gid_cache_pos = current_cache_pos;
       return (DENSITY_DIST_gid_cache_var)[0];
 
     } else {
@@ -122,7 +122,7 @@ double V0_x_global_procedure(long cursp, double z, double y, double x) {
     if (((V0_x_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
       GAPS_IO_DataSeek(pV0_x_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_x_gid_global_var, V0_x_gid_cache_var, 64);
-      (V0_x_gid_cache_pos = current_cache_pos);
+      V0_x_gid_cache_pos = current_cache_pos;
       return (V0_x_gid_cache_var)[0];
 
     } else {
@@ -153,7 +153,7 @@ double V0_y_global_procedure(long cursp, double z, double y, double x) {
     if (((V0_y_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
       GAPS_IO_DataSeek(pV0_y_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_y_gid_global_var, V0_y_gid_cache_var, 64);
-      (V0_y_gid_cache_pos = current_cache_pos);
+      V0_y_gid_cache_pos = current_cache_pos;
       return (V0_y_gid_cache_var)[0];
 
     } else {
@@ -184,7 +184,7 @@ double V0_z_global_procedure(long cursp, double z, double y, double x) {
     if (((V0_z_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
       GAPS_IO_DataSeek(pV0_z_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_z_gid_global_var, V0_z_gid_cache_var, 64);
-      (V0_z_gid_cache_pos = current_cache_pos);
+      V0_z_gid_cache_pos = current_cache_pos;
       return (V0_z_gid_cache_var)[0];
 
     } else {
@@ -208,11 +208,11 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      (pV0_z_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1)));
+      pV0_z_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_z_gid_global_var, nm);
       assert(((pV0_z_gid_global_var)->version == 0));
       assert(((pV0_z_gid_global_var)->dim == 4));
-      (GET_INIT_V0_z_inner_procedure = V0_z_global_procedure);
+      GET_INIT_V0_z_inner_procedure = V0_z_global_procedure;
     }
   }
   {
@@ -222,11 +222,11 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      (pV0_y_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1)));
+      pV0_y_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_y_gid_global_var, nm);
       assert(((pV0_y_gid_global_var)->version == 0));
       assert(((pV0_y_gid_global_var)->dim == 4));
-      (GET_INIT_V0_y_inner_procedure = V0_y_global_procedure);
+      GET_INIT_V0_y_inner_procedure = V0_y_global_procedure;
     }
   }
   {
@@ -236,11 +236,11 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      (pV0_x_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1)));
+      pV0_x_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_x_gid_global_var, nm);
       assert(((pV0_x_gid_global_var)->version == 0));
       assert(((pV0_x_gid_global_var)->dim == 4));
-      (GET_INIT_V0_x_inner_procedure = V0_x_global_procedure);
+      GET_INIT_V0_x_inner_procedure = V0_x_global_procedure;
     }
   }
   {
@@ -250,11 +250,11 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      (pDENSITY_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1)));
+      pDENSITY_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pDENSITY_DIST_gid_global_var, nm);
       assert(((pDENSITY_DIST_gid_global_var)->version == 0));
       assert(((pDENSITY_DIST_gid_global_var)->dim == 4));
-      (GET_INIT_DENSITY_DIST_inner_procedure = DENSITY_DIST_global_procedure);
+      GET_INIT_DENSITY_DIST_inner_procedure = DENSITY_DIST_global_procedure;
     }
   }
   {
@@ -264,18 +264,18 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      (pTEMPERATURE_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1)));
+      pTEMPERATURE_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pTEMPERATURE_DIST_gid_global_var, nm);
       assert(((pTEMPERATURE_DIST_gid_global_var)->version == 0));
       assert(((pTEMPERATURE_DIST_gid_global_var)->dim == 5));
-      (GET_INIT_TEMPERATURE_DIST_inner_procedure = TEMPERATURE_DIST_global_procedure);
+      GET_INIT_TEMPERATURE_DIST_inner_procedure = TEMPERATURE_DIST_global_procedure;
     }
   }
   int n = NUM_PROCESS;
 
   if ((NUM_PROCESS == 0)) {
     PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(n));
-    (NUM_PROCESS = n);
+    NUM_PROCESS = n;
   }
 
   long num_runtime = NUM_RUNTIME;
@@ -290,7 +290,7 @@ int main(int argc, char **argv) {
     long g;
 
     for ((g = 0); (g < NUM_N_HILBERT_DIMENSION); (g = (g + 1))) {
-      (numt = (numt * len_hilbert));
+      numt = (numt * len_hilbert);
     }
   }
   int rank;
@@ -330,25 +330,25 @@ int main(int argc, char **argv) {
   double M_USE_SAME_RANDOM_SEED = call_GET_VAR("USE_SAME_RANDOM_SEED");
 
   if ((M_DELTA_X == 0)) {
-    (M_DELTA_X = 1);
+    M_DELTA_X = 1;
   }
 
   if ((M_DELTA_Y == 0)) {
-    (M_DELTA_Y = 1);
+    M_DELTA_Y = 1;
   }
 
   if ((M_DELTA_Z == 0)) {
-    (M_DELTA_Z = 1);
+    M_DELTA_Z = 1;
   }
 
-  (srand_seed = (rank + 1));
+  srand_seed = (rank + 1);
   long local_seed = (rank + (1 + ((M_USE_TIME_AS_RANDOM_SEED) ? (time(NULL)) : (M_RAND_SEED))));
 
   if ((!M_USE_SAME_RANDOM_SEED)) {
     srand(srand_seed);
 
   } else {
-    (srand_seed = local_seed);
+    srand_seed = local_seed;
   }
 
   long tids[(num_runtime * n)];
@@ -388,15 +388,15 @@ int main(int argc, char **argv) {
   double G_USE_DIFFERENT_DEV_PERFORMANCE = call_GET_VAR("USE_DIFFERENT_DEV_PERFORMANCE");
 
   if ((G_GAPSIO_VERSION < 2)) {
-    (G_GAPSIO_NUM_REDUCEWRITE = 0);
+    G_GAPSIO_NUM_REDUCEWRITE = 0;
   }
 
   {
     long i = 0;
 
     for (i = 0; i < NUM_RUNTIME; i++) {
-      ((cd_types)[i] = call_GET_DEV_TYPE(i, rank));
-      ((dev_ids)[i] = call_GET_DEV_ID(i, rank));
+      (cd_types)[i] = call_GET_DEV_TYPE(i, rank);
+      (dev_ids)[i] = call_GET_DEV_ID(i, rank);
       ((cd_performances)[i] =
            ((G_USE_DIFFERENT_DEV_PERFORMANCE) ? (call_CAL_FUN_ONE_PARA("GET_DEV_PERFORMANCE", i))
                                               : (1)));
@@ -427,7 +427,7 @@ int main(int argc, char **argv) {
   int overlap_len = 2;
 
   if ((G_OVERLAP_LEN != 0)) {
-    (overlap_len = G_OVERLAP_LEN);
+    overlap_len = G_OVERLAP_LEN;
   }
 
   if ((rank == 0)) {
@@ -437,11 +437,11 @@ int main(int argc, char **argv) {
   long allxyzmax[3];
   set_Field3D_Seq(pfstest, NULL, M_DELTA_X, M_DELTA_Y, M_DELTA_Z, XMAX, YMAX, ZMAX, 2, overlap_len,
                   fieldlen, 0, len_hilbert, len_hilbert, len_hilbert, rank);
-  ((allxyzmax)[0] = (len_hilbert * XMAX));
-  ((allxyzmax)[1] = (len_hilbert * YMAX));
-  ((allxyzmax)[2] = (len_hilbert * ZMAX));
-  (fstestSPEC = fstest);
-  ((pfstestSPEC)->num_ele = (7 * NUM_SPEC));
+  (allxyzmax)[0] = (len_hilbert * XMAX);
+  (allxyzmax)[1] = (len_hilbert * YMAX);
+  (allxyzmax)[2] = (len_hilbert * ZMAX);
+  fstestSPEC = fstest;
+  (pfstestSPEC)->num_ele = (7 * NUM_SPEC);
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids,
                        local_tid_array, cd_types, dev_ids, cd_performances, num_runtime,
                        PS_MPI_COMM_WORLD, rank, n);
@@ -454,7 +454,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((pnpm)[i] = call_GET_NPM(i));
+      (pnpm)[i] = call_GET_NPM(i);
     }
   }
   double *pchg = malloc((sizeof(double) * NUM_SPEC));
@@ -463,7 +463,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((pchg)[i] = call_GET_CHARGE(i));
+      (pchg)[i] = call_GET_CHARGE(i);
     }
   }
   double *pmass = malloc((sizeof(double) * NUM_SPEC));
@@ -472,7 +472,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((pmass)[i] = call_GET_MASS(i));
+      (pmass)[i] = call_GET_MASS(i);
     }
   }
   long *pgcache = malloc((sizeof(long) * NUM_SPEC));
@@ -481,7 +481,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((pgcache)[i] = call_GET_GRID_CACHE_LEN(i));
+      (pgcache)[i] = call_GET_GRID_CACHE_LEN(i);
     }
   }
   long *pcucache = malloc((sizeof(long) * NUM_SPEC));
@@ -490,7 +490,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((pcucache)[i] = call_GET_CU_CACHE_LEN(i));
+      (pcucache)[i] = call_GET_CU_CACHE_LEN(i);
     }
   }
   Particle_in_Cell_MPI pis;
@@ -512,7 +512,7 @@ int main(int argc, char **argv) {
     long i;
 
     for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
-      ((p_particle_type)[i] = 0);
+      (p_particle_type)[i] = 0;
     }
   }
   init_global_particles(ppis, ptestfield, ptestfield, ptestfieldSPEC, M_USE_SMALL_NUM_GRIDS,
@@ -523,7 +523,7 @@ int main(int argc, char **argv) {
   double M_INIT_VMAX = call_GET_VAR("INIT_VMAX");
 
   if ((M_INIT_VMAX == 0)) {
-    (M_INIT_VMAX = 1);
+    M_INIT_VMAX = 1;
   }
 
   init_non_uni_particle_fmpi(&((ppis)->MPI_fieldE), M_INIT_VMAX);
@@ -589,12 +589,12 @@ int main(int argc, char **argv) {
           PS_MPI_Barrier(PS_MPI_COMM_WORLD);
         }
 
-        (tbeg = (wclk_now() - tbeg));
+        tbeg = (wclk_now() - tbeg);
         if ((rank == 0)) {
           fprintf(stderr, "done, time used=%fs\n", tbeg);
         }
 
-        (tsave = (tsave + 1));
+        tsave = (tsave + 1);
       }
 
       // set B1=B
@@ -670,7 +670,7 @@ int main(int argc, char **argv) {
 
           double tused = (tnow - tend);
 
-          (tend = tnow);
+          tend = tnow;
           fprintf(stderr, "step=%ld time used=%fs, ips=%f, allips=%f\n", t, tused, (1 / tused),
                   ((t + 1) / (tend - tbeg)));
         }

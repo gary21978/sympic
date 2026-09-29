@@ -39,7 +39,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
     for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
       long load0 = 1;
 
-      (use_local_particle_position = 1);
+      use_local_particle_position = 1;
       if (load0) {
         int Midx = ((use_local_particle_position)
                         ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]))
@@ -73,11 +73,11 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           long g;
 
           for ((g = 0); (g < 3); (g = (g + 1))) {
-            ((enevec)[(g + (3 * __idx))] = 0);
-            ((avvvec)[(g + (3 * __idx))] = 0);
+            (enevec)[(g + (3 * __idx))] = 0;
+            (avvvec)[(g + (3 * __idx))] = 0;
           }
         }
-        ((numcpvec)[(1 * __idx)] = 0);
+        (numcpvec)[(1 * __idx)] = 0;
         for (; (((__idx * 1) + lg) < load0); (lg = (lg + (__xlen * 1)))) {
           double a_rva[(1 * 6)];
           int __idx_all_base = ((__idx * 1) + lg);
@@ -129,21 +129,21 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
 
               double curene_z = (Mass * (0.5 * +((vz * vz))));
 
-              (ene0_x = (ene0_x + curene_x));
-              (ene0_y = (ene0_y + curene_y));
-              (ene0_z = (ene0_z + curene_z));
-              (aver_vx = (aver_vx + vx));
-              (aver_vy = (aver_vy + vy));
-              (aver_vz = (aver_vz + vz));
+              ene0_x = (ene0_x + curene_x);
+              ene0_y = (ene0_y + curene_y);
+              ene0_z = (ene0_z + curene_z);
+              aver_vx = (aver_vx + vx);
+              aver_vy = (aver_vy + vy);
+              aver_vz = (aver_vz + vz);
             }
           }
-          ((enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x));
-          ((enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y));
-          ((enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z));
-          ((avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx));
-          ((avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy));
-          ((avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz));
-          ((numcpvec)[__idx] = ((numcpvec)[__idx] + numcp));
+          (enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x);
+          (enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y);
+          (enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z);
+          (avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx);
+          (avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy);
+          (avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz);
+          (numcpvec)[__idx] = ((numcpvec)[__idx] + numcp);
         }
         __syncthreads();
         if (__idx == 0) {
@@ -151,13 +151,13 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
             long g;
 
             for ((g = 0); (g < __xlen); (g = (g + 1))) {
-              (allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]));
-              (allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]));
-              (allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]));
-              (allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]));
-              (allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]));
-              (allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]));
-              (allnumcp = (allnumcp + (numcpvec)[g]));
+              allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
+              allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
+              allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
+              allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]);
+              allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]);
+              allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]);
+              allnumcp = (allnumcp + (numcpvec)[g]);
             }
           }
           (((FoutEN +
@@ -284,10 +284,10 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
 
       long c_gid = allgid;
 
-      (use_local_particle_position = 0);
-      (mdx = (c_gid % XLEN));
-      (mdy = ((c_gid / XLEN) % YLEN));
-      (mdz = (c_gid / (XLEN * YLEN)));
+      use_local_particle_position = 0;
+      mdx = (c_gid % XLEN);
+      mdy = ((c_gid / XLEN) % YLEN);
+      mdz = (c_gid / (XLEN * YLEN));
       int load0 = new_load_tmp;
 
       int new_load = new_load_tmp;
@@ -328,11 +328,11 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           long g;
 
           for ((g = 0); (g < 3); (g = (g + 1))) {
-            ((enevec)[(g + (3 * __idx))] = 0);
-            ((avvvec)[(g + (3 * __idx))] = 0);
+            (enevec)[(g + (3 * __idx))] = 0;
+            (avvvec)[(g + (3 * __idx))] = 0;
           }
         }
-        ((numcpvec)[(1 * __idx)] = 0);
+        (numcpvec)[(1 * __idx)] = 0;
         for (; (((__idx * 1) + lg) < load0); (lg = (lg + (__xlen * 1)))) {
           double a_rva[(1 * 6)];
           int __idx_all_base = ((__idx * 1) + lg);
@@ -384,21 +384,21 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
 
               double curene_z = (Mass * (0.5 * +((vz * vz))));
 
-              (ene0_x = (ene0_x + curene_x));
-              (ene0_y = (ene0_y + curene_y));
-              (ene0_z = (ene0_z + curene_z));
-              (aver_vx = (aver_vx + vx));
-              (aver_vy = (aver_vy + vy));
-              (aver_vz = (aver_vz + vz));
+              ene0_x = (ene0_x + curene_x);
+              ene0_y = (ene0_y + curene_y);
+              ene0_z = (ene0_z + curene_z);
+              aver_vx = (aver_vx + vx);
+              aver_vy = (aver_vy + vy);
+              aver_vz = (aver_vz + vz);
             }
           }
-          ((enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x));
-          ((enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y));
-          ((enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z));
-          ((avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx));
-          ((avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy));
-          ((avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz));
-          ((numcpvec)[__idx] = ((numcpvec)[__idx] + numcp));
+          (enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x);
+          (enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y);
+          (enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z);
+          (avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx);
+          (avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy);
+          (avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz);
+          (numcpvec)[__idx] = ((numcpvec)[__idx] + numcp);
         }
         __syncthreads();
         if (__idx == 0) {
@@ -406,13 +406,13 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
             long g;
 
             for ((g = 0); (g < __xlen); (g = (g + 1))) {
-              (allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]));
-              (allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]));
-              (allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]));
-              (allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]));
-              (allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]));
-              (allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]));
-              (allnumcp = (allnumcp + (numcpvec)[g]));
+              allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
+              allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
+              allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
+              allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]);
+              allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]);
+              allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]);
+              allnumcp = (allnumcp + (numcpvec)[g]);
             }
           }
           (((FoutEN +
@@ -531,7 +531,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
       }
 
       if (load0 != new_load) {
-        ((xyzw)[(4 * ((__idy * numgrid) + allgid))] = new_load);
+        (xyzw)[(4 * ((__idy * numgrid) + allgid))] = new_load;
       }
     }
   }

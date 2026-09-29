@@ -19,7 +19,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
   long blk_all_len = (xb * (yb * (zb * num_ele)));
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -164,7 +164,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
 
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -172,7 +172,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
   double zeros[128];
   long lg = 0;
   for ((lg = 0); ((lg + __idx) < LOCAL_CACHE_LEN); (lg = (lg + __xlen))) {
-    ((zeros)[(lg + __idx)] = 0);
+    (zeros)[(lg + __idx)] = 0;
   }
   {
     long i;
@@ -185,7 +185,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
         {
           long Gll_P9918;
           for ((Gll_P9918 = 0); (Gll_P9918 < numcp); (Gll_P9918 = (Gll_P9918 + 1))) {
-            (((y + (blk_offset_t1 + j)))[Gll_P9918] = (zeros)[Gll_P9918]);
+            ((y + (blk_offset_t1 + j)))[Gll_P9918] = (zeros)[Gll_P9918];
           }
         }
       }

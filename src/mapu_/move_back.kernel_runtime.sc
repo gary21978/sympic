@@ -7,11 +7,11 @@
 #include "move_back.kernel.inc"
 
 int mapu_move_back_kernel_8_init(mapu_pscmc_env *pe, mapu_move_back_kernel_8_struct *kerstr) {
-  ((kerstr)->pe = pe);
+  (kerstr)->pe = pe;
   return 0;
 }
 void mapu_move_back_kernel_8_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(mapu_move_back_kernel_8_struct));
+  (len)[0] = sizeof(mapu_move_back_kernel_8_struct);
 }
 int mapu_move_back_kernel_8_get_xlen() { return 1; }
 int mapu_move_back_kernel_8_get_num_compute_units(mapu_move_back_kernel_8_struct *kerstr) {
@@ -52,8 +52,8 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
   } else {
     {
       dim3 multiylen = 1;
-      (multiylen.x = 64);
-      (multiylen.y = (scmc_internal_g_ylen / 64));
+      multiylen.x = 64;
+      multiylen.y = (scmc_internal_g_ylen / 64);
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -99,63 +99,63 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
 int mapu_move_back_kernel_8_scmc_set_parameter_inoutput(mapu_move_back_kernel_8_struct *kerstr,
                                                         mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->inoutput = pm);
+  kerstr->inoutput = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_xyzw(mapu_move_back_kernel_8_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->xyzw = pm);
+  kerstr->xyzw = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_cu_cache(mapu_move_back_kernel_8_struct *kerstr,
                                                         mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache = pm);
+  kerstr->cu_cache = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_cu_xyzw(mapu_move_back_kernel_8_struct *kerstr,
                                                        mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_xyzw = pm);
+  kerstr->cu_xyzw = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_XLEN(mapu_move_back_kernel_8_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->XLEN = pm);
+  kerstr->XLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_YLEN(mapu_move_back_kernel_8_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->YLEN = pm);
+  kerstr->YLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_ZLEN(mapu_move_back_kernel_8_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->ZLEN = pm);
+  kerstr->ZLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_grid_cache_len(
     mapu_move_back_kernel_8_struct *kerstr, mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->grid_cache_len = pm);
+  kerstr->grid_cache_len = pm;
   return 0;
 }
 int mapu_move_back_kernel_8_scmc_set_parameter_cu_cache_length(
     mapu_move_back_kernel_8_struct *kerstr, mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache_length = pm);
+  kerstr->cu_cache_length = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_init(mapu_pscmc_env *pe, mapu_move_back_kernel_6_struct *kerstr) {
-  ((kerstr)->pe = pe);
+  (kerstr)->pe = pe;
   return 0;
 }
 void mapu_move_back_kernel_6_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(mapu_move_back_kernel_6_struct));
+  (len)[0] = sizeof(mapu_move_back_kernel_6_struct);
 }
 int mapu_move_back_kernel_6_get_xlen() { return 1; }
 int mapu_move_back_kernel_6_get_num_compute_units(mapu_move_back_kernel_6_struct *kerstr) {
@@ -196,8 +196,8 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
   } else {
     {
       dim3 multiylen = 1;
-      (multiylen.x = 64);
-      (multiylen.y = (scmc_internal_g_ylen / 64));
+      multiylen.x = 64;
+      multiylen.y = (scmc_internal_g_ylen / 64);
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -243,54 +243,54 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
 int mapu_move_back_kernel_6_scmc_set_parameter_inoutput(mapu_move_back_kernel_6_struct *kerstr,
                                                         mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->inoutput = pm);
+  kerstr->inoutput = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_xyzw(mapu_move_back_kernel_6_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->xyzw = pm);
+  kerstr->xyzw = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_cu_cache(mapu_move_back_kernel_6_struct *kerstr,
                                                         mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache = pm);
+  kerstr->cu_cache = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_cu_xyzw(mapu_move_back_kernel_6_struct *kerstr,
                                                        mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_xyzw = pm);
+  kerstr->cu_xyzw = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_XLEN(mapu_move_back_kernel_6_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->XLEN = pm);
+  kerstr->XLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_YLEN(mapu_move_back_kernel_6_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->YLEN = pm);
+  kerstr->YLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_ZLEN(mapu_move_back_kernel_6_struct *kerstr,
                                                     mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->ZLEN = pm);
+  kerstr->ZLEN = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_grid_cache_len(
     mapu_move_back_kernel_6_struct *kerstr, mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->grid_cache_len = pm);
+  kerstr->grid_cache_len = pm;
   return 0;
 }
 int mapu_move_back_kernel_6_scmc_set_parameter_cu_cache_length(
     mapu_move_back_kernel_6_struct *kerstr, mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache_length = pm);
+  kerstr->cu_cache_length = pm;
   return 0;
 }

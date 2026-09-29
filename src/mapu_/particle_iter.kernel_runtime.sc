@@ -11,12 +11,10 @@ static int dump_kernel_variables = 0;
 extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
 
 int mapu_dump_ene_num_init(mapu_pscmc_env *pe, mapu_dump_ene_num_struct *kerstr) {
-  ((kerstr)->pe = pe);
+  (kerstr)->pe = pe;
   return 0;
 }
-void mapu_dump_ene_num_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(mapu_dump_ene_num_struct));
-}
+void mapu_dump_ene_num_get_struct_len(size_t *len) { (len)[0] = sizeof(mapu_dump_ene_num_struct); }
 int mapu_dump_ene_num_get_xlen() { return 1; }
 int mapu_dump_ene_num_get_num_compute_units(mapu_dump_ene_num_struct *kerstr) { return 4; }
 int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_g_xlen,
@@ -42,7 +40,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -68,7 +66,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -93,7 +91,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -119,7 +117,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -145,7 +143,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -171,7 +169,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -197,7 +195,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -223,7 +221,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -249,7 +247,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -274,7 +272,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -299,7 +297,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -324,7 +322,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -349,7 +347,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -375,7 +373,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -401,7 +399,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -427,7 +425,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -453,7 +451,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -478,7 +476,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -504,7 +502,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -529,7 +527,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -555,7 +553,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -581,7 +579,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -607,7 +605,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -633,7 +631,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -703,8 +701,8 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
   } else {
     {
       dim3 multiylen = 1;
-      (multiylen.x = 64);
-      (multiylen.y = (scmc_internal_g_ylen / 64));
+      multiylen.x = 64;
+      multiylen.y = (scmc_internal_g_ylen / 64);
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -789,7 +787,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -815,7 +813,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -840,7 +838,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -866,7 +864,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -892,7 +890,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -918,7 +916,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -944,7 +942,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -970,7 +968,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -996,7 +994,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1021,7 +1019,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1046,7 +1044,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1071,7 +1069,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1096,7 +1094,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1122,7 +1120,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1148,7 +1146,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1174,7 +1172,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1200,7 +1198,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1225,7 +1223,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1251,7 +1249,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1276,7 +1274,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1302,7 +1300,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1328,7 +1326,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1354,7 +1352,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1380,7 +1378,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1393,151 +1391,151 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
   } else {
     { 0; }
   }
-  (_pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1));
+  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_inoutput(mapu_dump_ene_num_struct *kerstr,
                                                   mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->inoutput = pm);
+  kerstr->inoutput = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_xyzw(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->xyzw = pm);
+  kerstr->xyzw = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_cu_cache(mapu_dump_ene_num_struct *kerstr,
                                                   mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache = pm);
+  kerstr->cu_cache = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_cu_xyzw(mapu_dump_ene_num_struct *kerstr,
                                                  mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_xyzw = pm);
+  kerstr->cu_xyzw = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_fieldE(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->fieldE = pm);
+  kerstr->fieldE = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_fieldB(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->fieldB = pm);
+  kerstr->fieldB = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_FoutJ(mapu_dump_ene_num_struct *kerstr,
                                                mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->FoutJ = pm);
+  kerstr->FoutJ = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_FoutEN(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->FoutEN = pm);
+  kerstr->FoutEN = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_XLEN(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->XLEN = pm);
+  kerstr->XLEN = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_YLEN(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->YLEN = pm);
+  kerstr->YLEN = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_ZLEN(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->ZLEN = pm);
+  kerstr->ZLEN = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_ovlp(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->ovlp = pm);
+  kerstr->ovlp = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_numvec(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->numvec = pm);
+  kerstr->numvec = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_num_ele(mapu_dump_ene_num_struct *kerstr,
                                                  mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->num_ele = pm);
+  kerstr->num_ele = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_grid_cache_len(mapu_dump_ene_num_struct *kerstr,
                                                         mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->grid_cache_len = pm);
+  kerstr->grid_cache_len = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_cu_cache_length(mapu_dump_ene_num_struct *kerstr,
                                                          mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->cu_cache_length = pm);
+  kerstr->cu_cache_length = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_Mass(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->Mass = pm);
+  kerstr->Mass = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_Charge(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->Charge = pm);
+  kerstr->Charge = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_SPEC(mapu_dump_ene_num_struct *kerstr,
                                               mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->SPEC = pm);
+  kerstr->SPEC = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_NUM_SPEC(mapu_dump_ene_num_struct *kerstr,
                                                   mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->NUM_SPEC = pm);
+  kerstr->NUM_SPEC = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_DELTA_X(mapu_dump_ene_num_struct *kerstr,
                                                  mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->DELTA_X = pm);
+  kerstr->DELTA_X = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_DELTA_Y(mapu_dump_ene_num_struct *kerstr,
                                                  mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->DELTA_Y = pm);
+  kerstr->DELTA_Y = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_DELTA_Z(mapu_dump_ene_num_struct *kerstr,
                                                  mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->DELTA_Z = pm);
+  kerstr->DELTA_Z = pm;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_Deltat(mapu_dump_ene_num_struct *kerstr,
                                                 mapu_pscmc_mem *pm) {
   mapsSetDevice((kerstr->pe)->device_id);
-  (kerstr->Deltat = pm);
+  kerstr->Deltat = pm;
   return 0;
 }
 #ifdef __CUDACC__

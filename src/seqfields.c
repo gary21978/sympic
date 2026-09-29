@@ -22,8 +22,8 @@ int build_Field_compute_unit_from_seq_field(Field3D_Seq *pthis, Field3D_Seq *inp
   int new_num_ele = (num_cu * (input_E)->num_ele);
 
   fprintf(stderr, "newnumele=%d numcu=%d\n", new_num_ele, num_cu);
-  ((pthis)[0] = (input_E)[0]);
-  ((pthis)->num_ele = new_num_ele);
+  (pthis)[0] = (input_E)[0];
+  (pthis)->num_ele = new_num_ele;
   return 0;
 }
 int build_Field_compute_unit_from_mpi_field(Field3D_MPI *pthis, Field3D_MPI *input_E) {
@@ -31,8 +31,8 @@ int build_Field_compute_unit_from_mpi_field(Field3D_MPI *pthis, Field3D_MPI *inp
   // defined from class Field3D_MPI
 
   //====================Field3D_MPI
-  ((pthis)[0] = (input_E)[0]);
-  ((pthis)->data = malloc((sizeof(Field3D_Seq) * (input_E)->num_runtime)));
+  (pthis)[0] = (input_E)[0];
+  (pthis)->data = malloc((sizeof(Field3D_Seq) * (input_E)->num_runtime));
   {
     long i;
 

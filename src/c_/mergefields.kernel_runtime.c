@@ -8,7 +8,7 @@ static int dump_kernel_variables = 0;
 extern long _pscmc_c_global_dump_kernel_variables, _pscmc_c_global_dump_times;
 int c_merge_ovlp_m2o_once_init(c_pscmc_env *pe, c_merge_ovlp_m2o_once_struct *kerstr) { return 0; }
 void c_merge_ovlp_m2o_once_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_merge_ovlp_m2o_once_struct));
+  (len)[0] = sizeof(c_merge_ovlp_m2o_once_struct);
 }
 int c_merge_ovlp_m2o_once_get_xlen() { return IDX_OPT_MAX; }
 int c_merge_ovlp_m2o_once_get_num_compute_units(c_merge_ovlp_m2o_once_struct *kerstr) { return 1; }
@@ -27,7 +27,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -44,7 +44,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -61,7 +61,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -78,7 +78,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -95,7 +95,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -112,7 +112,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -129,7 +129,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -146,7 +146,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -163,7 +163,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -180,7 +180,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -197,7 +197,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -214,7 +214,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -231,7 +231,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -248,7 +248,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -265,7 +265,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -282,7 +282,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -299,7 +299,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -316,7 +316,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -333,7 +333,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -350,7 +350,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -367,7 +367,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -384,7 +384,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -401,7 +401,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -418,7 +418,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -435,7 +435,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -452,7 +452,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -469,7 +469,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -486,7 +486,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -503,7 +503,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -520,7 +520,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -537,7 +537,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -554,7 +554,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -571,7 +571,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -613,7 +613,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -630,7 +630,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -647,7 +647,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -664,7 +664,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -681,7 +681,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -698,7 +698,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -715,7 +715,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -732,7 +732,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -749,7 +749,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -766,7 +766,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -783,7 +783,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -800,7 +800,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -817,7 +817,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -834,7 +834,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -851,7 +851,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -868,7 +868,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -885,7 +885,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -902,7 +902,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -919,7 +919,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -936,7 +936,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -953,7 +953,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -970,7 +970,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -987,7 +987,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1004,7 +1004,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1021,7 +1021,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1038,7 +1038,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1055,7 +1055,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1072,7 +1072,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1089,7 +1089,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1106,7 +1106,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1123,7 +1123,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1140,7 +1140,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1157,7 +1157,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1169,179 +1169,179 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecmain(c_merge_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp0(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp0 = pm->d_data);
-  ((kerstr)->vecovlp0_len = pm->len);
+  (kerstr)->vecovlp0 = pm->d_data;
+  (kerstr)->vecovlp0_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp1(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp1 = pm->d_data);
-  ((kerstr)->vecovlp1_len = pm->len);
+  (kerstr)->vecovlp1 = pm->d_data;
+  (kerstr)->vecovlp1_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp2(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp2 = pm->d_data);
-  ((kerstr)->vecovlp2_len = pm->len);
+  (kerstr)->vecovlp2 = pm->d_data;
+  (kerstr)->vecovlp2_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp3(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp3 = pm->d_data);
-  ((kerstr)->vecovlp3_len = pm->len);
+  (kerstr)->vecovlp3 = pm->d_data;
+  (kerstr)->vecovlp3_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp4(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp4 = pm->d_data);
-  ((kerstr)->vecovlp4_len = pm->len);
+  (kerstr)->vecovlp4 = pm->d_data;
+  (kerstr)->vecovlp4_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp5(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp5 = pm->d_data);
-  ((kerstr)->vecovlp5_len = pm->len);
+  (kerstr)->vecovlp5 = pm->d_data;
+  (kerstr)->vecovlp5_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp6(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp6 = pm->d_data);
-  ((kerstr)->vecovlp6_len = pm->len);
+  (kerstr)->vecovlp6 = pm->d_data;
+  (kerstr)->vecovlp6_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp7(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp7 = pm->d_data);
-  ((kerstr)->vecovlp7_len = pm->len);
+  (kerstr)->vecovlp7 = pm->d_data;
+  (kerstr)->vecovlp7_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp8(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp8 = pm->d_data);
-  ((kerstr)->vecovlp8_len = pm->len);
+  (kerstr)->vecovlp8 = pm->d_data;
+  (kerstr)->vecovlp8_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp9(c_merge_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp9 = pm->d_data);
-  ((kerstr)->vecovlp9_len = pm->len);
+  (kerstr)->vecovlp9 = pm->d_data;
+  (kerstr)->vecovlp9_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp10(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp10 = pm->d_data);
-  ((kerstr)->vecovlp10_len = pm->len);
+  (kerstr)->vecovlp10 = pm->d_data;
+  (kerstr)->vecovlp10_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp11(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp11 = pm->d_data);
-  ((kerstr)->vecovlp11_len = pm->len);
+  (kerstr)->vecovlp11 = pm->d_data;
+  (kerstr)->vecovlp11_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp12(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp12 = pm->d_data);
-  ((kerstr)->vecovlp12_len = pm->len);
+  (kerstr)->vecovlp12 = pm->d_data;
+  (kerstr)->vecovlp12_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp14(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp14 = pm->d_data);
-  ((kerstr)->vecovlp14_len = pm->len);
+  (kerstr)->vecovlp14 = pm->d_data;
+  (kerstr)->vecovlp14_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp15(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp15 = pm->d_data);
-  ((kerstr)->vecovlp15_len = pm->len);
+  (kerstr)->vecovlp15 = pm->d_data;
+  (kerstr)->vecovlp15_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp16(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp16 = pm->d_data);
-  ((kerstr)->vecovlp16_len = pm->len);
+  (kerstr)->vecovlp16 = pm->d_data;
+  (kerstr)->vecovlp16_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp17(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp17 = pm->d_data);
-  ((kerstr)->vecovlp17_len = pm->len);
+  (kerstr)->vecovlp17 = pm->d_data;
+  (kerstr)->vecovlp17_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp18(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp18 = pm->d_data);
-  ((kerstr)->vecovlp18_len = pm->len);
+  (kerstr)->vecovlp18 = pm->d_data;
+  (kerstr)->vecovlp18_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp19(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp19 = pm->d_data);
-  ((kerstr)->vecovlp19_len = pm->len);
+  (kerstr)->vecovlp19 = pm->d_data;
+  (kerstr)->vecovlp19_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp20(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp20 = pm->d_data);
-  ((kerstr)->vecovlp20_len = pm->len);
+  (kerstr)->vecovlp20 = pm->d_data;
+  (kerstr)->vecovlp20_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp21(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp21 = pm->d_data);
-  ((kerstr)->vecovlp21_len = pm->len);
+  (kerstr)->vecovlp21 = pm->d_data;
+  (kerstr)->vecovlp21_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp22(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp22 = pm->d_data);
-  ((kerstr)->vecovlp22_len = pm->len);
+  (kerstr)->vecovlp22 = pm->d_data;
+  (kerstr)->vecovlp22_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp23(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp23 = pm->d_data);
-  ((kerstr)->vecovlp23_len = pm->len);
+  (kerstr)->vecovlp23 = pm->d_data;
+  (kerstr)->vecovlp23_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp24(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp24 = pm->d_data);
-  ((kerstr)->vecovlp24_len = pm->len);
+  (kerstr)->vecovlp24 = pm->d_data;
+  (kerstr)->vecovlp24_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp25(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp25 = pm->d_data);
-  ((kerstr)->vecovlp25_len = pm->len);
+  (kerstr)->vecovlp25 = pm->d_data;
+  (kerstr)->vecovlp25_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecovlp26(c_merge_ovlp_m2o_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp26 = pm->d_data);
-  ((kerstr)->vecovlp26_len = pm->len);
+  (kerstr)->vecovlp26 = pm->d_data;
+  (kerstr)->vecovlp26_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_numvec(c_merge_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_num_ele(c_merge_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_xblock(c_merge_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_yblock(c_merge_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_zblock(c_merge_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_ovlp(c_merge_ovlp_m2o_once_struct *kerstr,
                                                   c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_init(c_pscmc_env *pe, c_merge_ovlp_m2o_all_in_one_struct *kerstr) {
   return 0;
 }
 void c_merge_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_merge_ovlp_m2o_all_in_one_struct));
+  (len)[0] = sizeof(c_merge_ovlp_m2o_all_in_one_struct);
 }
 int c_merge_ovlp_m2o_all_in_one_get_xlen() { return IDX_OPT_MAX; }
 int c_merge_ovlp_m2o_all_in_one_get_num_compute_units(c_merge_ovlp_m2o_all_in_one_struct *kerstr) {
@@ -1362,7 +1362,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1379,7 +1379,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1396,7 +1396,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1413,7 +1413,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1430,7 +1430,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1447,7 +1447,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1464,7 +1464,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1481,7 +1481,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1517,7 +1517,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1534,7 +1534,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1551,7 +1551,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1568,7 +1568,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1585,7 +1585,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1602,7 +1602,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1619,7 +1619,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1636,7 +1636,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1648,48 +1648,48 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlps = pm->d_data);
-  ((kerstr)->vecovlps_len = pm->len);
+  (kerstr)->vecovlps = pm->d_data;
+  (kerstr)->vecovlps_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(
     c_merge_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
                                                         c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_merge_ovlp_m2o_init(c_pscmc_env *pe, c_merge_ovlp_m2o_struct *kerstr) { return 0; }
 void c_merge_ovlp_m2o_get_struct_len(size_t *len) { ((len)[0] = sizeof(c_merge_ovlp_m2o_struct)); }
@@ -1710,7 +1710,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1727,7 +1727,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1744,7 +1744,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1761,7 +1761,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1778,7 +1778,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1795,7 +1795,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1812,7 +1812,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1829,7 +1829,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1846,7 +1846,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -1882,7 +1882,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1899,7 +1899,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1916,7 +1916,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1933,7 +1933,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1950,7 +1950,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1967,7 +1967,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -1984,7 +1984,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2001,7 +2001,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2018,7 +2018,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2030,49 +2030,49 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_vecmain(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_vecovlp(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp = pm->d_data);
-  ((kerstr)->vecovlp_len = pm->len);
+  (kerstr)->vecovlp = pm->d_data;
+  (kerstr)->vecovlp_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_ovlpindex(c_merge_ovlp_m2o_struct *kerstr,
                                                   c_pscmc_mem *pm) {
-  ((kerstr)->ovlpindex = pm->d_data);
-  ((kerstr)->ovlpindex_len = pm->len);
+  (kerstr)->ovlpindex = pm->d_data;
+  (kerstr)->ovlpindex_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_numvec(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_num_ele(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_xblock(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_yblock(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_zblock(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_ovlp(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_init(c_pscmc_env *pe, c_merge_ovlp_o2m_once_struct *kerstr) { return 0; }
 void c_merge_ovlp_o2m_once_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_merge_ovlp_o2m_once_struct));
+  (len)[0] = sizeof(c_merge_ovlp_o2m_once_struct);
 }
 int c_merge_ovlp_o2m_once_get_xlen() { return IDX_OPT_MAX; }
 int c_merge_ovlp_o2m_once_get_num_compute_units(c_merge_ovlp_o2m_once_struct *kerstr) { return 1; }
@@ -2091,7 +2091,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2108,7 +2108,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2125,7 +2125,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2142,7 +2142,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2159,7 +2159,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2176,7 +2176,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2193,7 +2193,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2210,7 +2210,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2227,7 +2227,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2244,7 +2244,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2261,7 +2261,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2278,7 +2278,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2295,7 +2295,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2312,7 +2312,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2329,7 +2329,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2346,7 +2346,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2363,7 +2363,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2380,7 +2380,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2397,7 +2397,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2414,7 +2414,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2431,7 +2431,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2448,7 +2448,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2465,7 +2465,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2482,7 +2482,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2499,7 +2499,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2516,7 +2516,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2533,7 +2533,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2550,7 +2550,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2567,7 +2567,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2584,7 +2584,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2601,7 +2601,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2618,7 +2618,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2635,7 +2635,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -2677,7 +2677,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2694,7 +2694,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2711,7 +2711,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2728,7 +2728,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2745,7 +2745,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2762,7 +2762,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2779,7 +2779,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2796,7 +2796,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2813,7 +2813,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2830,7 +2830,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2847,7 +2847,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2864,7 +2864,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2881,7 +2881,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2898,7 +2898,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2915,7 +2915,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2932,7 +2932,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2949,7 +2949,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2966,7 +2966,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -2983,7 +2983,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3000,7 +3000,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3017,7 +3017,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3034,7 +3034,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3051,7 +3051,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3068,7 +3068,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3085,7 +3085,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3102,7 +3102,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3119,7 +3119,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3136,7 +3136,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3153,7 +3153,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3170,7 +3170,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3187,7 +3187,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3204,7 +3204,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3221,7 +3221,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3233,179 +3233,179 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecmain(c_merge_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp0(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp0 = pm->d_data);
-  ((kerstr)->vecovlp0_len = pm->len);
+  (kerstr)->vecovlp0 = pm->d_data;
+  (kerstr)->vecovlp0_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp1(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp1 = pm->d_data);
-  ((kerstr)->vecovlp1_len = pm->len);
+  (kerstr)->vecovlp1 = pm->d_data;
+  (kerstr)->vecovlp1_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp2(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp2 = pm->d_data);
-  ((kerstr)->vecovlp2_len = pm->len);
+  (kerstr)->vecovlp2 = pm->d_data;
+  (kerstr)->vecovlp2_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp3(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp3 = pm->d_data);
-  ((kerstr)->vecovlp3_len = pm->len);
+  (kerstr)->vecovlp3 = pm->d_data;
+  (kerstr)->vecovlp3_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp4(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp4 = pm->d_data);
-  ((kerstr)->vecovlp4_len = pm->len);
+  (kerstr)->vecovlp4 = pm->d_data;
+  (kerstr)->vecovlp4_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp5(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp5 = pm->d_data);
-  ((kerstr)->vecovlp5_len = pm->len);
+  (kerstr)->vecovlp5 = pm->d_data;
+  (kerstr)->vecovlp5_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp6(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp6 = pm->d_data);
-  ((kerstr)->vecovlp6_len = pm->len);
+  (kerstr)->vecovlp6 = pm->d_data;
+  (kerstr)->vecovlp6_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp7(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp7 = pm->d_data);
-  ((kerstr)->vecovlp7_len = pm->len);
+  (kerstr)->vecovlp7 = pm->d_data;
+  (kerstr)->vecovlp7_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp8(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp8 = pm->d_data);
-  ((kerstr)->vecovlp8_len = pm->len);
+  (kerstr)->vecovlp8 = pm->d_data;
+  (kerstr)->vecovlp8_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp9(c_merge_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp9 = pm->d_data);
-  ((kerstr)->vecovlp9_len = pm->len);
+  (kerstr)->vecovlp9 = pm->d_data;
+  (kerstr)->vecovlp9_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp10(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp10 = pm->d_data);
-  ((kerstr)->vecovlp10_len = pm->len);
+  (kerstr)->vecovlp10 = pm->d_data;
+  (kerstr)->vecovlp10_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp11(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp11 = pm->d_data);
-  ((kerstr)->vecovlp11_len = pm->len);
+  (kerstr)->vecovlp11 = pm->d_data;
+  (kerstr)->vecovlp11_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp12(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp12 = pm->d_data);
-  ((kerstr)->vecovlp12_len = pm->len);
+  (kerstr)->vecovlp12 = pm->d_data;
+  (kerstr)->vecovlp12_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp14(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp14 = pm->d_data);
-  ((kerstr)->vecovlp14_len = pm->len);
+  (kerstr)->vecovlp14 = pm->d_data;
+  (kerstr)->vecovlp14_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp15(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp15 = pm->d_data);
-  ((kerstr)->vecovlp15_len = pm->len);
+  (kerstr)->vecovlp15 = pm->d_data;
+  (kerstr)->vecovlp15_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp16(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp16 = pm->d_data);
-  ((kerstr)->vecovlp16_len = pm->len);
+  (kerstr)->vecovlp16 = pm->d_data;
+  (kerstr)->vecovlp16_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp17(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp17 = pm->d_data);
-  ((kerstr)->vecovlp17_len = pm->len);
+  (kerstr)->vecovlp17 = pm->d_data;
+  (kerstr)->vecovlp17_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp18(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp18 = pm->d_data);
-  ((kerstr)->vecovlp18_len = pm->len);
+  (kerstr)->vecovlp18 = pm->d_data;
+  (kerstr)->vecovlp18_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp19(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp19 = pm->d_data);
-  ((kerstr)->vecovlp19_len = pm->len);
+  (kerstr)->vecovlp19 = pm->d_data;
+  (kerstr)->vecovlp19_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp20(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp20 = pm->d_data);
-  ((kerstr)->vecovlp20_len = pm->len);
+  (kerstr)->vecovlp20 = pm->d_data;
+  (kerstr)->vecovlp20_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp21(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp21 = pm->d_data);
-  ((kerstr)->vecovlp21_len = pm->len);
+  (kerstr)->vecovlp21 = pm->d_data;
+  (kerstr)->vecovlp21_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp22(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp22 = pm->d_data);
-  ((kerstr)->vecovlp22_len = pm->len);
+  (kerstr)->vecovlp22 = pm->d_data;
+  (kerstr)->vecovlp22_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp23(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp23 = pm->d_data);
-  ((kerstr)->vecovlp23_len = pm->len);
+  (kerstr)->vecovlp23 = pm->d_data;
+  (kerstr)->vecovlp23_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp24(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp24 = pm->d_data);
-  ((kerstr)->vecovlp24_len = pm->len);
+  (kerstr)->vecovlp24 = pm->d_data;
+  (kerstr)->vecovlp24_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp25(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp25 = pm->d_data);
-  ((kerstr)->vecovlp25_len = pm->len);
+  (kerstr)->vecovlp25 = pm->d_data;
+  (kerstr)->vecovlp25_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecovlp26(c_merge_ovlp_o2m_once_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp26 = pm->d_data);
-  ((kerstr)->vecovlp26_len = pm->len);
+  (kerstr)->vecovlp26 = pm->d_data;
+  (kerstr)->vecovlp26_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_numvec(c_merge_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_num_ele(c_merge_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_xblock(c_merge_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_yblock(c_merge_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_zblock(c_merge_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_ovlp(c_merge_ovlp_o2m_once_struct *kerstr,
                                                   c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_init(c_pscmc_env *pe, c_merge_ovlp_o2m_all_in_one_struct *kerstr) {
   return 0;
 }
 void c_merge_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_merge_ovlp_o2m_all_in_one_struct));
+  (len)[0] = sizeof(c_merge_ovlp_o2m_all_in_one_struct);
 }
 int c_merge_ovlp_o2m_all_in_one_get_xlen() { return IDX_OPT_MAX; }
 int c_merge_ovlp_o2m_all_in_one_get_num_compute_units(c_merge_ovlp_o2m_all_in_one_struct *kerstr) {
@@ -3426,7 +3426,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3443,7 +3443,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3460,7 +3460,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3477,7 +3477,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3494,7 +3494,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3511,7 +3511,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3528,7 +3528,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3545,7 +3545,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3581,7 +3581,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3598,7 +3598,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3615,7 +3615,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3632,7 +3632,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3649,7 +3649,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3666,7 +3666,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3683,7 +3683,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3700,7 +3700,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3712,48 +3712,48 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlps = pm->d_data);
-  ((kerstr)->vecovlps_len = pm->len);
+  (kerstr)->vecovlps = pm->d_data;
+  (kerstr)->vecovlps_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(
     c_merge_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
                                                         c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_merge_ovlp_o2m_init(c_pscmc_env *pe, c_merge_ovlp_o2m_struct *kerstr) { return 0; }
 void c_merge_ovlp_o2m_get_struct_len(size_t *len) { ((len)[0] = sizeof(c_merge_ovlp_o2m_struct)); }
@@ -3774,7 +3774,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3791,7 +3791,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3808,7 +3808,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3825,7 +3825,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3842,7 +3842,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3859,7 +3859,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3876,7 +3876,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3893,7 +3893,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3910,7 +3910,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -3946,7 +3946,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3963,7 +3963,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3980,7 +3980,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -3997,7 +3997,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4014,7 +4014,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4031,7 +4031,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4048,7 +4048,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4065,7 +4065,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4082,7 +4082,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4094,49 +4094,49 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_vecmain(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_vecovlp(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp = pm->d_data);
-  ((kerstr)->vecovlp_len = pm->len);
+  (kerstr)->vecovlp = pm->d_data;
+  (kerstr)->vecovlp_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_ovlpindex(c_merge_ovlp_o2m_struct *kerstr,
                                                   c_pscmc_mem *pm) {
-  ((kerstr)->ovlpindex = pm->d_data);
-  ((kerstr)->ovlpindex_len = pm->len);
+  (kerstr)->ovlpindex = pm->d_data;
+  (kerstr)->ovlpindex_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_numvec(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_num_ele(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_xblock(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_yblock(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_zblock(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_ovlp(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_init(c_pscmc_env *pe, c_sync_ovlp_m2o_once_struct *kerstr) { return 0; }
 void c_sync_ovlp_m2o_once_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_sync_ovlp_m2o_once_struct));
+  (len)[0] = sizeof(c_sync_ovlp_m2o_once_struct);
 }
 int c_sync_ovlp_m2o_once_get_xlen() { return IDX_OPT_MAX; }
 int c_sync_ovlp_m2o_once_get_num_compute_units(c_sync_ovlp_m2o_once_struct *kerstr) { return 1; }
@@ -4155,7 +4155,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4172,7 +4172,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4189,7 +4189,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4206,7 +4206,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4223,7 +4223,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4240,7 +4240,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4257,7 +4257,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4274,7 +4274,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4291,7 +4291,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4308,7 +4308,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4325,7 +4325,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4342,7 +4342,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4359,7 +4359,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4376,7 +4376,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4393,7 +4393,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4410,7 +4410,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4427,7 +4427,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4444,7 +4444,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4461,7 +4461,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4478,7 +4478,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4495,7 +4495,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4512,7 +4512,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4529,7 +4529,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4546,7 +4546,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4563,7 +4563,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4580,7 +4580,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4597,7 +4597,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4614,7 +4614,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4631,7 +4631,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4648,7 +4648,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4665,7 +4665,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4682,7 +4682,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4699,7 +4699,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -4741,7 +4741,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4758,7 +4758,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4775,7 +4775,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4792,7 +4792,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4809,7 +4809,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4826,7 +4826,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4843,7 +4843,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4860,7 +4860,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4877,7 +4877,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4894,7 +4894,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4911,7 +4911,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4928,7 +4928,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4945,7 +4945,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4962,7 +4962,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4979,7 +4979,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -4996,7 +4996,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5013,7 +5013,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5030,7 +5030,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5047,7 +5047,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5064,7 +5064,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5081,7 +5081,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5098,7 +5098,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5115,7 +5115,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5132,7 +5132,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5149,7 +5149,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5166,7 +5166,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5183,7 +5183,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5200,7 +5200,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5217,7 +5217,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5234,7 +5234,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5251,7 +5251,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5268,7 +5268,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5285,7 +5285,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5297,179 +5297,179 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp0(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp0 = pm->d_data);
-  ((kerstr)->vecovlp0_len = pm->len);
+  (kerstr)->vecovlp0 = pm->d_data;
+  (kerstr)->vecovlp0_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp1(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp1 = pm->d_data);
-  ((kerstr)->vecovlp1_len = pm->len);
+  (kerstr)->vecovlp1 = pm->d_data;
+  (kerstr)->vecovlp1_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp2(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp2 = pm->d_data);
-  ((kerstr)->vecovlp2_len = pm->len);
+  (kerstr)->vecovlp2 = pm->d_data;
+  (kerstr)->vecovlp2_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp3(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp3 = pm->d_data);
-  ((kerstr)->vecovlp3_len = pm->len);
+  (kerstr)->vecovlp3 = pm->d_data;
+  (kerstr)->vecovlp3_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp4(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp4 = pm->d_data);
-  ((kerstr)->vecovlp4_len = pm->len);
+  (kerstr)->vecovlp4 = pm->d_data;
+  (kerstr)->vecovlp4_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp5(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp5 = pm->d_data);
-  ((kerstr)->vecovlp5_len = pm->len);
+  (kerstr)->vecovlp5 = pm->d_data;
+  (kerstr)->vecovlp5_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp6(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp6 = pm->d_data);
-  ((kerstr)->vecovlp6_len = pm->len);
+  (kerstr)->vecovlp6 = pm->d_data;
+  (kerstr)->vecovlp6_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp7(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp7 = pm->d_data);
-  ((kerstr)->vecovlp7_len = pm->len);
+  (kerstr)->vecovlp7 = pm->d_data;
+  (kerstr)->vecovlp7_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp8(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp8 = pm->d_data);
-  ((kerstr)->vecovlp8_len = pm->len);
+  (kerstr)->vecovlp8 = pm->d_data;
+  (kerstr)->vecovlp8_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp9(c_sync_ovlp_m2o_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp9 = pm->d_data);
-  ((kerstr)->vecovlp9_len = pm->len);
+  (kerstr)->vecovlp9 = pm->d_data;
+  (kerstr)->vecovlp9_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp10(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp10 = pm->d_data);
-  ((kerstr)->vecovlp10_len = pm->len);
+  (kerstr)->vecovlp10 = pm->d_data;
+  (kerstr)->vecovlp10_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp11(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp11 = pm->d_data);
-  ((kerstr)->vecovlp11_len = pm->len);
+  (kerstr)->vecovlp11 = pm->d_data;
+  (kerstr)->vecovlp11_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp12(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp12 = pm->d_data);
-  ((kerstr)->vecovlp12_len = pm->len);
+  (kerstr)->vecovlp12 = pm->d_data;
+  (kerstr)->vecovlp12_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp14(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp14 = pm->d_data);
-  ((kerstr)->vecovlp14_len = pm->len);
+  (kerstr)->vecovlp14 = pm->d_data;
+  (kerstr)->vecovlp14_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp15(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp15 = pm->d_data);
-  ((kerstr)->vecovlp15_len = pm->len);
+  (kerstr)->vecovlp15 = pm->d_data;
+  (kerstr)->vecovlp15_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp16(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp16 = pm->d_data);
-  ((kerstr)->vecovlp16_len = pm->len);
+  (kerstr)->vecovlp16 = pm->d_data;
+  (kerstr)->vecovlp16_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp17(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp17 = pm->d_data);
-  ((kerstr)->vecovlp17_len = pm->len);
+  (kerstr)->vecovlp17 = pm->d_data;
+  (kerstr)->vecovlp17_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp18(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp18 = pm->d_data);
-  ((kerstr)->vecovlp18_len = pm->len);
+  (kerstr)->vecovlp18 = pm->d_data;
+  (kerstr)->vecovlp18_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp19(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp19 = pm->d_data);
-  ((kerstr)->vecovlp19_len = pm->len);
+  (kerstr)->vecovlp19 = pm->d_data;
+  (kerstr)->vecovlp19_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp20(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp20 = pm->d_data);
-  ((kerstr)->vecovlp20_len = pm->len);
+  (kerstr)->vecovlp20 = pm->d_data;
+  (kerstr)->vecovlp20_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp21(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp21 = pm->d_data);
-  ((kerstr)->vecovlp21_len = pm->len);
+  (kerstr)->vecovlp21 = pm->d_data;
+  (kerstr)->vecovlp21_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp22(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp22 = pm->d_data);
-  ((kerstr)->vecovlp22_len = pm->len);
+  (kerstr)->vecovlp22 = pm->d_data;
+  (kerstr)->vecovlp22_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp23(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp23 = pm->d_data);
-  ((kerstr)->vecovlp23_len = pm->len);
+  (kerstr)->vecovlp23 = pm->d_data;
+  (kerstr)->vecovlp23_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp24(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp24 = pm->d_data);
-  ((kerstr)->vecovlp24_len = pm->len);
+  (kerstr)->vecovlp24 = pm->d_data;
+  (kerstr)->vecovlp24_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp25(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp25 = pm->d_data);
-  ((kerstr)->vecovlp25_len = pm->len);
+  (kerstr)->vecovlp25 = pm->d_data;
+  (kerstr)->vecovlp25_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecovlp26(c_sync_ovlp_m2o_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp26 = pm->d_data);
-  ((kerstr)->vecovlp26_len = pm->len);
+  (kerstr)->vecovlp26 = pm->d_data;
+  (kerstr)->vecovlp26_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_numvec(c_sync_ovlp_m2o_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_num_ele(c_sync_ovlp_m2o_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_xblock(c_sync_ovlp_m2o_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_yblock(c_sync_ovlp_m2o_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_zblock(c_sync_ovlp_m2o_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_ovlp(c_sync_ovlp_m2o_once_struct *kerstr,
                                                  c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_init(c_pscmc_env *pe, c_sync_ovlp_m2o_all_in_one_struct *kerstr) {
   return 0;
 }
 void c_sync_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_sync_ovlp_m2o_all_in_one_struct));
+  (len)[0] = sizeof(c_sync_ovlp_m2o_all_in_one_struct);
 }
 int c_sync_ovlp_m2o_all_in_one_get_xlen() { return IDX_OPT_MAX; }
 int c_sync_ovlp_m2o_all_in_one_get_num_compute_units(c_sync_ovlp_m2o_all_in_one_struct *kerstr) {
@@ -5490,7 +5490,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5507,7 +5507,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5524,7 +5524,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5541,7 +5541,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5558,7 +5558,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5575,7 +5575,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5592,7 +5592,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5609,7 +5609,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5645,7 +5645,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5662,7 +5662,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5679,7 +5679,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5696,7 +5696,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5713,7 +5713,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5730,7 +5730,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5747,7 +5747,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5764,7 +5764,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -5776,48 +5776,48 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                           c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecovlps(
     c_sync_ovlp_m2o_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlps = pm->d_data);
-  ((kerstr)->vecovlps_len = pm->len);
+  (kerstr)->vecovlps = pm->d_data;
+  (kerstr)->vecovlps_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_numvec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_num_ele(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                           c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_xblock(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_yblock(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_zblock(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_m2o_init(c_pscmc_env *pe, c_sync_ovlp_m2o_struct *kerstr) { return 0; }
 void c_sync_ovlp_m2o_get_struct_len(size_t *len) { ((len)[0] = sizeof(c_sync_ovlp_m2o_struct)); }
@@ -5838,7 +5838,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5855,7 +5855,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5872,7 +5872,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5889,7 +5889,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5906,7 +5906,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5923,7 +5923,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5940,7 +5940,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5957,7 +5957,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -5974,7 +5974,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6010,7 +6010,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6027,7 +6027,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6044,7 +6044,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6061,7 +6061,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6078,7 +6078,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6095,7 +6095,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6112,7 +6112,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6129,7 +6129,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6146,7 +6146,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6158,48 +6158,48 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_vecovlp(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp = pm->d_data);
-  ((kerstr)->vecovlp_len = pm->len);
+  (kerstr)->vecovlp = pm->d_data;
+  (kerstr)->vecovlp_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_ovlpindex(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlpindex = pm->d_data);
-  ((kerstr)->ovlpindex_len = pm->len);
+  (kerstr)->ovlpindex = pm->d_data;
+  (kerstr)->ovlpindex_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_numvec(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_num_ele(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_xblock(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_yblock(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_zblock(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_ovlp(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_init(c_pscmc_env *pe, c_sync_ovlp_o2m_once_struct *kerstr) { return 0; }
 void c_sync_ovlp_o2m_once_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_sync_ovlp_o2m_once_struct));
+  (len)[0] = sizeof(c_sync_ovlp_o2m_once_struct);
 }
 int c_sync_ovlp_o2m_once_get_xlen() { return IDX_OPT_MAX; }
 int c_sync_ovlp_o2m_once_get_num_compute_units(c_sync_ovlp_o2m_once_struct *kerstr) { return 1; }
@@ -6218,7 +6218,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6235,7 +6235,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6252,7 +6252,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6269,7 +6269,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6286,7 +6286,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6303,7 +6303,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6320,7 +6320,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6337,7 +6337,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6354,7 +6354,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6371,7 +6371,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6388,7 +6388,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6405,7 +6405,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6422,7 +6422,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6439,7 +6439,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6456,7 +6456,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6473,7 +6473,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6490,7 +6490,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6507,7 +6507,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6524,7 +6524,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6541,7 +6541,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6558,7 +6558,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6575,7 +6575,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6592,7 +6592,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6609,7 +6609,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6626,7 +6626,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6643,7 +6643,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6660,7 +6660,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6677,7 +6677,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6694,7 +6694,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6711,7 +6711,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6728,7 +6728,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6745,7 +6745,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6762,7 +6762,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -6804,7 +6804,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6821,7 +6821,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6838,7 +6838,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6855,7 +6855,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6872,7 +6872,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6889,7 +6889,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6906,7 +6906,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6923,7 +6923,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6940,7 +6940,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6957,7 +6957,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6974,7 +6974,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -6991,7 +6991,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7008,7 +7008,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7025,7 +7025,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7042,7 +7042,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7059,7 +7059,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7076,7 +7076,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7093,7 +7093,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7110,7 +7110,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7127,7 +7127,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7144,7 +7144,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7161,7 +7161,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7178,7 +7178,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7195,7 +7195,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7212,7 +7212,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7229,7 +7229,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7246,7 +7246,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7263,7 +7263,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7280,7 +7280,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7297,7 +7297,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7314,7 +7314,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7331,7 +7331,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7348,7 +7348,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7360,179 +7360,179 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp0(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp0 = pm->d_data);
-  ((kerstr)->vecovlp0_len = pm->len);
+  (kerstr)->vecovlp0 = pm->d_data;
+  (kerstr)->vecovlp0_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp1(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp1 = pm->d_data);
-  ((kerstr)->vecovlp1_len = pm->len);
+  (kerstr)->vecovlp1 = pm->d_data;
+  (kerstr)->vecovlp1_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp2(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp2 = pm->d_data);
-  ((kerstr)->vecovlp2_len = pm->len);
+  (kerstr)->vecovlp2 = pm->d_data;
+  (kerstr)->vecovlp2_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp3(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp3 = pm->d_data);
-  ((kerstr)->vecovlp3_len = pm->len);
+  (kerstr)->vecovlp3 = pm->d_data;
+  (kerstr)->vecovlp3_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp4(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp4 = pm->d_data);
-  ((kerstr)->vecovlp4_len = pm->len);
+  (kerstr)->vecovlp4 = pm->d_data;
+  (kerstr)->vecovlp4_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp5(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp5 = pm->d_data);
-  ((kerstr)->vecovlp5_len = pm->len);
+  (kerstr)->vecovlp5 = pm->d_data;
+  (kerstr)->vecovlp5_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp6(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp6 = pm->d_data);
-  ((kerstr)->vecovlp6_len = pm->len);
+  (kerstr)->vecovlp6 = pm->d_data;
+  (kerstr)->vecovlp6_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp7(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp7 = pm->d_data);
-  ((kerstr)->vecovlp7_len = pm->len);
+  (kerstr)->vecovlp7 = pm->d_data;
+  (kerstr)->vecovlp7_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp8(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp8 = pm->d_data);
-  ((kerstr)->vecovlp8_len = pm->len);
+  (kerstr)->vecovlp8 = pm->d_data;
+  (kerstr)->vecovlp8_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp9(c_sync_ovlp_o2m_once_struct *kerstr,
                                                      c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp9 = pm->d_data);
-  ((kerstr)->vecovlp9_len = pm->len);
+  (kerstr)->vecovlp9 = pm->d_data;
+  (kerstr)->vecovlp9_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp10(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp10 = pm->d_data);
-  ((kerstr)->vecovlp10_len = pm->len);
+  (kerstr)->vecovlp10 = pm->d_data;
+  (kerstr)->vecovlp10_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp11(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp11 = pm->d_data);
-  ((kerstr)->vecovlp11_len = pm->len);
+  (kerstr)->vecovlp11 = pm->d_data;
+  (kerstr)->vecovlp11_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp12(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp12 = pm->d_data);
-  ((kerstr)->vecovlp12_len = pm->len);
+  (kerstr)->vecovlp12 = pm->d_data;
+  (kerstr)->vecovlp12_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp14(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp14 = pm->d_data);
-  ((kerstr)->vecovlp14_len = pm->len);
+  (kerstr)->vecovlp14 = pm->d_data;
+  (kerstr)->vecovlp14_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp15(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp15 = pm->d_data);
-  ((kerstr)->vecovlp15_len = pm->len);
+  (kerstr)->vecovlp15 = pm->d_data;
+  (kerstr)->vecovlp15_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp16(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp16 = pm->d_data);
-  ((kerstr)->vecovlp16_len = pm->len);
+  (kerstr)->vecovlp16 = pm->d_data;
+  (kerstr)->vecovlp16_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp17(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp17 = pm->d_data);
-  ((kerstr)->vecovlp17_len = pm->len);
+  (kerstr)->vecovlp17 = pm->d_data;
+  (kerstr)->vecovlp17_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp18(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp18 = pm->d_data);
-  ((kerstr)->vecovlp18_len = pm->len);
+  (kerstr)->vecovlp18 = pm->d_data;
+  (kerstr)->vecovlp18_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp19(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp19 = pm->d_data);
-  ((kerstr)->vecovlp19_len = pm->len);
+  (kerstr)->vecovlp19 = pm->d_data;
+  (kerstr)->vecovlp19_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp20(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp20 = pm->d_data);
-  ((kerstr)->vecovlp20_len = pm->len);
+  (kerstr)->vecovlp20 = pm->d_data;
+  (kerstr)->vecovlp20_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp21(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp21 = pm->d_data);
-  ((kerstr)->vecovlp21_len = pm->len);
+  (kerstr)->vecovlp21 = pm->d_data;
+  (kerstr)->vecovlp21_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp22(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp22 = pm->d_data);
-  ((kerstr)->vecovlp22_len = pm->len);
+  (kerstr)->vecovlp22 = pm->d_data;
+  (kerstr)->vecovlp22_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp23(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp23 = pm->d_data);
-  ((kerstr)->vecovlp23_len = pm->len);
+  (kerstr)->vecovlp23 = pm->d_data;
+  (kerstr)->vecovlp23_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp24(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp24 = pm->d_data);
-  ((kerstr)->vecovlp24_len = pm->len);
+  (kerstr)->vecovlp24 = pm->d_data;
+  (kerstr)->vecovlp24_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp25(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp25 = pm->d_data);
-  ((kerstr)->vecovlp25_len = pm->len);
+  (kerstr)->vecovlp25 = pm->d_data;
+  (kerstr)->vecovlp25_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecovlp26(c_sync_ovlp_o2m_once_struct *kerstr,
                                                       c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp26 = pm->d_data);
-  ((kerstr)->vecovlp26_len = pm->len);
+  (kerstr)->vecovlp26 = pm->d_data;
+  (kerstr)->vecovlp26_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_numvec(c_sync_ovlp_o2m_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_num_ele(c_sync_ovlp_o2m_once_struct *kerstr,
                                                     c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_xblock(c_sync_ovlp_o2m_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_yblock(c_sync_ovlp_o2m_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_zblock(c_sync_ovlp_o2m_once_struct *kerstr,
                                                    c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_ovlp(c_sync_ovlp_o2m_once_struct *kerstr,
                                                  c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_init(c_pscmc_env *pe, c_sync_ovlp_o2m_all_in_one_struct *kerstr) {
   return 0;
 }
 void c_sync_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
-  ((len)[0] = sizeof(c_sync_ovlp_o2m_all_in_one_struct));
+  (len)[0] = sizeof(c_sync_ovlp_o2m_all_in_one_struct);
 }
 int c_sync_ovlp_o2m_all_in_one_get_xlen() { return IDX_OPT_MAX; }
 int c_sync_ovlp_o2m_all_in_one_get_num_compute_units(c_sync_ovlp_o2m_all_in_one_struct *kerstr) {
@@ -7553,7 +7553,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7570,7 +7570,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7587,7 +7587,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7604,7 +7604,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7621,7 +7621,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7638,7 +7638,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7655,7 +7655,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7672,7 +7672,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7708,7 +7708,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7725,7 +7725,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7742,7 +7742,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7759,7 +7759,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7776,7 +7776,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7793,7 +7793,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7810,7 +7810,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7827,7 +7827,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -7839,48 +7839,48 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                           c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecovlps(
     c_sync_ovlp_o2m_all_in_one_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlps = pm->d_data);
-  ((kerstr)->vecovlps_len = pm->len);
+  (kerstr)->vecovlps = pm->d_data;
+  (kerstr)->vecovlps_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_numvec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_num_ele(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                           c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_xblock(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_yblock(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_zblock(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                          c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                                        c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }
 int c_sync_ovlp_o2m_init(c_pscmc_env *pe, c_sync_ovlp_o2m_struct *kerstr) { return 0; }
 void c_sync_ovlp_o2m_get_struct_len(size_t *len) { ((len)[0] = sizeof(c_sync_ovlp_o2m_struct)); }
@@ -7901,7 +7901,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7918,7 +7918,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7935,7 +7935,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7952,7 +7952,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7969,7 +7969,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -7986,7 +7986,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -8003,7 +8003,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -8020,7 +8020,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -8037,7 +8037,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
           if ((write_len <= 0)) {
             {
-              (write_len = 1);
+              write_len = 1;
             }
           } else {
             { 0; }
@@ -8073,7 +8073,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8090,7 +8090,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8107,7 +8107,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8124,7 +8124,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8141,7 +8141,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8158,7 +8158,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8175,7 +8175,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8192,7 +8192,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8209,7 +8209,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
 
         if ((write_len <= 0)) {
           {
-            (write_len = 1);
+            write_len = 1;
           }
         } else {
           { 0; }
@@ -8221,42 +8221,42 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
   } else {
     { 0; }
   }
-  (_pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1));
+  _pscmc_c_global_dump_times = (_pscmc_c_global_dump_times + 1);
   return 0;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecmain = pm->d_data);
-  ((kerstr)->vecmain_len = pm->len);
+  (kerstr)->vecmain = pm->d_data;
+  (kerstr)->vecmain_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_vecovlp(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->vecovlp = pm->d_data);
-  ((kerstr)->vecovlp_len = pm->len);
+  (kerstr)->vecovlp = pm->d_data;
+  (kerstr)->vecovlp_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_ovlpindex(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlpindex = pm->d_data);
-  ((kerstr)->ovlpindex_len = pm->len);
+  (kerstr)->ovlpindex = pm->d_data;
+  (kerstr)->ovlpindex_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_numvec(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->numvec = pm->d_data);
-  ((kerstr)->numvec_len = pm->len);
+  (kerstr)->numvec = pm->d_data;
+  (kerstr)->numvec_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_num_ele(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->num_ele = pm->d_data);
-  ((kerstr)->num_ele_len = pm->len);
+  (kerstr)->num_ele = pm->d_data;
+  (kerstr)->num_ele_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_xblock(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->xblock = pm->d_data);
-  ((kerstr)->xblock_len = pm->len);
+  (kerstr)->xblock = pm->d_data;
+  (kerstr)->xblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_yblock(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->yblock = pm->d_data);
-  ((kerstr)->yblock_len = pm->len);
+  (kerstr)->yblock = pm->d_data;
+  (kerstr)->yblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_zblock(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->zblock = pm->d_data);
-  ((kerstr)->zblock_len = pm->len);
+  (kerstr)->zblock = pm->d_data;
+  (kerstr)->zblock_len = pm->len;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_ovlp(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
-  ((kerstr)->ovlp = pm->d_data);
-  ((kerstr)->ovlp_len = pm->len);
+  (kerstr)->ovlp = pm->d_data;
+  (kerstr)->ovlp_len = pm->len;
 }

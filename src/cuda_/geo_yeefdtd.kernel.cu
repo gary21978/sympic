@@ -22,7 +22,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
   long local_ymax = ((1 + __idy) * local_ynum);
 
   if (local_ymax >= numvec) {
-    (local_ymax = numvec);
+    local_ymax = numvec;
   }
 
   long blk_all_len_nonele = (xblock * (yblock * zblock));
@@ -305,8 +305,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                                        })) *
                                                       (DELTA_Z * vB21101))))) +
                                              (-1.0 * (x0 * ((1.0 / ({
-                                                               double tmppowvar =
-                                                                   (1.0 + (x0 + xo0));
+                                                               double tmppowvar = 1.0 + (x0 + xo0);
 
                                                                tmppowvar;
                                                              })) *
@@ -774,7 +773,7 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
   long local_ymax = ((1 + __idy) * local_ynum);
 
   if (local_ymax >= numvec) {
-    (local_ymax = numvec);
+    local_ymax = numvec;
   }
 
   long blk_all_len_nonele = (xblock * (yblock * zblock));

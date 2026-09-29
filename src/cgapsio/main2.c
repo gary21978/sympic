@@ -21,8 +21,8 @@ int read_file(void **pptr, int64_t *plen, char *name) {
   }
   fseek(fp, 0, SEEK_END);
   long l = ftell(fp);
-  ((pptr)[0] = malloc(l));
-  ((plen)[0] = l);
+  (pptr)[0] = malloc(l);
+  (plen)[0] = l;
   fseek(fp, 0, SEEK_SET);
   size_t ret = fread((pptr)[0], 1, l, fp);
   return 0;
@@ -49,10 +49,10 @@ int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   {
     long i;
     for ((i = 0); (i < (l - 5)); (i = (i + 1))) {
-      ((pName)[i] = (pNameAll)[i]);
+      (pName)[i] = (pNameAll)[i];
     }
   }
-  ((pName)[(l - 5)] = 0);
+  (pName)[(l - 5)] = 0;
   sscanf((pNameAll + (l + 1)), "%d", prank);
   return 0;
 }
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
     return 0;
   } else {
   }
-  ((pgi)->version = 2);
+  (pgi)->version = 2;
   char oriname[512];
   {
     int rank;
@@ -91,9 +91,9 @@ int main(int argc, char **argv) {
   {
     long g;
     for ((g = 0); (g < dim); (g = (g + 1))) {
-      ((poutlen)[g] = ((pdimarray)[g] * (pblockarray)[g]));
-      (oneblock_len = (oneblock_len * (pdimarray)[g]));
-      (numblocks = (numblocks * (pblockarray)[g]));
+      (poutlen)[g] = ((pdimarray)[g] * (pblockarray)[g]);
+      oneblock_len = (oneblock_len * (pdimarray)[g]);
+      numblocks = (numblocks * (pblockarray)[g]);
     }
   }
   int num_files = (argc - 2);
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
         long j;
         for ((j = 0); (j < l); (j = (j + 1))) {
           if (((meta_file_name)[(l - (1 + j))] == '_')) {
-            (sj = ((l - (1 + j)) - 4));
+            sj = ((l - (1 + j)) - 4);
             break;
           } else {
           }
@@ -122,13 +122,13 @@ int main(int argc, char **argv) {
       }
       memcpy((meta_file_name + sj), "META", 4);
       read_file((void **)(meta_data + cur_i), (meta_data_len + cur_i), meta_file_name);
-      ((meta_data_len)[cur_i] = ((meta_data_len)[cur_i] / sizeof(int64_t)));
+      (meta_data_len)[cur_i] = ((meta_data_len)[cur_i] / sizeof(int64_t));
       {
         long j;
         for ((j = 0); (j < (meta_data_len)[cur_i]); (j = (j + 1))) {
           int64_t local_id_m = ((meta_data)[cur_i])[j];
-          ((file_id)[local_id_m] = cur_i);
-          ((local_block_id)[local_id_m] = j);
+          (file_id)[local_id_m] = cur_i;
+          (local_block_id)[local_id_m] = j;
         }
       }
     }
@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
     exit(0);
   } else {
   }
-  (t_min = ((t_min + numsteps) % numsteps));
+  t_min = ((t_min + numsteps) % numsteps);
   if (max_numt) {
     sscanf(max_numt, "%ld", &(t_max));
   } else {
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
     sscanf(output_offset_numt, "%ld", &(t_opt_offset));
   } else {
   }
-  (t_max = (((t_max + (numsteps + -1)) % numsteps) + 1));
+  t_max = (((t_max + (numsteps + -1)) % numsteps) + 1);
   fprintf(stderr, "tmin=%ld tmax=%ld topt=%ld\n", t_min, t_max, t_opt_offset);
   GAPS_IO_InitDataInfo(pgo, type, dim, poutlen);
   GAPS_IO_InitOFile_with_TimeStep(pgo, (argv)[(argc - 1)],
@@ -180,11 +180,11 @@ int main(int argc, char **argv) {
   int64_t opt_read_block = oneblock_len;
   int dim_current = 0;
   for (0; (dim_current < dim); (dim_current = (dim_current + 1))) {
-    (opt_write_block = (opt_write_block * (poutlen)[dim_current]));
-    (opt_read_block = (opt_read_block * (pblockarray)[dim_current]));
+    opt_write_block = (opt_write_block * (poutlen)[dim_current]);
+    opt_read_block = (opt_read_block * (pblockarray)[dim_current]);
     if ((opt_read_block > BLOCK_THREH)) {
-      (opt_write_block = (opt_write_block / (poutlen)[dim_current]));
-      (opt_read_block = (opt_read_block / (pblockarray)[dim_current]));
+      opt_write_block = (opt_write_block / (poutlen)[dim_current]);
+      opt_read_block = (opt_read_block / (pblockarray)[dim_current]);
       break;
     } else {
     }
@@ -193,11 +193,11 @@ int main(int argc, char **argv) {
   {
     long i;
     for ((i = 0); (i < dim_current); (i = (i + 1))) {
-      (one_write_offset = (one_write_offset * (poutlen)[i]));
+      one_write_offset = (one_write_offset * (poutlen)[i]);
     }
   }
   int64_t one_write_stride_num =
-      (one_write_offset * (((dim_current < dim)) ? ((pdimarray)[dim_current]) : (1)));
+      one_write_offset * (((dim_current < dim)) ? ((pdimarray)[dim_current]) : (1));
   int64_t num_reads_per_step = ((pgo)->numperstep / opt_read_block);
   int64_t num_blocks_per_read = (opt_read_block / oneblock_len);
   int64_t num_writes_per_read = (opt_read_block / opt_write_block);
@@ -227,8 +227,8 @@ int main(int argc, char **argv) {
                 {
                   long tmpids;
                   for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
-                    ((pblkid)[tmpids] = (gid % (pblockarray)[tmpids]));
-                    (gid = (gid / (pblockarray)[tmpids]));
+                    (pblkid)[tmpids] = (gid % (pblockarray)[tmpids]);
+                    gid = (gid / (pblockarray)[tmpids]);
                   }
                 }
               }
@@ -240,16 +240,16 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
-                        ((plocalid)[tmpids] = (gid % (pdimarray)[tmpids]));
-                        (gid = (gid / (pdimarray)[tmpids]));
+                        (plocalid)[tmpids] = (gid % (pdimarray)[tmpids]);
+                        gid = (gid / (pdimarray)[tmpids]);
                       }
                     }
                   }
                   {
                     long a;
                     for ((a = 0); (a < dim); (a = (a + 1))) {
-                      ((pallid)[a] = ((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a])));
-                      ((palldim)[a] = ((pdimarray)[a] * (pblockarray)[a]));
+                      (pallid)[a] = ((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a]));
+                      (palldim)[a] = ((pdimarray)[a] * (pblockarray)[a]);
                       ((pallid_local)[a] =
                            (((a < dim_current)) ? (((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a])))
                                                 : ((plocalid)[a])));
@@ -264,14 +264,14 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
-                        (gid = (gid + ((pallid)[tmpids] * stride_len)));
-                        (stride_len = (stride_len * (palldim)[tmpids]));
+                        gid = (gid + ((pallid)[tmpids] * stride_len));
+                        stride_len = (stride_len * (palldim)[tmpids]);
                       }
                     }
                     gid;
                   });
                   if (((l == 0) && (r_rd == 0))) {
-                    (global_offset_new = global_id_out);
+                    global_offset_new = global_id_out;
                   } else {
                   }
                   int64_t global_id = ({
@@ -280,8 +280,8 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
-                        (gid = (gid + ((pallid_local)[tmpids] * stride_len)));
-                        (stride_len = (stride_len * (palldim_local)[tmpids]));
+                        gid = (gid + ((pallid_local)[tmpids] * stride_len));
+                        stride_len = (stride_len * (palldim_local)[tmpids]);
                       }
                     }
                     gid;

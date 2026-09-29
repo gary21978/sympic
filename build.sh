@@ -81,8 +81,8 @@ build_in_simulator_guest() {
     if qemu_guest_ready "${ssh_port}"; then
         echo "=== simulator guest already reachable on SSH port ${ssh_port}; skip start_emu.sh ==="
     else
-        echo "=== start simulator guest: ${pciemu_release_dir}/start_emu.sh -clT ==="
-        (cd "${pciemu_release_dir}" && ./start_emu.sh -clT)
+        echo "=== start simulator guest: ${pciemu_release_dir}/start_emu.sh -T ==="
+        (cd "${pciemu_release_dir}" && ./start_emu.sh -T -d disable)
         ssh_port="$(qemu_guest_ssh_port "${config_file}")"
     fi
 

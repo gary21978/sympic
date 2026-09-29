@@ -107,39 +107,39 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_XLEN((sort_kernel)[0], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_YLEN((sort_kernel)[0], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ZLEN((sort_kernel)[0], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ovlp((sort_kernel)[0], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_numvec((sort_kernel)[0],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_grid_cache_len((sort_kernel)[0],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[0], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_x_6_exec((sort_kernel)[0], cuda_gpu_sort_one_grid_x_6_get_xlen(), numvec);
@@ -158,43 +158,43 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_6_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_6_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -266,39 +266,39 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_XLEN((sort_kernel)[1], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_YLEN((sort_kernel)[1], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ZLEN((sort_kernel)[1], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ovlp((sort_kernel)[1], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_numvec((sort_kernel)[1],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_grid_cache_len((sort_kernel)[1],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[1], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_y_6_exec((sort_kernel)[1], cuda_gpu_sort_one_grid_y_6_get_xlen(), numvec);
@@ -317,43 +317,43 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_6_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_6_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -425,39 +425,39 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_XLEN((sort_kernel)[2], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_YLEN((sort_kernel)[2], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ZLEN((sort_kernel)[2], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ovlp((sort_kernel)[2], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_numvec((sort_kernel)[2],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_grid_cache_len((sort_kernel)[2],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[2], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_z_6_exec((sort_kernel)[2], cuda_gpu_sort_one_grid_z_6_get_xlen(), numvec);
@@ -476,43 +476,43 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_6_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_6_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_6_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -588,39 +588,39 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_XLEN((sort_kernel)[6], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_YLEN((sort_kernel)[6], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ZLEN((sort_kernel)[6], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ovlp((sort_kernel)[6], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_numvec((sort_kernel)[6],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len((sort_kernel)[6],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[6], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_x_8_exec((sort_kernel)[6], cuda_gpu_sort_one_grid_x_8_get_xlen(), numvec);
@@ -639,43 +639,43 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_8_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_8_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -751,39 +751,39 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_XLEN((sort_kernel)[7], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_YLEN((sort_kernel)[7], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ZLEN((sort_kernel)[7], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ovlp((sort_kernel)[7], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_numvec((sort_kernel)[7],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len((sort_kernel)[7],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[7], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_y_8_exec((sort_kernel)[7], cuda_gpu_sort_one_grid_y_8_get_xlen(), numvec);
@@ -802,43 +802,43 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_8_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_8_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -914,39 +914,39 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_XLEN((sort_kernel)[8], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_YLEN((sort_kernel)[8], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ZLEN((sort_kernel)[8], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ovlp((sort_kernel)[8], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_numvec((sort_kernel)[8],
                                                        &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len((sort_kernel)[8],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length(
       (sort_kernel)[8], &(cuda_alloc_prefix_cu_cache_length));
   cuda_gpu_sort_one_grid_z_8_exec((sort_kernel)[8], cuda_gpu_sort_one_grid_z_8_get_xlen(), numvec);
@@ -965,43 +965,43 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_l_8_exec(cu_swap_l_6_kernel, cuda_cu_swap_l_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(cuda_alloc_prefix_cu_cache_length));
     cuda_pscmc_mem cuda_alloc_prefix_the_dir_num;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(cuda_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     cuda_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(cuda_alloc_prefix_the_dir_num));
     cuda_pscmc_mem cuda_alloc_prefix_XYZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(cuda_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     cuda_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(cuda_alloc_prefix_XYZLEN));
     cuda_cu_swap_r_8_exec(cu_swap_r_6_kernel, cuda_cu_swap_r_8_get_xlen(), numvec);
     cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
@@ -1057,31 +1057,31 @@ int cuda_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+    (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
     cuda_move_back_kernel_6_scmc_set_parameter_XLEN(move_back_kernel_6_kernel,
                                                     &(cuda_alloc_prefix_XLEN));
     cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+    (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
     cuda_move_back_kernel_6_scmc_set_parameter_YLEN(move_back_kernel_6_kernel,
                                                     &(cuda_alloc_prefix_YLEN));
     cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+    (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
     cuda_move_back_kernel_6_scmc_set_parameter_ZLEN(move_back_kernel_6_kernel,
                                                     &(cuda_alloc_prefix_ZLEN));
     cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+    (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
     cuda_move_back_kernel_6_scmc_set_parameter_grid_cache_len(move_back_kernel_6_kernel,
                                                               &(cuda_alloc_prefix_grid_cache_len));
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_move_back_kernel_6_scmc_set_parameter_cu_cache_length(
         move_back_kernel_6_kernel, &(cuda_alloc_prefix_cu_cache_length));
     cuda_move_back_kernel_6_exec(move_back_kernel_6_kernel, cuda_move_back_kernel_6_get_xlen(),
@@ -1141,31 +1141,31 @@ int cuda_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
     cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN);
+    (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
     cuda_move_back_kernel_8_scmc_set_parameter_XLEN(move_back_kernel_8_kernel,
                                                     &(cuda_alloc_prefix_XLEN));
     cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN);
+    (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
     cuda_move_back_kernel_8_scmc_set_parameter_YLEN(move_back_kernel_8_kernel,
                                                     &(cuda_alloc_prefix_YLEN));
     cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+    (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
     cuda_move_back_kernel_8_scmc_set_parameter_ZLEN(move_back_kernel_8_kernel,
                                                     &(cuda_alloc_prefix_ZLEN));
     cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+    (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
     cuda_move_back_kernel_8_scmc_set_parameter_grid_cache_len(move_back_kernel_8_kernel,
                                                               &(cuda_alloc_prefix_grid_cache_len));
     cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
     cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     cuda_move_back_kernel_8_scmc_set_parameter_cu_cache_length(
         move_back_kernel_8_kernel, &(cuda_alloc_prefix_cu_cache_length));
     cuda_move_back_kernel_8_exec(move_back_kernel_8_kernel, cuda_move_back_kernel_8_get_xlen(),
@@ -1224,31 +1224,31 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_6_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_6_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   MAPU_SORT_ONE_GRID_X6_SET_XLEN((sort_kernel)[0], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   MAPU_SORT_ONE_GRID_X6_SET_YLEN((sort_kernel)[0], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   MAPU_SORT_ONE_GRID_X6_SET_ZLEN((sort_kernel)[0], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   MAPU_SORT_ONE_GRID_X6_SET_OVLP((sort_kernel)[0], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   MAPU_SORT_ONE_GRID_X6_SET_NUMVEC((sort_kernel)[0], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   MAPU_SORT_ONE_GRID_X6_SET_GRID_CACHE_LEN((sort_kernel)[0], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   MAPU_SORT_ONE_GRID_X6_SET_CU_CACHE_LENGTH((sort_kernel)[0], &(mapu_alloc_prefix_cu_cache_length));
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_X6_GET_XLEN();
   MAPU_SORT_ONE_GRID_X6_EXEC((sort_kernel)[0], sort_one_grid_xlen, numvec);
@@ -1265,17 +1265,17 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_6_exec(cu_swap_l_6_kernel, mapu_cu_swap_l_6_get_xlen(), numvec);
 
@@ -1283,21 +1283,21 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_6_exec(cu_swap_r_6_kernel, mapu_cu_swap_r_6_get_xlen(), numvec);
 
@@ -1350,31 +1350,31 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_6_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_6_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   MAPU_SORT_ONE_GRID_Y6_SET_XLEN((sort_kernel)[1], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   MAPU_SORT_ONE_GRID_Y6_SET_YLEN((sort_kernel)[1], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   MAPU_SORT_ONE_GRID_Y6_SET_ZLEN((sort_kernel)[1], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   MAPU_SORT_ONE_GRID_Y6_SET_OVLP((sort_kernel)[1], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   MAPU_SORT_ONE_GRID_Y6_SET_NUMVEC((sort_kernel)[1], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   MAPU_SORT_ONE_GRID_Y6_SET_GRID_CACHE_LEN((sort_kernel)[1], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   MAPU_SORT_ONE_GRID_Y6_SET_CU_CACHE_LENGTH((sort_kernel)[1], &(mapu_alloc_prefix_cu_cache_length));
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_Y6_GET_XLEN();
   MAPU_SORT_ONE_GRID_Y6_EXEC((sort_kernel)[1], sort_one_grid_xlen, numvec);
@@ -1391,17 +1391,17 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_6_exec(cu_swap_l_6_kernel, mapu_cu_swap_l_6_get_xlen(), numvec);
 
@@ -1409,21 +1409,21 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_6_exec(cu_swap_r_6_kernel, mapu_cu_swap_r_6_get_xlen(), numvec);
 
@@ -1476,31 +1476,31 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_6_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_6_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   MAPU_SORT_ONE_GRID_Z6_SET_XLEN((sort_kernel)[2], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   MAPU_SORT_ONE_GRID_Z6_SET_YLEN((sort_kernel)[2], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   MAPU_SORT_ONE_GRID_Z6_SET_ZLEN((sort_kernel)[2], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   MAPU_SORT_ONE_GRID_Z6_SET_OVLP((sort_kernel)[2], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   MAPU_SORT_ONE_GRID_Z6_SET_NUMVEC((sort_kernel)[2], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   MAPU_SORT_ONE_GRID_Z6_SET_GRID_CACHE_LEN((sort_kernel)[2], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   MAPU_SORT_ONE_GRID_Z6_SET_CU_CACHE_LENGTH((sort_kernel)[2], &(mapu_alloc_prefix_cu_cache_length));
 
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_Z6_GET_XLEN();
@@ -1517,17 +1517,17 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_6_scmc_set_parameter_cu_cache_length(cu_swap_l_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_6_scmc_set_parameter_the_dir_num(cu_swap_l_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_6_scmc_set_parameter_XYZLEN(cu_swap_l_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_6_exec(cu_swap_l_6_kernel, mapu_cu_swap_l_6_get_xlen(), numvec);
 
@@ -1535,21 +1535,21 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_6_scmc_set_parameter_cu_cache_length(cu_swap_r_6_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_6_scmc_set_parameter_the_dir_num(cu_swap_r_6_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_6_scmc_set_parameter_XYZLEN(cu_swap_r_6_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_6_exec(cu_swap_r_6_kernel, mapu_cu_swap_r_6_get_xlen(), numvec);
 
@@ -1601,32 +1601,32 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_8_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_8_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   mapu_sort_one_grid_x_8_scmc_set_parameter_XLEN((sort_kernel)[6], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   mapu_sort_one_grid_x_8_scmc_set_parameter_YLEN((sort_kernel)[6], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   mapu_sort_one_grid_x_8_scmc_set_parameter_ZLEN((sort_kernel)[6], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   mapu_sort_one_grid_x_8_scmc_set_parameter_ovlp((sort_kernel)[6], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   mapu_sort_one_grid_x_8_scmc_set_parameter_numvec((sort_kernel)[6], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   mapu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len((sort_kernel)[6],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length((sort_kernel)[6],
                                                             &(mapu_alloc_prefix_cu_cache_length));
   mapu_sort_one_grid_x_8_exec((sort_kernel)[6], mapu_sort_one_grid_x_8_get_xlen(), numvec);
@@ -1643,17 +1643,17 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_8_exec(cu_swap_l_8_kernel, mapu_cu_swap_l_8_get_xlen(), numvec);
 
@@ -1661,21 +1661,21 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_8_exec(cu_swap_r_8_kernel, mapu_cu_swap_r_8_get_xlen(), numvec);
 
@@ -1727,32 +1727,32 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_8_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_8_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   mapu_sort_one_grid_y_8_scmc_set_parameter_XLEN((sort_kernel)[7], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   mapu_sort_one_grid_y_8_scmc_set_parameter_YLEN((sort_kernel)[7], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   mapu_sort_one_grid_y_8_scmc_set_parameter_ZLEN((sort_kernel)[7], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   mapu_sort_one_grid_y_8_scmc_set_parameter_ovlp((sort_kernel)[7], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   mapu_sort_one_grid_y_8_scmc_set_parameter_numvec((sort_kernel)[7], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   mapu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len((sort_kernel)[7],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length((sort_kernel)[7],
                                                             &(mapu_alloc_prefix_cu_cache_length));
   mapu_sort_one_grid_y_8_exec((sort_kernel)[7], mapu_sort_one_grid_y_8_get_xlen(), numvec);
@@ -1769,17 +1769,17 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_8_exec(cu_swap_l_8_kernel, mapu_cu_swap_l_8_get_xlen(), numvec);
 
@@ -1787,21 +1787,21 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_8_exec(cu_swap_r_8_kernel, mapu_cu_swap_r_8_get_xlen(), numvec);
 
@@ -1853,32 +1853,32 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   mapu_cu_swap_r_8_scmc_set_parameter_adjoint_vec_pids(cu_swap_r_8_kernel, adjoint_vec_pids);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+  (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
   mapu_sort_one_grid_z_8_scmc_set_parameter_XLEN((sort_kernel)[8], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+  (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
   mapu_sort_one_grid_z_8_scmc_set_parameter_YLEN((sort_kernel)[8], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+  (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
   mapu_sort_one_grid_z_8_scmc_set_parameter_ZLEN((sort_kernel)[8], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
-  ((((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp);
+  (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
   mapu_sort_one_grid_z_8_scmc_set_parameter_ovlp((sort_kernel)[8], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec);
+  (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
   mapu_sort_one_grid_z_8_scmc_set_parameter_numvec((sort_kernel)[8], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+  (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
   mapu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len((sort_kernel)[8],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-  ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+  (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length((sort_kernel)[8],
                                                             &(mapu_alloc_prefix_cu_cache_length));
   mapu_sort_one_grid_z_8_exec((sort_kernel)[8], mapu_sort_one_grid_z_8_get_xlen(), numvec);
@@ -1895,17 +1895,17 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_l_8_scmc_set_parameter_cu_cache_length(cu_swap_l_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_l_8_scmc_set_parameter_the_dir_num(cu_swap_l_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_l_8_scmc_set_parameter_XYZLEN(cu_swap_l_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_l_8_exec(cu_swap_l_8_kernel, mapu_cu_swap_l_8_get_xlen(), numvec);
 
@@ -1913,21 +1913,21 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XYZLEN));
   }
-  (XYZLEN = -(XYZLEN));
+  XYZLEN = -(XYZLEN);
   {
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_cu_swap_r_8_scmc_set_parameter_cu_cache_length(cu_swap_r_8_kernel,
                                                         &(mapu_alloc_prefix_cu_cache_length));
     mapu_pscmc_mem mapu_alloc_prefix_the_dir_num;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_the_dir_num), PS_INT_NUM, 0);
-    ((((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num);
+    (((int *)(mapu_alloc_prefix_the_dir_num).h_data))[0] = the_dir_num;
     mapu_cu_swap_r_8_scmc_set_parameter_the_dir_num(cu_swap_r_8_kernel,
                                                     &(mapu_alloc_prefix_the_dir_num));
     mapu_pscmc_mem mapu_alloc_prefix_XYZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XYZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN);
+    (((long *)(mapu_alloc_prefix_XYZLEN).h_data))[0] = XYZLEN;
     mapu_cu_swap_r_8_scmc_set_parameter_XYZLEN(cu_swap_r_8_kernel, &(mapu_alloc_prefix_XYZLEN));
     mapu_cu_swap_r_8_exec(cu_swap_r_8_kernel, mapu_cu_swap_r_8_get_xlen(), numvec);
 
@@ -1969,27 +1969,27 @@ int mapu_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
     mapu_move_back_kernel_6_scmc_set_parameter_cu_xyzw(move_back_kernel_6_kernel, cu_xyzw);
     mapu_pscmc_mem mapu_alloc_prefix_XLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+    (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
     mapu_move_back_kernel_6_scmc_set_parameter_XLEN(move_back_kernel_6_kernel,
                                                     &(mapu_alloc_prefix_XLEN));
     mapu_pscmc_mem mapu_alloc_prefix_YLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+    (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
     mapu_move_back_kernel_6_scmc_set_parameter_YLEN(move_back_kernel_6_kernel,
                                                     &(mapu_alloc_prefix_YLEN));
     mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+    (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
     mapu_move_back_kernel_6_scmc_set_parameter_ZLEN(move_back_kernel_6_kernel,
                                                     &(mapu_alloc_prefix_ZLEN));
     mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+    (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
     mapu_move_back_kernel_6_scmc_set_parameter_grid_cache_len(move_back_kernel_6_kernel,
                                                               &(mapu_alloc_prefix_grid_cache_len));
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_move_back_kernel_6_scmc_set_parameter_cu_cache_length(
         move_back_kernel_6_kernel, &(mapu_alloc_prefix_cu_cache_length));
     mapu_move_back_kernel_6_exec(move_back_kernel_6_kernel, mapu_move_back_kernel_6_get_xlen(),
@@ -2035,27 +2035,27 @@ int mapu_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
     mapu_move_back_kernel_8_scmc_set_parameter_cu_xyzw(move_back_kernel_8_kernel, cu_xyzw);
     mapu_pscmc_mem mapu_alloc_prefix_XLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN);
+    (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
     mapu_move_back_kernel_8_scmc_set_parameter_XLEN(move_back_kernel_8_kernel,
                                                     &(mapu_alloc_prefix_XLEN));
     mapu_pscmc_mem mapu_alloc_prefix_YLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN);
+    (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
     mapu_move_back_kernel_8_scmc_set_parameter_YLEN(move_back_kernel_8_kernel,
                                                     &(mapu_alloc_prefix_YLEN));
     mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN);
+    (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
     mapu_move_back_kernel_8_scmc_set_parameter_ZLEN(move_back_kernel_8_kernel,
                                                     &(mapu_alloc_prefix_ZLEN));
     mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len);
+    (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
     mapu_move_back_kernel_8_scmc_set_parameter_grid_cache_len(move_back_kernel_8_kernel,
                                                               &(mapu_alloc_prefix_grid_cache_len));
     mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
     mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
-    ((((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length);
+    (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
     mapu_move_back_kernel_8_scmc_set_parameter_cu_cache_length(
         move_back_kernel_8_kernel, &(mapu_alloc_prefix_cu_cache_length));
     mapu_move_back_kernel_8_exec(move_back_kernel_8_kernel, mapu_move_back_kernel_8_get_xlen(),

@@ -69,13 +69,13 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *, cuda_pscmc_mem *pm, int type, size_t l
 int cuda_pscmc_get_local_len() { return IDX_OPT_MAX; }
 void *cuda_pscmc_get_h_data(cuda_pscmc_mem *pm, void **h_data) {
   if (h_data != NULL) {
-    ((h_data)[0] = pm->h_data);
+    (h_data)[0] = pm->h_data;
   }
 
   return pm->h_data;
 }
 int cuda_pscmc_get_env_len(size_t *l) {
-  ((l)[0] = sizeof(cuda_pscmc_env));
+  (l)[0] = sizeof(cuda_pscmc_env);
   return 0;
 }
 int cuda_pscmc_flush(cuda_pscmc_env *pe) {
@@ -88,40 +88,40 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *pe, cuda_pscmc_mem *pm, int type, size_t
 
   int *perr = &(err);
 
-  (pm->len = len);
-  (pm->pe = pe);
+  pm->len = len;
+  pm->pe = pe;
   if (len == 0) {
-    (len = 1);
+    len = 1;
   }
 
   size_t datasize;
 
   if (type == PS_INT_NUM) {
-    (datasize = (len * sizeof(int)));
+    datasize = (len * sizeof(int));
 
   } else {
     if (type == PS_LONG_NUM) {
-      (datasize = (len * sizeof(long)));
+      datasize = (len * sizeof(long));
 
     } else {
       if (type == PS_FLOAT_NUM) {
-        (datasize = (len * sizeof(float)));
+        datasize = (len * sizeof(float));
 
       } else {
         if (type == PS_DOUBLE_NUM) {
-          (datasize = (len * sizeof(double)));
+          datasize = (len * sizeof(double));
 
         } else {
           if (type == PS_SHORT_NUM) {
-            (datasize = (len * sizeof(short)));
+            datasize = (len * sizeof(short));
 
           } else {
             if (type == PS_CHAR) {
-              (datasize = (len * sizeof(char)));
+              datasize = (len * sizeof(char));
 
             } else {
               fprintf(stderr, "Error: unknown type in init_pscmc_mem: type=%d\n", type);
-              (datasize = len);
+              datasize = len;
             }
           }
         }
@@ -129,11 +129,11 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *pe, cuda_pscmc_mem *pm, int type, size_t
     }
   }
 
-  (pm->type_len = (datasize / len));
-  (pm->h_data = malloc(datasize));
+  pm->type_len = (datasize / len);
+  pm->h_data = malloc(datasize);
   if (pm->len > 0) {
     cudaMalloc((void **)&(pm->d_data), datasize);
-    (err = cudaGetLastError());
+    err = cudaGetLastError();
     ERROPT(err, "Failed to alloc cuda memory");
   }
 
@@ -156,7 +156,7 @@ int cuda_pscmc_mem_sync_h2d(cuda_pscmc_mem *pm) {
 
   if (pm->len > 0) {
     cudaMemcpy(pm->d_data, pm->h_data, (pm->len * pm->type_len), cudaMemcpyHostToDevice);
-    (err = cudaGetLastError());
+    err = cudaGetLastError();
     ERROPT(err, "Failed to write to cuda memory");
   }
 
@@ -170,7 +170,7 @@ int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm) {
   cudaSetDevice((pm->pe)->device_id);
   if (pm->len > 0) {
     cudaMemcpy(pm->h_data, pm->d_data, (pm->len * pm->type_len), cudaMemcpyDeviceToHost);
-    (err = cudaGetLastError());
+    err = cudaGetLastError();
     ERROPT(err, "Failed to write to host memory");
   }
 
@@ -183,8 +183,8 @@ int cuda_pscmc_env_init(cuda_pscmc_env *pe, int dev_num, void *fv) {
 
   cudaGetLastError();
   cudaSetDevice(dev_num);
-  (pe->device_id = dev_num);
-  (err = cudaGetLastError());
+  pe->device_id = dev_num;
+  err = cudaGetLastError();
   ERROPT(err, "failed to set the device");
   return 0;
 }

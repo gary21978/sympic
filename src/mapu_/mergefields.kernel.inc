@@ -741,33 +741,33 @@ __global__ void mapu_sync_ovlp_m2o_once(
   const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
   const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
   __mem0__ __DDR double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     __mem1__ MAPU_LONG ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -1136,7 +1136,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
             }
           }
         }
-        (v_offset = (v_offset + (ovlpalllen * numvec)));
+        v_offset = (v_offset + (ovlpalllen * numvec));
       }
     }
   }
@@ -1161,33 +1161,33 @@ __global__ void mapu_merge_ovlp_o2m_once(
   const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
   const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
   __mem0__ __DDR double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     __mem1__ MAPU_LONG ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -1354,35 +1354,35 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
   field_zma = (zb - ovlp);
 
   if (xlo == 0) {
-    (field_xmi = 0);
-    (field_xma = (ovlp + 0));
+    field_xmi = 0;
+    field_xma = (ovlp + 0);
   } else {
 
     if ((xlo == 2)) {
-      (field_xmi = (xb - (ovlp + 0)));
-      (field_xma = (xb - 0));
+      field_xmi = (xb - (ovlp + 0));
+      field_xma = (xb - 0);
     }
   }
 
   if (ylo == 0) {
-    (field_ymi = 0);
-    (field_yma = (ovlp + 0));
+    field_ymi = 0;
+    field_yma = (ovlp + 0);
   } else {
 
     if ((ylo == 2)) {
-      (field_ymi = (yb - (ovlp + 0)));
-      (field_yma = (yb - 0));
+      field_ymi = (yb - (ovlp + 0));
+      field_yma = (yb - 0);
     }
   }
 
   if ((zlo == 0)) {
-    (field_zmi = 0);
-    (field_zma = (ovlp + 0));
+    field_zmi = 0;
+    field_zma = (ovlp + 0);
   } else {
 
     if ((zlo == 2)) {
-      (field_zmi = (zb - (ovlp + 0)));
-      (field_zma = (zb - 0));
+      field_zmi = (zb - (ovlp + 0));
+      field_zma = (zb - 0);
     }
   }
   __mem1__ MAPU_LONG ovlpxma;
@@ -1415,7 +1415,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
 
                     if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                       {
-                        (lxyzx = ovlp);
+                        lxyzx = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1423,7 +1423,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                       {
-                        (lxyzy = ovlp);
+                        lxyzy = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1431,7 +1431,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                       {
-                        (lxyzz = ovlp);
+                        lxyzz = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1581,7 +1581,7 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
           }
         }
       }
-      (v_offset = (v_offset + (ovlpalllen * numvec)));
+      v_offset = (v_offset + (ovlpalllen * numvec));
     }
   }
 #endif
@@ -1605,33 +1605,33 @@ __global__ void mapu_merge_ovlp_m2o_once(
   const MAPU_LONG __ylen = (gridDim.x * gridDim.y);
   const MAPU_LONG __global_idx = (__idx + (__idy * __xlen));
   __mem0__ __DDR double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
 
   __mem1__ MAPU_LONG ovlpindex;
   for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {

@@ -29,7 +29,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -45,39 +45,39 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long field_zma = (zb - ovlp);
 
   if ((xlo == 0)) {
-    (field_xmi = 0);
-    (field_xma = (ovlp + 0));
+    field_xmi = 0;
+    field_xma = (ovlp + 0);
   } else {
 
     if ((xlo == 2)) {
-      (field_xmi = (xb - (ovlp + 0)));
-      (field_xma = (xb - 0));
+      field_xmi = (xb - (ovlp + 0));
+      field_xma = (xb - 0);
     } else {
       0;
     }
   }
 
   if ((ylo == 0)) {
-    (field_ymi = 0);
-    (field_yma = (ovlp + 0));
+    field_ymi = 0;
+    field_yma = (ovlp + 0);
   } else {
 
     if ((ylo == 2)) {
-      (field_ymi = (yb - (ovlp + 0)));
-      (field_yma = (yb - 0));
+      field_ymi = (yb - (ovlp + 0));
+      field_yma = (yb - 0);
     } else {
       0;
     }
   }
 
   if ((zlo == 0)) {
-    (field_zmi = 0);
-    (field_zma = (ovlp + 0));
+    field_zmi = 0;
+    field_zma = (ovlp + 0);
   } else {
 
     if ((zlo == 2)) {
-      (field_zmi = (zb - (ovlp + 0)));
-      (field_zma = (zb - 0));
+      field_zmi = (zb - (ovlp + 0));
+      field_zma = (zb - 0);
     } else {
       0;
     }
@@ -105,7 +105,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                       {
-                        (lxyzx = ovlp);
+                        lxyzx = ovlp;
                       }
                     } else {
                       { 0; }
@@ -113,7 +113,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                       {
-                        (lxyzy = ovlp);
+                        lxyzy = ovlp;
                       }
                     } else {
                       { 0; }
@@ -121,7 +121,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                       {
-                        (lxyzz = ovlp);
+                        lxyzz = ovlp;
                       }
                     } else {
                       { 0; }
@@ -183,7 +183,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -199,39 +199,39 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = 0);
-            (field_xma = (ovlp + 0));
+            field_xmi = 0;
+            field_xma = (ovlp + 0);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + 0)));
-              (field_xma = (xb - 0));
+              field_xmi = (xb - (ovlp + 0));
+              field_xma = (xb - 0);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = 0);
-            (field_yma = (ovlp + 0));
+            field_ymi = 0;
+            field_yma = (ovlp + 0);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + 0)));
-              (field_yma = (yb - 0));
+              field_ymi = (yb - (ovlp + 0));
+              field_yma = (yb - 0);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = 0);
-            (field_zma = (ovlp + 0));
+            field_zmi = 0;
+            field_zma = (ovlp + 0);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + 0)));
-              (field_zma = (zb - 0));
+              field_zmi = (zb - (ovlp + 0));
+              field_zma = (zb - 0);
             } else {
               0;
             }
@@ -259,7 +259,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -267,7 +267,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -275,7 +275,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -304,7 +304,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
               }
             }
           }
-          (v_offset = (v_offset + (ovlpalllen * numvec)));
+          v_offset = (v_offset + (ovlpalllen * numvec));
         }
       }
     }
@@ -326,33 +326,33 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
   const long __ylen = scmc_internal_g_ylen;
   const long __global_idx = (__idx + (__idy * __xlen));
   double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -375,7 +375,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -391,39 +391,39 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = 0);
-            (field_xma = (ovlp + 0));
+            field_xmi = 0;
+            field_xma = (ovlp + 0);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + 0)));
-              (field_xma = (xb - 0));
+              field_xmi = (xb - (ovlp + 0));
+              field_xma = (xb - 0);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = 0);
-            (field_yma = (ovlp + 0));
+            field_ymi = 0;
+            field_yma = (ovlp + 0);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + 0)));
-              (field_yma = (yb - 0));
+              field_ymi = (yb - (ovlp + 0));
+              field_yma = (yb - 0);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = 0);
-            (field_zma = (ovlp + 0));
+            field_zmi = 0;
+            field_zma = (ovlp + 0);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + 0)));
-              (field_zma = (zb - 0));
+              field_zmi = (zb - (ovlp + 0));
+              field_zma = (zb - 0);
             } else {
               0;
             }
@@ -451,7 +451,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -459,7 +459,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -467,7 +467,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -522,7 +522,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -538,39 +538,39 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long field_zma = (zb - ovlp);
 
   if ((xlo == 0)) {
-    (field_xmi = ovlp);
-    (field_xma = (ovlp + ovlp));
+    field_xmi = ovlp;
+    field_xma = (ovlp + ovlp);
   } else {
 
     if ((xlo == 2)) {
-      (field_xmi = (xb - (ovlp + ovlp)));
-      (field_xma = (xb - ovlp));
+      field_xmi = (xb - (ovlp + ovlp));
+      field_xma = (xb - ovlp);
     } else {
       0;
     }
   }
 
   if ((ylo == 0)) {
-    (field_ymi = ovlp);
-    (field_yma = (ovlp + ovlp));
+    field_ymi = ovlp;
+    field_yma = (ovlp + ovlp);
   } else {
 
     if ((ylo == 2)) {
-      (field_ymi = (yb - (ovlp + ovlp)));
-      (field_yma = (yb - ovlp));
+      field_ymi = (yb - (ovlp + ovlp));
+      field_yma = (yb - ovlp);
     } else {
       0;
     }
   }
 
   if ((zlo == 0)) {
-    (field_zmi = ovlp);
-    (field_zma = (ovlp + ovlp));
+    field_zmi = ovlp;
+    field_zma = (ovlp + ovlp);
   } else {
 
     if ((zlo == 2)) {
-      (field_zmi = (zb - (ovlp + ovlp)));
-      (field_zma = (zb - ovlp));
+      field_zmi = (zb - (ovlp + ovlp));
+      field_zma = (zb - ovlp);
     } else {
       0;
     }
@@ -598,7 +598,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                       {
-                        (lxyzx = ovlp);
+                        lxyzx = ovlp;
                       }
                     } else {
                       { 0; }
@@ -606,7 +606,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                       {
-                        (lxyzy = ovlp);
+                        lxyzy = ovlp;
                       }
                     } else {
                       { 0; }
@@ -614,7 +614,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                       {
-                        (lxyzz = ovlp);
+                        lxyzz = ovlp;
                       }
                     } else {
                       { 0; }
@@ -677,7 +677,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -693,39 +693,39 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = ovlp);
-            (field_xma = (ovlp + ovlp));
+            field_xmi = ovlp;
+            field_xma = (ovlp + ovlp);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + ovlp)));
-              (field_xma = (xb - ovlp));
+              field_xmi = (xb - (ovlp + ovlp));
+              field_xma = (xb - ovlp);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = ovlp);
-            (field_yma = (ovlp + ovlp));
+            field_ymi = ovlp;
+            field_yma = (ovlp + ovlp);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + ovlp)));
-              (field_yma = (yb - ovlp));
+              field_ymi = (yb - (ovlp + ovlp));
+              field_yma = (yb - ovlp);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = ovlp);
-            (field_zma = (ovlp + ovlp));
+            field_zmi = ovlp;
+            field_zma = (ovlp + ovlp);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + ovlp)));
-              (field_zma = (zb - ovlp));
+              field_zmi = (zb - (ovlp + ovlp));
+              field_zma = (zb - ovlp);
             } else {
               0;
             }
@@ -753,7 +753,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -761,7 +761,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -769,7 +769,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -799,7 +799,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
               }
             }
           }
-          (v_offset = (v_offset + (ovlpalllen * numvec)));
+          v_offset = (v_offset + (ovlpalllen * numvec));
         }
       }
     }
@@ -821,33 +821,33 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
   const long __ylen = scmc_internal_g_ylen;
   const long __global_idx = (__idx + (__idy * __xlen));
   double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -870,7 +870,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -886,39 +886,39 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = ovlp);
-            (field_xma = (ovlp + ovlp));
+            field_xmi = ovlp;
+            field_xma = (ovlp + ovlp);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + ovlp)));
-              (field_xma = (xb - ovlp));
+              field_xmi = (xb - (ovlp + ovlp));
+              field_xma = (xb - ovlp);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = ovlp);
-            (field_yma = (ovlp + ovlp));
+            field_ymi = ovlp;
+            field_yma = (ovlp + ovlp);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + ovlp)));
-              (field_yma = (yb - ovlp));
+              field_ymi = (yb - (ovlp + ovlp));
+              field_yma = (yb - ovlp);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = ovlp);
-            (field_zma = (ovlp + ovlp));
+            field_zmi = ovlp;
+            field_zma = (ovlp + ovlp);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + ovlp)));
-              (field_zma = (zb - ovlp));
+              field_zmi = (zb - (ovlp + ovlp));
+              field_zma = (zb - ovlp);
             } else {
               0;
             }
@@ -946,7 +946,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -954,7 +954,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -962,7 +962,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1018,7 +1018,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -1034,39 +1034,39 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long field_zma = (zb - ovlp);
 
   if ((xlo == 0)) {
-    (field_xmi = ovlp);
-    (field_xma = (ovlp + ovlp));
+    field_xmi = ovlp;
+    field_xma = (ovlp + ovlp);
   } else {
 
     if ((xlo == 2)) {
-      (field_xmi = (xb - (ovlp + ovlp)));
-      (field_xma = (xb - ovlp));
+      field_xmi = (xb - (ovlp + ovlp));
+      field_xma = (xb - ovlp);
     } else {
       0;
     }
   }
 
   if ((ylo == 0)) {
-    (field_ymi = ovlp);
-    (field_yma = (ovlp + ovlp));
+    field_ymi = ovlp;
+    field_yma = (ovlp + ovlp);
   } else {
 
     if ((ylo == 2)) {
-      (field_ymi = (yb - (ovlp + ovlp)));
-      (field_yma = (yb - ovlp));
+      field_ymi = (yb - (ovlp + ovlp));
+      field_yma = (yb - ovlp);
     } else {
       0;
     }
   }
 
   if ((zlo == 0)) {
-    (field_zmi = ovlp);
-    (field_zma = (ovlp + ovlp));
+    field_zmi = ovlp;
+    field_zma = (ovlp + ovlp);
   } else {
 
     if ((zlo == 2)) {
-      (field_zmi = (zb - (ovlp + ovlp)));
-      (field_zma = (zb - ovlp));
+      field_zmi = (zb - (ovlp + ovlp));
+      field_zma = (zb - ovlp);
     } else {
       0;
     }
@@ -1094,7 +1094,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                       {
-                        (lxyzx = ovlp);
+                        lxyzx = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1102,7 +1102,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                       {
-                        (lxyzy = ovlp);
+                        lxyzy = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1110,7 +1110,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                       {
-                        (lxyzz = ovlp);
+                        lxyzz = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1176,7 +1176,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -1192,39 +1192,39 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = ovlp);
-            (field_xma = (ovlp + ovlp));
+            field_xmi = ovlp;
+            field_xma = (ovlp + ovlp);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + ovlp)));
-              (field_xma = (xb - ovlp));
+              field_xmi = (xb - (ovlp + ovlp));
+              field_xma = (xb - ovlp);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = ovlp);
-            (field_yma = (ovlp + ovlp));
+            field_ymi = ovlp;
+            field_yma = (ovlp + ovlp);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + ovlp)));
-              (field_yma = (yb - ovlp));
+              field_ymi = (yb - (ovlp + ovlp));
+              field_yma = (yb - ovlp);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = ovlp);
-            (field_zma = (ovlp + ovlp));
+            field_zmi = ovlp;
+            field_zma = (ovlp + ovlp);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + ovlp)));
-              (field_zma = (zb - ovlp));
+              field_zmi = (zb - (ovlp + ovlp));
+              field_zma = (zb - ovlp);
             } else {
               0;
             }
@@ -1252,7 +1252,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1260,7 +1260,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1268,7 +1268,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1301,7 +1301,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
               }
             }
           }
-          (v_offset = (v_offset + (ovlpalllen * numvec)));
+          v_offset = (v_offset + (ovlpalllen * numvec));
         }
       }
     }
@@ -1323,33 +1323,33 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
   const long __ylen = scmc_internal_g_ylen;
   const long __global_idx = (__idx + (__idy * __xlen));
   double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -1372,7 +1372,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -1388,39 +1388,39 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = ovlp);
-            (field_xma = (ovlp + ovlp));
+            field_xmi = ovlp;
+            field_xma = (ovlp + ovlp);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + ovlp)));
-              (field_xma = (xb - ovlp));
+              field_xmi = (xb - (ovlp + ovlp));
+              field_xma = (xb - ovlp);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = ovlp);
-            (field_yma = (ovlp + ovlp));
+            field_ymi = ovlp;
+            field_yma = (ovlp + ovlp);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + ovlp)));
-              (field_yma = (yb - ovlp));
+              field_ymi = (yb - (ovlp + ovlp));
+              field_yma = (yb - ovlp);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = ovlp);
-            (field_zma = (ovlp + ovlp));
+            field_zmi = ovlp;
+            field_zma = (ovlp + ovlp);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + ovlp)));
-              (field_zma = (zb - ovlp));
+              field_zmi = (zb - (ovlp + ovlp));
+              field_zma = (zb - ovlp);
             } else {
               0;
             }
@@ -1448,7 +1448,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1456,7 +1456,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1464,7 +1464,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1523,7 +1523,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
   if ((local_ymax >= numvec)) {
     {
-      (local_ymax = numvec);
+      local_ymax = numvec;
     }
   } else {
     { 0; }
@@ -1539,39 +1539,39 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long field_zma = (zb - ovlp);
 
   if ((xlo == 0)) {
-    (field_xmi = 0);
-    (field_xma = (ovlp + 0));
+    field_xmi = 0;
+    field_xma = (ovlp + 0);
   } else {
 
     if ((xlo == 2)) {
-      (field_xmi = (xb - (ovlp + 0)));
-      (field_xma = (xb - 0));
+      field_xmi = (xb - (ovlp + 0));
+      field_xma = (xb - 0);
     } else {
       0;
     }
   }
 
   if ((ylo == 0)) {
-    (field_ymi = 0);
-    (field_yma = (ovlp + 0));
+    field_ymi = 0;
+    field_yma = (ovlp + 0);
   } else {
 
     if ((ylo == 2)) {
-      (field_ymi = (yb - (ovlp + 0)));
-      (field_yma = (yb - 0));
+      field_ymi = (yb - (ovlp + 0));
+      field_yma = (yb - 0);
     } else {
       0;
     }
   }
 
   if ((zlo == 0)) {
-    (field_zmi = 0);
-    (field_zma = (ovlp + 0));
+    field_zmi = 0;
+    field_zma = (ovlp + 0);
   } else {
 
     if ((zlo == 2)) {
-      (field_zmi = (zb - (ovlp + 0)));
-      (field_zma = (zb - 0));
+      field_zmi = (zb - (ovlp + 0));
+      field_zma = (zb - 0);
     } else {
       0;
     }
@@ -1599,7 +1599,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                       {
-                        (lxyzx = ovlp);
+                        lxyzx = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1607,7 +1607,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                       {
-                        (lxyzy = ovlp);
+                        lxyzy = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1615,7 +1615,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
                     if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                       {
-                        (lxyzz = ovlp);
+                        lxyzz = ovlp;
                       }
                     } else {
                       { 0; }
@@ -1678,7 +1678,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -1694,39 +1694,39 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = 0);
-            (field_xma = (ovlp + 0));
+            field_xmi = 0;
+            field_xma = (ovlp + 0);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + 0)));
-              (field_xma = (xb - 0));
+              field_xmi = (xb - (ovlp + 0));
+              field_xma = (xb - 0);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = 0);
-            (field_yma = (ovlp + 0));
+            field_ymi = 0;
+            field_yma = (ovlp + 0);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + 0)));
-              (field_yma = (yb - 0));
+              field_ymi = (yb - (ovlp + 0));
+              field_yma = (yb - 0);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = 0);
-            (field_zma = (ovlp + 0));
+            field_zmi = 0;
+            field_zma = (ovlp + 0);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + 0)));
-              (field_zma = (zb - 0));
+              field_zmi = (zb - (ovlp + 0));
+              field_zma = (zb - 0);
             } else {
               0;
             }
@@ -1754,7 +1754,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1762,7 +1762,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1770,7 +1770,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1800,7 +1800,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
               }
             }
           }
-          (v_offset = (v_offset + (ovlpalllen * numvec)));
+          v_offset = (v_offset + (ovlpalllen * numvec));
         }
       }
     }
@@ -1822,33 +1822,33 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
   const long __ylen = scmc_internal_g_ylen;
   const long __global_idx = (__idx + (__idy * __xlen));
   double *vecovlps[27];
-  ((vecovlps)[0] = vecovlp0);
-  ((vecovlps)[1] = vecovlp1);
-  ((vecovlps)[2] = vecovlp2);
-  ((vecovlps)[3] = vecovlp3);
-  ((vecovlps)[4] = vecovlp4);
-  ((vecovlps)[5] = vecovlp5);
-  ((vecovlps)[6] = vecovlp6);
-  ((vecovlps)[7] = vecovlp7);
-  ((vecovlps)[8] = vecovlp8);
-  ((vecovlps)[9] = vecovlp9);
-  ((vecovlps)[10] = vecovlp10);
-  ((vecovlps)[11] = vecovlp11);
-  ((vecovlps)[12] = vecovlp12);
-  ((vecovlps)[13] = NULL);
-  ((vecovlps)[14] = vecovlp14);
-  ((vecovlps)[15] = vecovlp15);
-  ((vecovlps)[16] = vecovlp16);
-  ((vecovlps)[17] = vecovlp17);
-  ((vecovlps)[18] = vecovlp18);
-  ((vecovlps)[19] = vecovlp19);
-  ((vecovlps)[20] = vecovlp20);
-  ((vecovlps)[21] = vecovlp21);
-  ((vecovlps)[22] = vecovlp22);
-  ((vecovlps)[23] = vecovlp23);
-  ((vecovlps)[24] = vecovlp24);
-  ((vecovlps)[25] = vecovlp25);
-  ((vecovlps)[26] = vecovlp26);
+  (vecovlps)[0] = vecovlp0;
+  (vecovlps)[1] = vecovlp1;
+  (vecovlps)[2] = vecovlp2;
+  (vecovlps)[3] = vecovlp3;
+  (vecovlps)[4] = vecovlp4;
+  (vecovlps)[5] = vecovlp5;
+  (vecovlps)[6] = vecovlp6;
+  (vecovlps)[7] = vecovlp7;
+  (vecovlps)[8] = vecovlp8;
+  (vecovlps)[9] = vecovlp9;
+  (vecovlps)[10] = vecovlp10;
+  (vecovlps)[11] = vecovlp11;
+  (vecovlps)[12] = vecovlp12;
+  (vecovlps)[13] = NULL;
+  (vecovlps)[14] = vecovlp14;
+  (vecovlps)[15] = vecovlp15;
+  (vecovlps)[16] = vecovlp16;
+  (vecovlps)[17] = vecovlp17;
+  (vecovlps)[18] = vecovlp18;
+  (vecovlps)[19] = vecovlp19;
+  (vecovlps)[20] = vecovlp20;
+  (vecovlps)[21] = vecovlp21;
+  (vecovlps)[22] = vecovlp22;
+  (vecovlps)[23] = vecovlp23;
+  (vecovlps)[24] = vecovlp24;
+  (vecovlps)[25] = vecovlp25;
+  (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
     for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
@@ -1871,7 +1871,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
           if ((local_ymax >= numvec)) {
             {
-              (local_ymax = numvec);
+              local_ymax = numvec;
             }
           } else {
             { 0; }
@@ -1887,39 +1887,39 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
           long field_zma = (zb - ovlp);
 
           if ((xlo == 0)) {
-            (field_xmi = 0);
-            (field_xma = (ovlp + 0));
+            field_xmi = 0;
+            field_xma = (ovlp + 0);
           } else {
 
             if ((xlo == 2)) {
-              (field_xmi = (xb - (ovlp + 0)));
-              (field_xma = (xb - 0));
+              field_xmi = (xb - (ovlp + 0));
+              field_xma = (xb - 0);
             } else {
               0;
             }
           }
 
           if ((ylo == 0)) {
-            (field_ymi = 0);
-            (field_yma = (ovlp + 0));
+            field_ymi = 0;
+            field_yma = (ovlp + 0);
           } else {
 
             if ((ylo == 2)) {
-              (field_ymi = (yb - (ovlp + 0)));
-              (field_yma = (yb - 0));
+              field_ymi = (yb - (ovlp + 0));
+              field_yma = (yb - 0);
             } else {
               0;
             }
           }
 
           if ((zlo == 0)) {
-            (field_zmi = 0);
-            (field_zma = (ovlp + 0));
+            field_zmi = 0;
+            field_zma = (ovlp + 0);
           } else {
 
             if ((zlo == 2)) {
-              (field_zmi = (zb - (ovlp + 0)));
-              (field_zma = (zb - 0));
+              field_zmi = (zb - (ovlp + 0));
+              field_zma = (zb - 0);
             } else {
               0;
             }
@@ -1947,7 +1947,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
                               {
-                                (lxyzx = ovlp);
+                                lxyzx = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1955,7 +1955,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
                               {
-                                (lxyzy = ovlp);
+                                lxyzy = ovlp;
                               }
                             } else {
                               { 0; }
@@ -1963,7 +1963,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
                             if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
                               {
-                                (lxyzz = ovlp);
+                                lxyzz = ovlp;
                               }
                             } else {
                               { 0; }

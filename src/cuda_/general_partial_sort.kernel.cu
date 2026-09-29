@@ -26,10 +26,10 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -86,9 +86,9 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -116,21 +116,21 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -150,7 +150,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN7 = 0;
 
@@ -165,7 +165,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN8 = 0;
 
@@ -180,7 +180,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -195,16 +195,16 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - 1))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - 1))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN9 = 0;
 
@@ -240,14 +240,14 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN11 = 0;
 
@@ -280,10 +280,10 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - 1))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - 1))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -295,7 +295,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN13 = 0;
 
@@ -309,7 +309,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -326,13 +326,13 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -387,7 +387,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -395,9 +395,9 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -421,21 +421,21 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -452,7 +452,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN16 = 0;
 
@@ -467,7 +467,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN17 = 0;
 
@@ -482,7 +482,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -500,7 +500,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -608,7 +608,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 6)))[0] > XLEN) {
@@ -644,15 +644,15 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -738,8 +738,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -770,8 +770,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -804,8 +804,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -829,8 +829,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -839,10 +839,10 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -930,8 +930,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzx == (XLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -970,68 +970,6 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -1073,14 +1011,14 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -1162,10 +1100,10 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -1207,8 +1145,8 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -1298,7 +1236,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -1360,10 +1298,10 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -1420,9 +1358,9 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -1450,21 +1388,21 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -1484,7 +1422,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN20 = 0;
 
@@ -1499,7 +1437,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN21 = 0;
 
@@ -1514,7 +1452,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -1529,16 +1467,16 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN22 = 0;
 
@@ -1575,14 +1513,14 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN24 = 0;
 
@@ -1615,10 +1553,10 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - XLEN))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -1630,7 +1568,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN26 = 0;
 
@@ -1644,7 +1582,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -1661,13 +1599,13 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -1722,7 +1660,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -1730,9 +1668,9 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -1756,21 +1694,21 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -1787,7 +1725,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN29 = 0;
 
@@ -1802,7 +1740,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN30 = 0;
 
@@ -1817,7 +1755,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -1835,7 +1773,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -1943,7 +1881,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 6)))[1] > YLEN) {
@@ -1979,15 +1917,15 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -2073,8 +2011,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -2105,8 +2043,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -2139,8 +2077,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -2164,8 +2102,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -2174,10 +2112,10 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -2266,8 +2204,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzy == (YLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -2306,68 +2244,6 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -2410,14 +2286,14 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -2500,10 +2376,10 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -2545,8 +2421,8 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -2636,7 +2512,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -2698,10 +2574,10 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -2758,9 +2634,9 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -2788,21 +2664,21 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -2822,7 +2698,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN33 = 0;
 
@@ -2837,7 +2713,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN34 = 0;
 
@@ -2852,7 +2728,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -2867,16 +2743,16 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN35 = 0;
 
@@ -2914,14 +2790,14 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN37 = 0;
 
@@ -2954,10 +2830,10 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -2969,7 +2845,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN39 = 0;
 
@@ -2983,7 +2859,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -3000,13 +2876,13 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -3061,7 +2937,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -3069,9 +2945,9 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -3095,21 +2971,21 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -3126,7 +3002,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN42 = 0;
 
@@ -3141,7 +3017,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN43 = 0;
 
@@ -3156,7 +3032,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -3174,7 +3050,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -3282,7 +3158,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 6)))[2] > ZLEN) {
@@ -3318,15 +3194,15 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -3412,8 +3288,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -3444,8 +3320,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -3478,8 +3354,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -3503,8 +3379,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -3513,10 +3389,10 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -3605,8 +3481,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzz == (ZLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -3645,68 +3521,6 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -3749,14 +3563,14 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -3839,10 +3653,10 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -3884,8 +3698,8 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -3975,7 +3789,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -4033,10 +3847,10 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -4075,7 +3889,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -4083,9 +3897,9 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -4109,21 +3923,21 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -4140,7 +3954,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN46 = 0;
 
@@ -4155,7 +3969,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN47 = 0;
 
@@ -4170,7 +3984,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -4188,7 +4002,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -4246,7 +4060,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN49 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -4282,8 +4096,8 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzx == (XLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -4322,68 +4136,6 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -4425,14 +4177,14 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -4514,10 +4266,10 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -4559,8 +4311,8 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -4650,7 +4402,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -4708,10 +4460,10 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -4750,7 +4502,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -4758,9 +4510,9 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -4784,21 +4536,21 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -4815,7 +4567,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN51 = 0;
 
@@ -4830,7 +4582,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN52 = 0;
 
@@ -4845,7 +4597,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -4863,7 +4615,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -4921,7 +4673,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN54 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -4958,8 +4710,8 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzy == (YLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -4998,68 +4750,6 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -5102,14 +4792,14 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -5192,10 +4882,10 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -5237,8 +4927,8 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -5328,7 +5018,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -5386,10 +5076,10 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (6 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
@@ -5428,7 +5118,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 6))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 6))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -5436,9 +5126,9 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -5462,21 +5152,21 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -5493,7 +5183,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN56 = 0;
 
@@ -5508,7 +5198,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN57 = 0;
 
@@ -5523,7 +5213,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -5541,7 +5231,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (6 * ((__idx * (__xlen * 0)) + 0)))])) /
                6));
@@ -5599,7 +5289,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN59 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -5636,8 +5326,8 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzz == (ZLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -5676,68 +5366,6 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 6 )
- )
-)[	(  j * 6 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -5780,14 +5408,14 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -5870,10 +5498,10 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -5915,8 +5543,8 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -6006,7 +5634,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -6068,10 +5696,10 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -6128,9 +5756,9 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -6158,21 +5786,21 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -6192,7 +5820,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN61 = 0;
 
@@ -6207,7 +5835,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN62 = 0;
 
@@ -6222,7 +5850,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -6237,16 +5865,16 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - 1))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - 1))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - 1)) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN63 = 0;
 
@@ -6282,14 +5910,14 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN65 = 0;
 
@@ -6322,10 +5950,10 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - 1))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - 1))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -6337,7 +5965,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN67 = 0;
 
@@ -6351,7 +5979,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -6368,13 +5996,13 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -6429,7 +6057,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -6437,9 +6065,9 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -6463,21 +6091,21 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -6494,7 +6122,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN70 = 0;
 
@@ -6509,7 +6137,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN71 = 0;
 
@@ -6524,7 +6152,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -6542,7 +6170,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -6650,7 +6278,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 8)))[0] > XLEN) {
@@ -6686,15 +6314,15 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -6780,8 +6408,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -6812,8 +6440,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -6846,8 +6474,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -6871,8 +6499,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -6881,10 +6509,10 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -6972,8 +6600,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzx == (XLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -7012,68 +6640,6 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -7115,14 +6681,14 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -7204,10 +6770,10 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -7249,8 +6815,8 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -7340,7 +6906,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -7402,10 +6968,10 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -7462,9 +7028,9 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -7492,21 +7058,21 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -7526,7 +7092,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN74 = 0;
 
@@ -7541,7 +7107,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN75 = 0;
 
@@ -7556,7 +7122,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -7571,16 +7137,16 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - XLEN)) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN76 = 0;
 
@@ -7617,14 +7183,14 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN78 = 0;
 
@@ -7657,10 +7223,10 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - XLEN))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - XLEN))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -7672,7 +7238,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN80 = 0;
 
@@ -7686,7 +7252,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -7703,13 +7269,13 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -7764,7 +7330,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -7772,9 +7338,9 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -7798,21 +7364,21 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -7829,7 +7395,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN83 = 0;
 
@@ -7844,7 +7410,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN84 = 0;
 
@@ -7859,7 +7425,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -7877,7 +7443,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -7985,7 +7551,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 8)))[1] > YLEN) {
@@ -8021,15 +7587,15 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -8115,8 +7681,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -8147,8 +7713,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -8181,8 +7747,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -8206,8 +7772,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -8216,10 +7782,10 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -8308,8 +7874,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzy == (YLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -8348,68 +7914,6 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -8452,14 +7956,14 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -8542,10 +8046,10 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -8587,8 +8091,8 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -8678,7 +8182,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -8740,10 +8244,10 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -8800,9 +8304,9 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
 
           int is_cur = ((!is_to_right) && (!is_to_left));
 
-          (is_to_left = (if_exist_particle && is_to_left));
-          (is_to_right = (if_exist_particle && is_to_right));
-          (is_cur = (if_exist_particle && is_cur));
+          is_to_left = (if_exist_particle && is_to_left);
+          is_to_right = (if_exist_particle && is_to_right);
+          is_cur = (if_exist_particle && is_cur);
           {
             long i;
 
@@ -8830,21 +8334,21 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            (cur_grid_num = (cur_grid_num + 1));
+            cur_grid_num = (cur_grid_num + 1);
           }
 
           if (is_to_left) {
-            (to_left_num = (to_left_num + 1));
+            to_left_num = (to_left_num + 1);
           }
 
           if (is_to_right) {
-            (to_right_num = (to_right_num + 1));
+            to_right_num = (to_right_num + 1);
           }
         }
       }
-      ((cgn_shared)[__idx] = cur_grid_num);
-      ((tln_shared)[__idx] = to_left_num);
-      ((trn_shared)[__idx] = to_right_num);
+      (cgn_shared)[__idx] = cur_grid_num;
+      (tln_shared)[__idx] = to_left_num;
+      (trn_shared)[__idx] = to_right_num;
       __syncthreads();
       long p = 0;
 
@@ -8864,7 +8368,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+        num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
         {
           long MYGEN87 = 0;
 
@@ -8879,7 +8383,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+        num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
         {
           long MYGEN88 = 0;
 
@@ -8894,7 +8398,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+        num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
         __syncthreads();
       }
     }
@@ -8909,16 +8413,16 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
     int end_plus = 0;
 
     if (!is_most_left) {
-      (beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))]);
-      (beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 2)]);
-      (end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 3)]);
+      beg_left_main = (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))];
+      beg_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 2)];
+      end_plus = (xyzw)[((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) + 3)];
     }
 
     {
       int num_copy_real_11516lap = (end_plus - beg_plus);
 
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - num_write_main));
+        num_copy_real_11516lap = (grid_cache_len - num_write_main);
         {
           long MYGEN89 = 0;
 
@@ -8956,14 +8460,14 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + num_copy_real_11516lap));
+      num_write_main = (num_write_main + num_copy_real_11516lap);
     }
     __syncthreads();
     {
       int num_copy_real_11516lap = num_write_minus;
 
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
-        (num_copy_real_11516lap = (grid_cache_len - beg_left_main));
+        num_copy_real_11516lap = (grid_cache_len - beg_left_main);
         {
           long MYGEN91 = 0;
 
@@ -8996,10 +8500,10 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (beg_left_main = (beg_left_main + num_copy_real_11516lap));
+      beg_left_main = (beg_left_main + num_copy_real_11516lap);
     }
     if ((!is_most_left) && (__idx == 0)) {
-      ((xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))] = beg_left_main);
+      (xyzw)[(4 * ((cu_offset + grid_id) - (XLEN * YLEN)))] = beg_left_main;
     }
 
     int cap_tmp = ((is_most_right) ? (0) : ((grid_cache_len - num_write_main)));
@@ -9011,7 +8515,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       int num_copy_real_11516lap = num_write_plus;
 
       if (num_copy_real_11516lap > cap_tmp) {
-        (num_copy_real_11516lap = cap_tmp);
+        num_copy_real_11516lap = cap_tmp;
         {
           long MYGEN93 = 0;
 
@@ -9025,7 +8529,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        (cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp)));
+        cu_cur_cache_load = (cu_cur_cache_load + (num_write_plus - cap_tmp));
       }
 
       {
@@ -9042,13 +8546,13 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (total_cache_num = (total_cache_num + num_copy_real_11516lap));
+      total_cache_num = (total_cache_num + num_copy_real_11516lap);
     }
     int xm4[4];
-    ((xm4)[0] = num_write_main);
-    ((xm4)[1] = num_write_main);
-    ((xm4)[2] = num_write_main);
-    ((xm4)[3] = total_cache_num);
+    (xm4)[0] = num_write_main;
+    (xm4)[1] = num_write_main;
+    (xm4)[2] = num_write_main;
+    (xm4)[3] = total_cache_num;
     if (__idx == 0) {
       {
         {
@@ -9103,7 +8607,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -9111,9 +8615,9 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -9137,21 +8641,21 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -9168,7 +8672,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN96 = 0;
 
@@ -9183,7 +8687,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN97 = 0;
 
@@ -9198,7 +8702,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -9216,7 +8720,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -9324,7 +8828,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (cur_to_left = (cur_to_left + 1));
+            cur_to_left = (cur_to_left + 1);
 
           } else {
             if (((local_pos_cache + (g * 8)))[2] > ZLEN) {
@@ -9360,15 +8864,15 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (cur_this = (cur_this + 1));
+              cur_this = (cur_this + 1);
             }
           }
         }
       }
-      ((cu_xyzw_shared)[0] = cur_this);
-      ((cu_xyzw_shared)[1] = beg_to_left);
-      ((cu_xyzw_shared)[2] = cur_to_left);
-      ((cu_xyzw_shared)[3] = cur_to_right);
+      (cu_xyzw_shared)[0] = cur_this;
+      (cu_xyzw_shared)[1] = beg_to_left;
+      (cu_xyzw_shared)[2] = cur_to_left;
+      (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
 
@@ -9454,8 +8958,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            (num_write_main = (num_write_main + num_write_tmp));
-            (num_write_tmp = 0);
+            num_write_main = (num_write_main + num_write_tmp);
+            num_write_tmp = 0;
             {
               long i;
 
@@ -9486,8 +8990,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              (num_write_main = (num_write_main + num_write_tmp));
-              (num_write_tmp = 0);
+              num_write_main = (num_write_main + num_write_tmp);
+              num_write_tmp = 0;
               {
                 long i;
 
@@ -9520,8 +9024,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                (num_write_main = (num_write_main + num_write_tmp));
-                (num_write_tmp = 0);
+                num_write_main = (num_write_main + num_write_tmp);
+                num_write_tmp = 0;
 
               } else {
                 num_write_tmp++;
@@ -9545,8 +9049,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        (num_write_main = (num_write_main + num_write_tmp));
-        (num_write_tmp = 0);
+        num_write_main = (num_write_main + num_write_tmp);
+        num_write_tmp = 0;
       }
       int x_main = num_write_main;
 
@@ -9555,10 +9059,10 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
       int x_beg_plus = (((grid_cache_len - cur_load) / 2) + (num_write_minus + x_main));
 
       int xm4[4];
-      ((xm4)[0] = x_main);
-      ((xm4)[1] = (num_write_minus + x_main));
-      ((xm4)[2] = x_beg_plus);
-      ((xm4)[3] = (num_write_plus + x_beg_plus));
+      (xm4)[0] = x_main;
+      (xm4)[1] = (num_write_minus + x_main);
+      (xm4)[2] = x_beg_plus;
+      (xm4)[3] = (num_write_plus + x_beg_plus);
       {
         long inner_step;
 
@@ -9647,8 +9151,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         int is_most_right = (bxyzz == (ZLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -9687,68 +9191,6 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -9791,14 +9233,14 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -9881,10 +9323,10 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -9926,8 +9368,8 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -10017,7 +9459,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -10075,10 +9517,10 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -10117,7 +9559,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(0 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -10125,9 +9567,9 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -10151,21 +9593,21 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -10182,7 +9624,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN100 = 0;
 
@@ -10197,7 +9639,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN101 = 0;
 
@@ -10212,7 +9654,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -10230,7 +9672,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -10288,7 +9730,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN103 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -10324,8 +9766,8 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzx == (XLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -10364,68 +9806,6 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -10467,14 +9847,14 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -10556,10 +9936,10 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -10601,8 +9981,8 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -10692,7 +10072,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -10750,10 +10130,10 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -10792,7 +10172,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(1 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -10800,9 +10180,9 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -10826,21 +10206,21 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -10857,7 +10237,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN105 = 0;
 
@@ -10872,7 +10252,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN106 = 0;
 
@@ -10887,7 +10267,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -10905,7 +10285,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -10963,7 +10343,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN108 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -11000,8 +10380,8 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzy == (YLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -11040,68 +10420,6 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -11144,14 +10462,14 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -11234,10 +10552,10 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -11279,8 +10597,8 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -11370,7 +10688,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -11428,10 +10746,10 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
   int cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
 
   double *for_sort_grid_memory_left =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((2 * cu_cache_length) / 5)));
 
   double *for_sort_grid_memory_right =
-      (cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10))));
+      cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
@@ -11470,7 +10788,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
         int if_exist_particle = (real_p < cur_load);
 
         double particle_sort_key_element =
-            ((if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 8))]) : (-1));
+            (if_exist_particle) ? ((cu_cache_head)[(2 + (real_p * 8))]) : (-1);
 
         int is_to_left = (particle_sort_key_element < left_bound);
 
@@ -11478,9 +10796,9 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
 
         int is_cur = ((!is_to_right) && (!is_to_left));
 
-        (is_to_left = (if_exist_particle && is_to_left));
-        (is_to_right = (if_exist_particle && is_to_right));
-        (is_cur = (if_exist_particle && is_cur));
+        is_to_left = (if_exist_particle && is_to_left);
+        is_to_right = (if_exist_particle && is_to_right);
+        is_cur = (if_exist_particle && is_cur);
         {
           long i;
 
@@ -11504,21 +10822,21 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          (cur_grid_num = (cur_grid_num + 1));
+          cur_grid_num = (cur_grid_num + 1);
         }
 
         if (is_to_left) {
-          (to_left_num = (to_left_num + 1));
+          to_left_num = (to_left_num + 1);
         }
 
         if (is_to_right) {
-          (to_right_num = (to_right_num + 1));
+          to_right_num = (to_right_num + 1);
         }
       }
     }
-    ((cgn_shared)[__idx] = cur_grid_num);
-    ((tln_shared)[__idx] = to_left_num);
-    ((trn_shared)[__idx] = to_right_num);
+    (cgn_shared)[__idx] = cur_grid_num;
+    (tln_shared)[__idx] = to_left_num;
+    (trn_shared)[__idx] = to_right_num;
     __syncthreads();
     long p = 0;
 
@@ -11535,7 +10853,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]));
+      num_write_main = (num_write_main + (cgn_shared)[(p / __xlen)]);
       {
         long MYGEN110 = 0;
 
@@ -11550,7 +10868,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]));
+      num_write_minus = (num_write_minus + (tln_shared)[(p / __xlen)]);
       {
         long MYGEN111 = 0;
 
@@ -11565,7 +10883,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      (num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]));
+      num_write_plus = (num_write_plus + (trn_shared)[(p / __xlen)]);
       __syncthreads();
     }
   }
@@ -11583,7 +10901,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
     }
   }
   int xm4[4];
-  ((xm4)[0] = num_write_main);
+  (xm4)[0] = num_write_main;
   ((xm4)[1] = ((&((for_sort_grid_memory_left)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))]) -
                 &((cu_cache_head)[(0 + (8 * ((__idx * (__xlen * 0)) + 0)))])) /
                8));
@@ -11641,7 +10959,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
       int ridx = (MYGEN113 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -11678,8 +10996,8 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         int is_most_right = (bxyzz == (ZLEN - 1));
 
         if (is_most_left) {
-          ((prev_zw)[0] = grid_cache_len);
-          ((prev_zw)[1] = grid_cache_len);
+          (prev_zw)[0] = grid_cache_len;
+          (prev_zw)[1] = grid_cache_len;
 
         } else {
           {
@@ -11718,68 +11036,6 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         int num_cur_remains = (minus_max - beg_minus);
 
         int num_left_remains = (grid_cache_len - beg_plus);
-
-#if 0    
-			long  j = 0 ;
-
-	if (  	(  	(  bxyzx == 1 )
- && 	(  bxyzy == 1 )
- )
-  ){  
-			fprintf ( stderr , "idy=%d x=[%d %d %d] main_load=%d cur_rem=%d " , __idy , bxyzx , bxyzy , bxyzz , beg_minus , num_cur_remains )
-;
-	for (j ; 	(  j < beg_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d left_load=%d " , bxyzx , 	(  end_minus - beg_minus )
- )
-;
-	for (j=beg_minus ; 	(  j < end_minus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-	fprintf ( stderr , "x=%d right_load=%d " , bxyzx , 	(  end_plus - beg_plus )
- )
-;
-	for (j=beg_plus ; 	(  j < end_plus )
- ; j++)
-	{
-	fprintf ( stderr , "%e " , (	(  inoutput + 	(  	(  	(  cu_offset + grid_id )
- * grid_cache_len )
- * 8 )
- )
-)[	(  j * 8 )
-] )
-;
-}
-	fprintf ( stderr , "\n" )
-;
-
-	}else{
-	 }
-
-#else
-
-#endif
 
         {
           {
@@ -11822,14 +11078,14 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         }
 
         int num_left_to_cu_cache =
-            (((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0));
+            ((num_cur_remains < num_from_left)) ? ((num_from_left - num_cur_remains)) : (0);
 
         int num_cur_to_cu_cache =
-            (((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0));
+            ((num_left_remains < num_to_left)) ? ((num_to_left - num_left_remains)) : (0);
 
         (num_from_left =
              (((num_cur_remains < num_from_left)) ? (num_cur_remains) : (num_from_left)));
-        (num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left)));
+        num_to_left = (((num_left_remains < num_to_left)) ? (num_left_remains) : (num_to_left));
         {
           long inner_step;
 
@@ -11912,10 +11168,10 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        (beg_minus = (beg_minus + num_from_left));
-        ((cur_xyzw)[0] = beg_minus);
-        ((cur_xyzw)[1] = beg_minus);
-        ((prev_zw)[1] = (beg_plus + num_to_left));
+        beg_minus = (beg_minus + num_from_left);
+        (cur_xyzw)[0] = beg_minus;
+        (cur_xyzw)[1] = beg_minus;
+        (prev_zw)[1] = (beg_plus + num_to_left);
         {
           long inner_step;
 
@@ -11957,8 +11213,8 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
 
           int cur_cu_cache_load = atomicAdd((cu_xyzw_shared + 3), -(cur_to_cu_cache));
 
-          ((cur_xyzw)[2] = beg_minus);
-          ((cur_xyzw)[3] = beg_minus);
+          (cur_xyzw)[2] = beg_minus;
+          (cur_xyzw)[3] = beg_minus;
           {
             {
               long inner_step;
@@ -12048,7 +11304,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
 
         int load0 = (beg_minus + pluslen);
 
-        ((xyzw)[(4 * (cu_offset + grid_id))] = load0);
+        (xyzw)[(4 * (cu_offset + grid_id))] = load0;
         {
           {
             long inner_step;
@@ -12117,7 +11373,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       int ridx = (MYGEN115 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -12154,8 +11410,8 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         __shared__ int al1[2];
         if (__idx == 0) {
-          ((al1)[0] = (cu_xyzw_shared)[3]);
-          ((al1)[1] = (cu_xyzw_shared)[3]);
+          (al1)[0] = (cu_xyzw_shared)[3];
+          (al1)[1] = (cu_xyzw_shared)[3];
           {
             long inner_step;
 
@@ -12200,7 +11456,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      ((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+      (par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
       {
         long inner_step;
 
@@ -12216,7 +11472,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      (end_cu_par = (end_cu_par + 1));
+      end_cu_par = (end_cu_par + 1);
     }
   }
 }
@@ -12243,7 +11499,7 @@ if (1) {
     }
   }
 }
-((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+(par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
 {
   long inner_step;
 
@@ -12259,7 +11515,7 @@ if (1) {
     }
   }
 }
-(end_cu_par = (end_cu_par + __xlen));
+end_cu_par = (end_cu_par + __xlen);
 }
 }
 else {
@@ -12300,7 +11556,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       int ridx = (MYGEN117 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -12337,7 +11593,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         __shared__ int al1[2];
         if (__idx == 0) {
-          ((al1)[0] = cu_cache_length);
+          (al1)[0] = cu_cache_length;
           {
             long inner_step;
 
@@ -12382,7 +11638,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      ((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+      (par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
       {
         long inner_step;
 
@@ -12398,7 +11654,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      (end_cu_par = (end_cu_par + 1));
+      end_cu_par = (end_cu_par + 1);
     }
   }
 }
@@ -12425,7 +11681,7 @@ if (1) {
     }
   }
 }
-((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+(par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
 {
   long inner_step;
 
@@ -12441,7 +11697,7 @@ if (1) {
     }
   }
 }
-(end_cu_par = (end_cu_par + __xlen));
+end_cu_par = (end_cu_par + __xlen);
 }
 }
 else {
@@ -12482,7 +11738,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       int ridx = (MYGEN119 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -12519,8 +11775,8 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         __shared__ int al1[2];
         if (__idx == 0) {
-          ((al1)[0] = (cu_xyzw_shared)[3]);
-          ((al1)[1] = (cu_xyzw_shared)[3]);
+          (al1)[0] = (cu_xyzw_shared)[3];
+          (al1)[1] = (cu_xyzw_shared)[3];
           {
             long inner_step;
 
@@ -12565,7 +11821,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      ((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+      (par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
       {
         long inner_step;
 
@@ -12581,7 +11837,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      (end_cu_par = (end_cu_par + 1));
+      end_cu_par = (end_cu_par + 1);
     }
   }
 }
@@ -12608,7 +11864,7 @@ if (1) {
     }
   }
 }
-((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+(par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
 {
   long inner_step;
 
@@ -12624,7 +11880,7 @@ if (1) {
     }
   }
 }
-(end_cu_par = (end_cu_par + __xlen));
+end_cu_par = (end_cu_par + __xlen);
 }
 }
 else {
@@ -12665,7 +11921,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       int ridx = (MYGEN121 + __idx);
 
       if (ridx < 4) {
-        ((cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx]);
+        (cu_xyzw_shared)[ridx] = ((cu_xyzw + (4 * __idy)))[ridx];
       }
     }
   }
@@ -12702,7 +11958,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         __shared__ int al1[2];
         if (__idx == 0) {
-          ((al1)[0] = cu_cache_length);
+          (al1)[0] = cu_cache_length;
           {
             long inner_step;
 
@@ -12747,7 +12003,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      ((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+      (par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
       {
         long inner_step;
 
@@ -12763,7 +12019,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           }
         }
       }
-      (end_cu_par = (end_cu_par + 1));
+      end_cu_par = (end_cu_par + 1);
     }
   }
 }
@@ -12790,7 +12046,7 @@ if (1) {
     }
   }
 }
-((par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN));
+(par_cache)[the_dir_num] = ((par_cache)[the_dir_num] + XYZLEN);
 {
   long inner_step;
 
@@ -12806,7 +12062,7 @@ if (1) {
     }
   }
 }
-(end_cu_par = (end_cu_par + __xlen));
+end_cu_par = (end_cu_par + __xlen);
 }
 }
 else {

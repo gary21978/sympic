@@ -17,7 +17,7 @@
 
 ```bash
 cd /pathtodriver/pciemu/release
-./start_emu.sh -clT
+./start_emu.sh -T # dual device
 ```
 
 然后进入 QEMU，执行：

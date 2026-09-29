@@ -29,7 +29,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pinput = (double *)&(input);
   int g;
   for ((g = 0); (g < 8); (g = (g + 1))) {
-    ((pret)[g] = floor((pinput)[g]));
+    (pret)[g] = floor((pinput)[g]);
   }
   return ret;
 }
@@ -135,7 +135,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
                 {
                   __mem1__ MAPU_LONG grid_load_end;
                   grid_load_end = (gridload + 1);
-                  ((xyzw)[(4 * allid_grid)] = grid_load_end);
+                  (xyzw)[(4 * allid_grid)] = grid_load_end;
 
                   if ((6 * 1)) {
                     {
@@ -150,7 +150,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
                   } else {
                     { 0; }
                   }
-                  (wrted_grid = 1);
+                  wrted_grid = 1;
                 }
               } else {
                 { 0; }
@@ -175,7 +175,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
               } else {
                 { 0; }
               }
-              (cur_cu_load = (cur_cu_load + 1));
+              cur_cu_load = (cur_cu_load + 1);
             }
           } else {
             { 0; }
@@ -189,7 +189,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   }
   if ((__idx == 0)) {
     {
-      ((cu_xyzw)[(__idy * 4)] = cur_cu_load);
+      (cu_xyzw)[(__idy * 4)] = cur_cu_load;
     }
   } else {
     { 0; }
@@ -293,7 +293,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
                 {
                   __mem1__ MAPU_LONG grid_load_end;
                   grid_load_end = (gridload + 1);
-                  ((xyzw)[(4 * allid_grid)] = grid_load_end);
+                  (xyzw)[(4 * allid_grid)] = grid_load_end;
 
                   if ((8 * 1)) {
                     {
@@ -308,7 +308,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
                   } else {
                     { 0; }
                   }
-                  (wrted_grid = 1);
+                  wrted_grid = 1;
                 }
               } else {
                 { 0; }
@@ -333,7 +333,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
               } else {
                 { 0; }
               }
-              (cur_cu_load = (cur_cu_load + 1));
+              cur_cu_load = (cur_cu_load + 1);
             }
           } else {
             { 0; }
@@ -347,7 +347,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   }
   if ((__idx == 0)) {
     {
-      ((cu_xyzw)[(__idy * 4)] = cur_cu_load);
+      (cu_xyzw)[(__idy * 4)] = cur_cu_load;
     }
   } else {
     { 0; }

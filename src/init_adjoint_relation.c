@@ -30,10 +30,10 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
 
     for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
       if ((!(cd_performances)[k])) {
-        ((cd_performances)[k] = 1);
+        (cd_performances)[k] = 1;
       }
 
-      (total_perf = (total_perf + (cd_performances)[k]));
+      total_perf = (total_perf + (cd_performances)[k]);
     }
   }
   if (fp) {
@@ -50,7 +50,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
            ((fp) ? ((cplx_ori_array)[(ori_vec)[i]])
                  : (floor(call_CAL_FUN_ONE_PARA("get_thread_complexity", (ori_vec)[i])))));
       assert(((cplx_array)[i] >= 0));
-      (total_complexity = (total_complexity + (cplx_array)[i]));
+      total_complexity = (total_complexity + (cplx_array)[i]);
     }
   }
   assert(total_complexity);
@@ -60,7 +60,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
 
   long l_tid = 0;
 
-  ((num_thread_array)[0] = 0);
+  (num_thread_array)[0] = 0;
   {
     long i;
 
@@ -75,24 +75,24 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
         long j;
 
         for ((j = 0); (j < dev_id); (j = (j + 1))) {
-          (current_perf_all = (current_perf_all + (cd_performances)[j]));
+          current_perf_all = (current_perf_all + (cd_performances)[j]);
         }
       }
       if (((global_cplx * ((num_proc / num_cds_per_mpi_proc) * total_perf)) >=
            (current_perf_all * total_complexity))) {
         if ((current_pid < num_proc)) {
-          ((num_thread_array)[current_pid] = i);
+          (num_thread_array)[current_pid] = i;
         }
 
         if ((current_pid < num_proc)) {
-          (current_pid = (current_pid + 1));
-          (l_tid = -1);
+          current_pid = (current_pid + 1);
+          l_tid = -1;
         }
       }
 
-      (global_cplx = (global_cplx + (cplx_array)[i]));
-      (l_tid = (l_tid + 1));
-      ((local_tid_array)[i] = l_tid);
+      global_cplx = (global_cplx + (cplx_array)[i]);
+      l_tid = (l_tid + 1);
+      (local_tid_array)[i] = l_tid;
     }
   }
   assert((current_pid == num_proc));
@@ -118,7 +118,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
     long k;
 
     for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
-      (total_perf = (total_perf + (cd_performances)[k]));
+      total_perf = (total_perf + (cd_performances)[k]);
     }
   }
   for (i = 0; (i < num_mpi_proc); i++) {
@@ -127,7 +127,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
     long tid_plus = (global_tid + oneprocnum);
 
     if ((i < plusone)) {
-      (tid_plus = (tid_plus + 1));
+      tid_plus = (tid_plus + 1);
     }
 
     long num_t_one_mpi_proc = (tid_plus - tid_min);
@@ -136,35 +136,35 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
       long k;
 
       for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
-        ((num_thread_array)[(k + (i * num_cds_per_mpi_proc))] = global_tid);
+        (num_thread_array)[(k + (i * num_cds_per_mpi_proc))] = global_tid;
         long old_pid = global_tid;
 
         double cur_proc_num_threads_f =
-            ((1.0 * ((cd_performances)[k] * num_t_one_mpi_proc)) / total_perf);
+            (1.0 * ((cd_performances)[k] * num_t_one_mpi_proc)) / total_perf;
 
         long cur_proc_num_threads =
             floor((cur_proc_num_threads_f + ((1 - (1.0 / num_cds_per_mpi_proc)) + 0.01)));
 
         if ((k == (num_cds_per_mpi_proc - 1))) {
-          (global_tid = (tid_min + num_t_one_mpi_proc));
+          global_tid = (tid_min + num_t_one_mpi_proc);
 
         } else {
-          (global_tid = (global_tid + cur_proc_num_threads));
+          global_tid = (global_tid + cur_proc_num_threads);
         }
 
         if ((global_tid > num_thread)) {
-          (global_tid = num_thread);
+          global_tid = num_thread;
         }
 
         if ((global_tid > (num_t_one_mpi_proc + tid_min))) {
-          (global_tid = (num_t_one_mpi_proc + tid_min));
+          global_tid = (num_t_one_mpi_proc + tid_min);
         }
 
         {
           long j;
 
           for ((j = old_pid); (j < global_tid); (j = (j + 1))) {
-            ((local_tid_array)[j] = (j - old_pid));
+            (local_tid_array)[j] = (j - old_pid);
           }
         }
       }
@@ -253,7 +253,7 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
     long g;
 
     for ((g = 0); (g < ndim); (g = (g + 1))) {
-      (alllen = (alllen * onen));
+      alllen = (alllen * onen);
     }
   }
   long i = 0;
@@ -267,30 +267,30 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
 
     long bxyzz = (cur_thread / (x_num_thread_block * y_num_thread_block));
 
-    ((global_x_offset)[i] = (xlen * bxyzx));
-    ((global_y_offset)[i] = (ylen * bxyzy));
-    ((global_z_offset)[i] = (zlen * bxyzz));
+    (global_x_offset)[i] = (xlen * bxyzx);
+    (global_y_offset)[i] = (ylen * bxyzy);
+    (global_z_offset)[i] = (zlen * bxyzz);
 #ifdef SYMPIC_CUDA
     {
       int *tmpv = (cuda_pscmc_get_h_data(cur_rankx_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzx == (x_num_thread_block - 1))) + (bxyzx == 0)));
-      (tmpv = (cuda_pscmc_get_h_data(xoffset, NULL)));
-      ((tmpv)[i] = (global_x_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzx == (x_num_thread_block - 1))) + (bxyzx == 0));
+      tmpv = (cuda_pscmc_get_h_data(xoffset, NULL));
+      (tmpv)[i] = (global_x_offset)[i];
     }
     {
       int *tmpv = (cuda_pscmc_get_h_data(cur_ranky_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzy == (y_num_thread_block - 1))) + (bxyzy == 0)));
-      (tmpv = (cuda_pscmc_get_h_data(yoffset, NULL)));
-      ((tmpv)[i] = (global_y_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzy == (y_num_thread_block - 1))) + (bxyzy == 0));
+      tmpv = (cuda_pscmc_get_h_data(yoffset, NULL));
+      (tmpv)[i] = (global_y_offset)[i];
     }
     {
       int *tmpv = (cuda_pscmc_get_h_data(cur_rankz_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzz == (z_num_thread_block - 1))) + (bxyzz == 0)));
-      (tmpv = (cuda_pscmc_get_h_data(zoffset, NULL)));
-      ((tmpv)[i] = (global_z_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzz == (z_num_thread_block - 1))) + (bxyzz == 0));
+      tmpv = (cuda_pscmc_get_h_data(zoffset, NULL));
+      (tmpv)[i] = (global_z_offset)[i];
     }
     cuda_pscmc_mem_sync_h2d(cur_rankx_pscmc);
     cuda_pscmc_mem_sync_h2d(cur_ranky_pscmc);
@@ -303,23 +303,23 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
     {
       int *tmpv = (mapu_pscmc_get_h_data(cur_rankx_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzx == (x_num_thread_block - 1))) + (bxyzx == 0)));
-      (tmpv = (mapu_pscmc_get_h_data(xoffset, NULL)));
-      ((tmpv)[i] = (global_x_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzx == (x_num_thread_block - 1))) + (bxyzx == 0));
+      tmpv = (mapu_pscmc_get_h_data(xoffset, NULL));
+      (tmpv)[i] = (global_x_offset)[i];
     }
     {
       int *tmpv = (mapu_pscmc_get_h_data(cur_ranky_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzy == (y_num_thread_block - 1))) + (bxyzy == 0)));
-      (tmpv = (mapu_pscmc_get_h_data(yoffset, NULL)));
-      ((tmpv)[i] = (global_y_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzy == (y_num_thread_block - 1))) + (bxyzy == 0));
+      tmpv = (mapu_pscmc_get_h_data(yoffset, NULL));
+      (tmpv)[i] = (global_y_offset)[i];
     }
     {
       int *tmpv = (mapu_pscmc_get_h_data(cur_rankz_pscmc, NULL));
 
-      ((tmpv)[i] = ((2 * (bxyzz == (z_num_thread_block - 1))) + (bxyzz == 0)));
-      (tmpv = (mapu_pscmc_get_h_data(zoffset, NULL)));
-      ((tmpv)[i] = (global_z_offset)[i]);
+      (tmpv)[i] = ((2 * (bxyzz == (z_num_thread_block - 1))) + (bxyzz == 0));
+      tmpv = (mapu_pscmc_get_h_data(zoffset, NULL));
+      (tmpv)[i] = (global_z_offset)[i];
     }
     mapu_pscmc_mem_sync_h2d(cur_rankx_pscmc);
     mapu_pscmc_mem_sync_h2d(cur_ranky_pscmc);
@@ -328,7 +328,7 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
     mapu_pscmc_mem_sync_h2d(yoffset);
     mapu_pscmc_mem_sync_h2d(zoffset);
 #endif
-    ((global_id)[i] = cur_thread);
+    (global_id)[i] = cur_thread;
     {
       long xyzz;
 
@@ -353,10 +353,10 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
 
                 long cur_adj_id = (ovvec)[adj_id_pre];
 
-                ((adj_ids)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = cur_adj_id);
+                (adj_ids)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = cur_adj_id;
                 long cur_adj_pid = find_the_proc_id(cur_adj_id, num_proc, num_thread_array);
 
-                ((adj_processes)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = cur_adj_pid);
+                (adj_processes)[((i * NUM_SYNC_LAYER) + xyzlocalall)] = cur_adj_pid;
                 ((adj_local_tid)[((i * NUM_SYNC_LAYER) + xyzlocalall)] =
                      (local_tid_array)[cur_adj_id]);
               }

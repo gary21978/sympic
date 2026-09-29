@@ -114,11 +114,10 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
                 for (xyzx = 0; xyzx < 1; xyzx++) {
                   long blk_offset_0 =
                       (blk_all_len_0 * i) +
-                      (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                      (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
-                  long blk_offset_1 =
-                      (blk_all_len_1 * i) +
-                      (0 + (3 * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                  long blk_offset_1 = (blk_all_len_1 * i) +
+                                      (3 * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                   {
                     long g = 0;
@@ -210,8 +209,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] = 0);
                       }
                     }
@@ -250,7 +248,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -321,7 +319,7 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -350,7 +348,7 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -425,8 +423,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] = a);
                       }
                     }
@@ -465,7 +462,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -536,7 +533,7 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -565,7 +562,7 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -673,31 +670,29 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        if ((fast_y[(0 + (num_ele *
-                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        if ((fast_y[(num_ele *
+                                     (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                     realidx] > 0) &&
-                            (fast_u[(0 + (num_ele *
-                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                            (fast_u[(num_ele *
+                                     (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                     realidx] > 0)) {
-                          (fast_y[(0 + (num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                          (fast_y[(num_ele *
+                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                   realidx] =
                                (minus_over_q_e *
-                                (fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                       (yb * (xyzz + ovlp))))))) +
+                                (fast_x[(num_ele *
+                                         (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                         realidx] *
-                                 log(fast_y[(0 +
-                                             (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                       (yb * (xyzz + ovlp))))))) +
+                                 log(fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                      (yb * (xyzz + ovlp)))))) +
                                             realidx] /
-                                     fast_u[(0 +
-                                             (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                       (yb * (xyzz + ovlp))))))) +
+                                     fast_u[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                      (yb * (xyzz + ovlp)))))) +
                                             realidx]))));
 
                         } else {
-                          (fast_y[(0 + (num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                          (fast_y[(num_ele *
+                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                   realidx] = 0);
                         }
                       }
@@ -737,7 +732,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -818,7 +813,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -835,7 +830,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -852,7 +847,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_u + 0)[inner_step + inner_g] =
+                    (fast_u[inner_step + inner_g] =
                          ((u + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -887,7 +882,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -901,7 +896,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -915,7 +910,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((u + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_u + 0)[inner_step + inner_g]);
+                       fast_u[inner_step + inner_g]);
                 }
               }
             }
@@ -990,16 +985,15 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        if (fast_y[(0 + (num_ele *
-                                         (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        if (fast_y[(num_ele *
+                                    (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                    realidx] != 0) {
-                          (fast_y[(0 + (num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                          (fast_y[(num_ele *
+                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                   realidx] =
-                               (1.0 /
-                                fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                      (yb * (xyzz + ovlp))))))) +
-                                       realidx]));
+                               (1.0 / fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                       (yb * (xyzz + ovlp)))))) +
+                                             realidx]));
                         }
                       }
                     }
@@ -1038,7 +1032,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -1111,7 +1105,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1142,7 +1136,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -1233,11 +1227,10 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] =
-                             (a * fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                        (yb * (xyzz + ovlp))))))) +
+                             (a * fast_x[(num_ele *
+                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                          realidx]));
                       }
                     }
@@ -1276,7 +1269,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -1347,7 +1340,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1364,7 +1357,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1393,7 +1386,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -1407,7 +1400,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -1498,14 +1491,13 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] =
-                             (fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp))))))) +
+                             (fast_y[(num_ele *
+                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                      realidx] +
-                              (a * fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                         (yb * (xyzz + ovlp))))))) +
+                              (a * fast_x[(num_ele *
+                                           (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                           realidx])));
                       }
                     }
@@ -1544,7 +1536,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -1616,7 +1608,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1633,7 +1625,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1662,7 +1654,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -1676,7 +1668,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -1767,14 +1759,13 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] =
-                             ((a * fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                         (yb * (xyzz + ovlp))))))) +
+                             ((a * fast_x[(num_ele *
+                                           (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                           realidx]) +
-                              (b * fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                         (yb * (xyzz + ovlp))))))) +
+                              (b * fast_y[(num_ele *
+                                           (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                           realidx])));
                       }
                     }
@@ -1813,7 +1804,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -1886,7 +1877,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1903,7 +1894,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -1932,7 +1923,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -1946,7 +1937,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -2037,14 +2028,13 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
                       long realidx;
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                        (fast_y[(0 + (num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                        (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                 realidx] =
-                             (fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp))))))) +
+                             (fast_x[(num_ele *
+                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                      realidx] *
-                              fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp))))))) +
+                              fast_y[(num_ele *
+                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                      realidx]));
                       }
                     }
@@ -2083,7 +2073,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -2155,7 +2145,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2172,7 +2162,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2201,7 +2191,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -2215,7 +2205,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -2294,14 +2284,13 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
 
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
-                             ((fabs(
-                                   fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                         (yb * (xyzz + ovlp))))))) +
-                                          realidx]) > reduce_tmp)
-                                  ? (fabs(fast_y[(0 + (num_ele *
-                                                       (ovlp + (xb * ((xyzy + ovlp) +
-                                                                      (yb * (xyzz + ovlp))))))) +
-                                                 realidx]))
+                             ((fabs(fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                     (yb * (xyzz + ovlp)))))) +
+                                           realidx]) > reduce_tmp)
+                                  ? (fabs(
+                                        fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                         (yb * (xyzz + ovlp)))))) +
+                                               realidx]))
                                   : (reduce_tmp)));
                       }
                     }
@@ -2327,7 +2316,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -2416,7 +2405,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2446,7 +2435,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -2555,11 +2544,11 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
                              (reduce_tmp +
-                              (fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                     (yb * (xyzz + ovlp))))))) +
+                              (fast_x[(num_ele *
+                                       (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                       realidx] *
-                               fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                     (yb * (xyzz + ovlp))))))) +
+                               fast_y[(num_ele *
+                                       (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                       realidx])));
                       }
                     }
@@ -2585,7 +2574,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -2672,7 +2661,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2689,7 +2678,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_x + 0)[inner_step + inner_g] =
+                    (fast_x[inner_step + inner_g] =
                          ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2718,7 +2707,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }
@@ -2732,7 +2721,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_x + 0)[inner_step + inner_g]);
+                       fast_x[inner_step + inner_g]);
                 }
               }
             }
@@ -2824,8 +2813,8 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
                       for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
                              (reduce_tmp +
-                              fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp))))))) +
+                              fast_y[(num_ele *
+                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                      realidx]));
                       }
                     }
@@ -2851,7 +2840,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
 
                     long blk_offset =
                         (blk_all_len * i) +
-                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                        (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
 
                     {
                       long g = 0;
@@ -2937,7 +2926,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((fast_y + 0)[inner_step + inner_g] =
+                    (fast_y[inner_step + inner_g] =
                          ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
                   }
                 }
@@ -2966,7 +2955,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                       (fast_y + 0)[inner_step + inner_g]);
+                       fast_y[inner_step + inner_g]);
                 }
               }
             }

@@ -341,14 +341,14 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
               long xyzx;
 
               for (xyzx = 0; xyzx < 3; xyzx++) {
-                int xyzlocalall = (0 + (xyzx + (3 * (xyzy + (3 * xyzz)))));
+                int xyzlocalall = (xyzx + (3 * (xyzy + (3 * xyzz))));
 
                 long adj_id_pre =
-                    0 + ((((bxyzx + (xyzx - 1)) + x_num_thread_block) % x_num_thread_block) +
-                         (x_num_thread_block *
-                          ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
-                           (y_num_thread_block *
-                            (((bxyzz + (xyzz - 1)) + z_num_thread_block) % z_num_thread_block)))));
+                    ((((bxyzx + (xyzx - 1)) + x_num_thread_block) % x_num_thread_block) +
+                     (x_num_thread_block *
+                      ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
+                       (y_num_thread_block *
+                        (((bxyzz + (xyzz - 1)) + z_num_thread_block) % z_num_thread_block)))));
 
                 long cur_adj_id = (ovvec)[adj_id_pre];
 

@@ -74,16 +74,15 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                       {
                         long realidx;
                         for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                          (fast_y[(0 + (num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                          (fast_y[(num_ele *
+                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                   realidx] =
-                               (fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                      (yb * (xyzz + ovlp))))))) +
+                               (fast_y[(num_ele *
+                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
                                        realidx] +
-                                (a *
-                                 fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                       (yb * (xyzz + ovlp))))))) +
-                                        realidx])));
+                                (a * fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                      (yb * (xyzz + ovlp)))))) +
+                                            realidx])));
                         }
                       }
                     }
@@ -119,7 +118,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                       long blk_offset_t1 = (blk_all_len * i);
                       long blk_offset =
                           (blk_all_len * i) +
-                          (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
+                          (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
                       {
                         long g = 0;
                         for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {

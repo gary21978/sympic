@@ -2657,7 +2657,7 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
         long numvec = pfield->numvec;
         long cu_cache_length = particle_spec_1[i].cu_cache_length;
         long xyzlenarr[3] = {pfield->xlen, pfield->ylen, pfield->zlen};
-        long XYZLEN = (1 - 0) * xyzlenarr[dir];
+        long XYZLEN = xyzlenarr[dir];
 
         sympic_set_device(dev);
         sympic_device_synchronize();

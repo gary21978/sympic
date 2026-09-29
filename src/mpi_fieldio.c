@@ -251,12 +251,11 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
                   for (xyzx = 0; xyzx < 1; xyzx++) {
                     int64_t offsetlen =
-                        num_ele *
-                        (global_x_offset[vid] +
-                         (0 + (xlen * (x_num_thread_block *
-                                       (xyzy + (global_y_offset[vid] +
-                                                (ylen * (y_num_thread_block *
-                                                         (xyzz + global_z_offset[vid])))))))));
+                        num_ele * (global_x_offset[vid] +
+                                   (xlen * (x_num_thread_block *
+                                            (xyzy + (global_y_offset[vid] +
+                                                     (ylen * (y_num_thread_block *
+                                                              (xyzz + global_z_offset[vid]))))))));
 
                     GAPS_IO_DataSeek(gid, timestep, offsetlen);
                     GAPS_IO_FWrite(

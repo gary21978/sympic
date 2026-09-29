@@ -331,7 +331,7 @@ pushJ_B_fused_iBz_pair_bank(const pushJ_weight_bank_t *__restrict__ bank,
 #pragma clang loop unroll(full)
       for (long x = 0; x < 5; x++) {
         const int allidx = x + tile_xlen * (y + 5 * z);
-        sum0 = sum0 + (field[allidx * 3 + 0] * (wF0x[x] * tyz));
+        sum0 = sum0 + (field[allidx * 3] * (wF0x[x] * tyz));
         sum1 = sum1 + (field[allidx * 3 + 1] * (wF0y[y] * tx[x]));
       }
     }
@@ -357,7 +357,7 @@ pushJ_B_fused_iBy23_bank(const pushJ_weight_bank_t *__restrict__ bank,
 #pragma clang loop unroll(full)
       for (long x = 0; x < 5; x++) {
         const int allidx = x + tile_xlen * (y + 5 * z);
-        const double field0 = shB1[allidx * 3 + 0];
+        const double field0 = shB1[allidx * 3];
         sum0 = sum0 + (field0 * (wF0x[x] * tyz0));
         sum1 = sum1 + (field0 * (wF0x[x] * tyz1));
       }
@@ -432,7 +432,7 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ex_bank(
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
         v8fp64 term =
-            (shE0[0 + (3 * (idx + (tile_xlen * (idy + (idz * 5)))))] + 0) * (f1_x1[idx] * wyz);
+            (shE0[(3 * (idx + (tile_xlen * (idy + (idz * 5)))))] + 0) * (f1_x1[idx] * wyz);
         AllEx = AllEx + term;
       }
     }
@@ -641,10 +641,10 @@ pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank, const pushJ_v
 #pragma clang loop unroll(full)
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 accum = shJ_incf[(allidx * 3) + 0];
+        v8fp64 accum = shJ_incf[(allidx * 3)];
         accum = accum + (pathX12[xyzx] * wyz12);
         accum = accum + (pathX23[xyzx] * wyz23);
-        shJ_incf[(allidx * 3) + 0] = accum;
+        shJ_incf[(allidx * 3)] = accum;
       }
     }
   }
@@ -708,9 +708,9 @@ pushJ_vlo_field_ddr_elem_offset(MAPU_LONG __idy, int bBidx, int bBidy, int bBidz
                                 int xyzz, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
                                 int num_ele) {
   return (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-         (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                            (((xyzy + bBidy) + ovlp) +
-                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp)))))));
+         (num_ele * ((bBidx + ovlp) +
+                     ((XLEN + (2 * ovlp)) * (((xyzy + bBidy) + ovlp) +
+                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp))))));
 }
 
 static __device__ __attribute__((always_inline)) inline void pushJ_vlo_K1_load_shared_5x5x5(
@@ -807,7 +807,7 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st
 #pragma clang loop unroll(full)
     for (int lane = 0; lane < 8; lane++) {
       const int src = g_inner + lane;
-      head_l[0][lane] = particle_dm[0 + 6 * src];
+      head_l[0][lane] = particle_dm[6 * src];
       head_l[1][lane] = particle_dm[1 + 6 * src];
       head_l[2][lane] = particle_dm[2 + 6 * src];
       head_l[3][lane] = particle_dm[3 + 6 * src];
@@ -1164,7 +1164,7 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
 #pragma clang loop unroll(full)
     for (int lane = 0; lane < 8; lane++) {
       const int poff = (g_inner + lane) * 6;
-      particle_dm[poff + 0] = newxx_l[lane];
+      particle_dm[poff] = newxx_l[lane];
       particle_dm[poff + 1] = newxy_l[lane];
       particle_dm[poff + 2] = newxz_l[lane];
       particle_dm[poff + 3] = newvx_l[lane];

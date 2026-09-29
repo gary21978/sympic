@@ -106,8 +106,8 @@ pushJ_B_integral_comp0_f0x_dif1y_f1z(const double *field, const double *f0x, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + (field[(allidx * 3) + 0] *
-                     (f0x[xyzx] * ((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1z[xyzz])));
+        sum = sum +
+              (field[(allidx * 3)] * (f0x[xyzx] * ((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1z[xyzz])));
       }
     }
   }
@@ -138,8 +138,8 @@ pushJ_B_integral_comp0_f0x_dif1z_f1y(const double *field, const double *f0x, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + (field[(allidx * 3) + 0] *
-                     (f0x[xyzx] * ((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1y[xyzy])));
+        sum = sum +
+              (field[(allidx * 3)] * (f0x[xyzx] * ((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1y[xyzy])));
       }
     }
   }
@@ -183,7 +183,7 @@ pushJ_B_integral_comp2_f0z_dif1y_f1x(const double *field, const double *f0z, con
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1x_f1y(
     v8fp64 *scr, const double *field, v8fp64 rx_f0z, v8fp64 dix_f0z, v8fp64 rx_if1x_hi,
     v8fp64 dix_if1x_hi, v8fp64 rx_if1x_lo, v8fp64 dix_if1x_lo, v8fp64 rx_f1y, v8fp64 dix_f1y) {
-  v8fp64 *wF0z = scr + 0;
+  v8fp64 *wF0z = scr;
   v8fp64 *wHiX = scr + 5;
   v8fp64 *wLoX = scr + 10;
   v8fp64 *wF1y = scr + 15;
@@ -208,7 +208,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1x_f1y(
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1y_f1z(
     v8fp64 *scr, const double *field, v8fp64 rx_f0x, v8fp64 dix_f0x, v8fp64 rx_if1y_hi,
     v8fp64 dix_if1y_hi, v8fp64 rx_if1y_lo, v8fp64 dix_if1y_lo, v8fp64 rx_f1z, v8fp64 dix_f1z) {
-  v8fp64 *wF0x = scr + 0;
+  v8fp64 *wF0x = scr;
   v8fp64 *wHiY = scr + 5;
   v8fp64 *wLoY = scr + 10;
   v8fp64 *wF1z = scr + 15;
@@ -222,8 +222,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1y_f1z(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum +
-              (field[(allidx * 3) + 0] * (wF0x[xyzx] * ((wHiY[xyzy] - wLoY[xyzy]) * wF1z[xyzz])));
+        sum = sum + (field[(allidx * 3)] * (wF0x[xyzx] * ((wHiY[xyzy] - wLoY[xyzy]) * wF1z[xyzz])));
       }
     }
   }
@@ -233,7 +232,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1y_f1z(
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1x_f1z(
     v8fp64 *scr, const double *field, v8fp64 rx_f0y, v8fp64 dix_f0y, v8fp64 rx_if1x_hi,
     v8fp64 dix_if1x_hi, v8fp64 rx_if1x_lo, v8fp64 dix_if1x_lo, v8fp64 rx_f1z, v8fp64 dix_f1z) {
-  v8fp64 *wF0y = scr + 0;
+  v8fp64 *wF0y = scr;
   v8fp64 *wHiX = scr + 5;
   v8fp64 *wLoX = scr + 10;
   v8fp64 *wF1z = scr + 15;
@@ -258,7 +257,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1x_f1z(
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1z_f1y(
     v8fp64 *scr, const double *field, v8fp64 rx_f0x, v8fp64 dix_f0x, v8fp64 rx_if1z_hi,
     v8fp64 dix_if1z_hi, v8fp64 rx_if1z_lo, v8fp64 dix_if1z_lo, v8fp64 rx_f1y, v8fp64 dix_f1y) {
-  v8fp64 *wF0x = scr + 0;
+  v8fp64 *wF0x = scr;
   v8fp64 *wHiZ = scr + 5;
   v8fp64 *wLoZ = scr + 10;
   v8fp64 *wF1y = scr + 15;
@@ -272,8 +271,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1z_f1y(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum +
-              (field[(allidx * 3) + 0] * (wF0x[xyzx] * ((wHiZ[xyzz] - wLoZ[xyzz]) * wF1y[xyzy])));
+        sum = sum + (field[(allidx * 3)] * (wF0x[xyzx] * ((wHiZ[xyzz] - wLoZ[xyzz]) * wF1y[xyzy])));
       }
     }
   }
@@ -283,7 +281,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1z_f1y(
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1z_f1x(
     v8fp64 *scr, const double *field, v8fp64 rx_f0y, v8fp64 dix_f0y, v8fp64 rx_if1z_hi,
     v8fp64 dix_if1z_hi, v8fp64 rx_if1z_lo, v8fp64 dix_if1z_lo, v8fp64 rx_f1x, v8fp64 dix_f1x) {
-  v8fp64 *wF0y = scr + 0;
+  v8fp64 *wF0y = scr;
   v8fp64 *wHiZ = scr + 5;
   v8fp64 *wLoZ = scr + 10;
   v8fp64 *wF1x = scr + 15;
@@ -308,7 +306,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1z_f1x(
 __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1y_f1x(
     v8fp64 *scr, const double *field, v8fp64 rx_f0z, v8fp64 dix_f0z, v8fp64 rx_if1y_hi,
     v8fp64 dix_if1y_hi, v8fp64 rx_if1y_lo, v8fp64 dix_if1y_lo, v8fp64 rx_f1x, v8fp64 dix_f1x) {
-  v8fp64 *wF0z = scr + 0;
+  v8fp64 *wF0z = scr;
   v8fp64 *wHiY = scr + 5;
   v8fp64 *wLoY = scr + 10;
   v8fp64 *wF1x = scr + 15;
@@ -336,7 +334,7 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1y_f1x(
 __device__ __noinline__ v8fp64 pushJ_E_interp_Ex(v8fp64 *scr, const double *shE0, v8fp64 rx1x,
                                                  v8fp64 dix1x, v8fp64 rx1y, v8fp64 dix1y,
                                                  v8fp64 rx1z, v8fp64 dix1z) {
-  v8fp64 *f1_x1 = scr + 0;
+  v8fp64 *f1_x1 = scr;
   v8fp64 *f0_y1 = scr + 5;
   v8fp64 *f0_z1 = scr + 10;
   eval_f1(rx1x, dix1x, f1_x1);
@@ -347,7 +345,7 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ex(v8fp64 *scr, const double *shE0
   for (long idz = 0; idz < 5; idz++) {
     for (long idy = 0; idy < 5; idy++) {
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = vbroadcast(shE0[0 + (3 * (idx + (5 * (idy + (idz * 5)))))] + 0) *
+        v8fp64 term = vbroadcast(shE0[(3 * (idx + (5 * (idy + (idz * 5)))))] + 0) *
                       (f1_x1[idx] * (f0_y1[idy] * f0_z1[idz]));
         AllEx = AllEx + term;
       }
@@ -359,7 +357,7 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ex(v8fp64 *scr, const double *shE0
 __device__ __noinline__ v8fp64 pushJ_E_interp_Ey(v8fp64 *scr, const double *shE0, v8fp64 rx1x,
                                                  v8fp64 dix1x, v8fp64 rx1y, v8fp64 dix1y,
                                                  v8fp64 rx1z, v8fp64 dix1z) {
-  v8fp64 *f1_y1 = scr + 0;
+  v8fp64 *f1_y1 = scr;
   v8fp64 *f0_z1 = scr + 5;
   v8fp64 *f0_x1 = scr + 10;
   eval_f1(rx1y, dix1y, f1_y1);
@@ -382,7 +380,7 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ey(v8fp64 *scr, const double *shE0
 __device__ __noinline__ v8fp64 pushJ_E_interp_Ez(v8fp64 *scr, const double *shE0, v8fp64 rx1x,
                                                  v8fp64 dix1x, v8fp64 rx1y, v8fp64 dix1y,
                                                  v8fp64 rx1z, v8fp64 dix1z) {
-  v8fp64 *f1_z1 = scr + 0;
+  v8fp64 *f1_z1 = scr;
   v8fp64 *f0_x1 = scr + 5;
   v8fp64 *f0_y1 = scr + 10;
   eval_f1(rx1z, dix1z, f1_z1);

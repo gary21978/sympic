@@ -457,24 +457,19 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
                 for (xyzx = 0; xyzx < numvec; xyzx++) {
                   long *cur_adj_id = (adjoint_vec_pids_host + (6 * xyzx));
 
-                  (cur_adj_id[0] =
-                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (0 + (3 * (1 + 3))))],
+                  (cur_adj_id[0] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (3 * (1 + 3))],
+                                               adj_ids, numvec));
+                  (cur_adj_id[1] = find_vec_id(
+                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (2 + (3 * (1 + 3)))], adj_ids, numvec));
+                  (cur_adj_id[2] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 3))],
+                                               adj_ids, numvec));
+                  (cur_adj_id[3] = find_vec_id(
+                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (2 + 3)))], adj_ids, numvec));
+                  (cur_adj_id[4] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 1))],
+                                               adj_ids, numvec));
+                  (cur_adj_id[5] =
+                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (1 + (3 * 2))))],
                                    adj_ids, numvec));
-                  (cur_adj_id[1] =
-                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (2 + (3 * (1 + 3))))],
-                                   adj_ids, numvec));
-                  (cur_adj_id[2] =
-                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (1 + (3 * (0 + 3))))],
-                                   adj_ids, numvec));
-                  (cur_adj_id[3] =
-                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (1 + (3 * (2 + 3))))],
-                                   adj_ids, numvec));
-                  (cur_adj_id[4] = find_vec_id(
-                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (1 + (3 * (1 + (3 * 0)))))], adj_ids,
-                       numvec));
-                  (cur_adj_id[5] = find_vec_id(
-                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (0 + (1 + (3 * (1 + (3 * 2)))))], adj_ids,
-                       numvec));
                 }
               }
             }
@@ -659,9 +654,8 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
                 for (xyzx = 0; xyzx < xlen; xyzx++) {
                   double *grid_r =
-                      grid_r_0 +
-                      (0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz))))));
-                  int *grid_xyzw = (xyzw_0 + (0 + (4 * (xyzx + (xlen * (xyzy + (ylen * xyzz)))))));
+                      grid_r_0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))));
+                  int *grid_xyzw = (xyzw_0 + (4 * (xyzx + (xlen * (xyzy + (ylen * xyzz))))));
 
                   long l = 0;
                   long grid_load = (call_GET_INIT_DENSITY_DIST(

@@ -84,67 +84,62 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                   for (xyzx = 0; xyzx < XLEN; xyzx++) {
 
                     double vB11101 =
-                        vread_tmp[(1 + 0) +
-                                  (num_ele * (((0 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[1 +
+                                  (num_ele * (((xyzx + -1) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21101 =
-                        vread_tmp[(2 + 0) +
-                                  (num_ele * (((0 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[2 +
+                                  (num_ele * (((xyzx + -1) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB01011 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                              (xblock * (((0 + (xyzy + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((xyzy + -1) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21011 =
-                        vread_tmp[(2 + 0) +
+                        vread_tmp[2 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                              (xblock * (((0 + (xyzy + -1)) + ovlp) +
+                                              (xblock * (((xyzy + -1) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB00111 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                                         (yblock * ((0 + (xyzz + -1)) + ovlp))))))];
+                                                         (yblock * ((xyzz + -1) + ovlp))))))];
 
                     double vB10111 =
-                        vread_tmp[(1 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                              (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                                         (yblock * ((0 + (xyzz + -1)) + ovlp))))))];
+                        vread_tmp[1 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                  (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                             (yblock * ((xyzz + -1) + ovlp))))))];
 
                     double vB01111 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB11111 =
-                        vread_tmp[(1 + 0) +
+                        vread_tmp[1 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21111 =
-                        vread_tmp[(2 + 0) +
+                        vread_tmp[2 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double xo0 = (gxoffset + (xyzx + -1));
 
-                    (vwrt_tmp[0 +
-                              (num_ele * ((xyzx + ovlp) +
+                    (vwrt_tmp[(num_ele * ((xyzx + ovlp) +
                                           (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
-                         (vwrt_tmp[0 + (num_ele *
-                                        ((xyzx + ovlp) +
-                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
+                         (vwrt_tmp[(num_ele *
+                                    ((xyzx + ovlp) +
+                                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
                           (DT *
                            (x0 *
                             ((1.0 / ({
@@ -436,59 +431,63 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
 
           long xyzz = (g / (XLEN * YLEN));
 
-          double vB11101 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB11101 =
+              (inB0 +
+               blk_offset)[(1 + (num_ele * (((xyzx + -1) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB21101 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21101 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((xyzx + -1) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB01011 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB01011 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((xyzy + -1) + ovlp) +
+                                                         (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
-          double vB21011 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((0 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21011 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((xyzy + -1) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB00111 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) + ovlp)))))))];
+          double vB00111 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                         (yblock * ((xyzz + -1) + ovlp))))))];
 
-          double vB10111 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((0 + (xyzz + -1)) + ovlp)))))))];
+          double vB10111 =
+              (inB0 + blk_offset)[(1 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                                   (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                              (yblock * ((xyzz + -1) + ovlp)))))))];
 
-          double vB01111 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB01111 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                         (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
-          double vB11111 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB11111 =
+              (inB0 +
+               blk_offset)[(1 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB21111 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21111 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
           double xo0 = (gxoffset + (xyzx + -1));
 
-          ((inoutE1 +
-            blk_offset)[0 + (num_ele * ((xyzx + ovlp) +
-                                        (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
-               ((inoutE1 + blk_offset)[0 + (num_ele * ((xyzx + ovlp) +
-                                                       (xblock * ((xyzy + ovlp) +
-                                                                  (yblock * (xyzz + ovlp))))))] +
+          ((inoutE1 + blk_offset)[(
+               num_ele * ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
+               ((inoutE1 +
+                 blk_offset)[(num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
                 (DT * (x0 * ((1.0 / ({
                                 double tmppowvar = (1.0 + (x0 + xo0));
 
@@ -828,65 +827,61 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
                   for (xyzx = 0; xyzx < XLEN; xyzx++) {
 
                     double vB01111 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB11111 =
-                        vread_tmp[(1 + 0) +
+                        vread_tmp[1 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21111 =
-                        vread_tmp[(2 + 0) +
+                        vread_tmp[2 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB02111 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((2 + (xyzz + -1)) + ovlp))))))];
 
                     double vB12111 =
-                        vread_tmp[(1 + 0) +
+                        vread_tmp[1 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((2 + (xyzz + -1)) + ovlp))))))];
 
                     double vB01211 =
-                        vread_tmp[(0 + 0) +
-                                  (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                        vread_tmp[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((2 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21211 =
-                        vread_tmp[(2 + 0) +
+                        vread_tmp[2 +
                                   (num_ele * (((1 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((2 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB11121 =
-                        vread_tmp[(1 + 0) +
+                        vread_tmp[1 +
                                   (num_ele * (((2 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
                     double vB21121 =
-                        vread_tmp[(2 + 0) +
+                        vread_tmp[2 +
                                   (num_ele * (((2 + (xyzx + -1)) + ovlp) +
                                               (xblock * (((1 + (xyzy + -1)) + ovlp) +
                                                          (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
-                    (vwrt_tmp[0 +
-                              (num_ele * ((xyzx + ovlp) +
+                    (vwrt_tmp[(num_ele * ((xyzx + ovlp) +
                                           (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
-                         (vwrt_tmp[0 + (num_ele *
-                                        ((xyzx + ovlp) +
-                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
+                         (vwrt_tmp[(num_ele *
+                                    ((xyzx + ovlp) +
+                                     (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
                           (DT * ((-1.0 * vB11111) + (vB12111 + (vB21111 + (-1.0 * vB21211)))))));
                     (vwrt_tmp[1 +
                               (num_ele * ((xyzx + ovlp) +
@@ -933,57 +928,62 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
 
           long xyzz = (g / (XLEN * YLEN));
 
-          double vB01111 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB01111 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                         (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
-          double vB11111 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB11111 =
+              (inB0 +
+               blk_offset)[(1 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB21111 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21111 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB02111 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) + ovlp)))))))];
+          double vB02111 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                         (yblock * ((2 + (xyzz + -1)) + ovlp))))))];
 
-          double vB12111 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((2 + (xyzz + -1)) + ovlp)))))))];
+          double vB12111 =
+              (inB0 +
+               blk_offset)[(1 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((2 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB01211 = (inB0 + blk_offset)[(
-              (0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB01211 =
+              (inB0 + blk_offset)[(num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                              (xblock * (((2 + (xyzy + -1)) + ovlp) +
+                                                         (yblock * ((1 + (xyzz + -1)) + ovlp))))))];
 
-          double vB21211 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((2 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21211 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((2 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB11121 = (inB0 + blk_offset)[(
-              (1 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB11121 =
+              (inB0 +
+               blk_offset)[(1 + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          double vB21121 = (inB0 + blk_offset)[(
-              (2 + 0) + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
-                                    (xblock * (((1 + (xyzy + -1)) + ovlp) +
-                                               (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
+          double vB21121 =
+              (inB0 +
+               blk_offset)[(2 + (num_ele * (((2 + (xyzx + -1)) + ovlp) +
+                                            (xblock * (((1 + (xyzy + -1)) + ovlp) +
+                                                       (yblock * ((1 + (xyzz + -1)) + ovlp)))))))];
 
-          ((inoutE1 +
-            blk_offset)[0 + (num_ele * ((xyzx + ovlp) +
-                                        (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
-               ((inoutE1 + blk_offset)[0 + (num_ele * ((xyzx + ovlp) +
-                                                       (xblock * ((xyzy + ovlp) +
-                                                                  (yblock * (xyzz + ovlp))))))] +
+          ((inoutE1 + blk_offset)[(
+               num_ele * ((xyzx + ovlp) + (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] =
+               ((inoutE1 +
+                 blk_offset)[(num_ele * ((xyzx + ovlp) +
+                                         (xblock * ((xyzy + ovlp) + (yblock * (xyzz + ovlp))))))] +
                 (DT * ((-1.0 * vB11111) + (vB12111 + (vB21111 + (-1.0 * vB21211)))))));
           ((inoutE1 +
             blk_offset)[1 + (num_ele * ((xyzx + ovlp) +

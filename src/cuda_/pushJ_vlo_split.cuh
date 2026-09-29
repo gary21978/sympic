@@ -33,7 +33,7 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx12(v8fp64 *scr, v8fp64 r
                                                            v8fp64 simd_mask, v8fp64 *shJ_incf,
                                                            double grid_geo_x, double Charge0,
                                                            double Tori_X0, double XO, int bBidx) {
-  v8fp64 *if1_x1 = scr + 0;
+  v8fp64 *if1_x1 = scr;
   v8fp64 *if1_x2 = scr + 5;
   v8fp64 *f0_y1 = scr + 10;
   v8fp64 *f0_z1 = scr + 15;
@@ -49,8 +49,8 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx12(v8fp64 *scr, v8fp64 r
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp = simd_mask * ((if1_x2[xyzx] - if1_x1[xyzx]) * (f0_y1[xyzy] * f0_z1[xyzz]));
-        shJ_incf[(allidx * 3) + 0] =
-            shJ_incf[(allidx * 3) + 0] +
+        shJ_incf[(allidx * 3)] =
+            shJ_incf[(allidx * 3)] +
             (grid_geo_x * ((Tori_X0 / (Tori_X0 + (XO + (bBidx + xyzx)))) * Charge0)) * Jtmp;
       }
     }
@@ -63,7 +63,7 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy12(v8fp64 *scr, v8fp64 r
                                                            v8fp64 simd_mask, v8fp64 *shJ_incf,
                                                            double grid_geo_y, double Charge0,
                                                            double Tori_X0, double XO, int bBidx) {
-  v8fp64 *if1_y1 = scr + 0;
+  v8fp64 *if1_y1 = scr;
   v8fp64 *if1_y2 = scr + 5;
   v8fp64 *f0_x2 = scr + 10;
   v8fp64 *f0_z1 = scr + 15;
@@ -93,7 +93,7 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jz13(v8fp64 *scr, v8fp64 r
                                                            v8fp64 simd_mask, v8fp64 *shJ_incf,
                                                            double grid_geo_z, double Charge0,
                                                            double Tori_X0, double XO, int bBidx) {
-  v8fp64 *if1_z1 = scr + 0;
+  v8fp64 *if1_z1 = scr;
   v8fp64 *if1_z3 = scr + 5;
   v8fp64 *f0_x2 = scr + 10;
   v8fp64 *f0_y2 = scr + 15;
@@ -123,7 +123,7 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy23(v8fp64 *scr, v8fp64 r
                                                            v8fp64 simd_mask, v8fp64 *shJ_incf,
                                                            double grid_geo_y, double Charge0,
                                                            double Tori_X0, double XO, int bBidx) {
-  v8fp64 *if1_y2 = scr + 0;
+  v8fp64 *if1_y2 = scr;
   v8fp64 *if1_y3 = scr + 5;
   v8fp64 *f0_x2 = scr + 10;
   v8fp64 *f0_z3 = scr + 15;
@@ -153,7 +153,7 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx23(v8fp64 *scr, v8fp64 r
                                                            v8fp64 simd_mask, v8fp64 *shJ_incf,
                                                            double grid_geo_x, double Charge0,
                                                            double Tori_X0, double XO, int bBidx) {
-  v8fp64 *if1_x2 = scr + 0;
+  v8fp64 *if1_x2 = scr;
   v8fp64 *if1_x3 = scr + 5;
   v8fp64 *f0_y3 = scr + 10;
   v8fp64 *f0_z3 = scr + 15;
@@ -169,8 +169,8 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx23(v8fp64 *scr, v8fp64 r
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp = simd_mask * ((if1_x3[xyzx] - if1_x2[xyzx]) * (f0_y3[xyzy] * f0_z3[xyzz]));
-        shJ_incf[(allidx * 3) + 0] =
-            shJ_incf[(allidx * 3) + 0] +
+        shJ_incf[(allidx * 3)] =
+            shJ_incf[(allidx * 3)] +
             (grid_geo_x * ((Tori_X0 / (Tori_X0 + (XO + (bBidx + xyzx)))) * Charge0)) * Jtmp;
       }
     }
@@ -180,9 +180,9 @@ static __device__ __forceinline__ long
 pushJ_vlo_field_ddr_elem_offset(long __idy, int bBidx, int bBidy, int bBidz, int xyzy, int xyzz,
                                 long XLEN, long YLEN, long ZLEN, int ovlp, int num_ele) {
   return (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-         (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                            (((xyzy + bBidy) + ovlp) +
-                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp)))))));
+         (num_ele * ((bBidx + ovlp) +
+                     ((XLEN + (2 * ovlp)) * (((xyzy + bBidy) + ovlp) +
+                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp))))));
 }
 
 static __device__ __forceinline__ void

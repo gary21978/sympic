@@ -35,7 +35,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
         int ridx = (MYGEN5 + __idx);
 
         if (ridx < (numcp * 6)) {
-          ((local_temp_particle_cache + (0 * 6))[ridx] =
+          (local_temp_particle_cache[ridx] =
                (cu_cache + (((cu_cache_length * __idy) + i) * 6))[ridx]);
         }
       }
@@ -53,7 +53,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
         int wrted_grid = 0;
 
         if (cuda_is_in(xyzx, 0, XLEN) && (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN))) {
-          long allid_grid = ((0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset);
+          long allid_grid = ((xyzx + (XLEN * (xyzy + (YLEN * xyzz)))) + cu_offset);
 
           int gridload = (xyzw)[(4 * allid_grid)];
 
@@ -136,7 +136,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
         int ridx = (MYGEN6 + __idx);
 
         if (ridx < (numcp * 8)) {
-          ((local_temp_particle_cache + (0 * 8))[ridx] =
+          (local_temp_particle_cache[ridx] =
                (cu_cache + (((cu_cache_length * __idy) + i) * 8))[ridx]);
         }
       }
@@ -154,7 +154,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
         int wrted_grid = 0;
 
         if (cuda_is_in(xyzx, 0, XLEN) && (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN))) {
-          long allid_grid = ((0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset);
+          long allid_grid = ((xyzx + (XLEN * (xyzy + (YLEN * xyzz)))) + cu_offset);
 
           int gridload = (xyzw)[(4 * allid_grid)];
 

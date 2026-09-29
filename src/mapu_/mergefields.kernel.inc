@@ -59,7 +59,7 @@ __global__ void mapu_sync_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp,
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
   } else if (xlo == 2) {
     field_xmi = xb - ovlp;
     field_xma = xb;
@@ -1347,34 +1347,34 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
   } else {
 
     if (xlo == 2) {
-      field_xmi = xb - (ovlp + 0);
-      field_xma = xb - 0;
+      field_xmi = xb - ovlp;
+      field_xma = xb;
     }
   }
 
   if (ylo == 0) {
     field_ymi = 0;
-    field_yma = ovlp + 0;
+    field_yma = ovlp;
   } else {
 
     if (ylo == 2) {
-      field_ymi = yb - (ovlp + 0);
-      field_yma = yb - 0;
+      field_ymi = yb - ovlp;
+      field_yma = yb;
     }
   }
 
   if (zlo == 0) {
     field_zmi = 0;
-    field_zma = ovlp + 0;
+    field_zma = ovlp;
   } else {
 
     if (zlo == 2) {
-      field_zmi = zb - (ovlp + 0);
-      field_zma = zb - 0;
+      field_zmi = zb - ovlp;
+      field_zma = zb;
     }
   }
   __mem1__ MAPU_LONG ovlpxma;

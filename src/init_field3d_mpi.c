@@ -86,7 +86,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
                     rzlen = zlen;
                   }
 
-                  ((pthis->sync_layer_len)[0 + (xyzx + (3 * (xyzy + (3 * xyzz))))] =
+                  ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
                        (rxlen * (rylen * (rzlen * new_num_ele))));
                 }
               }
@@ -289,7 +289,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
                 rzlen = zlen;
               }
 
-              ((pthis->sync_layer_len)[0 + (xyzx + (3 * (xyzy + (3 * xyzz))))] =
+              ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
                    (rxlen * (rylen * (rzlen * num_ele))));
             }
           }
@@ -400,11 +400,11 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -676,11 +676,11 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -952,11 +952,11 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1220,11 +1220,11 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1489,11 +1489,11 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1773,11 +1773,11 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                   [(j * ((data + i)->xblock *
                                          ((data + i)->yblock *
                                           ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   (0 + ((data + i)->num_ele *
-                                         ((0 + (data + i)->ovlp) +
-                                          ((data + i)->xblock *
-                                           ((xyzy + (data + i)->ovlp) +
-                                            ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))]),
+                                   ((data + i)->num_ele *
+                                    (((data + i)->ovlp) +
+                                     ((data + i)->xblock *
+                                      ((xyzy + (data + i)->ovlp) +
+                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {

@@ -54,34 +54,34 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpind
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
 
   } else {
     if (xlo == 2) {
-      field_xmi = xb - (ovlp + 0);
-      field_xma = xb - 0;
+      field_xmi = xb - ovlp;
+      field_xma = xb;
     }
   }
 
   if (ylo == 0) {
     field_ymi = 0;
-    field_yma = ovlp + 0;
+    field_yma = ovlp;
 
   } else {
     if (ylo == 2) {
-      field_ymi = yb - (ovlp + 0);
-      field_yma = yb - 0;
+      field_ymi = yb - ovlp;
+      field_yma = yb;
     }
   }
 
   if (zlo == 0) {
     field_zmi = 0;
-    field_zma = ovlp + 0;
+    field_zma = ovlp;
 
   } else {
     if (zlo == 2) {
-      field_zmi = zb - (ovlp + 0);
-      field_zma = zb - 0;
+      field_zmi = zb - ovlp;
+      field_zma = zb;
     }
   }
 
@@ -211,34 +211,34 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
 
         if (xlo == 0) {
           field_xmi = 0;
-          field_xma = ovlp + 0;
+          field_xma = ovlp;
 
         } else {
           if (xlo == 2) {
-            field_xmi = xb - (ovlp + 0);
-            field_xma = xb - 0;
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
         }
 
         if (ylo == 0) {
           field_ymi = 0;
-          field_yma = ovlp + 0;
+          field_yma = ovlp;
 
         } else {
           if (ylo == 2) {
-            field_ymi = yb - (ovlp + 0);
-            field_yma = yb - 0;
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
         }
 
         if (zlo == 0) {
           field_zmi = 0;
-          field_zma = ovlp + 0;
+          field_zma = ovlp;
 
         } else {
           if (zlo == 2) {
-            field_zmi = zb - (ovlp + 0);
-            field_zma = zb - 0;
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
         }
 
@@ -406,34 +406,34 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
 
         if (xlo == 0) {
           field_xmi = 0;
-          field_xma = ovlp + 0;
+          field_xma = ovlp;
 
         } else {
           if (xlo == 2) {
-            field_xmi = xb - (ovlp + 0);
-            field_xma = xb - 0;
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
         }
 
         if (ylo == 0) {
           field_ymi = 0;
-          field_yma = ovlp + 0;
+          field_yma = ovlp;
 
         } else {
           if (ylo == 2) {
-            field_ymi = yb - (ovlp + 0);
-            field_yma = yb - 0;
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
         }
 
         if (zlo == 0) {
           field_zmi = 0;
-          field_zma = ovlp + 0;
+          field_zma = ovlp;
 
         } else {
           if (zlo == 2) {
-            field_zmi = zb - (ovlp + 0);
-            field_zma = zb - 0;
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
         }
 
@@ -1563,34 +1563,34 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpin
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
 
   } else {
     if (xlo == 2) {
-      field_xmi = xb - (ovlp + 0);
-      field_xma = xb - 0;
+      field_xmi = xb - ovlp;
+      field_xma = xb;
     }
   }
 
   if (ylo == 0) {
     field_ymi = 0;
-    field_yma = ovlp + 0;
+    field_yma = ovlp;
 
   } else {
     if (ylo == 2) {
-      field_ymi = yb - (ovlp + 0);
-      field_yma = yb - 0;
+      field_ymi = yb - ovlp;
+      field_yma = yb;
     }
   }
 
   if (zlo == 0) {
     field_zmi = 0;
-    field_zma = ovlp + 0;
+    field_zma = ovlp;
 
   } else {
     if (zlo == 2) {
-      field_zmi = zb - (ovlp + 0);
-      field_zma = zb - 0;
+      field_zmi = zb - ovlp;
+      field_zma = zb;
     }
   }
 
@@ -1720,34 +1720,34 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
 
         if (xlo == 0) {
           field_xmi = 0;
-          field_xma = ovlp + 0;
+          field_xma = ovlp;
 
         } else {
           if (xlo == 2) {
-            field_xmi = xb - (ovlp + 0);
-            field_xma = xb - 0;
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
         }
 
         if (ylo == 0) {
           field_ymi = 0;
-          field_yma = ovlp + 0;
+          field_yma = ovlp;
 
         } else {
           if (ylo == 2) {
-            field_ymi = yb - (ovlp + 0);
-            field_yma = yb - 0;
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
         }
 
         if (zlo == 0) {
           field_zmi = 0;
-          field_zma = ovlp + 0;
+          field_zma = ovlp;
 
         } else {
           if (zlo == 2) {
-            field_zmi = zb - (ovlp + 0);
-            field_zma = zb - 0;
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
         }
 
@@ -1914,34 +1914,34 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
 
         if (xlo == 0) {
           field_xmi = 0;
-          field_xma = ovlp + 0;
+          field_xma = ovlp;
 
         } else {
           if (xlo == 2) {
-            field_xmi = xb - (ovlp + 0);
-            field_xma = xb - 0;
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
         }
 
         if (ylo == 0) {
           field_ymi = 0;
-          field_yma = ovlp + 0;
+          field_yma = ovlp;
 
         } else {
           if (ylo == 2) {
-            field_ymi = yb - (ovlp + 0);
-            field_yma = yb - 0;
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
         }
 
         if (zlo == 0) {
           field_zmi = 0;
-          field_zma = ovlp + 0;
+          field_zma = ovlp;
 
         } else {
           if (zlo == 2) {
-            field_zmi = zb - (ovlp + 0);
-            field_zma = zb - 0;
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
         }
 

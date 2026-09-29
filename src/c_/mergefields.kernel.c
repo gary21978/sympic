@@ -46,12 +46,12 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
   } else {
 
     if (xlo == 2) {
-      field_xmi = xb - (ovlp + 0);
-      field_xma = xb - 0;
+      field_xmi = xb - ovlp;
+      field_xma = xb;
     } else {
       0;
     }
@@ -59,12 +59,12 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
   if (ylo == 0) {
     field_ymi = 0;
-    field_yma = ovlp + 0;
+    field_yma = ovlp;
   } else {
 
     if (ylo == 2) {
-      field_ymi = yb - (ovlp + 0);
-      field_yma = yb - 0;
+      field_ymi = yb - ovlp;
+      field_yma = yb;
     } else {
       0;
     }
@@ -72,12 +72,12 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
 
   if (zlo == 0) {
     field_zmi = 0;
-    field_zma = ovlp + 0;
+    field_zma = ovlp;
   } else {
 
     if (zlo == 2) {
-      field_zmi = zb - (ovlp + 0);
-      field_zma = zb - 0;
+      field_zmi = zb - ovlp;
+      field_zma = zb;
     } else {
       0;
     }
@@ -200,12 +200,12 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
           if (xlo == 0) {
             field_xmi = 0;
-            field_xma = ovlp + 0;
+            field_xma = ovlp;
           } else {
 
             if (xlo == 2) {
-              field_xmi = xb - (ovlp + 0);
-              field_xma = xb - 0;
+              field_xmi = xb - ovlp;
+              field_xma = xb;
             } else {
               0;
             }
@@ -213,12 +213,12 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
           if (ylo == 0) {
             field_ymi = 0;
-            field_yma = ovlp + 0;
+            field_yma = ovlp;
           } else {
 
             if (ylo == 2) {
-              field_ymi = yb - (ovlp + 0);
-              field_yma = yb - 0;
+              field_ymi = yb - ovlp;
+              field_yma = yb;
             } else {
               0;
             }
@@ -226,12 +226,12 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
 
           if (zlo == 0) {
             field_zmi = 0;
-            field_zma = ovlp + 0;
+            field_zma = ovlp;
           } else {
 
             if (zlo == 2) {
-              field_zmi = zb - (ovlp + 0);
-              field_zma = zb - 0;
+              field_zmi = zb - ovlp;
+              field_zma = zb;
             } else {
               0;
             }
@@ -392,12 +392,12 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
           if (xlo == 0) {
             field_xmi = 0;
-            field_xma = ovlp + 0;
+            field_xma = ovlp;
           } else {
 
             if (xlo == 2) {
-              field_xmi = xb - (ovlp + 0);
-              field_xma = xb - 0;
+              field_xmi = xb - ovlp;
+              field_xma = xb;
             } else {
               0;
             }
@@ -405,12 +405,12 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
           if (ylo == 0) {
             field_ymi = 0;
-            field_yma = ovlp + 0;
+            field_yma = ovlp;
           } else {
 
             if (ylo == 2) {
-              field_ymi = yb - (ovlp + 0);
-              field_yma = yb - 0;
+              field_ymi = yb - ovlp;
+              field_yma = yb;
             } else {
               0;
             }
@@ -418,12 +418,12 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
 
           if (zlo == 0) {
             field_zmi = 0;
-            field_zma = ovlp + 0;
+            field_zma = ovlp;
           } else {
 
             if (zlo == 2) {
-              field_zmi = zb - (ovlp + 0);
-              field_zma = zb - 0;
+              field_zmi = zb - ovlp;
+              field_zma = zb;
             } else {
               0;
             }
@@ -1531,12 +1531,12 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
   if (xlo == 0) {
     field_xmi = 0;
-    field_xma = ovlp + 0;
+    field_xma = ovlp;
   } else {
 
     if (xlo == 2) {
-      field_xmi = xb - (ovlp + 0);
-      field_xma = xb - 0;
+      field_xmi = xb - ovlp;
+      field_xma = xb;
     } else {
       0;
     }
@@ -1544,12 +1544,12 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
   if (ylo == 0) {
     field_ymi = 0;
-    field_yma = ovlp + 0;
+    field_yma = ovlp;
   } else {
 
     if (ylo == 2) {
-      field_ymi = yb - (ovlp + 0);
-      field_yma = yb - 0;
+      field_ymi = yb - ovlp;
+      field_yma = yb;
     } else {
       0;
     }
@@ -1557,12 +1557,12 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
 
   if (zlo == 0) {
     field_zmi = 0;
-    field_zma = ovlp + 0;
+    field_zma = ovlp;
   } else {
 
     if (zlo == 2) {
-      field_zmi = zb - (ovlp + 0);
-      field_zma = zb - 0;
+      field_zmi = zb - ovlp;
+      field_zma = zb;
     } else {
       0;
     }
@@ -1685,12 +1685,12 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
           if (xlo == 0) {
             field_xmi = 0;
-            field_xma = ovlp + 0;
+            field_xma = ovlp;
           } else {
 
             if (xlo == 2) {
-              field_xmi = xb - (ovlp + 0);
-              field_xma = xb - 0;
+              field_xmi = xb - ovlp;
+              field_xma = xb;
             } else {
               0;
             }
@@ -1698,12 +1698,12 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
           if (ylo == 0) {
             field_ymi = 0;
-            field_yma = ovlp + 0;
+            field_yma = ovlp;
           } else {
 
             if (ylo == 2) {
-              field_ymi = yb - (ovlp + 0);
-              field_yma = yb - 0;
+              field_ymi = yb - ovlp;
+              field_yma = yb;
             } else {
               0;
             }
@@ -1711,12 +1711,12 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
 
           if (zlo == 0) {
             field_zmi = 0;
-            field_zma = ovlp + 0;
+            field_zma = ovlp;
           } else {
 
             if (zlo == 2) {
-              field_zmi = zb - (ovlp + 0);
-              field_zma = zb - 0;
+              field_zmi = zb - ovlp;
+              field_zma = zb;
             } else {
               0;
             }
@@ -1876,12 +1876,12 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
           if (xlo == 0) {
             field_xmi = 0;
-            field_xma = ovlp + 0;
+            field_xma = ovlp;
           } else {
 
             if (xlo == 2) {
-              field_xmi = xb - (ovlp + 0);
-              field_xma = xb - 0;
+              field_xmi = xb - ovlp;
+              field_xma = xb;
             } else {
               0;
             }
@@ -1889,12 +1889,12 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
           if (ylo == 0) {
             field_ymi = 0;
-            field_yma = ovlp + 0;
+            field_yma = ovlp;
           } else {
 
             if (ylo == 2) {
-              field_ymi = yb - (ovlp + 0);
-              field_yma = yb - 0;
+              field_ymi = yb - ovlp;
+              field_yma = yb;
             } else {
               0;
             }
@@ -1902,12 +1902,12 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
 
           if (zlo == 0) {
             field_zmi = 0;
-            field_zma = ovlp + 0;
+            field_zma = ovlp;
           } else {
 
             if (zlo == 2) {
-              field_zmi = zb - (ovlp + 0);
-              field_zma = zb - 0;
+              field_zmi = zb - ovlp;
+              field_zma = zb;
             } else {
               0;
             }

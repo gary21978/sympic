@@ -91,8 +91,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
     if (numcp * 6) {
       {
         const size_t data_size = sizeof((cu_cache + (((cu_cache_length * __idy) + i) * 6))[0]);
-        memcpy_async(__pscmc_mapu_internal_block__,
-                     ((unsigned *)(local_temp_particle_cache + (0 * 6))),
+        memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)(local_temp_particle_cache)),
                      ((__DDR unsigned *)(cu_cache + (((cu_cache_length * __idy) + i) * 6))),
                      ((uint64_t)((numcp * 6) * data_size)), __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -125,7 +124,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
               (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN))) {
             {
               __mem1__ MAPU_LONG allid_grid;
-              allid_grid = (0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset;
+              allid_grid = (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))) + cu_offset;
               __mem1__ int gridload;
               gridload = xyzw[4 * allid_grid];
 
@@ -249,8 +248,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
     if (numcp * 8) {
       {
         const size_t data_size = sizeof((cu_cache + (((cu_cache_length * __idy) + i) * 8))[0]);
-        memcpy_async(__pscmc_mapu_internal_block__,
-                     ((unsigned *)(local_temp_particle_cache + (0 * 8))),
+        memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)(local_temp_particle_cache)),
                      ((__DDR unsigned *)(cu_cache + (((cu_cache_length * __idy) + i) * 8))),
                      ((uint64_t)((numcp * 8) * data_size)), __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -283,7 +281,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
               (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN))) {
             {
               __mem1__ MAPU_LONG allid_grid;
-              allid_grid = (0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset;
+              allid_grid = (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))) + cu_offset;
               __mem1__ int gridload;
               gridload = xyzw[4 * allid_grid];
 

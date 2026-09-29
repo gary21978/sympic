@@ -32,19 +32,19 @@
 static __device__ KERNEL_M __noinline__ void
 eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
                 v8fp64 if1[5]) {
-  const v8fp64 omrx = (1.00000000000000000e+00 - rx);
+  const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
-  const v8fp64 dix_p1 = (dix + 1.00000000000000000e+00);
+  const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
   const v8fp64 quarter_omrx2 =
-      (2.50000000000000000e-01 * (omrx * omrx));
-  const v8fp64 quarter_rx2 = (2.50000000000000000e-01 * rx2);
+      (0.25 * (omrx * omrx));
+  const v8fp64 quarter_rx2 = (0.25 * rx2);
   const v8fp64 linear =
-      (2.50000000000000000e-01 +
-       (5.00000000000000000e-01 * rx));
+      (0.25 +
+       (0.5 * rx));
 
   const v8fp64 f0_b1 = quarter_omrx2;
-  const v8fp64 f0_b2 = (5.00000000000000000e-01 - quarter_rx2);
+  const v8fp64 f0_b2 = (0.5 - quarter_rx2);
   const v8fp64 f0_b3 = (linear - quarter_rx2);
   const v8fp64 f0_b4 = quarter_rx2;
 
@@ -54,9 +54,9 @@ eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
   f0[3] = (f0_b3 * dix_p1) + (f0_b4 * neg_dix);
   f0[4] = (f0_b4 * dix_p1);
 
-  const v8fp64 f1_b1 = (5.00000000000000000e-01 * omrx);
-  const v8fp64 f1_b2 = (5.00000000000000000e-01 + (v8fp64){});
-  const v8fp64 f1_b3 = (5.00000000000000000e-01 * rx);
+  const v8fp64 f1_b1 = (0.5 * omrx);
+  const v8fp64 f1_b2 = (0.5 + (v8fp64){});
+  const v8fp64 f1_b3 = (0.5 * rx);
 
   f1[0] = (f1_b1 * neg_dix);
   f1[1] = (f1_b1 * dix_p1) + (f1_b2 * neg_dix);
@@ -65,7 +65,7 @@ eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
   f1[4] = (v8fp64){};
 
   const v8fp64 if1_b1 =
-      (1.00000000000000000e+00 - quarter_omrx2);
+      (1.0 - quarter_omrx2);
   const v8fp64 if1_b2 = linear;
   const v8fp64 if1_b3 = quarter_rx2;
 
@@ -79,19 +79,19 @@ eval_f0_f1_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 f1[5],
 /* Narrow fused evaluator used where only f0 and if1 survive downstream. */
 static __device__ KERNEL_M __noinline__ void
 eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
-  const v8fp64 omrx = (1.00000000000000000e+00 - rx);
+  const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
-  const v8fp64 dix_p1 = (dix + 1.00000000000000000e+00);
+  const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
   const v8fp64 quarter_omrx2 =
-      (2.50000000000000000e-01 * (omrx * omrx));
-  const v8fp64 quarter_rx2 = (2.50000000000000000e-01 * rx2);
+      (0.25 * (omrx * omrx));
+  const v8fp64 quarter_rx2 = (0.25 * rx2);
   const v8fp64 linear =
-      (2.50000000000000000e-01 +
-       (5.00000000000000000e-01 * rx));
+      (0.25 +
+       (0.5 * rx));
 
   const v8fp64 f0_b1 = quarter_omrx2;
-  const v8fp64 f0_b2 = (5.00000000000000000e-01 - quarter_rx2);
+  const v8fp64 f0_b2 = (0.5 - quarter_rx2);
   const v8fp64 f0_b3 = (linear - quarter_rx2);
   const v8fp64 f0_b4 = quarter_rx2;
 
@@ -102,7 +102,7 @@ eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
   f0[4] = (f0_b4 * dix_p1);
 
   const v8fp64 if1_b1 =
-      (1.00000000000000000e+00 -
+      (1.0 -
        quarter_omrx2);
   const v8fp64 if1_b2 = linear;
   const v8fp64 if1_b3 = quarter_rx2;
@@ -117,17 +117,17 @@ eval_f0_if1(v8fp64 rx, v8fp64 dix, v8fp64 f0[5], v8fp64 if1[5]) {
 /* Single-family evaluator retained for narrow if1-only positions. */
 static __device__ KERNEL_M __noinline__ void
 eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
-  const v8fp64 omrx = (1.00000000000000000e+00 - rx);
+  const v8fp64 omrx = (1.0 - rx);
   const v8fp64 rx2 = (rx * rx);
-  const v8fp64 dix_p1 = (dix + 1.00000000000000000e+00);
+  const v8fp64 dix_p1 = (dix + 1.0);
   const v8fp64 neg_dix = -dix;
   const v8fp64 if1_b1 =
-      (1.00000000000000000e+00 -
-       (2.50000000000000000e-01 * (omrx * omrx)));
+      (1.0 -
+       (0.25 * (omrx * omrx)));
   const v8fp64 if1_b2 =
-      (2.50000000000000000e-01 +
-       (5.00000000000000000e-01 * rx));
-  const v8fp64 if1_b3 = (2.50000000000000000e-01 * rx2);
+      (0.25 +
+       (0.5 * rx));
+  const v8fp64 if1_b3 = (0.25 * rx2);
 
   if1[0] = dix_p1 + (if1_b1 * neg_dix);
   if1[1] = (if1_b1 * dix_p1) + (if1_b2 * neg_dix);
@@ -568,25 +568,25 @@ pushJ_vlo_ctx_init_const(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y,
   const double DELTA_Y2 = (DELTA_Y * DELTA_Y);
   const double DELTA_Z2 = (DELTA_Z * DELTA_Z);
   const double INV_DELTA_X2 =
-      (1.00000000000000000e+00 / DELTA_X2);
+      (1.0 / DELTA_X2);
   const double INV_DELTA_Z2 =
-      (1.00000000000000000e+00 / DELTA_Z2);
+      (1.0 / DELTA_Z2);
   const double TX02 = (Tori_X0 * Tori_X0);
-  const double INV_TX02 = (1.00000000000000000e+00 / TX02);
+  const double INV_TX02 = (1.0 / TX02);
   const double QE_MASS = (Charge0 / Mass0);
   const double grid_geo_x = (DELTA_X / (DELTA_Y * DELTA_Z));
   const double grid_geo_y = (DELTA_Y / (DELTA_Z * DELTA_X));
   const double grid_geo_z = (DELTA_Z / (DELTA_X * DELTA_Y));
 
   ctx->Deltat = Deltat;
-  ctx->TWO_DELTAT = (2.00000000000000000e+00 * Deltat);
+  ctx->TWO_DELTAT = (2.0 * Deltat);
   ctx->Tori_X0 = Tori_X0;
   ctx->X_PUSH_SCALE =
       INV_DELTA_X2 * (Deltat * QE_MASS);
   ctx->Y_FORCE_SCALE =
       TX02 *
       (QE_MASS *
-       (Deltat * (1.00000000000000000e+00 / DELTA_Y2)));
+       (Deltat * (1.0 / DELTA_Y2)));
   ctx->Z_PUSH_SCALE =
       INV_DELTA_Z2 * (Deltat * QE_MASS);
   ctx->X_GEOMETRY_SCALE =
@@ -621,7 +621,7 @@ pushJ_vlo_ctx_init_tile(pushJ_ctx_t *ctx, double XO, double YO, double ZO,
 #pragma clang loop unroll(full)
   for (int x = 0; x < 5; ++x) {
     const double radius = ctx->Tori_X0 + (XO + (bBidx + x));
-    const double inv_radius = 1.00000000000000000e+00 / radius;
+    const double inv_radius = 1.0 / radius;
     ctx->deposit_geo_x[x] = ctx->J_GEO_X_SCALE * inv_radius;
     ctx->deposit_geo_y[x] = ctx->J_GEO_Y_SCALE * radius;
     ctx->deposit_geo_z[x] = ctx->J_GEO_Z_SCALE * inv_radius;
@@ -904,7 +904,7 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K1_setup_weights_x0x1(
       head_l[4][lane] = particle_dm[4 + 6 * src];
       head_l[5][lane] = particle_dm[5 + 6 * src];
     }
-    st->simd_mask = (1.00000000000000000e+00 + (v8fp64){});
+    st->simd_mask = (1.0 + (v8fp64){});
   } else {
     for (int f = 0; f < 6; f++) {
 #pragma clang loop unroll(full)
@@ -923,9 +923,9 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K1_setup_weights_x0x1(
     }
   }
 
-  st->xx1 = head[0] - (5.00000000000000000e-01);
-  st->xy1 = head[1] - (5.00000000000000000e-01);
-  st->xz1 = head[2] - (5.00000000000000000e-01);
+  st->xx1 = head[0] - (0.5);
+  st->xy1 = head[1] - (0.5);
+  st->xz1 = head[2] - (0.5);
   st->vx0 = head[3];
   st->vy0 = head[4];
   st->vz0 = head[5];
@@ -975,7 +975,7 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K1_setup_weights_x0x1(
 static __device__ KERNEL_M __noinline__ void
 pushJ_vlo_K2_push_x2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 x1,
                      v8fp64 allincfvx, const pushJ_ctx_t *ctx) {
-  const v8fp64 drift = (2.00000000000000000e+00 * x1) - x0;
+  const v8fp64 drift = (2.0 * x1) - x0;
   st->x2 = drift + (ctx->X_PUSH_SCALE * allincfvx);
 
   /* Evaluate floor once and reuse the identical value for rx/dix. */
@@ -1005,7 +1005,7 @@ pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 y0, v8fp64 y1,
   const v8fp64 tx0_plus_x2 = (TX0 + st->x2);
   const v8fp64 metric_x0 = (tx0_plus_x0 * tx0_plus_x0);
   const v8fp64 metric_x2 = (tx0_plus_x2 * tx0_plus_x2);
-  const v8fp64 G = (1.00000000000000000e+00 / metric_x2);
+  const v8fp64 G = (1.0 / metric_x2);
   st->vy0 = (cy_scale * G);
 
   const v8fp64 advect =
@@ -1022,7 +1022,7 @@ pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0, v8fp64 y0, v8fp64 y1,
 static __device__ KERNEL_M __noinline__ void
 pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st, v8fp64 z0, v8fp64 z1, v8fp64 iBz,
                         v8fp64 allincfvz, const pushJ_ctx_t *ctx) {
-  const v8fp64 drift_z2 = (2.00000000000000000e+00 * z1) - z0;
+  const v8fp64 drift_z2 = (2.0 * z1) - z0;
   st->z2 = drift_z2 + (ctx->Z_PUSH_SCALE * (allincfvz - iBz));
 
   const v8fp64 z2_rel = (st->z2 - (ctx->ZO - ctx->zmid));
@@ -1032,7 +1032,7 @@ pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st, v8fp64 z0, v8fp64 z1, v8fp64 iBz,
 
   /* Theory Eq. (63): the second-stage z subflow has no field term.  This is
    * structural and remains valid when fieldB/fieldB1 contain external B. */
-  st->z3 = (2.00000000000000000e+00 * st->z2) - z1;
+  st->z3 = (2.0 * st->z2) - z1;
 
   const v8fp64 z3_rel = (st->z3 - (ctx->ZO - ctx->zmid));
   const v8fp64 z3_floor = geo_floor_simd(z3_rel);
@@ -1046,7 +1046,7 @@ pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1, v8fp64 iBy,
   /* Reuse the Cy produced by pushJ_vlo_K2_push_y2.  No reciprocal or metric
    * reconstruction is needed in the y3 stage. */
   st->y3 =
-      ((2.00000000000000000e+00 * st->y2) - y1) - (st->vy0 * iBy);
+      ((2.0 * st->y2) - y1) - (st->vy0 * iBy);
 
   const v8fp64 y3_rel = (st->y3 - ctx->YO);
   const v8fp64 y3_floor = geo_floor_simd(y3_rel);
@@ -1066,7 +1066,7 @@ pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1, v8fp64 y1, v8fp64 iBx,
   const v8fp64 dy12 = (y1 - st->y2);
   const v8fp64 dy23 = (st->y2 - st->y3);
   const v8fp64 y_geometry = (dy12 * dy12) + (dy23 * dy23);
-  const v8fp64 drift = (2.00000000000000000e+00 * st->x2) - x1;
+  const v8fp64 drift = (2.0 * st->x2) - x1;
   const v8fp64 geometry =
       ctx->X_GEOMETRY_SCALE * ((TX0 + st->x2) * y_geometry);
   st->x3 = (drift + geometry) - (ctx->X_PUSH_SCALE * iBx);
@@ -1111,7 +1111,7 @@ pushJ_vlo_K2_compute_iBy23(const pushJ_weight_bank_t *bank,
                            const double *shB1, int tile_xlen) {
   v8fp64 t0, t1;
   pushJ_B_fused_iBy23_bank(bank, shB1, tile_xlen, &t0, &t1);
-  return (-1.00000000000000000e+00 * (t0 + t1));
+  return (-1.0 * (t0 + t1));
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64
@@ -1278,9 +1278,9 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
   newxx[0] = (st->x3 - ctx->XO);
   newxy[0] = (st->y3 - ctx->YO);
   newxz[0] = ((st->z3 + ctx->zmid) - ctx->ZO);
-  newxx[0] = (newxx[0] + 5.00000000000000000e-01);
-  newxy[0] = (newxy[0] + 5.00000000000000000e-01);
-  newxz[0] = (newxz[0] + 5.00000000000000000e-01);
+  newxx[0] = (newxx[0] + 0.5);
+  newxy[0] = (newxy[0] + 0.5);
+  newxz[0] = (newxz[0] + 0.5);
   if (full_batch) {
     /* opt_stage51-2 full batch: fixed six-field scatter, no bounds check and
      * no six-way field branch. */

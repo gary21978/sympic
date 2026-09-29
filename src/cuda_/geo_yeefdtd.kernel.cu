@@ -245,90 +245,90 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
                            (x0 *
-                            ((1.00000000000000000e+00 / ({
+                            ((1.0 / ({
                                 double tmppowvar =
-                                    (1.00000000000000000e+00 + (x0 + xo0));
+                                    (1.0 + (x0 + xo0));
 
                                 tmppowvar;
                               })) *
                              (DELTA_X *
-                              ((1.00000000000000000e+00 / ({
+                              ((1.0 / ({
                                   double tmppowvar = DELTA_Y;
 
                                   tmppowvar;
                                 })) *
-                               ((1.00000000000000000e+00 / ({
+                               ((1.0 / ({
                                    double tmppowvar = DELTA_Z;
 
                                    tmppowvar;
                                  })) *
-                                (((1.00000000000000000e+00 / ({
+                                (((1.0 / ({
                                      double tmppowvar = x0;
 
                                      tmppowvar;
                                    })) *
-                                  ((1.00000000000000000e+00 + (x0 + xo0)) *
-                                   ((1.00000000000000000e+00 / ({
+                                  ((1.0 + (x0 + xo0)) *
+                                   ((1.0 / ({
                                        double tmppowvar = DELTA_X;
 
                                        tmppowvar;
                                      })) *
-                                    (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                    (DELTA_Y * ((1.0 / ({
                                                    double tmppowvar = DELTA_Z;
 
                                                    tmppowvar;
                                                  })) *
                                                 vB10111))))) +
-                                 ((-1.00000000000000000e+00 *
-                                   ((1.00000000000000000e+00 / ({
+                                 ((-1.0 *
+                                   ((1.0 / ({
                                        double tmppowvar = x0;
 
                                        tmppowvar;
                                      })) *
-                                    ((1.00000000000000000e+00 + (x0 + xo0)) *
-                                     ((1.00000000000000000e+00 / ({
+                                    ((1.0 + (x0 + xo0)) *
+                                     ((1.0 / ({
                                          double tmppowvar = DELTA_X;
 
                                          tmppowvar;
                                        })) *
-                                      (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                      (DELTA_Y * ((1.0 / ({
                                                      double tmppowvar = DELTA_Z;
 
                                                      tmppowvar;
                                                    })) *
                                                   vB11111)))))) +
-                                  ((-1.00000000000000000e+00 *
-                                    (x0 * ((1.00000000000000000e+00 / ({
+                                  ((-1.0 *
+                                    (x0 * ((1.0 / ({
                                               double tmppowvar =
-                                                  (1.00000000000000000e+00 +
+                                                  (1.0 +
                                                    (x0 + xo0));
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_X;
 
                                                tmppowvar;
                                              })) *
-                                            ((1.00000000000000000e+00 / ({
+                                            ((1.0 / ({
                                                 double tmppowvar = DELTA_Y;
 
                                                 tmppowvar;
                                               })) *
                                              (DELTA_Z * vB21011)))))) +
-                                   (x0 * ((1.00000000000000000e+00 / ({
+                                   (x0 * ((1.0 / ({
                                              double tmppowvar =
-                                                 (1.00000000000000000e+00 +
+                                                 (1.0 +
                                                   (x0 + xo0));
 
                                              tmppowvar;
                                            })) *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_X;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Y;
 
                                                tmppowvar;
@@ -345,93 +345,93 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
-                           ((1.00000000000000000e+00 / ({
+                           ((1.0 / ({
                                double tmppowvar = x0;
 
                                tmppowvar;
                              })) *
-                            ((1.00000000000000000e+00 + (x0 + xo0)) *
-                             ((1.00000000000000000e+00 / ({
+                            ((1.0 + (x0 + xo0)) *
+                             ((1.0 / ({
                                  double tmppowvar = DELTA_X;
 
                                  tmppowvar;
                                })) *
                               (DELTA_Y *
-                               ((1.00000000000000000e+00 / ({
+                               ((1.0 / ({
                                    double tmppowvar = DELTA_Z;
 
                                    tmppowvar;
                                  })) *
-                                ((-1.00000000000000000e+00 *
-                                  (x0 * ((1.00000000000000000e+00 / ({
+                                ((-1.0 *
+                                  (x0 * ((1.0 / ({
                                             double tmppowvar =
-                                                (1.00000000000000000e+00 +
+                                                (1.0 +
                                                  (x0 + xo0));
 
                                             tmppowvar;
                                           })) *
                                          (DELTA_X *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_Y;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Z;
 
                                                tmppowvar;
                                              })) *
                                             vB00111)))))) +
-                                 ((x0 * ((1.00000000000000000e+00 / ({
+                                 ((x0 * ((1.0 / ({
                                             double tmppowvar =
-                                                (1.00000000000000000e+00 +
+                                                (1.0 +
                                                  (x0 + xo0));
 
                                             tmppowvar;
                                           })) *
                                          (DELTA_X *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_Y;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Z;
 
                                                tmppowvar;
                                              })) *
                                             vB01111))))) +
-                                  ((x0 * ((1.00000000000000000e+00 / ({
+                                  ((x0 * ((1.0 / ({
                                              double tmppowvar = (x0 + xo0);
 
                                              tmppowvar;
                                            })) *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_X;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Y;
 
                                                tmppowvar;
                                              })) *
                                             (DELTA_Z * vB21101))))) +
-                                   (-1.00000000000000000e+00 *
+                                   (-1.0 *
                                     (x0 *
-                                     ((1.00000000000000000e+00 / ({
+                                     ((1.0 / ({
                                          double tmppowvar =
-                                             (1.00000000000000000e+00 +
+                                             (1.0 +
                                               (x0 + xo0));
 
                                          tmppowvar;
                                        })) *
-                                      ((1.00000000000000000e+00 / ({
+                                      ((1.0 / ({
                                           double tmppowvar = DELTA_X;
 
                                           tmppowvar;
                                         })) *
-                                       ((1.00000000000000000e+00 / ({
+                                       ((1.0 / ({
                                            double tmppowvar = DELTA_Y;
 
                                            tmppowvar;
@@ -449,93 +449,93 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
                            (x0 *
-                            ((1.00000000000000000e+00 / ({
+                            ((1.0 / ({
                                 double tmppowvar =
-                                    (1.00000000000000000e+00 + (x0 + xo0));
+                                    (1.0 + (x0 + xo0));
 
                                 tmppowvar;
                               })) *
-                             ((1.00000000000000000e+00 / ({
+                             ((1.0 / ({
                                  double tmppowvar = DELTA_X;
 
                                  tmppowvar;
                                })) *
-                              ((1.00000000000000000e+00 / ({
+                              ((1.0 / ({
                                   double tmppowvar = DELTA_Y;
 
                                   tmppowvar;
                                 })) *
                                (DELTA_Z *
-                                ((x0 * ((1.00000000000000000e+00 / ({
+                                ((x0 * ((1.0 / ({
                                            double tmppowvar =
-                                               (1.00000000000000000e+00 +
+                                               (1.0 +
                                                 (x0 + xo0));
 
                                            tmppowvar;
                                          })) *
                                         (DELTA_X *
-                                         ((1.00000000000000000e+00 / ({
+                                         ((1.0 / ({
                                              double tmppowvar = DELTA_Y;
 
                                              tmppowvar;
                                            })) *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_Z;
 
                                               tmppowvar;
                                             })) *
                                            vB01011))))) +
-                                 ((-1.00000000000000000e+00 *
-                                   (x0 * ((1.00000000000000000e+00 / ({
+                                 ((-1.0 *
+                                   (x0 * ((1.0 / ({
                                              double tmppowvar =
-                                                 (1.00000000000000000e+00 +
+                                                 (1.0 +
                                                   (x0 + xo0));
 
                                              tmppowvar;
                                            })) *
                                           (DELTA_X *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Y;
 
                                                tmppowvar;
                                              })) *
-                                            ((1.00000000000000000e+00 / ({
+                                            ((1.0 / ({
                                                 double tmppowvar = DELTA_Z;
 
                                                 tmppowvar;
                                               })) *
                                              vB01111)))))) +
-                                  ((-1.00000000000000000e+00 *
-                                    ((1.00000000000000000e+00 / ({
+                                  ((-1.0 *
+                                    ((1.0 / ({
                                         double tmppowvar = x0;
 
                                         tmppowvar;
                                       })) *
                                      ((x0 + xo0) *
-                                      ((1.00000000000000000e+00 / ({
+                                      ((1.0 / ({
                                           double tmppowvar = DELTA_X;
 
                                           tmppowvar;
                                         })) *
-                                       (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                       (DELTA_Y * ((1.0 / ({
                                                       double tmppowvar =
                                                           DELTA_Z;
 
                                                       tmppowvar;
                                                     })) *
                                                    vB11101)))))) +
-                                   ((1.00000000000000000e+00 / ({
+                                   ((1.0 / ({
                                        double tmppowvar = x0;
 
                                        tmppowvar;
                                      })) *
-                                    ((1.00000000000000000e+00 + (x0 + xo0)) *
-                                     ((1.00000000000000000e+00 / ({
+                                    ((1.0 + (x0 + xo0)) *
+                                     ((1.0 / ({
                                          double tmppowvar = DELTA_X;
 
                                          tmppowvar;
                                        })) *
-                                      (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                      (DELTA_Y * ((1.0 / ({
                                                      double tmppowvar = DELTA_Z;
 
                                                      tmppowvar;
@@ -710,90 +710,90 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                     0 + (num_ele * ((xyzx + ovlp) +
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
-                (DT * (x0 * ((1.00000000000000000e+00 / ({
+                (DT * (x0 * ((1.0 / ({
                                 double tmppowvar =
-                                    (1.00000000000000000e+00 + (x0 + xo0));
+                                    (1.0 + (x0 + xo0));
 
                                 tmppowvar;
                               })) *
                              (DELTA_X *
-                              ((1.00000000000000000e+00 / ({
+                              ((1.0 / ({
                                   double tmppowvar = DELTA_Y;
 
                                   tmppowvar;
                                 })) *
-                               ((1.00000000000000000e+00 / ({
+                               ((1.0 / ({
                                    double tmppowvar = DELTA_Z;
 
                                    tmppowvar;
                                  })) *
-                                (((1.00000000000000000e+00 / ({
+                                (((1.0 / ({
                                      double tmppowvar = x0;
 
                                      tmppowvar;
                                    })) *
-                                  ((1.00000000000000000e+00 + (x0 + xo0)) *
-                                   ((1.00000000000000000e+00 / ({
+                                  ((1.0 + (x0 + xo0)) *
+                                   ((1.0 / ({
                                        double tmppowvar = DELTA_X;
 
                                        tmppowvar;
                                      })) *
-                                    (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                    (DELTA_Y * ((1.0 / ({
                                                    double tmppowvar = DELTA_Z;
 
                                                    tmppowvar;
                                                  })) *
                                                 vB10111))))) +
-                                 ((-1.00000000000000000e+00 *
-                                   ((1.00000000000000000e+00 / ({
+                                 ((-1.0 *
+                                   ((1.0 / ({
                                        double tmppowvar = x0;
 
                                        tmppowvar;
                                      })) *
-                                    ((1.00000000000000000e+00 + (x0 + xo0)) *
-                                     ((1.00000000000000000e+00 / ({
+                                    ((1.0 + (x0 + xo0)) *
+                                     ((1.0 / ({
                                          double tmppowvar = DELTA_X;
 
                                          tmppowvar;
                                        })) *
-                                      (DELTA_Y * ((1.00000000000000000e+00 / ({
+                                      (DELTA_Y * ((1.0 / ({
                                                      double tmppowvar = DELTA_Z;
 
                                                      tmppowvar;
                                                    })) *
                                                   vB11111)))))) +
-                                  ((-1.00000000000000000e+00 *
-                                    (x0 * ((1.00000000000000000e+00 / ({
+                                  ((-1.0 *
+                                    (x0 * ((1.0 / ({
                                               double tmppowvar =
-                                                  (1.00000000000000000e+00 +
+                                                  (1.0 +
                                                    (x0 + xo0));
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_X;
 
                                                tmppowvar;
                                              })) *
-                                            ((1.00000000000000000e+00 / ({
+                                            ((1.0 / ({
                                                 double tmppowvar = DELTA_Y;
 
                                                 tmppowvar;
                                               })) *
                                              (DELTA_Z * vB21011)))))) +
-                                   (x0 * ((1.00000000000000000e+00 / ({
+                                   (x0 * ((1.0 / ({
                                              double tmppowvar =
-                                                 (1.00000000000000000e+00 +
+                                                 (1.0 +
                                                   (x0 + xo0));
 
                                              tmppowvar;
                                            })) *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_X;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Y;
 
                                                tmppowvar;
@@ -808,87 +808,87 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                 (DT *
-                 ((1.00000000000000000e+00 / ({
+                 ((1.0 / ({
                      double tmppowvar = x0;
 
                      tmppowvar;
                    })) *
-                  ((1.00000000000000000e+00 + (x0 + xo0)) *
-                   ((1.00000000000000000e+00 / ({
+                  ((1.0 + (x0 + xo0)) *
+                   ((1.0 / ({
                        double tmppowvar = DELTA_X;
 
                        tmppowvar;
                      })) *
                     (DELTA_Y *
-                     ((1.00000000000000000e+00 / ({
+                     ((1.0 / ({
                          double tmppowvar = DELTA_Z;
 
                          tmppowvar;
                        })) *
-                      ((-1.00000000000000000e+00 *
-                        (x0 * ((1.00000000000000000e+00 / ({
+                      ((-1.0 *
+                        (x0 * ((1.0 / ({
                                   double tmppowvar =
-                                      (1.00000000000000000e+00 + (x0 + xo0));
+                                      (1.0 + (x0 + xo0));
 
                                   tmppowvar;
                                 })) *
-                               (DELTA_X * ((1.00000000000000000e+00 / ({
+                               (DELTA_X * ((1.0 / ({
                                               double tmppowvar = DELTA_Y;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Z;
 
                                                tmppowvar;
                                              })) *
                                             vB00111)))))) +
-                       ((x0 * ((1.00000000000000000e+00 / ({
+                       ((x0 * ((1.0 / ({
                                   double tmppowvar =
-                                      (1.00000000000000000e+00 + (x0 + xo0));
+                                      (1.0 + (x0 + xo0));
 
                                   tmppowvar;
                                 })) *
-                               (DELTA_X * ((1.00000000000000000e+00 / ({
+                               (DELTA_X * ((1.0 / ({
                                               double tmppowvar = DELTA_Y;
 
                                               tmppowvar;
                                             })) *
-                                           ((1.00000000000000000e+00 / ({
+                                           ((1.0 / ({
                                                double tmppowvar = DELTA_Z;
 
                                                tmppowvar;
                                              })) *
                                             vB01111))))) +
-                        ((x0 * ((1.00000000000000000e+00 / ({
+                        ((x0 * ((1.0 / ({
                                    double tmppowvar = (x0 + xo0);
 
                                    tmppowvar;
                                  })) *
-                                ((1.00000000000000000e+00 / ({
+                                ((1.0 / ({
                                     double tmppowvar = DELTA_X;
 
                                     tmppowvar;
                                   })) *
-                                 ((1.00000000000000000e+00 / ({
+                                 ((1.0 / ({
                                      double tmppowvar = DELTA_Y;
 
                                      tmppowvar;
                                    })) *
                                   (DELTA_Z * vB21101))))) +
-                         (-1.00000000000000000e+00 *
-                          (x0 * ((1.00000000000000000e+00 / ({
+                         (-1.0 *
+                          (x0 * ((1.0 / ({
                                     double tmppowvar =
-                                        (1.00000000000000000e+00 + (x0 + xo0));
+                                        (1.0 + (x0 + xo0));
 
                                     tmppowvar;
                                   })) *
-                                 ((1.00000000000000000e+00 / ({
+                                 ((1.0 / ({
                                      double tmppowvar = DELTA_X;
 
                                      tmppowvar;
                                    })) *
-                                  ((1.00000000000000000e+00 / ({
+                                  ((1.0 / ({
                                       double tmppowvar = DELTA_Y;
 
                                       tmppowvar;
@@ -904,87 +904,87 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
                                                (yblock * (xyzz + ovlp)))))))] +
                 (DT *
                  (x0 *
-                  ((1.00000000000000000e+00 / ({
-                      double tmppowvar = (1.00000000000000000e+00 + (x0 + xo0));
+                  ((1.0 / ({
+                      double tmppowvar = (1.0 + (x0 + xo0));
 
                       tmppowvar;
                     })) *
-                   ((1.00000000000000000e+00 / ({
+                   ((1.0 / ({
                        double tmppowvar = DELTA_X;
 
                        tmppowvar;
                      })) *
-                    ((1.00000000000000000e+00 / ({
+                    ((1.0 / ({
                         double tmppowvar = DELTA_Y;
 
                         tmppowvar;
                       })) *
                      (DELTA_Z *
-                      ((x0 * ((1.00000000000000000e+00 / ({
+                      ((x0 * ((1.0 / ({
                                  double tmppowvar =
-                                     (1.00000000000000000e+00 + (x0 + xo0));
+                                     (1.0 + (x0 + xo0));
 
                                  tmppowvar;
                                })) *
-                              (DELTA_X * ((1.00000000000000000e+00 / ({
+                              (DELTA_X * ((1.0 / ({
                                              double tmppowvar = DELTA_Y;
 
                                              tmppowvar;
                                            })) *
-                                          ((1.00000000000000000e+00 / ({
+                                          ((1.0 / ({
                                               double tmppowvar = DELTA_Z;
 
                                               tmppowvar;
                                             })) *
                                            vB01011))))) +
-                       ((-1.00000000000000000e+00 *
-                         (x0 * ((1.00000000000000000e+00 / ({
+                       ((-1.0 *
+                         (x0 * ((1.0 / ({
                                    double tmppowvar =
-                                       (1.00000000000000000e+00 + (x0 + xo0));
+                                       (1.0 + (x0 + xo0));
 
                                    tmppowvar;
                                  })) *
-                                (DELTA_X * ((1.00000000000000000e+00 / ({
+                                (DELTA_X * ((1.0 / ({
                                                double tmppowvar = DELTA_Y;
 
                                                tmppowvar;
                                              })) *
-                                            ((1.00000000000000000e+00 / ({
+                                            ((1.0 / ({
                                                 double tmppowvar = DELTA_Z;
 
                                                 tmppowvar;
                                               })) *
                                              vB01111)))))) +
-                        ((-1.00000000000000000e+00 *
-                          ((1.00000000000000000e+00 / ({
+                        ((-1.0 *
+                          ((1.0 / ({
                               double tmppowvar = x0;
 
                               tmppowvar;
                             })) *
                            ((x0 + xo0) *
-                            ((1.00000000000000000e+00 / ({
+                            ((1.0 / ({
                                 double tmppowvar = DELTA_X;
 
                                 tmppowvar;
                               })) *
-                             (DELTA_Y * ((1.00000000000000000e+00 / ({
+                             (DELTA_Y * ((1.0 / ({
                                             double tmppowvar = DELTA_Z;
 
                                             tmppowvar;
                                           })) *
                                          vB11101)))))) +
-                         ((1.00000000000000000e+00 / ({
+                         ((1.0 / ({
                              double tmppowvar = x0;
 
                              tmppowvar;
                            })) *
-                          ((1.00000000000000000e+00 + (x0 + xo0)) *
-                           ((1.00000000000000000e+00 / ({
+                          ((1.0 + (x0 + xo0)) *
+                           ((1.0 / ({
                                double tmppowvar = DELTA_X;
 
                                tmppowvar;
                              })) *
-                            (DELTA_Y * ((1.00000000000000000e+00 / ({
+                            (DELTA_Y * ((1.0 / ({
                                            double tmppowvar = DELTA_Z;
 
                                            tmppowvar;
@@ -1232,8 +1232,8 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
-                           ((-1.00000000000000000e+00 * vB11111) +
-                            (vB12111 + (vB21111 + (-1.00000000000000000e+00 *
+                           ((-1.0 * vB11111) +
+                            (vB12111 + (vB21111 + (-1.0 *
                                                    vB21211)))))));
                     ((vwrt_tmp)[(
                          1 +
@@ -1246,8 +1246,8 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
-                           (vB01111 + ((-1.00000000000000000e+00 * vB02111) +
-                                       ((-1.00000000000000000e+00 * vB21111) +
+                           (vB01111 + ((-1.0 * vB02111) +
+                                       ((-1.0 * vB21111) +
                                         vB21121))))));
                     ((vwrt_tmp)[(
                          2 +
@@ -1260,8 +1260,8 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                           (DT *
-                           ((-1.00000000000000000e+00 * vB01111) +
-                            (vB01211 + (vB11111 + (-1.00000000000000000e+00 *
+                           ((-1.0 * vB01111) +
+                            (vB01211 + (vB11111 + (-1.0 *
                                                    vB11121)))))));
                   }
                 }
@@ -1431,9 +1431,9 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                     0 + (num_ele * ((xyzx + ovlp) +
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
-                (DT * ((-1.00000000000000000e+00 * vB11111) +
+                (DT * ((-1.0 * vB11111) +
                        (vB12111 +
-                        (vB21111 + (-1.00000000000000000e+00 * vB21211)))))));
+                        (vB21111 + (-1.0 * vB21211)))))));
           (((inoutE1 + blk_offset))[(
                1 + (num_ele *
                     ((xyzx + ovlp) +
@@ -1443,8 +1443,8 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
                 (DT * (vB01111 +
-                       ((-1.00000000000000000e+00 * vB02111) +
-                        ((-1.00000000000000000e+00 * vB21111) + vB21121))))));
+                       ((-1.0 * vB02111) +
+                        ((-1.0 * vB21111) + vB21121))))));
           (((inoutE1 + blk_offset))[(
                2 + (num_ele *
                     ((xyzx + ovlp) +
@@ -1453,9 +1453,9 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset,
                     2 + (num_ele * ((xyzx + ovlp) +
                                     (xblock * ((xyzy + ovlp) +
                                                (yblock * (xyzz + ovlp)))))))] +
-                (DT * ((-1.00000000000000000e+00 * vB01111) +
+                (DT * ((-1.0 * vB01111) +
                        (vB01211 +
-                        (vB11111 + (-1.00000000000000000e+00 * vB11121)))))));
+                        (vB11111 + (-1.0 * vB11121)))))));
         }
       }
     }

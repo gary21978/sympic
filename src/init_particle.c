@@ -513,7 +513,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
       init_particle(((pthis)->particles + ((i * num_runtime) + j)), ((pthis)->data + j), (Mass)[i], (Charge)[i],
                     (Number_particle_per_marker)[i],
                     ((grid_cache_len)[i] * ((USE_NON_UNI_CACHE_DIST) ? (({
-                       double cplx = 0.00000000000000000e+00;
+                       double cplx = 0.0;
 
                        {
                          long k;
@@ -530,7 +530,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                      }))
                                                                      : (1))),
                     ((cu_cache_length)[i] * ((USE_NON_UNI_CACHE_DIST) ? (({
-                       double cplx = 0.00000000000000000e+00;
+                       double cplx = 0.0;
 
                        {
                          long k;
@@ -658,9 +658,9 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
                   long l = 0;
                   long grid_load = (call_GET_INIT_DENSITY_DIST(
-                                        cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                                        ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                                        ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01))) *
+                                        cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                                        ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                                        ((global_x_offset)[cur_pcid] + (xyzx + 0.5))) *
                                     tgrid_load);
 
                   if ((grid_load > grid_cache_len)) {
@@ -677,17 +677,17 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
                   if (USE_INIT_V0) {
                     (vx_ijk =
-                         call_GET_INIT_V0_x(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                                            ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                                            ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01))));
+                         call_GET_INIT_V0_x(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                                            ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                                            ((global_x_offset)[cur_pcid] + (xyzx + 0.5))));
                     (vy_ijk =
-                         call_GET_INIT_V0_y(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                                            ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                                            ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01))));
+                         call_GET_INIT_V0_y(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                                            ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                                            ((global_x_offset)[cur_pcid] + (xyzx + 0.5))));
                     (vz_ijk =
-                         call_GET_INIT_V0_z(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                                            ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                                            ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01))));
+                         call_GET_INIT_V0_z(cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                                            ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                                            ((global_x_offset)[cur_pcid] + (xyzx + 0.5))));
                   }
 
                   double tempx = 1;
@@ -698,17 +698,17 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
                   if (USE_NON_UNI_TEMPERATURE) {
                     (tempx = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                         ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                         ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01)), 0));
+                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                         ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                         ((global_x_offset)[cur_pcid] + (xyzx + 0.5)), 0));
                     (tempy = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                         ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                         ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01)), 1));
+                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                         ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                         ((global_x_offset)[cur_pcid] + (xyzx + 0.5)), 1));
                     (tempz = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 5.00000000000000000e-01)),
-                         ((global_y_offset)[cur_pcid] + (xyzy + 5.00000000000000000e-01)),
-                         ((global_x_offset)[cur_pcid] + (xyzx + 5.00000000000000000e-01)), 2));
+                         cur_sp, ((global_z_offset)[cur_pcid] + (xyzz + 0.5)),
+                         ((global_y_offset)[cur_pcid] + (xyzy + 0.5)),
+                         ((global_x_offset)[cur_pcid] + (xyzx + 0.5)), 2));
                   }
 
                   for (l; (l < grid_load); l++) {
@@ -892,18 +892,18 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
                                             (r_x_rat * r_z_rat), (r_x_rat * r_y_rat), random_rate);
 
   } else {
-    test_set_mainland(&(pthis->MPI_fieldB), 0.00000000000000000e+00);
-    test_set_mainland(&(pthis->MPI_fieldE), 0.00000000000000000e+00);
+    test_set_mainland(&(pthis->MPI_fieldB), 0.0);
+    test_set_mainland(&(pthis->MPI_fieldE), 0.0);
   }
 
   sync_main_data_h2d(&((pthis)->MPI_fieldE));
   sync_main_data_h2d(&((pthis)->MPI_fieldB));
-  blas_yisax_Field3D_MPI(&((pthis)->MPI_fieldB1), &((pthis)->MPI_fieldB1), 1.00000000000000000e+00,
+  blas_yisax_Field3D_MPI(&((pthis)->MPI_fieldB1), &((pthis)->MPI_fieldB1), 1.0,
                          &((pthis)->MPI_fieldB));
   if (use_rel_ncr) {
     blas_yiszero_synced_Field3D_MPI(&((pthis)->MPI_fieldE01_2x), &((pthis)->MPI_fieldE01_2x));
     blas_yiszero_synced_Field3D_MPI(&((pthis)->MPI_fieldB0_2x), &((pthis)->MPI_fieldB0_2x));
-    blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldE), &((pthis)->MPI_fieldE01_2x), 1.00000000000000000e+00,
+    blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldE), &((pthis)->MPI_fieldE01_2x), 1.0,
                                    &((pthis)->MPI_fieldE));
     blas_yisax_enlarge_Field3D_MPI(&((pthis)->MPI_fieldB), &((pthis)->MPI_fieldB0_2x), 1, &((pthis)->MPI_fieldB));
   }

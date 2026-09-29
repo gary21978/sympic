@@ -16,7 +16,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
 
   long *cplx_ori_array = malloc((sizeof(long) * num_thread));
 
-  double total_complexity = 0.00000000000000000e+00;
+  double total_complexity = 0.0;
 
   char *cmplx_file_name = "COMPLEXITY_ARRAY";
 
@@ -137,11 +137,11 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
         long old_pid = global_tid;
 
         double cur_proc_num_threads_f =
-            ((1.00000000000000000e+00 * ((cd_performances)[k] * num_t_one_mpi_proc)) / total_perf);
+            ((1.0 * ((cd_performances)[k] * num_t_one_mpi_proc)) / total_perf);
 
         long cur_proc_num_threads =
             floor((cur_proc_num_threads_f +
-                   ((1 - (1.00000000000000000e+00 / num_cds_per_mpi_proc)) + 1.00000000000000002e-02)));
+                   ((1 - (1.0 / num_cds_per_mpi_proc)) + 0.01)));
 
         if ((k == (num_cds_per_mpi_proc - 1))) {
           (global_tid = (tid_min + num_t_one_mpi_proc));

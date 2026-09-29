@@ -1149,7 +1149,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec,
                                      (ovlp + (xb * ((xyzy + ovlp) +
                                                     (yb * (xyzz + ovlp))))))) +
                                realidx)] =
-                               (1.00000000000000000e+00 /
+                               (1.0 /
                                 (fast_y)[(
                                     (0 +
                                      (num_ele *
@@ -1210,7 +1210,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec,
 
                         if ((y)[(blk_offset + realidx)] != 0) {
                           ((y)[(blk_offset + realidx)] =
-                               (1.00000000000000000e+00 /
+                               (1.0 /
                                 (y)[(blk_offset + realidx)]));
 
                         }
@@ -1300,7 +1300,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core,
             for ((g = 0); (g < numcp); (g = (g + 1))) {
               if (((fast_y + (g * 1)))[0] != 0) {
                 (((fast_y + (g * 1)))[0] =
-                     (1.00000000000000000e+00 / ((fast_y + (g * 1)))[0]));
+                     (1.0 / ((fast_y + (g * 1)))[0]));
 
               }
             }
@@ -2611,7 +2611,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -2769,7 +2769,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -2889,7 +2889,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -3061,7 +3061,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -3214,7 +3214,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -3361,7 +3361,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum,
   }
 
   __shared__ double reduce_tmp_arr[IDX_OPT_MAX];
-  double reduce_tmp = 0.00000000000000000e+00;
+  double reduce_tmp = 0.0;
 
   {
     long i;
@@ -3522,7 +3522,7 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a,
                                              (gx = (gx + 1))) {
                                           (ret =
                                                (ret +
-                                                (1.25000000000000000e-01 *
+                                                (0.125 *
                                                  (x)[((blk_all_len_2x * i) +
                                                       (realidx +
                                                        (num_ele *
@@ -3645,7 +3645,7 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a,
                                                ((((ZLEN == 1)) ? (0) : (gz)) +
                                                 ovlp)))))))))] =
                                        (a *
-                                        (1.25000000000000000e-01 *
+                                        (0.125 *
                                          (x)[((blk_all_len * i) +
                                               (realidx +
                                                (num_ele *
@@ -3755,7 +3755,7 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a,
                                               (gx = (gx + 1))) {
                                            (ret =
                                                 (ret +
-                                                 (1.25000000000000000e-01 *
+                                                 (0.125 *
                                                   (x)[(
                                                       (blk_all_len_2x * i) +
                                                       (realidx +
@@ -3896,7 +3896,7 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a,
                                                                     : (gz)) +
                                                      ovlp)))))))))] +
                                         (a *
-                                         (1.25000000000000000e-01 *
+                                         (0.125 *
                                           (x)[((blk_all_len * i) +
                                                (realidx +
                                                 (num_ele *
@@ -4001,7 +4001,7 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
                                               (gx = (gx + 1))) {
                                            (ret =
                                                 (ret +
-                                                 (1.25000000000000000e-01 *
+                                                 (0.125 *
                                                   (x)[(
                                                       (blk_all_len_2x * i) +
                                                       (realidx +
@@ -4130,7 +4130,7 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a,
                                               ((2 * xyzz) +
                                                ((((ZLEN == 1)) ? (0) : (gz)) +
                                                 ovlp)))))))))] =
-                                       ((a * (1.25000000000000000e-01 *
+                                       ((a * (0.125 *
                                               (x)[((blk_all_len * i) +
                                                    (realidx +
                                                     (num_ele *

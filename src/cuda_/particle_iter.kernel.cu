@@ -71,17 +71,17 @@ __global__ void cuda_dump_ene_num(
 
         long lg = 0;
 
-        double allene0_x = 0.00000000000000000e+00;
+        double allene0_x = 0.0;
 
-        double allene0_y = 0.00000000000000000e+00;
+        double allene0_y = 0.0;
 
-        double allene0_z = 0.00000000000000000e+00;
+        double allene0_z = 0.0;
 
-        double allavv_x = 0.00000000000000000e+00;
+        double allavv_x = 0.0;
 
-        double allavv_y = 0.00000000000000000e+00;
+        double allavv_y = 0.0;
 
-        double allavv_z = 0.00000000000000000e+00;
+        double allavv_z = 0.0;
 
         int allnumcp = 0;
 
@@ -120,17 +120,17 @@ __global__ void cuda_dump_ene_num(
               }
             }
           }
-          double ene0_x = 0.00000000000000000e+00;
+          double ene0_x = 0.0;
 
-          double ene0_y = 0.00000000000000000e+00;
+          double ene0_y = 0.0;
 
-          double ene0_z = 0.00000000000000000e+00;
+          double ene0_z = 0.0;
 
-          double aver_vx = 0.00000000000000000e+00;
+          double aver_vx = 0.0;
 
-          double aver_vy = 0.00000000000000000e+00;
+          double aver_vy = 0.0;
 
-          double aver_vz = 0.00000000000000000e+00;
+          double aver_vz = 0.0;
 
           {
             long g;
@@ -143,13 +143,13 @@ __global__ void cuda_dump_ene_num(
               double vz = ((a_rva + (g * 6)))[5];
 
               double curene_x =
-                  (Mass * (5.00000000000000000e-01 * +((vx * vx))));
+                  (Mass * (0.5 * +((vx * vx))));
 
               double curene_y =
-                  (Mass * (5.00000000000000000e-01 * +((vy * vy))));
+                  (Mass * (0.5 * +((vy * vy))));
 
               double curene_z =
-                  (Mass * (5.00000000000000000e-01 * +((vz * vz))));
+                  (Mass * (0.5 * +((vz * vz))));
 
               (ene0_x = (ene0_x + curene_x));
               (ene0_y = (ene0_y + curene_y));
@@ -370,17 +370,17 @@ __global__ void cuda_dump_ene_num(
 
         long lg = 0;
 
-        double allene0_x = 0.00000000000000000e+00;
+        double allene0_x = 0.0;
 
-        double allene0_y = 0.00000000000000000e+00;
+        double allene0_y = 0.0;
 
-        double allene0_z = 0.00000000000000000e+00;
+        double allene0_z = 0.0;
 
-        double allavv_x = 0.00000000000000000e+00;
+        double allavv_x = 0.0;
 
-        double allavv_y = 0.00000000000000000e+00;
+        double allavv_y = 0.0;
 
-        double allavv_z = 0.00000000000000000e+00;
+        double allavv_z = 0.0;
 
         int allnumcp = 0;
 
@@ -419,17 +419,17 @@ __global__ void cuda_dump_ene_num(
               }
             }
           }
-          double ene0_x = 0.00000000000000000e+00;
+          double ene0_x = 0.0;
 
-          double ene0_y = 0.00000000000000000e+00;
+          double ene0_y = 0.0;
 
-          double ene0_z = 0.00000000000000000e+00;
+          double ene0_z = 0.0;
 
-          double aver_vx = 0.00000000000000000e+00;
+          double aver_vx = 0.0;
 
-          double aver_vy = 0.00000000000000000e+00;
+          double aver_vy = 0.0;
 
-          double aver_vz = 0.00000000000000000e+00;
+          double aver_vz = 0.0;
 
           {
             long g;
@@ -442,13 +442,13 @@ __global__ void cuda_dump_ene_num(
               double vz = ((a_rva + (g * 6)))[5];
 
               double curene_x =
-                  (Mass * (5.00000000000000000e-01 * +((vx * vx))));
+                  (Mass * (0.5 * +((vx * vx))));
 
               double curene_y =
-                  (Mass * (5.00000000000000000e-01 * +((vy * vy))));
+                  (Mass * (0.5 * +((vy * vy))));
 
               double curene_z =
-                  (Mass * (5.00000000000000000e-01 * +((vz * vz))));
+                  (Mass * (0.5 * +((vz * vz))));
 
               (ene0_x = (ene0_x + curene_x));
               (ene0_y = (ene0_y + curene_y));

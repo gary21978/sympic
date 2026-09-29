@@ -28,7 +28,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
         }
     }
     double reduce_tmp_arr[IDX_OPT_MAX];
-    double reduce_tmp = 0.00000000000000000e+00;
+    double reduce_tmp = 0.0;
     {
         long i;
         for ((i = local_ymin); (i < local_ymax); (i = (i + 1)))

@@ -686,7 +686,7 @@ __global__ void mapu_sort_one_grid_x_6(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -803,7 +803,7 @@ __global__ void mapu_sort_one_grid_x_6(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -945,7 +945,7 @@ __global__ void mapu_sort_one_grid_x_6(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 6) * 1)) {
                     {
@@ -1623,7 +1623,7 @@ __global__ void mapu_sort_one_grid_y_6(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -1740,7 +1740,7 @@ __global__ void mapu_sort_one_grid_y_6(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -1882,7 +1882,7 @@ __global__ void mapu_sort_one_grid_y_6(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 6) * 1)) {
                     {
@@ -2561,7 +2561,7 @@ __global__ void mapu_sort_one_grid_z_6(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -2678,7 +2678,7 @@ __global__ void mapu_sort_one_grid_z_6(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -2820,7 +2820,7 @@ __global__ void mapu_sort_one_grid_z_6(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 6) * 1)) {
                     {
@@ -6861,7 +6861,7 @@ __global__ void mapu_sort_one_grid_x_8(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -6978,7 +6978,7 @@ __global__ void mapu_sort_one_grid_x_8(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -7120,7 +7120,7 @@ __global__ void mapu_sort_one_grid_x_8(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 8) * 1)) {
                     {
@@ -8550,7 +8550,7 @@ __global__ void mapu_sort_one_grid_y_8(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -8667,7 +8667,7 @@ __global__ void mapu_sort_one_grid_y_8(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -8809,7 +8809,7 @@ __global__ void mapu_sort_one_grid_y_8(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 8) * 1)) {
                     {
@@ -10243,7 +10243,7 @@ __global__ void mapu_sort_one_grid_z_8(
   __mem1__ int cu_cur_cache_load;
   cu_cur_cache_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ double rat;
-  rat = ((1.00000000000000000e+00 * cu_cur_cache_load) / cu_cache_length);
+  rat = ((1.0 * cu_cur_cache_load) / cu_cache_length);
 
   if ((__idx == 0)) {
     {
@@ -10360,7 +10360,7 @@ __global__ void mapu_sort_one_grid_z_8(
         __mem1__ int cur_load;
         cur_load = (xyzw)[(4 * (cu_offset + grid_id))];
         __mem1__ double rat;
-        rat = ((1.00000000000000000e+00 * cur_load) / grid_cache_len);
+        rat = ((1.0 * cur_load) / grid_cache_len);
         __mem1__ MAPU_LONG bxyzx;
         bxyzx = (grid_id % XLEN);
         __mem1__ MAPU_LONG bxyzy;
@@ -10502,7 +10502,7 @@ __global__ void mapu_sort_one_grid_z_8(
                         (local_vel_cache)[((g * 3) + 1)]) +
                        ((local_vel_cache)[((g * 3) + 2)] *
                         (local_vel_cache)[((g * 3) + 2)]))) >
-                     1.00000000000000000e+00)) {
+                     1.0)) {
 
                   if (((num_write_tmp * 8) * 1)) {
                     {

@@ -175,17 +175,17 @@ __global__ void mapu_dump_ene_num(
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
-          allene0_x = 0.00000000000000000e+00;
+          allene0_x = 0.0;
           __mem1__ double allene0_y;
-          allene0_y = 0.00000000000000000e+00;
+          allene0_y = 0.0;
           __mem1__ double allene0_z;
-          allene0_z = 0.00000000000000000e+00;
+          allene0_z = 0.0;
           __mem1__ double allavv_x;
-          allavv_x = 0.00000000000000000e+00;
+          allavv_x = 0.0;
           __mem1__ double allavv_y;
-          allavv_y = 0.00000000000000000e+00;
+          allavv_y = 0.0;
           __mem1__ double allavv_z;
-          allavv_z = 0.00000000000000000e+00;
+          allavv_z = 0.0;
           __mem1__ int allnumcp;
           allnumcp = 0;
           {
@@ -227,17 +227,17 @@ __global__ void mapu_dump_ene_num(
               }
             }
             __mem1__ double ene0_x;
-            ene0_x = 0.00000000000000000e+00;
+            ene0_x = 0.0;
             __mem1__ double ene0_y;
-            ene0_y = 0.00000000000000000e+00;
+            ene0_y = 0.0;
             __mem1__ double ene0_z;
-            ene0_z = 0.00000000000000000e+00;
+            ene0_z = 0.0;
             __mem1__ double aver_vx;
-            aver_vx = 0.00000000000000000e+00;
+            aver_vx = 0.0;
             __mem1__ double aver_vy;
-            aver_vy = 0.00000000000000000e+00;
+            aver_vy = 0.0;
             __mem1__ double aver_vz;
-            aver_vz = 0.00000000000000000e+00;
+            aver_vz = 0.0;
             {
               __mem1__ MAPU_LONG g;
               for ((g = 0); (g < numcp); (g = (g + 1))) {
@@ -248,11 +248,11 @@ __global__ void mapu_dump_ene_num(
                 __mem1__ double vz;
                 vz = ((a_rva + (g * 6)))[5];
                 __mem1__ double curene_x;
-                curene_x = (Mass * (5.00000000000000000e-01 * +((vx * vx))));
+                curene_x = (Mass * (0.5 * +((vx * vx))));
                 __mem1__ double curene_y;
-                curene_y = (Mass * (5.00000000000000000e-01 * +((vy * vy))));
+                curene_y = (Mass * (0.5 * +((vy * vy))));
                 __mem1__ double curene_z;
-                curene_z = (Mass * (5.00000000000000000e-01 * +((vz * vz))));
+                curene_z = (Mass * (0.5 * +((vz * vz))));
                 (ene0_x = (ene0_x + curene_x));
                 (ene0_y = (ene0_y + curene_y));
                 (ene0_z = (ene0_z + curene_z));
@@ -404,17 +404,17 @@ __global__ void mapu_dump_ene_num(
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
-          allene0_x = 0.00000000000000000e+00;
+          allene0_x = 0.0;
           __mem1__ double allene0_y;
-          allene0_y = 0.00000000000000000e+00;
+          allene0_y = 0.0;
           __mem1__ double allene0_z;
-          allene0_z = 0.00000000000000000e+00;
+          allene0_z = 0.0;
           __mem1__ double allavv_x;
-          allavv_x = 0.00000000000000000e+00;
+          allavv_x = 0.0;
           __mem1__ double allavv_y;
-          allavv_y = 0.00000000000000000e+00;
+          allavv_y = 0.0;
           __mem1__ double allavv_z;
-          allavv_z = 0.00000000000000000e+00;
+          allavv_z = 0.0;
           __mem1__ int allnumcp;
           allnumcp = 0;
           {
@@ -457,17 +457,17 @@ __global__ void mapu_dump_ene_num(
               }
             }
             __mem1__ double ene0_x;
-            ene0_x = 0.00000000000000000e+00;
+            ene0_x = 0.0;
             __mem1__ double ene0_y;
-            ene0_y = 0.00000000000000000e+00;
+            ene0_y = 0.0;
             __mem1__ double ene0_z;
-            ene0_z = 0.00000000000000000e+00;
+            ene0_z = 0.0;
             __mem1__ double aver_vx;
-            aver_vx = 0.00000000000000000e+00;
+            aver_vx = 0.0;
             __mem1__ double aver_vy;
-            aver_vy = 0.00000000000000000e+00;
+            aver_vy = 0.0;
             __mem1__ double aver_vz;
-            aver_vz = 0.00000000000000000e+00;
+            aver_vz = 0.0;
             {
               __mem1__ MAPU_LONG g;
               for ((g = 0); (g < numcp); (g = (g + 1))) {
@@ -478,11 +478,11 @@ __global__ void mapu_dump_ene_num(
                 __mem1__ double vz;
                 vz = ((a_rva + (g * 6)))[5];
                 __mem1__ double curene_x;
-                curene_x = (Mass * (5.00000000000000000e-01 * +((vx * vx))));
+                curene_x = (Mass * (0.5 * +((vx * vx))));
                 __mem1__ double curene_y;
-                curene_y = (Mass * (5.00000000000000000e-01 * +((vy * vy))));
+                curene_y = (Mass * (0.5 * +((vy * vy))));
                 __mem1__ double curene_z;
-                curene_z = (Mass * (5.00000000000000000e-01 * +((vz * vz))));
+                curene_z = (Mass * (0.5 * +((vz * vz))));
                 (ene0_x = (ene0_x + curene_x));
                 (ene0_y = (ene0_y + curene_y));
                 (ene0_z = (ene0_z + curene_z));
@@ -613,14 +613,14 @@ __global__ void mapu_dump_ene_num(
   if ((__global_idx == 0)) {
     {
       printf("default %f\n",
-             ((__pscmc_clock_default * 1.00000000000000000e+00) / 1));
+             ((__pscmc_clock_default * 1.0) / 1));
     }
   }
 
   if ((__global_idx == 0)) {
     {
       printf("pushJ_shJ %f\n",
-             ((__pscmc_clock_pushJ_shJ * 1.00000000000000000e+00) /
+             ((__pscmc_clock_pushJ_shJ * 1.0) /
               __pscmc_clock_default));
     }
   }

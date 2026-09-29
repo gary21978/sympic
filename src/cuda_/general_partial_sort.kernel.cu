@@ -922,7 +922,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 
@@ -2450,7 +2450,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 
@@ -3979,7 +3979,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 
@@ -7810,7 +7810,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 
@@ -9338,7 +9338,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 
@@ -10867,7 +10867,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw,
                       (local_vel_cache)[((g * 3) + 1)]) +
                      ((local_vel_cache)[((g * 3) + 2)] *
                       (local_vel_cache)[((g * 3) + 2)]))) >
-                   1.00000000000000000e+00)) {
+                   1.0)) {
                 {
                   long inner_step;
 

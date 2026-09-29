@@ -34,7 +34,7 @@ double wclk_now() {
   struct timezone tz1;
 
   gettimeofday(&(tv1), &(tz1));
-  double time_start1 = (((double)tv1.tv_sec) + (9.99999999999999955e-07 * ((double)tv1.tv_usec)));
+  double time_start1 = (((double)tv1.tv_sec) + (1e-06 * ((double)tv1.tv_usec)));
 
   return time_start1;
 }
@@ -595,7 +595,7 @@ int main(int argc, char **argv) {
       }
 
       // set B1=B
-      blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldB1), 1.00000000000000000e+00, &(ppis->MPI_fieldB));
+      blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldB1), 1.0, &(ppis->MPI_fieldB));
       MPI_YEE_CURL_R(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldE), DELTAT);
       blas_axpy_Field3D_MPI(&(ppis->MPI_fieldE), &(ppis->MPI_fieldE), 1, &(ppis->MPI_fieldE_ext));
       blas_axpy_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB_ext));
@@ -623,7 +623,7 @@ int main(int argc, char **argv) {
         Field3D_MPI *pMPI_fieldB = &(MPI_fieldB);
 
         MPI_geo_nr_Bfield_pushJ_vlo(ppis, pMPI_fieldE, pMPI_fieldB, &(MPI_fieldB1), pMPI_FoutJ, pmass, pchg,
-                                    (5.00000000000000000e-01 * DELTAT), T_TORI_X0, 0, 0, 0, 0, 0);
+                                    (0.5 * DELTAT), T_TORI_X0, 0, 0, 0, 0, 0);
       }
       // sort particle if it is the sort time-step
       if (((t % num_multi_step_sort) == 0)) {

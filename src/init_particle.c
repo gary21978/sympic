@@ -446,15 +446,15 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < 1); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < 1; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < 1); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < 1; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < numvec); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < numvec; xyzx++) {
                   long *cur_adj_id = (adjoint_vec_pids_host + (6 * xyzx));
 
                   ((cur_adj_id)[0] = find_vec_id(
@@ -503,8 +503,8 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
 
   int j;
 
-  for (i = 0; (i < num_spec); i++) {
-    for (j = 0; (j < num_runtime); j++) {
+  for (i = 0; i < num_spec; i++) {
+    for (j = 0; j < num_runtime; j++) {
 
       // defined from class Field3D_Seq
 
@@ -521,7 +521,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                        {
                          long k;
 
-                         for ((k = 0); (k < numvec); (k = (k + 1))) {
+                         for (k = 0; k < numvec; k++) {
                            double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, (global_id)[k]);
 
                            if ((new_cplx > cplx)) {
@@ -538,7 +538,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                        {
                          long k;
 
-                         for ((k = 0); (k < numvec); (k = (k + 1))) {
+                         for (k = 0; k < numvec; k++) {
                            double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, (global_id)[k]);
 
                            if ((new_cplx > cplx)) {
@@ -642,22 +642,22 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
     double *host_data = (((double **)inoutput))[0];
     int *xyzw_data = (((int **)xyzw))[0];
 
-    for (cur_pcid = 0; (cur_pcid < numvec); cur_pcid++) {
+    for (cur_pcid = 0; cur_pcid < numvec; cur_pcid++) {
       double *grid_r_0 = (host_data + (cur_pcid * (alllenoff * (6 * grid_cache_len))));
       int *xyzw_0 = (xyzw_data + (cur_pcid * (alllenoff * 4)));
 
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < zlen; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ylen; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < xlen); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < xlen; xyzx++) {
                   double *grid_r =
                       (grid_r_0 +
                        (0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))))));
@@ -718,7 +718,7 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                          ((global_x_offset)[cur_pcid] + (xyzx + 0.5)), 2));
                   }
 
-                  for (l; (l < grid_load); l++) {
+                  for (l; l < grid_load; l++) {
                     (grid_xyzw)[0] = grid_load;
                     double *xyzvs = (grid_r + (l * ptlen));
 
@@ -780,7 +780,7 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
 
   int j;
 
-  for (i = 0; (i < num_spec); i++) {
+  for (i = 0; i < num_spec; i++) {
     if (srand_seed) {
       srand(srand_seed);
     }
@@ -791,7 +791,7 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
 
     if ((((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[i] != 1)) {
       fprintf(stderr, "info init_non_uni_particle_fmpi: spec=%d\n", i);
-      for (j = 0; (j < num_runtime); j++) {
+      for (j = 0; j < num_runtime; j++) {
         init_non_uni_particle_opc(((pthis)->particles + ((i * num_runtime) + j)),
                                   call_GET_INIT_LOAD(i), i, call_GET_INIT_VT(i), vmax, ptlen);
       }
@@ -838,7 +838,7 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   {
     long i;
 
-    for ((i = 0); (i < num_spec); (i = (i + 1))) {
+    for (i = 0; i < num_spec; i++) {
       use_small_ts = (use_small_ts + (particle_types)[i]);
     }
   }
@@ -923,7 +923,7 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   {
     long i;
 
-    for ((i = 0); (i < (num_spec * num_runtime)); (i = (i + 1))) {
+    for (i = 0; i < (num_spec * num_runtime); i++) {
       (((((pthis)->MPI_fieldE).particles + i))->pfieldE =
            (((pthis)->MPI_fieldE).data + (i % num_runtime)));
       (((((pthis)->MPI_fieldE).particles + i))->pfieldB =

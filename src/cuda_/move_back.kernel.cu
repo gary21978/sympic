@@ -25,13 +25,13 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
 
   int cur_cu_load = 0;
 
-  for (i = 0; (i < cu_load); (i = (i + 64))) {
+  for (i = 0; i < cu_load; i += 64) {
     long numcp = ((((i + 64) > cu_load)) ? ((cu_load - i)) : (64));
 
     {
       long MYGEN5 = 0;
 
-      for (; (MYGEN5 < (numcp * 6)); (MYGEN5 = (MYGEN5 + __xlen))) {
+      for (; MYGEN5 < (numcp * 6); MYGEN5 += __xlen) {
         int ridx = (MYGEN5 + __idx);
 
         if (ridx < (numcp * 6)) {
@@ -42,7 +42,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
     }
     __syncthreads();
     if (__idx == 0) {
-      for (j = 0; (j < numcp); j++) {
+      for (j = 0; j < numcp; j++) {
 
         long xyzx = floor(((local_temp_particle_cache + (j * 6)))[0]);
 
@@ -65,11 +65,11 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((inoutput + (6 * ((allid_grid * grid_cache_len) +
                                         gridload))))[((inner_step * 1) + inner_g)] =
                          ((local_temp_particle_cache + (j * 6)))[((inner_step * 1) + inner_g)]);
@@ -85,11 +85,11 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 6; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + (6 * ((__idy * cu_cache_length) +
                                       cur_cu_load))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache + (j * 6)))[((inner_step * 1) + inner_g)]);
@@ -127,13 +127,13 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
 
   int cur_cu_load = 0;
 
-  for (i = 0; (i < cu_load); (i = (i + 64))) {
+  for (i = 0; i < cu_load; i += 64) {
     long numcp = ((((i + 64) > cu_load)) ? ((cu_load - i)) : (64));
 
     {
       long MYGEN6 = 0;
 
-      for (; (MYGEN6 < (numcp * 8)); (MYGEN6 = (MYGEN6 + __xlen))) {
+      for (; MYGEN6 < (numcp * 8); MYGEN6 += __xlen) {
         int ridx = (MYGEN6 + __idx);
 
         if (ridx < (numcp * 8)) {
@@ -144,7 +144,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
     }
     __syncthreads();
     if (__idx == 0) {
-      for (j = 0; (j < numcp); j++) {
+      for (j = 0; j < numcp; j++) {
 
         long xyzx = floor(((local_temp_particle_cache + (j * 8)))[0]);
 
@@ -167,11 +167,11 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 8; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((inoutput + (8 * ((allid_grid * grid_cache_len) +
                                         gridload))))[((inner_step * 1) + inner_g)] =
                          ((local_temp_particle_cache + (j * 8)))[((inner_step * 1) + inner_g)]);
@@ -187,11 +187,11 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 8; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + (8 * ((__idy * cu_cache_length) +
                                       cur_cu_load))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache + (j * 8)))[((inner_step * 1) + inner_g)]);

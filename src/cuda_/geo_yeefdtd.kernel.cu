@@ -30,7 +30,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       int gxoffset = (xoffset)[i];
 
       long allmax = (XLEN * (YLEN * ZLEN));
@@ -44,12 +44,11 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((vread_tmp)[((inner_step * 1) + inner_g)] =
                        ((inB0 + blk_offset))[((inner_step * 1) + inner_g)]);
                 }
@@ -61,12 +60,11 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((vwrt_tmp)[((inner_step * 1) + inner_g)] =
                        ((inoutE1 + blk_offset))[((inner_step * 1) + inner_g)]);
                 }
@@ -77,15 +75,15 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < XLEN; xyzx++) {
 
                     double vB11101 =
                         (vread_tmp)[((1 + 0) + (num_ele * (((0 + (xyzx + -1)) + ovlp) +
@@ -418,12 +416,11 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((inoutE1 + blk_offset))[((inner_step * 1) + inner_g)] =
                      (vwrt_tmp)[((inner_step * 1) + inner_g)]);
               }
@@ -433,7 +430,7 @@ __global__ void cuda_GEO_YEE_CURL_L(double *inoutE1, double *inB0, int *xoffset,
       } else {
         long lg = 0;
 
-        for ((lg = 0); ((lg + __idx) < allmax); (lg = (lg + __xlen))) {
+        for (lg = 0; (lg + __idx) < allmax; lg = (lg + __xlen)) {
           long g = (lg + __idx);
 
           long xyzx = (g % XLEN);
@@ -781,7 +778,7 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
 
       long allmax = (XLEN * (YLEN * ZLEN));
 
@@ -794,12 +791,11 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((vread_tmp)[((inner_step * 1) + inner_g)] =
                        ((inB0 + blk_offset))[((inner_step * 1) + inner_g)]);
                 }
@@ -811,12 +807,11 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((vwrt_tmp)[((inner_step * 1) + inner_g)] =
                        ((inoutE1 + blk_offset))[((inner_step * 1) + inner_g)]);
                 }
@@ -827,15 +822,15 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < XLEN; xyzx++) {
 
                     double vB01111 =
                         (vread_tmp)[((0 + 0) + (num_ele * (((1 + (xyzx + -1)) + ovlp) +
@@ -921,12 +916,11 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (blk_all_len_nonele * num_ele));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (blk_all_len_nonele * num_ele); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((inoutE1 + blk_offset))[((inner_step * 1) + inner_g)] =
                      (vwrt_tmp)[((inner_step * 1) + inner_g)]);
               }
@@ -936,7 +930,7 @@ __global__ void cuda_YEE_CURL_R(double *inoutE1, double *inB0, int *xoffset, int
       } else {
         long lg = 0;
 
-        for ((lg = 0); ((lg + __idx) < allmax); (lg = (lg + __xlen))) {
+        for (lg = 0; (lg + __idx) < allmax; lg = (lg + __xlen)) {
           long g = (lg + __idx);
 
           long xyzx = (g % XLEN);

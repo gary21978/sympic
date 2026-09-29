@@ -3019,7 +3019,7 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
   //====================Field3D_MPI
   long i = 0;
 
-  for (i = 0; (i < (num_spec * num_runtime)); i++) {
+  for (i = 0; i < (num_spec * num_runtime); i++) {
     int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[(i / num_runtime)];
 
     int ptlen = (((ptype & 2)) ? (8) : (6));
@@ -3030,7 +3030,7 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
   }
   swap_particle_sort_host_l(pthis, dir, mask);
   swap_particle_sort_host_r(pthis, dir, mask);
-  for (i = 0; (i < (num_runtime * num_spec)); i++) {
+  for (i = 0; i < (num_runtime * num_spec); i++) {
 
     int ptype = ((((Particle_in_Cell_MPI *)pthis))->o_particle_type)[(i / num_runtime)];
 

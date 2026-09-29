@@ -289,7 +289,7 @@ int main(int argc, char **argv) {
   {
     long g;
 
-    for ((g = 0); (g < NUM_N_HILBERT_DIMENSION); (g = (g + 1))) {
+    for (g = 0; g < NUM_N_HILBERT_DIMENSION; g++) {
       numt = (numt * len_hilbert);
     }
   }
@@ -453,7 +453,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (pnpm)[i] = call_GET_NPM(i);
     }
   }
@@ -462,7 +462,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (pchg)[i] = call_GET_CHARGE(i);
     }
   }
@@ -471,7 +471,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (pmass)[i] = call_GET_MASS(i);
     }
   }
@@ -480,7 +480,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (pgcache)[i] = call_GET_GRID_CACHE_LEN(i);
     }
   }
@@ -489,7 +489,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (pcucache)[i] = call_GET_CU_CACHE_LEN(i);
     }
   }
@@ -511,7 +511,7 @@ int main(int argc, char **argv) {
   {
     long i;
 
-    for ((i = 0); (i < NUM_SPEC); (i = (i + 1))) {
+    for (i = 0; i < NUM_SPEC; i++) {
       (p_particle_type)[i] = 0;
     }
   }
@@ -682,7 +682,7 @@ int main(int argc, char **argv) {
       {
         long i;
 
-        for ((i = 0); (i < argc); (i = (i + 1))) {
+        for (i = 0; i < argc; i++) {
           fprintf(stderr, "%s ", (argv)[i]);
         }
       }

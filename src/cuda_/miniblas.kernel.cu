@@ -36,25 +36,25 @@ __global__ void cuda_blas_yiszero_synced(double *y, long y_cpu_core, long numvec
   __shared__ double zeros[128];
   long lg = 0;
 
-  for ((lg = 0); ((lg + __idx) < LOCAL_CACHE_LEN); (lg = (lg + __xlen))) {
+  for (lg = 0; (lg + __idx) < LOCAL_CACHE_LEN; lg = (lg + __xlen)) {
     (zeros)[(lg + __idx)] = 0;
   }
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       long blk_offset_t1 = (blk_all_len * i);
 
       long j = 0;
 
-      for ((j = 0); (j < blk_all_len); (j = (j + LOCAL_CACHE_LEN))) {
+      for (j = 0; j < blk_all_len; j = (j + LOCAL_CACHE_LEN)) {
         int numcp =
             (((j + LOCAL_CACHE_LEN) < blk_all_len)) ? (LOCAL_CACHE_LEN) : ((blk_all_len - j));
 
         {
           long lgGG817621_1 = 0;
 
-          for (; (lgGG817621_1 < numcp); (lgGG817621_1 = (lgGG817621_1 + __xlen))) {
+          for (; lgGG817621_1 < numcp; lgGG817621_1 = (lgGG817621_1 + __xlen)) {
             int ridx = (lgGG817621_1 + __idx);
 
             if (ridx < numcp) {
@@ -99,20 +99,20 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
 
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < 1; xyzx++) {
                   long blk_offset_0 =
                       ((blk_all_len_0 * i) +
                        (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
@@ -124,7 +124,7 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
                   {
                     long g = 0;
 
-                    for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                    for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                       long realidx = (__idx + (g * __xlen));
 
                       int cur_id = (realidx % num_ele);
@@ -177,18 +177,18 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -199,19 +199,19 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] = 0);
@@ -226,11 +226,11 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -241,15 +241,15 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -258,7 +258,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         (y)[(blk_offset + realidx)] = 0;
@@ -305,11 +305,11 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN11 = 0;
 
-        for (; ((gMYGEN11 + (__idx * 1)) < blk_all_len); (gMYGEN11 = (gMYGEN11 + (1 * __xlen)))) {
+        for (; (gMYGEN11 + (__idx * 1)) < blk_all_len; gMYGEN11 = (gMYGEN11 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN11);
 
           long numcp = 1;
@@ -319,11 +319,11 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -334,24 +334,24 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               ((fast_y + (g * 1)))[0] = 0;
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -394,18 +394,18 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -416,19 +416,19 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] = a);
@@ -443,11 +443,11 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -458,15 +458,15 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -475,7 +475,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         (y)[(blk_offset + realidx)] = a;
@@ -522,11 +522,11 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN16 = 0;
 
-        for (; ((gMYGEN16 + (__idx * 1)) < blk_all_len); (gMYGEN16 = (gMYGEN16 + (1 * __xlen)))) {
+        for (; (gMYGEN16 + (__idx * 1)) < blk_all_len; gMYGEN16 = (gMYGEN16 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN16);
 
           long numcp = 1;
@@ -536,11 +536,11 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -551,24 +551,24 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               ((fast_y + (g * 1)))[0] = a;
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -612,18 +612,18 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -636,11 +636,11 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -653,11 +653,11 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_u)[((inner_step * 1) + inner_g)] =
                        ((u + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -668,19 +668,19 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         if ((((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
                                                                        (yb * (xyzz + ovlp))))))) +
                                         realidx)] > 0) &&
@@ -720,11 +720,11 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -735,15 +735,15 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -752,7 +752,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         if ((((y)[(blk_offset + realidx)] > 0) &&
@@ -810,11 +810,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN21 = 0;
 
-        for (; ((gMYGEN21 + (__idx * 1)) < blk_all_len); (gMYGEN21 = (gMYGEN21 + (1 * __xlen)))) {
+        for (; (gMYGEN21 + (__idx * 1)) < blk_all_len; gMYGEN21 = (gMYGEN21 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN21);
 
           long numcp = 1;
@@ -824,11 +824,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -841,11 +841,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -858,11 +858,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_u + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((u + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -873,7 +873,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               if (((((fast_y + (g * 1)))[0] > 0) && (((fast_u + (g * 1)))[0] > 0))) {
                 (((fast_y + (g * 1)))[0] =
                      (minus_over_q_e * (((fast_x + (g * 1)))[0] *
@@ -887,17 +887,17 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -907,11 +907,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -921,11 +921,11 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((u + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_u + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -968,18 +968,18 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -990,19 +990,19 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         if (((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
                                                                       (yb * (xyzz + ovlp))))))) +
                                        realidx)] != 0)) {
@@ -1025,11 +1025,11 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -1040,15 +1040,15 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -1057,7 +1057,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         if ((y)[(blk_offset + realidx)] != 0) {
@@ -1106,11 +1106,11 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN30 = 0;
 
-        for (; ((gMYGEN30 + (__idx * 1)) < blk_all_len); (gMYGEN30 = (gMYGEN30 + (1 * __xlen)))) {
+        for (; (gMYGEN30 + (__idx * 1)) < blk_all_len; gMYGEN30 = (gMYGEN30 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN30);
 
           long numcp = 1;
@@ -1120,11 +1120,11 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1135,7 +1135,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               if (((fast_y + (g * 1)))[0] != 0) {
                 ((fast_y + (g * 1)))[0] = (1.0 / ((fast_y + (g * 1)))[0]);
               }
@@ -1144,17 +1144,17 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1197,18 +1197,18 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1221,11 +1221,11 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1236,19 +1236,19 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] =
@@ -1267,11 +1267,11 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -1282,15 +1282,15 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -1299,7 +1299,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         (y)[(blk_offset + realidx)] = (a * (x)[(blk_offset + realidx)]);
@@ -1346,11 +1346,11 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN35 = 0;
 
-        for (; ((gMYGEN35 + (__idx * 1)) < blk_all_len); (gMYGEN35 = (gMYGEN35 + (1 * __xlen)))) {
+        for (; (gMYGEN35 + (__idx * 1)) < blk_all_len; gMYGEN35 = (gMYGEN35 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN35);
 
           long numcp = 1;
@@ -1360,11 +1360,11 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1377,11 +1377,11 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1392,24 +1392,24 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               ((fast_y + (g * 1)))[0] = (a * ((fast_x + (g * 1)))[0]);
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1419,11 +1419,11 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1466,18 +1466,18 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1490,11 +1490,11 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1505,19 +1505,19 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] =
@@ -1539,11 +1539,11 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -1554,15 +1554,15 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -1571,7 +1571,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         ((y)[(blk_offset + realidx)] =
@@ -1619,11 +1619,11 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN42 = 0;
 
-        for (; ((gMYGEN42 + (__idx * 1)) < blk_all_len); (gMYGEN42 = (gMYGEN42 + (1 * __xlen)))) {
+        for (; (gMYGEN42 + (__idx * 1)) < blk_all_len; gMYGEN42 = (gMYGEN42 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN42);
 
           long numcp = 1;
@@ -1633,11 +1633,11 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1650,11 +1650,11 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1665,24 +1665,24 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               ((fast_y + (g * 1)))[0] = (((fast_y + (g * 1)))[0] + (a * ((fast_x + (g * 1)))[0]));
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1692,11 +1692,11 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1739,18 +1739,18 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1763,11 +1763,11 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1778,19 +1778,19 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] =
@@ -1813,11 +1813,11 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -1828,15 +1828,15 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -1845,7 +1845,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         ((y)[(blk_offset + realidx)] = ((a * (x)[(blk_offset + realidx)]) +
@@ -1894,11 +1894,11 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN49 = 0;
 
-        for (; ((gMYGEN49 + (__idx * 1)) < blk_all_len); (gMYGEN49 = (gMYGEN49 + (1 * __xlen)))) {
+        for (; (gMYGEN49 + (__idx * 1)) < blk_all_len; gMYGEN49 = (gMYGEN49 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN49);
 
           long numcp = 1;
@@ -1908,11 +1908,11 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1925,11 +1925,11 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -1940,7 +1940,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               (((fast_y + (g * 1)))[0] =
                    ((a * ((fast_x + (g * 1)))[0]) + (b * ((fast_y + (g * 1)))[0])));
             }
@@ -1948,17 +1948,17 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -1968,11 +1968,11 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2015,18 +2015,18 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2039,11 +2039,11 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2054,19 +2054,19 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         ((fast_y)[((0 + (num_ele *
                                          (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
                                    realidx)] =
@@ -2087,11 +2087,11 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)] =
                      (fast_y)[((inner_step * 1) + inner_g)]);
               }
@@ -2102,15 +2102,15 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -2119,7 +2119,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         ((y)[(blk_offset + realidx)] =
@@ -2167,11 +2167,11 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN56 = 0;
 
-        for (; ((gMYGEN56 + (__idx * 1)) < blk_all_len); (gMYGEN56 = (gMYGEN56 + (1 * __xlen)))) {
+        for (; (gMYGEN56 + (__idx * 1)) < blk_all_len; gMYGEN56 = (gMYGEN56 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN56);
 
           long numcp = 1;
@@ -2181,11 +2181,11 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2198,11 +2198,11 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2213,24 +2213,24 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               ((fast_y + (g * 1)))[0] = (((fast_x + (g * 1)))[0] * ((fast_y + (g * 1)))[0]);
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2240,11 +2240,11 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2290,18 +2290,18 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2312,19 +2312,19 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
                              (((fabs((fast_y)[(
                                     (0 + (num_ele *
@@ -2347,15 +2347,15 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -2364,7 +2364,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         (reduce_tmp = (((fabs((y)[(blk_offset + realidx)]) > reduce_tmp))
@@ -2387,7 +2387,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         (reduce_tmp = (((fabs((reduce_tmp_arr)[i1]) > reduce_tmp)) ? (fabs((reduce_tmp_arr)[i1]))
                                                                    : (reduce_tmp)));
       }
@@ -2429,11 +2429,11 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN63 = 0;
 
-        for (; ((gMYGEN63 + (__idx * 1)) < blk_all_len); (gMYGEN63 = (gMYGEN63 + (1 * __xlen)))) {
+        for (; (gMYGEN63 + (__idx * 1)) < blk_all_len; gMYGEN63 = (gMYGEN63 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN63);
 
           long numcp = 1;
@@ -2443,11 +2443,11 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2458,7 +2458,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               (reduce_tmp =
                    (((fabs(((fast_y + (g * 1)))[0]) > reduce_tmp)) ? (fabs(((fast_y + (g * 1)))[0]))
                                                                    : (reduce_tmp)));
@@ -2467,17 +2467,17 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2494,7 +2494,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         (reduce_tmp = (((fabs((reduce_tmp_arr)[i1]) > reduce_tmp)) ? (fabs((reduce_tmp_arr)[i1]))
                                                                    : (reduce_tmp)));
       }
@@ -2536,18 +2536,18 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2560,11 +2560,11 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_x)[((inner_step * 1) + inner_g)] =
                        ((x + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2575,19 +2575,19 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
                              (reduce_tmp +
                               ((fast_x)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
@@ -2608,15 +2608,15 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -2625,7 +2625,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         (reduce_tmp = (reduce_tmp + ((x)[(blk_offset + realidx)] *
@@ -2647,7 +2647,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         reduce_tmp = (reduce_tmp + (1 * (reduce_tmp_arr)[i1]));
       }
     }
@@ -2688,11 +2688,11 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN68 = 0;
 
-        for (; ((gMYGEN68 + (__idx * 1)) < blk_all_len); (gMYGEN68 = (gMYGEN68 + (1 * __xlen)))) {
+        for (; (gMYGEN68 + (__idx * 1)) < blk_all_len; gMYGEN68 = (gMYGEN68 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN68);
 
           long numcp = 1;
@@ -2702,11 +2702,11 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2719,11 +2719,11 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2734,24 +2734,24 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               reduce_tmp = (reduce_tmp + (((fast_x + (g * 1)))[0] * ((fast_y + (g * 1)))[0]));
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2761,11 +2761,11 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((x + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_x + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2782,7 +2782,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         reduce_tmp = (reduce_tmp + (1 * (reduce_tmp_arr)[i1]));
       }
     }
@@ -2823,18 +2823,18 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       if (blk_all_len <= 1) {
         double fast_y[1];
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < blk_all_len); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < blk_all_len; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((fast_y)[((inner_step * 1) + inner_g)] =
                        ((y + (i * blk_all_len)))[((inner_step * 1) + inner_g)]);
                 }
@@ -2845,19 +2845,19 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
                     {
                       long realidx;
 
-                      for ((realidx = 0); (realidx < (num_ele * XLEN)); (realidx = (realidx + 1))) {
+                      for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
                         (reduce_tmp =
                              (reduce_tmp +
                               (fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
@@ -2875,15 +2875,15 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
         {
           long xyzz;
 
-          for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
             {
               long xyzy;
 
-              for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+              for (xyzy = 0; xyzy < YLEN; xyzy++) {
                 {
                   long xyzx;
 
-                  for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                  for (xyzx = 0; xyzx < 1; xyzx++) {
 
                     long blk_offset =
                         ((blk_all_len * i) +
@@ -2892,7 +2892,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
                     {
                       long g = 0;
 
-                      for (g = 0; ((__idx + (g * __xlen)) < (XLEN * num_ele)); g++) {
+                      for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                         long realidx = (__idx + (g * __xlen));
 
                         reduce_tmp = (reduce_tmp + (y)[(blk_offset + realidx)]);
@@ -2913,7 +2913,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         reduce_tmp = (reduce_tmp + (reduce_tmp_arr)[i1]);
       }
     }
@@ -2954,11 +2954,11 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long gMYGEN75 = 0;
 
-        for (; ((gMYGEN75 + (__idx * 1)) < blk_all_len); (gMYGEN75 = (gMYGEN75 + (1 * __xlen)))) {
+        for (; (gMYGEN75 + (__idx * 1)) < blk_all_len; gMYGEN75 = (gMYGEN75 + (1 * __xlen))) {
           long iba_tmp = ((__idx * 1) + gMYGEN75);
 
           long numcp = 1;
@@ -2968,11 +2968,11 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)] =
                          (((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)]);
                   }
@@ -2983,24 +2983,24 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               reduce_tmp = (reduce_tmp + ((fast_y + (g * 1)))[0]);
             }
           }
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
             }
           }
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((y + (i * blk_all_len)) + (iba_tmp * 1)))[((inner_step * 1) + inner_g)] =
                        ((fast_y + (0 * 1)))[((inner_step * 1) + inner_g)]);
                 }
@@ -3017,7 +3017,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
     {
       long i1;
 
-      for ((i1 = 1); (i1 < IDX_OPT_MAX); (i1 = (i1 + 1))) {
+      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
         reduce_tmp = (reduce_tmp + (reduce_tmp_arr)[i1]);
       }
     }
@@ -3055,23 +3055,23 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a, long y_cp
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       ((y)[((blk_all_len * i) +
                             (realidx +
                              (num_ele *
@@ -3082,15 +3082,15 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a, long y_cp
                               {
                                 long gz;
 
-                                for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                                for (gz = 0; gz < 2; gz++) {
                                   {
                                     long gy;
 
-                                    for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                                    for (gy = 0; gy < 2; gy++) {
                                       {
                                         long gx;
 
-                                        for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                        for (gx = 0; gx < 2; gx++) {
                                           (ret =
                                                (ret +
                                                 (0.125 *
@@ -3155,35 +3155,35 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a, long y_c
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       {
                         long gz;
 
-                        for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                        for (gz = 0; gz < 2; gz++) {
                           {
                             long gy;
 
-                            for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                            for (gy = 0; gy < 2; gy++) {
                               {
                                 long gx;
 
-                                for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                for (gx = 0; gx < 2; gx++) {
                                   ((y)[((blk_all_len_2x * i) +
                                         (realidx +
                                          (num_ele *
@@ -3247,23 +3247,23 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a, long y_cpu
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       ((y)[((blk_all_len * i) +
                             (realidx +
                              (num_ele *
@@ -3278,15 +3278,15 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a, long y_cpu
                                {
                                  long gz;
 
-                                 for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                                 for (gz = 0; gz < 2; gz++) {
                                    {
                                      long gy;
 
-                                     for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                                     for (gy = 0; gy < 2; gy++) {
                                        {
                                          long gx;
 
-                                         for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                         for (gx = 0; gx < 2; gx++) {
                                            (ret =
                                                 (ret +
                                                  (0.125 *
@@ -3352,35 +3352,35 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a, long y_cp
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       {
                         long gz;
 
-                        for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                        for (gz = 0; gz < 2; gz++) {
                           {
                             long gy;
 
-                            for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                            for (gy = 0; gy < 2; gy++) {
                               {
                                 long gx;
 
-                                for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                for (gx = 0; gx < 2; gx++) {
                                   ((y)[((blk_all_len_2x * i) +
                                         (realidx +
                                          (num_ele *
@@ -3454,23 +3454,23 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       ((y)[((blk_all_len * i) +
                             (realidx +
                              (num_ele *
@@ -3481,15 +3481,15 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
                                {
                                  long gz;
 
-                                 for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                                 for (gz = 0; gz < 2; gz++) {
                                    {
                                      long gy;
 
-                                     for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                                     for (gy = 0; gy < 2; gy++) {
                                        {
                                          long gx;
 
-                                         for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                         for (gx = 0; gx < 2; gx++) {
                                            (ret =
                                                 (ret +
                                                  (0.125 *
@@ -3559,35 +3559,35 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a, double b
   {
     long i;
 
-    for ((i = local_ymin); (i < local_ymax); (i = (i + 1))) {
+    for (i = local_ymin; i < local_ymax; i++) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < ZLEN); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < YLEN); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < XLEN); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < XLEN; xyzx++) {
                   {
                     long realidx;
 
-                    for ((realidx = 0); (realidx < num_ele); (realidx = (realidx + 1))) {
+                    for (realidx = 0; realidx < num_ele; realidx++) {
                       {
                         long gz;
 
-                        for ((gz = 0); (gz < 2); (gz = (gz + 1))) {
+                        for (gz = 0; gz < 2; gz++) {
                           {
                             long gy;
 
-                            for ((gy = 0); (gy < 2); (gy = (gy + 1))) {
+                            for (gy = 0; gy < 2; gy++) {
                               {
                                 long gx;
 
-                                for ((gx = 0); (gx < 2); (gx = (gx + 1))) {
+                                for (gx = 0; gx < 2; gx++) {
                                   ((y)[((blk_all_len_2x * i) +
                                         (realidx +
                                          (num_ele *

@@ -57,7 +57,7 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
   {
     long l1;
 
-    for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
+    for (l1 = 0; l1 < cu_load; l1++) {
       long load0 = 1;
 
       use_local_particle_position = 1;
@@ -128,7 +128,7 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         {
           int g_inner;
 
-          for ((g_inner = 0); (g_inner < load0); (g_inner = (g_inner + 8))) {
+          for (g_inner = 0; g_inner < load0; g_inner += 8) {
             pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, g_inner, load0, Midx, Midy, Midz,
                                             Deltat);
             pushJ_vlo_K2_push_weights_x2x3(leaf_scr, &st, shE0, shB0, shB1, DELTA_X, DELTA_Y,
@@ -149,7 +149,7 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
   {
     long allgid;
 
-    for ((allgid = 0); (allgid < numgrid); (allgid = (allgid + 1))) {
+    for (allgid = 0; allgid < numgrid; allgid++) {
       int new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
 
       long c_gid = allgid;
@@ -233,7 +233,7 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         {
           int g_inner;
 
-          for ((g_inner = 0); (g_inner < load0); (g_inner = (g_inner + 8))) {
+          for (g_inner = 0; g_inner < load0; g_inner += 8) {
             pushJ_vlo_K1_setup_weights_x0x1(&st, particle_buf, g_inner, load0, Midx, Midy, Midz,
                                             Deltat);
             pushJ_vlo_K2_push_weights_x2x3(leaf_scr, &st, shE0, shB0, shB1, DELTA_X, DELTA_Y,

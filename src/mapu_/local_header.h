@@ -49,7 +49,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pret = (double *)&(ret);
   double *pinput = (double *)&(input);
   int g;
-  for ((g = 0); (g < 8); (g = (g + 1))) {
+  for (g = 0; g < 8; g++) {
     (pret)[g] = floor((pinput)[g]);
   }
   return ret;

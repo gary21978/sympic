@@ -86,9 +86,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp2_f0z_dif1x_f1y(const double *field, const double *f0z, const double *if1x_hi,
                                      const double *if1x_lo, const double *f1y) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 2)] *
                       (f0z[xyzz] * (((if1x_hi[xyzx] - if1x_lo[xyzx]) * f1y[xyzy])))));
@@ -102,9 +102,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp0_f0x_dif1y_f1z(const double *field, const double *f0x, const double *if1y_hi,
                                      const double *if1y_lo, const double *f1z) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 0)] *
                       (f0x[xyzx] * (((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1z[xyzz])))));
@@ -118,9 +118,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp1_f0y_dif1x_f1z(const double *field, const double *f0y, const double *if1x_hi,
                                      const double *if1x_lo, const double *f1z) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 1)] *
                       (f0y[xyzy] * (((if1x_hi[xyzx] - if1x_lo[xyzx]) * f1z[xyzz])))));
@@ -134,9 +134,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp0_f0x_dif1z_f1y(const double *field, const double *f0x, const double *if1z_hi,
                                      const double *if1z_lo, const double *f1y) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 0)] *
                       (f0x[xyzx] * (((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1y[xyzy])))));
@@ -150,9 +150,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp1_f0y_dif1z_f1x(const double *field, const double *f0y, const double *if1z_hi,
                                      const double *if1z_lo, const double *f1x) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 1)] *
                       (f0y[xyzy] * (((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1x[xyzx])))));
@@ -166,9 +166,9 @@ __device__ __noinline__ double
 pushJ_B_integral_comp2_f0z_dif1y_f1x(const double *field, const double *f0z, const double *if1y_hi,
                                      const double *if1y_lo, const double *f1x) {
   double sum = 0.0;
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 2)] *
                       (f0z[xyzz] * (((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1x[xyzx])))));
@@ -193,9 +193,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1x_f1y(
   eval_f1(rx_f1y, dix_f1y, wF1y);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 2)] *
                       (wF0z[xyzz] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1y[xyzy])))));
@@ -218,9 +218,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1y_f1z(
   eval_f1(rx_f1z, dix_f1z, wF1z);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 0)] *
                       (wF0x[xyzx] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1z[xyzz])))));
@@ -243,9 +243,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1x_f1z(
   eval_f1(rx_f1z, dix_f1z, wF1z);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 1)] *
                       (wF0y[xyzy] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1z[xyzz])))));
@@ -268,9 +268,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1z_f1y(
   eval_f1(rx_f1y, dix_f1y, wF1y);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 0)] *
                       (wF0x[xyzx] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1y[xyzy])))));
@@ -293,9 +293,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1z_f1x(
   eval_f1(rx_f1x, dix_f1x, wF1x);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 1)] *
                       (wF0y[xyzy] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1x[xyzx])))));
@@ -318,9 +318,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1y_f1x(
   eval_f1(rx_f1x, dix_f1x, wF1x);
 
   v8fp64 sum = vbroadcast(0.0);
-  for (long xyzz = 0; xyzz < 5; xyzz = (xyzz + 1)) {
-    for (long xyzy = 0; xyzy < 5; xyzy = (xyzy + 1)) {
-      for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+  for (long xyzz = 0; xyzz < 5; xyzz++) {
+    for (long xyzy = 0; xyzy < 5; xyzy++) {
+      for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         sum = sum + ((field[((allidx * 3) + 2)] *
                       (wF0z[xyzz] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1x[xyzx])))));
@@ -344,9 +344,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ex(v8fp64 *scr, const double *shE0
   eval_f0(rx1z, dix1z, f0_z1);
 
   v8fp64 AllEx = vbroadcast(0.0);
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = (vbroadcast(((shE0)[(0 + (3 * (idx + (5 * (idy + (idz * 5))))))] + 0)) *
                        ((f1_x1)[idx] * ((f0_y1)[idy] * (f0_z1)[idz])));
         AllEx = (AllEx + term);
@@ -367,9 +367,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ey(v8fp64 *scr, const double *shE0
   eval_f0(rx1x, dix1x, f0_x1);
 
   v8fp64 AllEy = vbroadcast(0.0);
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = (vbroadcast(((shE0)[(1 + (3 * (idz + (5 * (idx + (idy * 5))))))] + 0)) *
                        ((f1_y1)[idx] * ((f0_z1)[idy] * (f0_x1)[idz])));
         AllEy = (AllEy + term);
@@ -390,9 +390,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ez(v8fp64 *scr, const double *shE0
   eval_f0(rx1y, dix1y, f0_y1);
 
   v8fp64 AllEz = vbroadcast(0.0);
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = (vbroadcast(((shE0)[(2 + (3 * (idy + (5 * (idz + (idx * 5))))))] + 0)) *
                        ((f1_z1)[idx] * ((f0_x1)[idy] * (f0_y1)[idz])));
         AllEz = (AllEz + term);

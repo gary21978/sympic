@@ -28,7 +28,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pret = (double *)&(ret);
   double *pinput = (double *)&(input);
   int g;
-  for ((g = 0); (g < 8); (g = (g + 1))) {
+  for (g = 0; g < 8; g++) {
     (pret)[g] = floor((pinput)[g]);
   }
   return ret;
@@ -135,7 +135,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   __mem0__ int numcpvec[IDX_OPT_MAX];
   {
     __mem1__ MAPU_LONG l1;
-    for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
+    for (l1 = 0; l1 < cu_load; l1++) {
       __mem1__ MAPU_LONG load0;
       load0 = 1;
       __mem1__ MAPU_LONG new_load;
@@ -178,13 +178,13 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
           allnumcp = 0;
           {
             __mem1__ MAPU_LONG g;
-            for ((g = 0); (g < 3); (g = (g + 1))) {
+            for (g = 0; g < 3; g++) {
               (enevec)[(g + (3 * __idx))] = 0;
               (avvvec)[(g + (3 * __idx))] = 0;
             }
           }
           (numcpvec)[(1 * __idx)] = 0;
-          for (0; (((__idx * 64) + lg) < load0); (lg = (lg + (__xlen * 64)))) {
+          for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
             __mem0__ double a_rva[(64 * 6)];
             __mem1__ int __idx_all_base;
             __idx_all_base = ((__idx * 64) + lg);
@@ -221,7 +221,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             aver_vz = 0.0;
             {
               __mem1__ MAPU_LONG g;
-              for ((g = 0); (g < numcp); (g = (g + 1))) {
+              for (g = 0; g < numcp; g++) {
                 __mem1__ double vx;
                 vx = ((a_rva + (g * 6)))[3];
                 __mem1__ double vy;
@@ -254,7 +254,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             {
               {
                 __mem1__ MAPU_LONG g;
-                for ((g = 0); (g < __xlen); (g = (g + 1))) {
+                for (g = 0; g < __xlen; g++) {
                   allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
                   allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
                   allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
@@ -321,7 +321,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   }
   {
     __mem1__ MAPU_LONG allgid;
-    for ((allgid = 0); (allgid < numgrid); (allgid = (allgid + 1))) {
+    for (allgid = 0; allgid < numgrid; allgid++) {
       __mem1__ int new_load_tmp;
       new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
       __mem1__ MAPU_LONG c_gid;
@@ -372,13 +372,13 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
           allnumcp = 0;
           {
             __mem1__ MAPU_LONG g;
-            for ((g = 0); (g < 3); (g = (g + 1))) {
+            for (g = 0; g < 3; g++) {
               (enevec)[(g + (3 * __idx))] = 0;
               (avvvec)[(g + (3 * __idx))] = 0;
             }
           }
           (numcpvec)[(1 * __idx)] = 0;
-          for (0; (((__idx * 64) + lg) < load0); (lg = (lg + (__xlen * 64)))) {
+          for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
             __mem0__ double a_rva[(64 * 6)];
             __mem1__ int __idx_all_base;
             __idx_all_base = ((__idx * 64) + lg);
@@ -416,7 +416,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             aver_vz = 0.0;
             {
               __mem1__ MAPU_LONG g;
-              for ((g = 0); (g < numcp); (g = (g + 1))) {
+              for (g = 0; g < numcp; g++) {
                 __mem1__ double vx;
                 vx = ((a_rva + (g * 6)))[3];
                 __mem1__ double vy;
@@ -449,7 +449,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             {
               {
                 __mem1__ MAPU_LONG g;
-                for ((g = 0); (g < __xlen); (g = (g + 1))) {
+                for (g = 0; g < __xlen; g++) {
                   allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
                   allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
                   allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);

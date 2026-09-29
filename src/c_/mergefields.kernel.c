@@ -86,16 +86,16 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long ovlpyma = (field_yma - field_ymi);
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
@@ -132,7 +132,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
                 }
                 {
                   long g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
@@ -163,7 +163,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
   size_t v_offset = 0;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -240,16 +240,16 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -286,7 +286,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
@@ -355,7 +355,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
   (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -432,16 +432,16 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -478,7 +478,7 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
@@ -579,16 +579,16 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long ovlpyma = (field_yma - field_ymi);
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
@@ -625,7 +625,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
                 }
                 {
                   long g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
                          (i * ovlpalllen) +
@@ -657,7 +657,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
   size_t v_offset = 0;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -734,16 +734,16 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -780,7 +780,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
@@ -850,7 +850,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
   (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -927,16 +927,16 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -973,7 +973,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
@@ -1075,16 +1075,16 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long ovlpyma = (field_yma - field_ymi);
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
@@ -1121,7 +1121,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
                 }
                 {
                   long g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz)))))))] =
@@ -1156,7 +1156,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
   size_t v_offset = 0;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -1233,16 +1233,16 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -1279,7 +1279,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
@@ -1352,7 +1352,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
   (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -1429,16 +1429,16 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -1475,7 +1475,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecmain)[(
                                  (i * blk_all_len) +
@@ -1580,16 +1580,16 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long ovlpyma = (field_yma - field_ymi);
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
@@ -1626,7 +1626,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
                 }
                 {
                   long g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
                          (i * ovlpalllen) +
@@ -1658,7 +1658,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
   size_t v_offset = 0;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -1735,16 +1735,16 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -1781,7 +1781,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecovlp)[(
                                  (i * ovlpalllen) +
@@ -1851,7 +1851,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
   (vecovlps)[26] = vecovlp26;
   {
     long ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -1928,16 +1928,16 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
           long ovlpyma = (field_yma - field_ymi);
           long ovlpzma = (field_zma - field_zmi);
           long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for ((i = local_ymin); (i < local_ymax); i++) {
+          for (i = local_ymin; i < local_ymax; i++) {
             {
               long xyzz;
-              for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
                 {
                   long xyzy;
-                  for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                     {
                       long xyzx;
-                      for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                         long lxyzx = (xyzx + field_xmi);
                         long lxyzy = (xyzy + field_ymi);
                         long lxyzz = (xyzz + field_zmi);
@@ -1974,7 +1974,7 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                         }
                         {
                           long g = 0;
-                          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                             long realidx = (__idx + (g * __xlen));
                             ((vecovlp)[(
                                  (i * ovlpalllen) +

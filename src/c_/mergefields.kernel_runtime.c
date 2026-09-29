@@ -589,7 +589,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_m2o_once_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp0, (kerstr)->vecovlp1, (kerstr)->vecovlp2,
           (kerstr)->vecovlp3, (kerstr)->vecovlp4, (kerstr)->vecovlp5, (kerstr)->vecovlp6,
@@ -1499,7 +1499,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_m2o_all_in_one_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlps, ((kerstr)->numvec)[0], ((kerstr)->num_ele)[0],
           ((kerstr)->xblock)[0], ((kerstr)->yblock)[0], ((kerstr)->zblock)[0], ((kerstr)->ovlp)[0],
@@ -1864,7 +1864,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_m2o_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp, ((kerstr)->ovlpindex)[0], ((kerstr)->numvec)[0],
           ((kerstr)->num_ele)[0], ((kerstr)->xblock)[0], ((kerstr)->yblock)[0],
@@ -2653,7 +2653,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_o2m_once_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp0, (kerstr)->vecovlp1, (kerstr)->vecovlp2,
           (kerstr)->vecovlp3, (kerstr)->vecovlp4, (kerstr)->vecovlp5, (kerstr)->vecovlp6,
@@ -3563,7 +3563,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_o2m_all_in_one_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlps, ((kerstr)->numvec)[0], ((kerstr)->num_ele)[0],
           ((kerstr)->xblock)[0], ((kerstr)->yblock)[0], ((kerstr)->zblock)[0], ((kerstr)->ovlp)[0],
@@ -3928,7 +3928,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_merge_ovlp_o2m_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp, ((kerstr)->ovlpindex)[0], ((kerstr)->numvec)[0],
           ((kerstr)->num_ele)[0], ((kerstr)->xblock)[0], ((kerstr)->yblock)[0],
@@ -4717,7 +4717,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_m2o_once_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp0, (kerstr)->vecovlp1, (kerstr)->vecovlp2,
           (kerstr)->vecovlp3, (kerstr)->vecovlp4, (kerstr)->vecovlp5, (kerstr)->vecovlp6,
@@ -5627,7 +5627,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_m2o_all_in_one_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlps, ((kerstr)->numvec)[0], ((kerstr)->num_ele)[0],
           ((kerstr)->xblock)[0], ((kerstr)->yblock)[0], ((kerstr)->zblock)[0], ((kerstr)->ovlp)[0],
@@ -5992,7 +5992,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_m2o_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp, ((kerstr)->ovlpindex)[0], ((kerstr)->numvec)[0],
           ((kerstr)->num_ele)[0], ((kerstr)->xblock)[0], ((kerstr)->yblock)[0],
@@ -6780,7 +6780,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_o2m_once_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp0, (kerstr)->vecovlp1, (kerstr)->vecovlp2,
           (kerstr)->vecovlp3, (kerstr)->vecovlp4, (kerstr)->vecovlp5, (kerstr)->vecovlp6,
@@ -7690,7 +7690,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_o2m_all_in_one_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlps, ((kerstr)->numvec)[0], ((kerstr)->num_ele)[0],
           ((kerstr)->xblock)[0], ((kerstr)->yblock)[0], ((kerstr)->zblock)[0], ((kerstr)->ovlp)[0],
@@ -8055,7 +8055,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
     int ysingle = ((scmc_internal_g_ylen + (numt - 1)) / numt);
     int ymin = (tid * ysingle);
     int ymax = ((1 + tid) * ysingle);
-    for ((yid = ymin); ((yid < ymax) && (yid < scmc_internal_g_ylen)); (yid = (yid + 1))) {
+    for (yid = ymin; (yid < ymax) && (yid < scmc_internal_g_ylen); yid++) {
       c_sync_ovlp_o2m_scmc_kernel(
           (kerstr)->vecmain, (kerstr)->vecovlp, ((kerstr)->ovlpindex)[0], ((kerstr)->numvec)[0],
           ((kerstr)->num_ele)[0], ((kerstr)->xblock)[0], ((kerstr)->yblock)[0],

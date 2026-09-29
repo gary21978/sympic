@@ -431,11 +431,11 @@ __global__ void mapu_sync_ovlp_o2m_once(
 
       for (i = local_ymin; i < local_ymax; i++) {
         __mem1__ MAPU_LONG xyzz;
-        for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
           __mem1__ MAPU_LONG xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             __mem1__ MAPU_LONG xyzx;
-            for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+            for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
               __mem1__ MAPU_LONG lxyzx;
               lxyzx = (xyzx + field_xmi);
               __mem1__ MAPU_LONG lxyzy;
@@ -558,12 +558,12 @@ __global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
 
   for (i = local_ymin; i < local_ymax; i++) {
     __mem1__ MAPU_LONG xyzz;
-    for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
 
       __mem1__ MAPU_LONG xyzy;
-      for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
         __mem1__ MAPU_LONG xyzx;
-        for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
           __mem1__ MAPU_LONG lxyzx;
           lxyzx = (xyzx + field_xmi);
           __mem1__ MAPU_LONG lxyzy;
@@ -577,7 +577,7 @@ __global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
 
           __mem1__ MAPU_LONG g;
           g = 0;
-          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
             __mem1__ MAPU_LONG realidx;
             realidx = (__idx + (g * __xlen));
             ((vecovlp)[((i * ovlpalllen) +
@@ -606,7 +606,7 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
   v_offset = 0;
   {
     __mem1__ MAPU_LONG ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if ((ovlpindex == 13)) {
         {
           continue;
@@ -683,13 +683,13 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
         ovlpzma = (field_zma - field_zmi);
         __mem1__ MAPU_LONG ovlpalllen;
         ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           __mem1__ MAPU_LONG xyzz;
-          for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
             __mem1__ MAPU_LONG xyzy;
-            for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
               __mem1__ MAPU_LONG xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 __mem1__ MAPU_LONG lxyzx;
                 lxyzx = (xyzx + field_xmi);
                 __mem1__ MAPU_LONG lxyzy;
@@ -703,7 +703,7 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
 
                 __mem1__ MAPU_LONG g;
                 g = 0;
-                for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                   __mem1__ MAPU_LONG realidx;
                   realidx = (__idx + (g * __xlen));
                   ((vecovlp)[(
@@ -770,7 +770,7 @@ __global__ void mapu_sync_ovlp_m2o_once(
   (vecovlps)[26] = vecovlp26;
   {
     __mem1__ MAPU_LONG ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -849,13 +849,13 @@ __global__ void mapu_sync_ovlp_m2o_once(
         ovlpzma = (field_zma - field_zmi);
         __mem1__ MAPU_LONG ovlpalllen;
         ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           __mem1__ MAPU_LONG xyzz;
-          for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
             __mem1__ MAPU_LONG xyzy;
-            for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
               __mem1__ MAPU_LONG xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 __mem1__ MAPU_LONG lxyzx;
                 lxyzx = (xyzx + field_xmi);
                 __mem1__ MAPU_LONG lxyzy;
@@ -869,7 +869,7 @@ __global__ void mapu_sync_ovlp_m2o_once(
 
                 __mem1__ MAPU_LONG g;
                 g = 0;
-                for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                   __mem1__ MAPU_LONG realidx;
                   realidx = (__idx + (g * __xlen));
                   ((vecovlp)[(
@@ -967,13 +967,13 @@ __global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp
   ovlpzma = (field_zma - field_zmi);
   __mem1__ MAPU_LONG ovlpalllen;
   ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     __mem1__ MAPU_LONG xyzz;
-    for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
       __mem1__ MAPU_LONG xyzy;
-      for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
         __mem1__ MAPU_LONG xyzx;
-        for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
           __mem1__ MAPU_LONG lxyzx;
           lxyzx = (xyzx + field_xmi);
           __mem1__ MAPU_LONG lxyzy;
@@ -987,7 +987,7 @@ __global__ void mapu_merge_ovlp_o2m(__DDR double *vecmain, __DDR double *vecovlp
 
           __mem1__ MAPU_LONG g;
           g = 0;
-          for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
             __mem1__ MAPU_LONG realidx;
             realidx = (__idx + (g * __xlen));
             ((vecmain)[((i * blk_all_len) +
@@ -1019,7 +1019,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
   v_offset = 0;
   {
     __mem1__ MAPU_LONG ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if ((ovlpindex == 13)) {
         {
@@ -1097,13 +1097,13 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
         ovlpzma = (field_zma - field_zmi);
         __mem1__ MAPU_LONG ovlpalllen;
         ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           __mem1__ MAPU_LONG xyzz;
-          for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
             __mem1__ MAPU_LONG xyzy;
-            for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
               __mem1__ MAPU_LONG xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 __mem1__ MAPU_LONG lxyzx;
                 lxyzx = (xyzx + field_xmi);
                 __mem1__ MAPU_LONG lxyzy;
@@ -1118,7 +1118,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
                 {
                   __mem1__ MAPU_LONG g;
                   g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     __mem1__ MAPU_LONG realidx;
                     realidx = (__idx + (g * __xlen));
                     ((vecmain)[((i * blk_all_len) +
@@ -1190,7 +1190,7 @@ __global__ void mapu_merge_ovlp_o2m_once(
   (vecovlps)[26] = vecovlp26;
   {
     __mem1__ MAPU_LONG ovlpindex;
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if ((ovlpindex == 13)) {
         continue;
       } else {
@@ -1264,13 +1264,13 @@ __global__ void mapu_merge_ovlp_o2m_once(
         ovlpzma = (field_zma - field_zmi);
         __mem1__ MAPU_LONG ovlpalllen;
         ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           __mem1__ MAPU_LONG xyzz;
-          for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
             __mem1__ MAPU_LONG xyzy;
-            for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
               __mem1__ MAPU_LONG xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 __mem1__ MAPU_LONG lxyzx;
                 lxyzx = (xyzx + field_xmi);
                 __mem1__ MAPU_LONG lxyzy;
@@ -1284,7 +1284,7 @@ __global__ void mapu_merge_ovlp_o2m_once(
 
                 __mem1__ MAPU_LONG g;
                 g = 0;
-                for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                   __mem1__ MAPU_LONG realidx;
                   realidx = (__idx + (g * __xlen));
                   ((vecmain)[((i * blk_all_len) +
@@ -1393,16 +1393,16 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
   ovlpzma = (field_zma - field_zmi);
   __mem1__ MAPU_LONG ovlpalllen;
   ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       __mem1__ MAPU_LONG xyzz;
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           __mem1__ MAPU_LONG xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               __mem1__ MAPU_LONG xyzx;
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 __mem1__ MAPU_LONG lxyzx;
                 lxyzx = (xyzx + field_xmi);
                 __mem1__ MAPU_LONG lxyzy;
@@ -1443,7 +1443,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
                 {
                   __mem1__ MAPU_LONG g;
                   g = 0;
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     __mem1__ MAPU_LONG realidx;
                     realidx = (__idx + (g * __xlen));
                     ((vecovlp)[(
@@ -1478,7 +1478,7 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
   v_offset = 0;
 
   __mem1__ MAPU_LONG ovlpindex;
-  for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+  for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
     if ((ovlpindex == 13)) {
       continue;
     } else {
@@ -1552,13 +1552,13 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
       ovlpzma = (field_zma - field_zmi);
       __mem1__ MAPU_LONG ovlpalllen;
       ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-      for ((i = local_ymin); (i < local_ymax); i++) {
+      for (i = local_ymin; i < local_ymax; i++) {
         __mem1__ MAPU_LONG xyzz;
-        for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
           __mem1__ MAPU_LONG xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             __mem1__ MAPU_LONG xyzx;
-            for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+            for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
               __mem1__ MAPU_LONG lxyzx;
               lxyzx = (xyzx + field_xmi);
               __mem1__ MAPU_LONG lxyzy;
@@ -1568,7 +1568,7 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
 
               __mem1__ MAPU_LONG g;
               g = 0;
-              for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+              for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                 __mem1__ MAPU_LONG realidx;
                 realidx = (__idx + (g * __xlen));
                 ((vecovlp)[(
@@ -1634,7 +1634,7 @@ __global__ void mapu_merge_ovlp_m2o_once(
   (vecovlps)[26] = vecovlp26;
 
   __mem1__ MAPU_LONG ovlpindex;
-  for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+  for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
     if ((ovlpindex == 13)) {
       continue;
     } else {
@@ -1709,16 +1709,16 @@ __global__ void mapu_merge_ovlp_m2o_once(
       ovlpzma = (field_zma - field_zmi);
       __mem1__ MAPU_LONG ovlpalllen;
       ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-      for ((i = local_ymin); (i < local_ymax); i++) {
+      for (i = local_ymin; i < local_ymax; i++) {
 
         __mem1__ MAPU_LONG xyzz;
-        for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
 
           __mem1__ MAPU_LONG xyzy;
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
 
             __mem1__ MAPU_LONG xyzx;
-            for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+            for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
               __mem1__ MAPU_LONG lxyzx;
               lxyzx = (xyzx + field_xmi);
               __mem1__ MAPU_LONG lxyzy;
@@ -1728,7 +1728,7 @@ __global__ void mapu_merge_ovlp_m2o_once(
 
               __mem1__ MAPU_LONG g;
               g = 0;
-              for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+              for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                 __mem1__ MAPU_LONG realidx;
                 realidx = (__idx + (g * __xlen));
                 ((vecovlp)[(

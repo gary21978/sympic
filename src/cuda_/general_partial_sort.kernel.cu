@@ -33,7 +33,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzx = (grid_id % XLEN);
@@ -54,7 +54,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -67,8 +67,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -92,7 +91,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 6); (i = (i + 1))) {
+            for (i = 0; i < 6; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -134,11 +133,11 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN6 = 0;
 
-          for (; (MYGEN6 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN6 = (MYGEN6 + __xlen))) {
+          for (; MYGEN6 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN6 = (MYGEN6 + __xlen)) {
             int ridx = (MYGEN6 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -154,7 +153,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN7 = 0;
 
-          for (; (MYGEN7 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN7 = (MYGEN7 + __xlen))) {
+          for (; MYGEN7 < ((tln_shared)[(p / __xlen)] * 6); MYGEN7 = (MYGEN7 + __xlen)) {
             int ridx = (MYGEN7 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -169,7 +168,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN8 = 0;
 
-          for (; (MYGEN8 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN8 = (MYGEN8 + __xlen))) {
+          for (; MYGEN8 < ((trn_shared)[(p / __xlen)] * 6); MYGEN8 = (MYGEN8 + __xlen)) {
             int ridx = (MYGEN8 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -208,8 +207,8 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN9 = 0;
 
-          for (; (MYGEN9 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN9 = (MYGEN9 + __xlen))) {
+          for (; MYGEN9 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN9 = (MYGEN9 + __xlen)) {
             int ridx = (MYGEN9 + __idx);
 
             if ((ridx < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -227,7 +226,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN10 = 0;
 
-        for (; (MYGEN10 < (num_copy_real_11516lap * 6)); (MYGEN10 = (MYGEN10 + __xlen))) {
+        for (; MYGEN10 < (num_copy_real_11516lap * 6); MYGEN10 = (MYGEN10 + __xlen)) {
           int ridx = (MYGEN10 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -251,8 +250,8 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN11 = 0;
 
-          for (; (MYGEN11 < (6 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN11 = (MYGEN11 + __xlen))) {
+          for (; MYGEN11 < (6 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN11 = (MYGEN11 + __xlen)) {
             int ridx = (MYGEN11 + __idx);
 
             if ((ridx < (6 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -269,7 +268,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN12 = 0;
 
-        for (; (MYGEN12 < (num_copy_real_11516lap * 6)); (MYGEN12 = (MYGEN12 + __xlen))) {
+        for (; MYGEN12 < (num_copy_real_11516lap * 6); MYGEN12 = (MYGEN12 + __xlen)) {
           int ridx = (MYGEN12 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -299,7 +298,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN13 = 0;
 
-          for (; (MYGEN13 < (6 * (num_write_plus - cap_tmp))); (MYGEN13 = (MYGEN13 + __xlen))) {
+          for (; MYGEN13 < (6 * (num_write_plus - cap_tmp)); MYGEN13 = (MYGEN13 + __xlen)) {
             int ridx = (MYGEN13 + __idx);
 
             if (ridx < (6 * (num_write_plus - cap_tmp))) {
@@ -315,7 +314,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN14 = 0;
 
-        for (; (MYGEN14 < (num_copy_real_11516lap * 6)); (MYGEN14 = (MYGEN14 + __xlen))) {
+        for (; MYGEN14 < (num_copy_real_11516lap * 6); MYGEN14 = (MYGEN14 + __xlen)) {
           int ridx = (MYGEN14 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -338,11 +337,11 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -366,7 +365,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -379,7 +378,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -401,7 +400,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -439,11 +438,11 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN15 = 0;
 
-        for (; (MYGEN15 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN15 = (MYGEN15 + __xlen))) {
+        for (; MYGEN15 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN15 = (MYGEN15 + __xlen)) {
           int ridx = (MYGEN15 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -456,7 +455,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN16 = 0;
 
-        for (; (MYGEN16 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN16 = (MYGEN16 + __xlen))) {
+        for (; MYGEN16 < ((tln_shared)[(p / __xlen)] * 6); MYGEN16 = (MYGEN16 + __xlen)) {
           int ridx = (MYGEN16 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -471,7 +470,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN17 = 0;
 
-        for (; (MYGEN17 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN17 = (MYGEN17 + __xlen))) {
+        for (; MYGEN17 < ((trn_shared)[(p / __xlen)] * 6); MYGEN17 = (MYGEN17 + __xlen)) {
           int ridx = (MYGEN17 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -489,7 +488,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN18 = (num_write_plus * 6);
 
-    for (; (MYGEN18 > 0); (MYGEN18 = (MYGEN18 + -__xlen))) {
+    for (; MYGEN18 > 0; MYGEN18 = (MYGEN18 + -__xlen)) {
       int ridx = (MYGEN18 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -517,11 +516,11 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -570,18 +569,18 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -590,17 +589,17 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 6)))[0] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -616,11 +615,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -632,11 +631,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -657,7 +656,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -681,18 +680,18 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -705,11 +704,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -718,18 +717,17 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 6)))[0] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -743,7 +741,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 6); (i = (i + 1))) {
+              for (i = 0; i < 6; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                      ((local_pos_cache + (g * 6)))[i]);
               }
@@ -756,12 +754,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -775,7 +772,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -790,12 +787,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -816,12 +812,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 6)))[((inner_step * 1) + inner_g)]);
@@ -846,11 +841,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -860,12 +855,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -876,7 +870,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -884,12 +878,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_plus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -901,7 +894,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -911,11 +904,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -938,11 +931,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw +
                            ((4 * ((cu_offset + grid_id) - 1)) + 2)))[((inner_step * 2) + inner_g)]);
@@ -975,12 +968,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -994,12 +986,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - (1 * grid_cache_len)) * 6)))[((inner_step * 1) + inner_g)]);
@@ -1022,12 +1013,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -1039,12 +1029,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) - (1 * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -1060,12 +1049,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -1084,12 +1072,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -1107,11 +1094,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -1122,11 +1109,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - 1))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -1151,12 +1138,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -1170,11 +1156,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -1191,11 +1177,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -1205,7 +1191,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -1214,11 +1200,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -1241,11 +1227,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -1257,11 +1243,11 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -1305,7 +1291,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzy = ((grid_id / XLEN) % YLEN);
@@ -1326,7 +1312,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -1339,8 +1325,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -1364,7 +1349,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 6); (i = (i + 1))) {
+            for (i = 0; i < 6; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -1406,11 +1391,11 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN19 = 0;
 
-          for (; (MYGEN19 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN19 = (MYGEN19 + __xlen))) {
+          for (; MYGEN19 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN19 = (MYGEN19 + __xlen)) {
             int ridx = (MYGEN19 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -1426,7 +1411,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN20 = 0;
 
-          for (; (MYGEN20 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN20 = (MYGEN20 + __xlen))) {
+          for (; MYGEN20 < ((tln_shared)[(p / __xlen)] * 6); MYGEN20 = (MYGEN20 + __xlen)) {
             int ridx = (MYGEN20 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -1441,7 +1426,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN21 = 0;
 
-          for (; (MYGEN21 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN21 = (MYGEN21 + __xlen))) {
+          for (; MYGEN21 < ((trn_shared)[(p / __xlen)] * 6); MYGEN21 = (MYGEN21 + __xlen)) {
             int ridx = (MYGEN21 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -1480,8 +1465,8 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN22 = 0;
 
-          for (; (MYGEN22 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN22 = (MYGEN22 + __xlen))) {
+          for (; MYGEN22 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN22 = (MYGEN22 + __xlen)) {
             int ridx = (MYGEN22 + __idx);
 
             if ((ridx < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -1500,7 +1485,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN23 = 0;
 
-        for (; (MYGEN23 < (num_copy_real_11516lap * 6)); (MYGEN23 = (MYGEN23 + __xlen))) {
+        for (; MYGEN23 < (num_copy_real_11516lap * 6); MYGEN23 = (MYGEN23 + __xlen)) {
           int ridx = (MYGEN23 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -1524,8 +1509,8 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN24 = 0;
 
-          for (; (MYGEN24 < (6 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN24 = (MYGEN24 + __xlen))) {
+          for (; MYGEN24 < (6 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN24 = (MYGEN24 + __xlen)) {
             int ridx = (MYGEN24 + __idx);
 
             if ((ridx < (6 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -1542,7 +1527,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN25 = 0;
 
-        for (; (MYGEN25 < (num_copy_real_11516lap * 6)); (MYGEN25 = (MYGEN25 + __xlen))) {
+        for (; MYGEN25 < (num_copy_real_11516lap * 6); MYGEN25 = (MYGEN25 + __xlen)) {
           int ridx = (MYGEN25 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -1572,7 +1557,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN26 = 0;
 
-          for (; (MYGEN26 < (6 * (num_write_plus - cap_tmp))); (MYGEN26 = (MYGEN26 + __xlen))) {
+          for (; MYGEN26 < (6 * (num_write_plus - cap_tmp)); MYGEN26 = (MYGEN26 + __xlen)) {
             int ridx = (MYGEN26 + __idx);
 
             if (ridx < (6 * (num_write_plus - cap_tmp))) {
@@ -1588,7 +1573,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN27 = 0;
 
-        for (; (MYGEN27 < (num_copy_real_11516lap * 6)); (MYGEN27 = (MYGEN27 + __xlen))) {
+        for (; MYGEN27 < (num_copy_real_11516lap * 6); MYGEN27 = (MYGEN27 + __xlen)) {
           int ridx = (MYGEN27 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -1611,11 +1596,11 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -1639,7 +1624,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -1652,7 +1637,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -1674,7 +1659,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -1712,11 +1697,11 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN28 = 0;
 
-        for (; (MYGEN28 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN28 = (MYGEN28 + __xlen))) {
+        for (; MYGEN28 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN28 = (MYGEN28 + __xlen)) {
           int ridx = (MYGEN28 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -1729,7 +1714,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN29 = 0;
 
-        for (; (MYGEN29 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN29 = (MYGEN29 + __xlen))) {
+        for (; MYGEN29 < ((tln_shared)[(p / __xlen)] * 6); MYGEN29 = (MYGEN29 + __xlen)) {
           int ridx = (MYGEN29 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -1744,7 +1729,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN30 = 0;
 
-        for (; (MYGEN30 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN30 = (MYGEN30 + __xlen))) {
+        for (; MYGEN30 < ((trn_shared)[(p / __xlen)] * 6); MYGEN30 = (MYGEN30 + __xlen)) {
           int ridx = (MYGEN30 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -1762,7 +1747,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN31 = (num_write_plus * 6);
 
-    for (; (MYGEN31 > 0); (MYGEN31 = (MYGEN31 + -__xlen))) {
+    for (; MYGEN31 > 0; MYGEN31 = (MYGEN31 + -__xlen)) {
       int ridx = (MYGEN31 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -1790,11 +1775,11 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -1843,18 +1828,18 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -1863,17 +1848,17 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 6)))[1] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -1889,11 +1874,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -1905,11 +1890,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -1930,7 +1915,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -1954,18 +1939,18 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -1978,11 +1963,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -1991,18 +1976,17 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 6)))[1] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -2016,7 +2000,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 6); (i = (i + 1))) {
+              for (i = 0; i < 6; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                      ((local_pos_cache + (g * 6)))[i]);
               }
@@ -2029,12 +2013,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -2048,7 +2031,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -2063,12 +2046,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -2089,12 +2071,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 6)))[((inner_step * 1) + inner_g)]);
@@ -2119,11 +2100,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -2133,12 +2114,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -2149,7 +2129,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -2157,12 +2137,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_plus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -2174,7 +2153,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -2184,11 +2163,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -2212,11 +2191,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - XLEN)) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -2249,12 +2228,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -2268,12 +2246,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - (XLEN * grid_cache_len)) *
@@ -2297,12 +2274,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -2314,12 +2290,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) -
                       (XLEN * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
@@ -2336,12 +2311,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -2360,12 +2334,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -2383,11 +2356,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -2398,11 +2371,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - XLEN))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -2427,12 +2400,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -2446,11 +2418,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -2467,11 +2439,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -2481,7 +2453,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -2490,11 +2462,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -2517,11 +2489,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -2533,11 +2505,11 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -2581,7 +2553,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (6 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzz = (grid_id / (XLEN * YLEN));
@@ -2602,7 +2574,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -2615,8 +2587,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -2640,7 +2611,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 6); (i = (i + 1))) {
+            for (i = 0; i < 6; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -2682,11 +2653,11 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN32 = 0;
 
-          for (; (MYGEN32 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN32 = (MYGEN32 + __xlen))) {
+          for (; MYGEN32 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN32 = (MYGEN32 + __xlen)) {
             int ridx = (MYGEN32 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -2702,7 +2673,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN33 = 0;
 
-          for (; (MYGEN33 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN33 = (MYGEN33 + __xlen))) {
+          for (; MYGEN33 < ((tln_shared)[(p / __xlen)] * 6); MYGEN33 = (MYGEN33 + __xlen)) {
             int ridx = (MYGEN33 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -2717,7 +2688,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN34 = 0;
 
-          for (; (MYGEN34 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN34 = (MYGEN34 + __xlen))) {
+          for (; MYGEN34 < ((trn_shared)[(p / __xlen)] * 6); MYGEN34 = (MYGEN34 + __xlen)) {
             int ridx = (MYGEN34 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -2756,8 +2727,8 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN35 = 0;
 
-          for (; (MYGEN35 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN35 = (MYGEN35 + __xlen))) {
+          for (; MYGEN35 < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN35 = (MYGEN35 + __xlen)) {
             int ridx = (MYGEN35 + __idx);
 
             if ((ridx < (6 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -2776,7 +2747,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN36 = 0;
 
-        for (; (MYGEN36 < (num_copy_real_11516lap * 6)); (MYGEN36 = (MYGEN36 + __xlen))) {
+        for (; MYGEN36 < (num_copy_real_11516lap * 6); MYGEN36 = (MYGEN36 + __xlen)) {
           int ridx = (MYGEN36 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -2801,8 +2772,8 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN37 = 0;
 
-          for (; (MYGEN37 < (6 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN37 = (MYGEN37 + __xlen))) {
+          for (; MYGEN37 < (6 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN37 = (MYGEN37 + __xlen)) {
             int ridx = (MYGEN37 + __idx);
 
             if ((ridx < (6 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -2819,7 +2790,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN38 = 0;
 
-        for (; (MYGEN38 < (num_copy_real_11516lap * 6)); (MYGEN38 = (MYGEN38 + __xlen))) {
+        for (; MYGEN38 < (num_copy_real_11516lap * 6); MYGEN38 = (MYGEN38 + __xlen)) {
           int ridx = (MYGEN38 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -2849,7 +2820,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long MYGEN39 = 0;
 
-          for (; (MYGEN39 < (6 * (num_write_plus - cap_tmp))); (MYGEN39 = (MYGEN39 + __xlen))) {
+          for (; MYGEN39 < (6 * (num_write_plus - cap_tmp)); MYGEN39 = (MYGEN39 + __xlen)) {
             int ridx = (MYGEN39 + __idx);
 
             if (ridx < (6 * (num_write_plus - cap_tmp))) {
@@ -2865,7 +2836,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN40 = 0;
 
-        for (; (MYGEN40 < (num_copy_real_11516lap * 6)); (MYGEN40 = (MYGEN40 + __xlen))) {
+        for (; MYGEN40 < (num_copy_real_11516lap * 6); MYGEN40 = (MYGEN40 + __xlen)) {
           int ridx = (MYGEN40 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 6)) {
@@ -2888,11 +2859,11 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -2916,7 +2887,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -2929,7 +2900,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -2951,7 +2922,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -2989,11 +2960,11 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN41 = 0;
 
-        for (; (MYGEN41 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN41 = (MYGEN41 + __xlen))) {
+        for (; MYGEN41 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN41 = (MYGEN41 + __xlen)) {
           int ridx = (MYGEN41 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -3006,7 +2977,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN42 = 0;
 
-        for (; (MYGEN42 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN42 = (MYGEN42 + __xlen))) {
+        for (; MYGEN42 < ((tln_shared)[(p / __xlen)] * 6); MYGEN42 = (MYGEN42 + __xlen)) {
           int ridx = (MYGEN42 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -3021,7 +2992,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long MYGEN43 = 0;
 
-        for (; (MYGEN43 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN43 = (MYGEN43 + __xlen))) {
+        for (; MYGEN43 < ((trn_shared)[(p / __xlen)] * 6); MYGEN43 = (MYGEN43 + __xlen)) {
           int ridx = (MYGEN43 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -3039,7 +3010,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN44 = (num_write_plus * 6);
 
-    for (; (MYGEN44 > 0); (MYGEN44 = (MYGEN44 + -__xlen))) {
+    for (; MYGEN44 > 0; MYGEN44 = (MYGEN44 + -__xlen)) {
       int ridx = (MYGEN44 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -3067,11 +3038,11 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -3120,18 +3091,18 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -3140,17 +3111,17 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 6)))[2] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -3166,11 +3137,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -3182,11 +3153,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (6 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 6)))[((inner_step * 1) + inner_g)]);
@@ -3207,7 +3178,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -3231,18 +3202,18 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -3255,11 +3226,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -3268,18 +3239,17 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 6)))[2] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -3293,7 +3263,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 6); (i = (i + 1))) {
+              for (i = 0; i < 6; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                      ((local_pos_cache + (g * 6)))[i]);
               }
@@ -3306,12 +3276,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -3325,7 +3294,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -3340,12 +3309,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -3366,12 +3334,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 6)))[((inner_step * 1) + inner_g)]);
@@ -3396,11 +3363,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -3410,12 +3377,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -3426,7 +3392,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -3434,12 +3400,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (6 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (6 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                  (x_beg_plus * 6)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -3451,7 +3416,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -3461,11 +3426,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -3489,11 +3454,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -3526,12 +3491,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -3545,12 +3509,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - ((XLEN * YLEN) * grid_cache_len)) *
@@ -3574,12 +3537,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -3591,12 +3553,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) -
                       ((XLEN * YLEN) * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
@@ -3613,12 +3574,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -3637,12 +3597,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -3660,11 +3619,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -3675,11 +3634,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + (grid_id - (XLEN * YLEN)))) +
                              2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -3704,12 +3663,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -3723,11 +3681,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -3744,11 +3702,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -3758,7 +3716,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -3767,11 +3725,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -3794,11 +3752,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -3810,11 +3768,11 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -3868,7 +3826,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -3881,7 +3839,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -3903,7 +3861,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -3941,11 +3899,11 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN45 = 0;
 
-        for (; (MYGEN45 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN45 = (MYGEN45 + __xlen))) {
+        for (; MYGEN45 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN45 = (MYGEN45 + __xlen)) {
           int ridx = (MYGEN45 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -3958,7 +3916,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN46 = 0;
 
-        for (; (MYGEN46 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN46 = (MYGEN46 + __xlen))) {
+        for (; MYGEN46 < ((tln_shared)[(p / __xlen)] * 6); MYGEN46 = (MYGEN46 + __xlen)) {
           int ridx = (MYGEN46 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -3973,7 +3931,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN47 = 0;
 
-        for (; (MYGEN47 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN47 = (MYGEN47 + __xlen))) {
+        for (; MYGEN47 < ((trn_shared)[(p / __xlen)] * 6); MYGEN47 = (MYGEN47 + __xlen)) {
           int ridx = (MYGEN47 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -3991,7 +3949,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
   {
     long MYGEN48 = (num_write_plus * 6);
 
-    for (; (MYGEN48 > 0); (MYGEN48 = (MYGEN48 + -__xlen))) {
+    for (; MYGEN48 > 0; MYGEN48 = (MYGEN48 + -__xlen)) {
       int ridx = (MYGEN48 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -4019,11 +3977,11 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -4056,7 +4014,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN49 = 0;
 
-    for (; (MYGEN49 < 4); (MYGEN49 = (MYGEN49 + __xlen))) {
+    for (; MYGEN49 < 4; MYGEN49 = (MYGEN49 + __xlen)) {
       int ridx = (MYGEN49 + __idx);
 
       if (ridx < 4) {
@@ -4067,7 +4025,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -4077,11 +4035,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -4104,11 +4062,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw +
                            ((4 * ((cu_offset + grid_id) - 1)) + 2)))[((inner_step * 2) + inner_g)]);
@@ -4141,12 +4099,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -4160,12 +4117,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - (1 * grid_cache_len)) * 6)))[((inner_step * 1) + inner_g)]);
@@ -4188,12 +4144,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -4205,12 +4160,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) - (1 * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -4226,12 +4180,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -4250,12 +4203,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -4273,11 +4225,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -4288,11 +4240,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - 1))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -4317,12 +4269,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -4336,11 +4287,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -4357,11 +4308,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -4371,7 +4322,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -4380,11 +4331,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -4407,11 +4358,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -4423,11 +4374,11 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -4481,7 +4432,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -4494,7 +4445,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -4516,7 +4467,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -4554,11 +4505,11 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN50 = 0;
 
-        for (; (MYGEN50 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN50 = (MYGEN50 + __xlen))) {
+        for (; MYGEN50 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN50 = (MYGEN50 + __xlen)) {
           int ridx = (MYGEN50 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -4571,7 +4522,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN51 = 0;
 
-        for (; (MYGEN51 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN51 = (MYGEN51 + __xlen))) {
+        for (; MYGEN51 < ((tln_shared)[(p / __xlen)] * 6); MYGEN51 = (MYGEN51 + __xlen)) {
           int ridx = (MYGEN51 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -4586,7 +4537,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN52 = 0;
 
-        for (; (MYGEN52 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN52 = (MYGEN52 + __xlen))) {
+        for (; MYGEN52 < ((trn_shared)[(p / __xlen)] * 6); MYGEN52 = (MYGEN52 + __xlen)) {
           int ridx = (MYGEN52 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -4604,7 +4555,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
   {
     long MYGEN53 = (num_write_plus * 6);
 
-    for (; (MYGEN53 > 0); (MYGEN53 = (MYGEN53 + -__xlen))) {
+    for (; MYGEN53 > 0; MYGEN53 = (MYGEN53 + -__xlen)) {
       int ridx = (MYGEN53 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -4632,11 +4583,11 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -4669,7 +4620,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN54 = 0;
 
-    for (; (MYGEN54 < 4); (MYGEN54 = (MYGEN54 + __xlen))) {
+    for (; MYGEN54 < 4; MYGEN54 = (MYGEN54 + __xlen)) {
       int ridx = (MYGEN54 + __idx);
 
       if (ridx < 4) {
@@ -4680,7 +4631,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -4690,11 +4641,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -4718,11 +4669,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - XLEN)) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -4755,12 +4706,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -4774,12 +4724,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - (XLEN * grid_cache_len)) *
@@ -4803,12 +4752,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -4820,12 +4768,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) -
                       (XLEN * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
@@ -4842,12 +4789,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -4866,12 +4812,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -4889,11 +4834,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -4904,11 +4849,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - XLEN))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -4933,12 +4878,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -4952,11 +4896,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -4973,11 +4917,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -4987,7 +4931,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -4996,11 +4940,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -5023,11 +4967,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -5039,11 +4983,11 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -5097,7 +5041,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -5110,7 +5054,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -5132,7 +5076,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (6 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -5170,11 +5114,11 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN55 = 0;
 
-        for (; (MYGEN55 < ((cgn_shared)[(p / __xlen)] * 6)); (MYGEN55 = (MYGEN55 + __xlen))) {
+        for (; MYGEN55 < ((cgn_shared)[(p / __xlen)] * 6); MYGEN55 = (MYGEN55 + __xlen)) {
           int ridx = (MYGEN55 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 6)) {
@@ -5187,7 +5131,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN56 = 0;
 
-        for (; (MYGEN56 < ((tln_shared)[(p / __xlen)] * 6)); (MYGEN56 = (MYGEN56 + __xlen))) {
+        for (; MYGEN56 < ((tln_shared)[(p / __xlen)] * 6); MYGEN56 = (MYGEN56 + __xlen)) {
           int ridx = (MYGEN56 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 6)) {
@@ -5202,7 +5146,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
       {
         long MYGEN57 = 0;
 
-        for (; (MYGEN57 < ((trn_shared)[(p / __xlen)] * 6)); (MYGEN57 = (MYGEN57 + __xlen))) {
+        for (; MYGEN57 < ((trn_shared)[(p / __xlen)] * 6); MYGEN57 = (MYGEN57 + __xlen)) {
           int ridx = (MYGEN57 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 6)) {
@@ -5220,7 +5164,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
   {
     long MYGEN58 = (num_write_plus * 6);
 
-    for (; (MYGEN58 > 0); (MYGEN58 = (MYGEN58 + -__xlen))) {
+    for (; MYGEN58 > 0; MYGEN58 = (MYGEN58 + -__xlen)) {
       int ridx = (MYGEN58 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -5248,11 +5192,11 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -5285,7 +5229,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
   {
     long MYGEN59 = 0;
 
-    for (; (MYGEN59 < 4); (MYGEN59 = (MYGEN59 + __xlen))) {
+    for (; MYGEN59 < 4; MYGEN59 = (MYGEN59 + __xlen)) {
       int ridx = (MYGEN59 + __idx);
 
       if (ridx < 4) {
@@ -5296,7 +5240,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -5306,11 +5250,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -5334,11 +5278,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -5371,12 +5315,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_minus * 6)))[((inner_step * 1) + inner_g)]);
@@ -5390,12 +5333,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (6 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (6 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            ((beg_plus - ((XLEN * YLEN) * grid_cache_len)) *
@@ -5419,12 +5361,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -5436,12 +5377,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                      ((beg_plus * 6) -
                       ((XLEN * YLEN) * (grid_cache_len * 6)))))[((inner_step * 1) + inner_g)] =
@@ -5458,12 +5398,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -5482,12 +5421,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 6));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                  (cur_cu_cache_load * 6))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -5505,11 +5443,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -5520,11 +5458,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + (grid_id - (XLEN * YLEN)))) +
                              2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -5549,12 +5487,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (6 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (6 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 6)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     6))))[((inner_step * (6 * cur_to_cu_cache)) + inner_g)] =
@@ -5568,11 +5505,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -5589,11 +5526,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -5603,7 +5540,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -5612,11 +5549,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -5639,11 +5576,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                          (beg_plus * 6)))[((inner_step * 1) + inner_g)]);
@@ -5655,11 +5592,11 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (6 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (6 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                    (beg_minus * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 6)))[((inner_step * 1) + inner_g)]);
@@ -5703,7 +5640,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzx = (grid_id % XLEN);
@@ -5724,7 +5661,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -5737,8 +5674,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -5762,7 +5698,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -5804,11 +5740,11 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN60 = 0;
 
-          for (; (MYGEN60 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN60 = (MYGEN60 + __xlen))) {
+          for (; MYGEN60 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN60 = (MYGEN60 + __xlen)) {
             int ridx = (MYGEN60 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -5824,7 +5760,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN61 = 0;
 
-          for (; (MYGEN61 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN61 = (MYGEN61 + __xlen))) {
+          for (; MYGEN61 < ((tln_shared)[(p / __xlen)] * 8); MYGEN61 = (MYGEN61 + __xlen)) {
             int ridx = (MYGEN61 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -5839,7 +5775,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN62 = 0;
 
-          for (; (MYGEN62 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN62 = (MYGEN62 + __xlen))) {
+          for (; MYGEN62 < ((trn_shared)[(p / __xlen)] * 8); MYGEN62 = (MYGEN62 + __xlen)) {
             int ridx = (MYGEN62 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -5878,8 +5814,8 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN63 = 0;
 
-          for (; (MYGEN63 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN63 = (MYGEN63 + __xlen))) {
+          for (; MYGEN63 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN63 = (MYGEN63 + __xlen)) {
             int ridx = (MYGEN63 + __idx);
 
             if ((ridx < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -5897,7 +5833,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN64 = 0;
 
-        for (; (MYGEN64 < (num_copy_real_11516lap * 8)); (MYGEN64 = (MYGEN64 + __xlen))) {
+        for (; MYGEN64 < (num_copy_real_11516lap * 8); MYGEN64 = (MYGEN64 + __xlen)) {
           int ridx = (MYGEN64 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -5921,8 +5857,8 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN65 = 0;
 
-          for (; (MYGEN65 < (8 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN65 = (MYGEN65 + __xlen))) {
+          for (; MYGEN65 < (8 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN65 = (MYGEN65 + __xlen)) {
             int ridx = (MYGEN65 + __idx);
 
             if ((ridx < (8 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -5939,7 +5875,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN66 = 0;
 
-        for (; (MYGEN66 < (num_copy_real_11516lap * 8)); (MYGEN66 = (MYGEN66 + __xlen))) {
+        for (; MYGEN66 < (num_copy_real_11516lap * 8); MYGEN66 = (MYGEN66 + __xlen)) {
           int ridx = (MYGEN66 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -5969,7 +5905,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN67 = 0;
 
-          for (; (MYGEN67 < (8 * (num_write_plus - cap_tmp))); (MYGEN67 = (MYGEN67 + __xlen))) {
+          for (; MYGEN67 < (8 * (num_write_plus - cap_tmp)); MYGEN67 = (MYGEN67 + __xlen)) {
             int ridx = (MYGEN67 + __idx);
 
             if (ridx < (8 * (num_write_plus - cap_tmp))) {
@@ -5985,7 +5921,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN68 = 0;
 
-        for (; (MYGEN68 < (num_copy_real_11516lap * 8)); (MYGEN68 = (MYGEN68 + __xlen))) {
+        for (; MYGEN68 < (num_copy_real_11516lap * 8); MYGEN68 = (MYGEN68 + __xlen)) {
           int ridx = (MYGEN68 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -6008,11 +5944,11 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -6036,7 +5972,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -6049,7 +5985,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -6071,7 +6007,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -6109,11 +6045,11 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN69 = 0;
 
-        for (; (MYGEN69 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN69 = (MYGEN69 + __xlen))) {
+        for (; MYGEN69 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN69 = (MYGEN69 + __xlen)) {
           int ridx = (MYGEN69 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -6126,7 +6062,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN70 = 0;
 
-        for (; (MYGEN70 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN70 = (MYGEN70 + __xlen))) {
+        for (; MYGEN70 < ((tln_shared)[(p / __xlen)] * 8); MYGEN70 = (MYGEN70 + __xlen)) {
           int ridx = (MYGEN70 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -6141,7 +6077,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN71 = 0;
 
-        for (; (MYGEN71 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN71 = (MYGEN71 + __xlen))) {
+        for (; MYGEN71 < ((trn_shared)[(p / __xlen)] * 8); MYGEN71 = (MYGEN71 + __xlen)) {
           int ridx = (MYGEN71 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -6159,7 +6095,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN72 = (num_write_plus * 8);
 
-    for (; (MYGEN72 > 0); (MYGEN72 = (MYGEN72 + -__xlen))) {
+    for (; MYGEN72 > 0; MYGEN72 = (MYGEN72 + -__xlen)) {
       int ridx = (MYGEN72 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -6187,11 +6123,11 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -6240,18 +6176,18 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -6260,17 +6196,17 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 8)))[0] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -6286,11 +6222,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -6302,11 +6238,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -6327,7 +6263,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -6351,18 +6287,18 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 8)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (lg * 8)))[((inner_step * 1) + inner_g)]);
@@ -6375,11 +6311,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -6388,18 +6324,17 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 8)))[0] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -6413,7 +6348,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 8); (i = (i + 1))) {
+              for (i = 0; i < 8; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                      ((local_pos_cache + (g * 8)))[i]);
               }
@@ -6426,12 +6361,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -6445,7 +6379,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -6460,12 +6394,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -6486,12 +6419,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 8)))[((inner_step * 1) + inner_g)]);
@@ -6516,11 +6448,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -6530,12 +6462,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -6546,7 +6477,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -6554,12 +6485,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_plus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -6571,7 +6501,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -6581,11 +6511,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -6608,11 +6538,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw +
                            ((4 * ((cu_offset + grid_id) - 1)) + 2)))[((inner_step * 2) + inner_g)]);
@@ -6645,12 +6575,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -6664,12 +6593,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - (1 * grid_cache_len)) * 8)))[((inner_step * 1) + inner_g)]);
@@ -6692,12 +6620,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -6709,12 +6636,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) - (1 * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -6730,12 +6656,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -6754,12 +6679,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -6777,11 +6701,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -6792,11 +6716,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - 1))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -6821,12 +6745,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -6840,11 +6763,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -6861,11 +6784,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -6875,7 +6798,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -6884,11 +6807,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -6911,11 +6834,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -6927,11 +6850,11 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -6975,7 +6898,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzy = ((grid_id / XLEN) % YLEN);
@@ -6996,7 +6919,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -7009,8 +6932,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -7034,7 +6956,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -7076,11 +6998,11 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN73 = 0;
 
-          for (; (MYGEN73 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN73 = (MYGEN73 + __xlen))) {
+          for (; MYGEN73 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN73 = (MYGEN73 + __xlen)) {
             int ridx = (MYGEN73 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -7096,7 +7018,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN74 = 0;
 
-          for (; (MYGEN74 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN74 = (MYGEN74 + __xlen))) {
+          for (; MYGEN74 < ((tln_shared)[(p / __xlen)] * 8); MYGEN74 = (MYGEN74 + __xlen)) {
             int ridx = (MYGEN74 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -7111,7 +7033,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN75 = 0;
 
-          for (; (MYGEN75 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN75 = (MYGEN75 + __xlen))) {
+          for (; MYGEN75 < ((trn_shared)[(p / __xlen)] * 8); MYGEN75 = (MYGEN75 + __xlen)) {
             int ridx = (MYGEN75 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -7150,8 +7072,8 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN76 = 0;
 
-          for (; (MYGEN76 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN76 = (MYGEN76 + __xlen))) {
+          for (; MYGEN76 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN76 = (MYGEN76 + __xlen)) {
             int ridx = (MYGEN76 + __idx);
 
             if ((ridx < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -7170,7 +7092,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN77 = 0;
 
-        for (; (MYGEN77 < (num_copy_real_11516lap * 8)); (MYGEN77 = (MYGEN77 + __xlen))) {
+        for (; MYGEN77 < (num_copy_real_11516lap * 8); MYGEN77 = (MYGEN77 + __xlen)) {
           int ridx = (MYGEN77 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -7194,8 +7116,8 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN78 = 0;
 
-          for (; (MYGEN78 < (8 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN78 = (MYGEN78 + __xlen))) {
+          for (; MYGEN78 < (8 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN78 = (MYGEN78 + __xlen)) {
             int ridx = (MYGEN78 + __idx);
 
             if ((ridx < (8 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -7212,7 +7134,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN79 = 0;
 
-        for (; (MYGEN79 < (num_copy_real_11516lap * 8)); (MYGEN79 = (MYGEN79 + __xlen))) {
+        for (; MYGEN79 < (num_copy_real_11516lap * 8); MYGEN79 = (MYGEN79 + __xlen)) {
           int ridx = (MYGEN79 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -7242,7 +7164,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN80 = 0;
 
-          for (; (MYGEN80 < (8 * (num_write_plus - cap_tmp))); (MYGEN80 = (MYGEN80 + __xlen))) {
+          for (; MYGEN80 < (8 * (num_write_plus - cap_tmp)); MYGEN80 = (MYGEN80 + __xlen)) {
             int ridx = (MYGEN80 + __idx);
 
             if (ridx < (8 * (num_write_plus - cap_tmp))) {
@@ -7258,7 +7180,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN81 = 0;
 
-        for (; (MYGEN81 < (num_copy_real_11516lap * 8)); (MYGEN81 = (MYGEN81 + __xlen))) {
+        for (; MYGEN81 < (num_copy_real_11516lap * 8); MYGEN81 = (MYGEN81 + __xlen)) {
           int ridx = (MYGEN81 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -7281,11 +7203,11 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -7309,7 +7231,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -7322,7 +7244,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -7344,7 +7266,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -7382,11 +7304,11 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN82 = 0;
 
-        for (; (MYGEN82 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN82 = (MYGEN82 + __xlen))) {
+        for (; MYGEN82 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN82 = (MYGEN82 + __xlen)) {
           int ridx = (MYGEN82 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -7399,7 +7321,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN83 = 0;
 
-        for (; (MYGEN83 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN83 = (MYGEN83 + __xlen))) {
+        for (; MYGEN83 < ((tln_shared)[(p / __xlen)] * 8); MYGEN83 = (MYGEN83 + __xlen)) {
           int ridx = (MYGEN83 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -7414,7 +7336,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN84 = 0;
 
-        for (; (MYGEN84 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN84 = (MYGEN84 + __xlen))) {
+        for (; MYGEN84 < ((trn_shared)[(p / __xlen)] * 8); MYGEN84 = (MYGEN84 + __xlen)) {
           int ridx = (MYGEN84 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -7432,7 +7354,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN85 = (num_write_plus * 8);
 
-    for (; (MYGEN85 > 0); (MYGEN85 = (MYGEN85 + -__xlen))) {
+    for (; MYGEN85 > 0; MYGEN85 = (MYGEN85 + -__xlen)) {
       int ridx = (MYGEN85 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -7460,11 +7382,11 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -7513,18 +7435,18 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -7533,17 +7455,17 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 8)))[1] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -7559,11 +7481,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -7575,11 +7497,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -7600,7 +7522,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -7624,18 +7546,18 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 8)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (lg * 8)))[((inner_step * 1) + inner_g)]);
@@ -7648,11 +7570,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -7661,18 +7583,17 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 8)))[1] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -7686,7 +7607,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 8); (i = (i + 1))) {
+              for (i = 0; i < 8; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                      ((local_pos_cache + (g * 8)))[i]);
               }
@@ -7699,12 +7620,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -7718,7 +7638,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -7733,12 +7653,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -7759,12 +7678,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 8)))[((inner_step * 1) + inner_g)]);
@@ -7789,11 +7707,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -7803,12 +7721,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -7819,7 +7736,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -7827,12 +7744,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_plus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -7844,7 +7760,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -7854,11 +7770,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -7882,11 +7798,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - XLEN)) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -7919,12 +7835,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -7938,12 +7853,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - (XLEN * grid_cache_len)) *
@@ -7967,12 +7881,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -7984,12 +7897,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) -
                       (XLEN * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
@@ -8006,12 +7918,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -8030,12 +7941,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -8053,11 +7963,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -8068,11 +7978,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - XLEN))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -8097,12 +8007,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -8116,11 +8025,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -8137,11 +8046,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -8151,7 +8060,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -8160,11 +8069,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -8187,11 +8096,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -8203,11 +8112,11 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -8251,7 +8160,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
 
   double *cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
 
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     long grid_id = i;
 
     long bxyzz = (grid_id / (XLEN * YLEN));
@@ -8272,7 +8181,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
 
     long num_write_main = 0;
 
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       int cur_grid_num = 0;
 
       int to_left_num = 0;
@@ -8285,8 +8194,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long p;
 
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           int real_p = p;
 
           int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -8310,7 +8218,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           {
             long i;
 
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
               if (is_to_left) {
                 ((for_sort_grid_memory_left)[(
                      i + (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -8352,11 +8260,11 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       __syncthreads();
       long p = 0;
 
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
         {
           long MYGEN86 = 0;
 
-          for (; (MYGEN86 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN86 = (MYGEN86 + __xlen))) {
+          for (; MYGEN86 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN86 = (MYGEN86 + __xlen)) {
             int ridx = (MYGEN86 + __idx);
 
             if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -8372,7 +8280,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN87 = 0;
 
-          for (; (MYGEN87 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN87 = (MYGEN87 + __xlen))) {
+          for (; MYGEN87 < ((tln_shared)[(p / __xlen)] * 8); MYGEN87 = (MYGEN87 + __xlen)) {
             int ridx = (MYGEN87 + __idx);
 
             if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -8387,7 +8295,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN88 = 0;
 
-          for (; (MYGEN88 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN88 = (MYGEN88 + __xlen))) {
+          for (; MYGEN88 < ((trn_shared)[(p / __xlen)] * 8); MYGEN88 = (MYGEN88 + __xlen)) {
             int ridx = (MYGEN88 + __idx);
 
             if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -8426,8 +8334,8 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN89 = 0;
 
-          for (; (MYGEN89 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))));
-               (MYGEN89 = (MYGEN89 + __xlen))) {
+          for (; MYGEN89 < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main)));
+               MYGEN89 = (MYGEN89 + __xlen)) {
             int ridx = (MYGEN89 + __idx);
 
             if ((ridx < (8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))))) {
@@ -8446,7 +8354,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN90 = 0;
 
-        for (; (MYGEN90 < (num_copy_real_11516lap * 8)); (MYGEN90 = (MYGEN90 + __xlen))) {
+        for (; MYGEN90 < (num_copy_real_11516lap * 8); MYGEN90 = (MYGEN90 + __xlen)) {
           int ridx = (MYGEN90 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -8471,8 +8379,8 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN91 = 0;
 
-          for (; (MYGEN91 < (8 * (num_write_minus - (grid_cache_len - beg_left_main))));
-               (MYGEN91 = (MYGEN91 + __xlen))) {
+          for (; MYGEN91 < (8 * (num_write_minus - (grid_cache_len - beg_left_main)));
+               MYGEN91 = (MYGEN91 + __xlen)) {
             int ridx = (MYGEN91 + __idx);
 
             if ((ridx < (8 * (num_write_minus - (grid_cache_len - beg_left_main))))) {
@@ -8489,7 +8397,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN92 = 0;
 
-        for (; (MYGEN92 < (num_copy_real_11516lap * 8)); (MYGEN92 = (MYGEN92 + __xlen))) {
+        for (; MYGEN92 < (num_copy_real_11516lap * 8); MYGEN92 = (MYGEN92 + __xlen)) {
           int ridx = (MYGEN92 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -8519,7 +8427,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long MYGEN93 = 0;
 
-          for (; (MYGEN93 < (8 * (num_write_plus - cap_tmp))); (MYGEN93 = (MYGEN93 + __xlen))) {
+          for (; MYGEN93 < (8 * (num_write_plus - cap_tmp)); MYGEN93 = (MYGEN93 + __xlen)) {
             int ridx = (MYGEN93 + __idx);
 
             if (ridx < (8 * (num_write_plus - cap_tmp))) {
@@ -8535,7 +8443,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN94 = 0;
 
-        for (; (MYGEN94 < (num_copy_real_11516lap * 8)); (MYGEN94 = (MYGEN94 + __xlen))) {
+        for (; MYGEN94 < (num_copy_real_11516lap * 8); MYGEN94 = (MYGEN94 + __xlen)) {
           int ridx = (MYGEN94 + __idx);
 
           if (ridx < (num_copy_real_11516lap * 8)) {
@@ -8558,11 +8466,11 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 1; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 4; inner_g++) {
                 (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 4) + inner_g)] =
                      (xm4)[((inner_step * 4) + inner_g)]);
               }
@@ -8586,7 +8494,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -8599,7 +8507,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -8621,7 +8529,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -8659,11 +8567,11 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN95 = 0;
 
-        for (; (MYGEN95 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN95 = (MYGEN95 + __xlen))) {
+        for (; MYGEN95 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN95 = (MYGEN95 + __xlen)) {
           int ridx = (MYGEN95 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -8676,7 +8584,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN96 = 0;
 
-        for (; (MYGEN96 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN96 = (MYGEN96 + __xlen))) {
+        for (; MYGEN96 < ((tln_shared)[(p / __xlen)] * 8); MYGEN96 = (MYGEN96 + __xlen)) {
           int ridx = (MYGEN96 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -8691,7 +8599,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long MYGEN97 = 0;
 
-        for (; (MYGEN97 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN97 = (MYGEN97 + __xlen))) {
+        for (; MYGEN97 < ((trn_shared)[(p / __xlen)] * 8); MYGEN97 = (MYGEN97 + __xlen)) {
           int ridx = (MYGEN97 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -8709,7 +8617,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN98 = (num_write_plus * 8);
 
-    for (; (MYGEN98 > 0); (MYGEN98 = (MYGEN98 + -__xlen))) {
+    for (; MYGEN98 > 0; MYGEN98 = (MYGEN98 + -__xlen)) {
       int ridx = (MYGEN98 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -8737,11 +8645,11 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -8790,18 +8698,18 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
 
       int g;
 
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         long num_read = ((((lg + 64) > cu_cur_cache_load)) ? ((cu_cur_cache_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 6)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 6); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (lg * 6)))[((inner_step * 1) + inner_g)]);
@@ -8810,17 +8718,17 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
 
           if (((local_pos_cache + (g * 8)))[2] < 0) {
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 6; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                        (cur_to_left * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -8836,11 +8744,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_to_right * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -8852,11 +8760,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < 6; inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((cu_cache + (__idy * (8 * cu_cache_length))) +
                          (cur_this * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache + (g * 8)))[((inner_step * 1) + inner_g)]);
@@ -8877,7 +8785,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   __syncthreads();
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     long grid_id = (__idx + (i * __xlen));
 
     if (grid_id < xyzalllen) {
@@ -8901,18 +8809,18 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
 
       long num_write_tmp = 0;
 
-      for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cur_load; lg += 64) {
         long num_read = ((((lg + 64) > cur_load)) ? ((cur_load - lg)) : (64));
 
         {
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_read * 8)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_read * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_pos_cache + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (lg * 8)))[((inner_step * 1) + inner_g)]);
@@ -8925,11 +8833,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < num_read; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 3; inner_g++) {
                   ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -8938,18 +8846,17 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           if (((local_pos_cache + (g * 8)))[2] < left_bound) {
             assert((num_write_minus < 384));
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                        (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                          ((local_pos_cache +
@@ -8963,7 +8870,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             {
               long i;
 
-              for ((i = 0); (i < 8); (i = (i + 1))) {
+              for (i = 0; i < 8; i++) {
                 (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                      ((local_pos_cache + (g * 8)))[i]);
               }
@@ -8976,12 +8883,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long inner_step;
 
-                for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                     (inner_step = (inner_step + 1))) {
+                for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                   {
                     long inner_g;
 
-                    for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                    for (inner_g = 0; inner_g < 1; inner_g++) {
                       ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                            ((local_pos_cache +
@@ -8995,7 +8901,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
               {
                 long i;
 
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -9010,12 +8916,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                 {
                   long inner_step;
 
-                  for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-                       (inner_step = (inner_step + 1))) {
+                  for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
                     {
                       long inner_g;
 
-                      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                      for (inner_g = 0; inner_g < 1; inner_g++) {
                         ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                              ((local_pos_cache +
@@ -9036,12 +8941,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_write_tmp * 6));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_write_tmp * 6); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (num_write_main * 6)))[((inner_step * 1) + inner_g)] =
                      ((local_pos_cache + ((g - num_write_tmp) * 8)))[((inner_step * 1) + inner_g)]);
@@ -9066,11 +8970,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 4; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((xyzw + (4 * (cu_offset + grid_id))))[((inner_step * 1) + inner_g)] =
                    (xm4)[((inner_step * 1) + inner_g)]);
             }
@@ -9080,12 +8984,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_minus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_minus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9096,7 +8999,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
       if ((xm4)[3] > grid_cache_len) {
         long i = 0;
 
-        for (i = 0; (i < 4); i++) {
+        for (i = 0; i < 4; i++) {
         }
         assert(0);
       }
@@ -9104,12 +9007,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < (8 * num_write_plus));
-             (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < (8 * num_write_plus); inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                  (x_beg_plus * 8)))[((inner_step * 1) + inner_g)] =
                    ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9121,7 +9023,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
   }
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -9131,11 +9033,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -9159,11 +9061,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -9196,12 +9098,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -9215,12 +9116,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - ((XLEN * YLEN) * grid_cache_len)) *
@@ -9244,12 +9144,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9261,12 +9160,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) -
                       ((XLEN * YLEN) * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
@@ -9283,12 +9181,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -9307,12 +9204,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -9330,11 +9226,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -9345,11 +9241,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + (grid_id - (XLEN * YLEN)))) +
                              2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -9374,12 +9270,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -9393,11 +9288,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -9414,11 +9309,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -9428,7 +9323,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -9437,11 +9332,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -9464,11 +9359,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -9480,11 +9375,11 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9538,7 +9433,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -9551,7 +9446,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -9573,7 +9468,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -9611,11 +9506,11 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN99 = 0;
 
-        for (; (MYGEN99 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN99 = (MYGEN99 + __xlen))) {
+        for (; MYGEN99 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN99 = (MYGEN99 + __xlen)) {
           int ridx = (MYGEN99 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -9628,7 +9523,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN100 = 0;
 
-        for (; (MYGEN100 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN100 = (MYGEN100 + __xlen))) {
+        for (; MYGEN100 < ((tln_shared)[(p / __xlen)] * 8); MYGEN100 = (MYGEN100 + __xlen)) {
           int ridx = (MYGEN100 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -9643,7 +9538,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN101 = 0;
 
-        for (; (MYGEN101 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN101 = (MYGEN101 + __xlen))) {
+        for (; MYGEN101 < ((trn_shared)[(p / __xlen)] * 8); MYGEN101 = (MYGEN101 + __xlen)) {
           int ridx = (MYGEN101 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -9661,7 +9556,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
   {
     long MYGEN102 = (num_write_plus * 8);
 
-    for (; (MYGEN102 > 0); (MYGEN102 = (MYGEN102 + -__xlen))) {
+    for (; MYGEN102 > 0; MYGEN102 = (MYGEN102 + -__xlen)) {
       int ridx = (MYGEN102 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -9689,11 +9584,11 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -9726,7 +9621,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN103 = 0;
 
-    for (; (MYGEN103 < 4); (MYGEN103 = (MYGEN103 + __xlen))) {
+    for (; MYGEN103 < 4; MYGEN103 = (MYGEN103 + __xlen)) {
       int ridx = (MYGEN103 + __idx);
 
       if (ridx < 4) {
@@ -9737,7 +9632,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -9747,11 +9642,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -9774,11 +9669,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw +
                            ((4 * ((cu_offset + grid_id) - 1)) + 2)))[((inner_step * 2) + inner_g)]);
@@ -9811,12 +9706,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -9830,12 +9724,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - (1 * grid_cache_len)) * 8)))[((inner_step * 1) + inner_g)]);
@@ -9858,12 +9751,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9875,12 +9767,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) - (1 * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -9896,12 +9787,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -9920,12 +9810,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -9943,11 +9832,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -9958,11 +9847,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - 1))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -9987,12 +9876,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -10006,11 +9894,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -10027,11 +9915,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -10041,7 +9929,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -10050,11 +9938,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -10077,11 +9965,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -10093,11 +9981,11 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -10151,7 +10039,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -10164,7 +10052,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -10186,7 +10074,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -10224,11 +10112,11 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN104 = 0;
 
-        for (; (MYGEN104 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN104 = (MYGEN104 + __xlen))) {
+        for (; MYGEN104 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN104 = (MYGEN104 + __xlen)) {
           int ridx = (MYGEN104 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -10241,7 +10129,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN105 = 0;
 
-        for (; (MYGEN105 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN105 = (MYGEN105 + __xlen))) {
+        for (; MYGEN105 < ((tln_shared)[(p / __xlen)] * 8); MYGEN105 = (MYGEN105 + __xlen)) {
           int ridx = (MYGEN105 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -10256,7 +10144,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN106 = 0;
 
-        for (; (MYGEN106 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN106 = (MYGEN106 + __xlen))) {
+        for (; MYGEN106 < ((trn_shared)[(p / __xlen)] * 8); MYGEN106 = (MYGEN106 + __xlen)) {
           int ridx = (MYGEN106 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -10274,7 +10162,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
   {
     long MYGEN107 = (num_write_plus * 8);
 
-    for (; (MYGEN107 > 0); (MYGEN107 = (MYGEN107 + -__xlen))) {
+    for (; MYGEN107 > 0; MYGEN107 = (MYGEN107 + -__xlen)) {
       int ridx = (MYGEN107 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -10302,11 +10190,11 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -10339,7 +10227,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN108 = 0;
 
-    for (; (MYGEN108 < 4); (MYGEN108 = (MYGEN108 + __xlen))) {
+    for (; MYGEN108 < 4; MYGEN108 = (MYGEN108 + __xlen)) {
       int ridx = (MYGEN108 + __idx);
 
       if (ridx < 4) {
@@ -10350,7 +10238,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -10360,11 +10248,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -10388,11 +10276,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - XLEN)) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -10425,12 +10313,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -10444,12 +10331,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - (XLEN * grid_cache_len)) *
@@ -10473,12 +10359,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -10490,12 +10375,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) -
                       (XLEN * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
@@ -10512,12 +10396,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -10536,12 +10419,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -10559,11 +10441,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -10574,11 +10456,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw +
                      ((4 * (cu_offset + (grid_id - XLEN))) + 2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -10603,12 +10485,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -10622,11 +10503,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -10643,11 +10524,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -10657,7 +10538,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -10666,11 +10547,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -10693,11 +10574,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -10709,11 +10590,11 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -10767,7 +10648,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
 
   long num_write_main = 0;
 
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     int cur_grid_num = 0;
 
     int to_left_num = 0;
@@ -10780,7 +10661,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
     {
       long p;
 
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         int real_p = p;
 
         int local_p_id = (p - (lg + (__idx * __xlen)));
@@ -10802,7 +10683,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
         {
           long i;
 
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
             if (is_to_left) {
               ((for_sort_grid_memory_left)[(i +
                                             (8 * ((__idx * (__xlen * 1)) + (to_left_num + lg))))] =
@@ -10840,11 +10721,11 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
     __syncthreads();
     long p = 0;
 
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
       {
         long MYGEN109 = 0;
 
-        for (; (MYGEN109 < ((cgn_shared)[(p / __xlen)] * 8)); (MYGEN109 = (MYGEN109 + __xlen))) {
+        for (; MYGEN109 < ((cgn_shared)[(p / __xlen)] * 8); MYGEN109 = (MYGEN109 + __xlen)) {
           int ridx = (MYGEN109 + __idx);
 
           if (ridx < ((cgn_shared)[(p / __xlen)] * 8)) {
@@ -10857,7 +10738,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN110 = 0;
 
-        for (; (MYGEN110 < ((tln_shared)[(p / __xlen)] * 8)); (MYGEN110 = (MYGEN110 + __xlen))) {
+        for (; MYGEN110 < ((tln_shared)[(p / __xlen)] * 8); MYGEN110 = (MYGEN110 + __xlen)) {
           int ridx = (MYGEN110 + __idx);
 
           if (ridx < ((tln_shared)[(p / __xlen)] * 8)) {
@@ -10872,7 +10753,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
       {
         long MYGEN111 = 0;
 
-        for (; (MYGEN111 < ((trn_shared)[(p / __xlen)] * 8)); (MYGEN111 = (MYGEN111 + __xlen))) {
+        for (; MYGEN111 < ((trn_shared)[(p / __xlen)] * 8); MYGEN111 = (MYGEN111 + __xlen)) {
           int ridx = (MYGEN111 + __idx);
 
           if (ridx < ((trn_shared)[(p / __xlen)] * 8)) {
@@ -10890,7 +10771,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
   {
     long MYGEN112 = (num_write_plus * 8);
 
-    for (; (MYGEN112 > 0); (MYGEN112 = (MYGEN112 + -__xlen))) {
+    for (; MYGEN112 > 0; MYGEN112 = (MYGEN112 + -__xlen)) {
       int ridx = (MYGEN112 + (__idx + -__xlen));
 
       if (ridx >= 0) {
@@ -10918,11 +10799,11 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 4; inner_g++) {
               (((cu_xyzw + (4 * __idy)))[((inner_step * 4) + inner_g)] =
                    (xm4)[((inner_step * 4) + inner_g)]);
             }
@@ -10955,7 +10836,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
   {
     long MYGEN113 = 0;
 
-    for (; (MYGEN113 < 4); (MYGEN113 = (MYGEN113 + __xlen))) {
+    for (; MYGEN113 < 4; MYGEN113 = (MYGEN113 + __xlen)) {
       int ridx = (MYGEN113 + __idx);
 
       if (ridx < 4) {
@@ -10966,7 +10847,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
   __syncthreads();
   __syncthreads();
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -10976,11 +10857,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -11004,11 +10885,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 2); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 2; inner_g++) {
                     ((prev_zw)[((inner_step * 2) + inner_g)] =
                          ((xyzw + ((4 * ((cu_offset + grid_id) - (XLEN * YLEN))) +
                                    2)))[((inner_step * 2) + inner_g)]);
@@ -11041,12 +10922,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * num_to_left));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * num_to_left); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_minus * 8)))[((inner_step * 1) + inner_g)]);
@@ -11060,12 +10940,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < (8 * num_from_left));
-                   (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < (8 * num_from_left); inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 1; inner_g++) {
                     (((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            ((beg_plus - ((XLEN * YLEN) * grid_cache_len)) *
@@ -11089,12 +10968,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (num_from_left * 8));
-               (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (num_from_left * 8); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_plus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -11106,12 +10984,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_to_left * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_to_left * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                      ((beg_plus * 8) -
                       ((XLEN * YLEN) * (grid_cache_len * 8)))))[((inner_step * 1) + inner_g)] =
@@ -11128,12 +11005,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_left_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_left_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_plus +
@@ -11152,12 +11028,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (num_cur_to_cu_cache * 8));
-                 (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (num_cur_to_cu_cache * 8); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                  (cur_cu_cache_load * 8))))[((inner_step * 1) + inner_g)] =
                        ((local_temp_particle_cache_minus +
@@ -11175,11 +11050,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 2; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 (((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 1) + inner_g)] =
                      (cur_xyzw)[((inner_step * 1) + inner_g)]);
               }
@@ -11190,11 +11065,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + (grid_id - (XLEN * YLEN)))) +
                              2)))[((inner_step * 1) + inner_g)] =
                        (prev_zw)[((inner_step * 1) + inner_g)]);
@@ -11219,12 +11094,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < 1; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < (8 * cur_to_cu_cache));
-                       (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < (8 * cur_to_cu_cache); inner_g++) {
                     (((cu_cache + ((__idy * (cu_cache_length * 8)) +
                                    ((cur_cu_cache_load - cur_to_cu_cache) *
                                     8))))[((inner_step * (8 * cur_to_cu_cache)) + inner_g)] =
@@ -11238,11 +11112,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((xyzw + ((4 * (cu_offset + grid_id)) + 2)))[((inner_step * 1) + inner_g)] =
                        ((cur_xyzw + 2))[((inner_step * 1) + inner_g)]);
                 }
@@ -11259,11 +11133,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
     {
       long inner_step;
 
-      for ((inner_step = 0); (inner_step < 4); (inner_step = (inner_step + 1))) {
+      for (inner_step = 0; inner_step < 4; inner_step++) {
         {
           long inner_g;
 
-          for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+          for (inner_g = 0; inner_g < 1; inner_g++) {
             (((cu_xyzw + (4 * __idy)))[((inner_step * 1) + inner_g)] =
                  (cu_xyzw_shared)[((inner_step * 1) + inner_g)]);
           }
@@ -11273,7 +11147,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
   }
 
   if (1) {
-    for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+    for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
       if (grid_id < xyzalllen) {
@@ -11282,11 +11156,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 4); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 4; inner_g++) {
                   ((cur_xyzw)[((inner_step * 4) + inner_g)] =
                        ((xyzw + ((4 * (cu_offset + grid_id)) + 0)))[((inner_step * 4) + inner_g)]);
                 }
@@ -11309,11 +11183,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)] =
                        (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                          (beg_plus * 8)))[((inner_step * 1) + inner_g)]);
@@ -11325,11 +11199,11 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
         {
           long inner_step;
 
-          for ((inner_step = 0); (inner_step < (8 * pluslen)); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < (8 * pluslen); inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                    (beg_minus * 8)))[((inner_step * 1) + inner_g)] =
                      ((local_temp_particle_cache_minus + (0 * 8)))[((inner_step * 1) + inner_g)]);
@@ -11357,7 +11231,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN114 = 0;
 
-    for (; (MYGEN114 < 2); (MYGEN114 = (MYGEN114 + __xlen))) {
+    for (; MYGEN114 < 2; MYGEN114 = (MYGEN114 + __xlen)) {
       int ridx = (MYGEN114 + __idx);
 
       if (ridx < 2) {
@@ -11369,7 +11243,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN115 = 0;
 
-    for (; (MYGEN115 < 4); (MYGEN115 = (MYGEN115 + __xlen))) {
+    for (; MYGEN115 < 4; MYGEN115 = (MYGEN115 + __xlen)) {
       int ridx = (MYGEN115 + __idx);
 
       if (ridx < 4) {
@@ -11393,11 +11267,11 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((cu_xyzw + (4 * left_pid)))[((inner_step * 1) + inner_g)] =
                    (&(new_left_par))[((inner_step * 1) + inner_g)]);
             }
@@ -11415,11 +11289,11 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_xyzw + ((4 * __idy) + 1)))[((inner_step * 1) + inner_g)] =
                        (al1)[((inner_step * 1) + inner_g)]);
                 }
@@ -11437,17 +11311,17 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long i;
 
-        for ((i = beg_left_par); (i < end_left_par); (i = (i + 1))) {
+        for (i = beg_left_par; i < end_left_par; i++) {
           int real_id = i;
 
           double par_cache[6];
           {{long inner_step;
 
-          for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 6; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((par_cache)[((inner_step * 1) + inner_g)] =
                      (((cu_cache + (__idy * (6 * cu_cache_length))) +
                        (6 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11460,11 +11334,11 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 6; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((cu_cache + (left_pid * (6 * cu_cache_length))) +
                  (6 * end_cu_par)))[((inner_step * 1) + inner_g)] =
                    (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11480,17 +11354,17 @@ else {
 }
 
 if (1) {
-  for ((i = beg_left_par); ((i + __idx) < end_left_par); (i = (i + __xlen))) {
+  for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
     int real_id = (i + __idx);
 
     double par_cache[6];
     {{long inner_step;
 
-    for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+    for (inner_step = 0; inner_step < 6; inner_step++) {
       {
         long inner_g;
 
-        for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+        for (inner_g = 0; inner_g < 1; inner_g++) {
           ((par_cache)[((inner_step * 1) + inner_g)] =
                (((cu_cache + (__idy * (6 * cu_cache_length))) +
                  (6 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11503,11 +11377,11 @@ if (1) {
 {
   long inner_step;
 
-  for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+  for (inner_step = 0; inner_step < 6; inner_step++) {
     {
       long inner_g;
 
-      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+      for (inner_g = 0; inner_g < 1; inner_g++) {
         ((((cu_cache + (left_pid * (6 * cu_cache_length))) +
            (6 * (end_cu_par + __idx))))[((inner_step * 1) + inner_g)] =
              (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11540,7 +11414,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN116 = 0;
 
-    for (; (MYGEN116 < 2); (MYGEN116 = (MYGEN116 + __xlen))) {
+    for (; MYGEN116 < 2; MYGEN116 = (MYGEN116 + __xlen)) {
       int ridx = (MYGEN116 + __idx);
 
       if (ridx < 2) {
@@ -11552,7 +11426,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN117 = 0;
 
-    for (; (MYGEN117 < 4); (MYGEN117 = (MYGEN117 + __xlen))) {
+    for (; MYGEN117 < 4; MYGEN117 = (MYGEN117 + __xlen)) {
       int ridx = (MYGEN117 + __idx);
 
       if (ridx < 4) {
@@ -11576,11 +11450,11 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((cu_xyzw + (4 * left_pid)))[((inner_step * 1) + inner_g)] =
                    (&(new_left_par))[((inner_step * 1) + inner_g)]);
             }
@@ -11597,11 +11471,11 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_xyzw + ((4 * __idy) + 3)))[((inner_step * 1) + inner_g)] =
                        (al1)[((inner_step * 1) + inner_g)]);
                 }
@@ -11619,17 +11493,17 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long i;
 
-        for ((i = beg_left_par); (i < end_left_par); (i = (i + 1))) {
+        for (i = beg_left_par; i < end_left_par; i++) {
           int real_id = i;
 
           double par_cache[6];
           {{long inner_step;
 
-          for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 6; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((par_cache)[((inner_step * 1) + inner_g)] =
                      (((cu_cache + (__idy * (6 * cu_cache_length))) +
                        (6 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11642,11 +11516,11 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 6; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((cu_cache + (left_pid * (6 * cu_cache_length))) +
                  (6 * end_cu_par)))[((inner_step * 1) + inner_g)] =
                    (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11662,17 +11536,17 @@ else {
 }
 
 if (1) {
-  for ((i = beg_left_par); ((i + __idx) < end_left_par); (i = (i + __xlen))) {
+  for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
     int real_id = (i + __idx);
 
     double par_cache[6];
     {{long inner_step;
 
-    for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+    for (inner_step = 0; inner_step < 6; inner_step++) {
       {
         long inner_g;
 
-        for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+        for (inner_g = 0; inner_g < 1; inner_g++) {
           ((par_cache)[((inner_step * 1) + inner_g)] =
                (((cu_cache + (__idy * (6 * cu_cache_length))) +
                  (6 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11685,11 +11559,11 @@ if (1) {
 {
   long inner_step;
 
-  for ((inner_step = 0); (inner_step < 6); (inner_step = (inner_step + 1))) {
+  for (inner_step = 0; inner_step < 6; inner_step++) {
     {
       long inner_g;
 
-      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+      for (inner_g = 0; inner_g < 1; inner_g++) {
         ((((cu_cache + (left_pid * (6 * cu_cache_length))) +
            (6 * (end_cu_par + __idx))))[((inner_step * 1) + inner_g)] =
              (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11722,7 +11596,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN118 = 0;
 
-    for (; (MYGEN118 < 2); (MYGEN118 = (MYGEN118 + __xlen))) {
+    for (; MYGEN118 < 2; MYGEN118 = (MYGEN118 + __xlen)) {
       int ridx = (MYGEN118 + __idx);
 
       if (ridx < 2) {
@@ -11734,7 +11608,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN119 = 0;
 
-    for (; (MYGEN119 < 4); (MYGEN119 = (MYGEN119 + __xlen))) {
+    for (; MYGEN119 < 4; MYGEN119 = (MYGEN119 + __xlen)) {
       int ridx = (MYGEN119 + __idx);
 
       if (ridx < 4) {
@@ -11758,11 +11632,11 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((cu_xyzw + (4 * left_pid)))[((inner_step * 1) + inner_g)] =
                    (&(new_left_par))[((inner_step * 1) + inner_g)]);
             }
@@ -11780,11 +11654,11 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 2); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 2; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_xyzw + ((4 * __idy) + 1)))[((inner_step * 1) + inner_g)] =
                        (al1)[((inner_step * 1) + inner_g)]);
                 }
@@ -11802,17 +11676,17 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long i;
 
-        for ((i = beg_left_par); (i < end_left_par); (i = (i + 1))) {
+        for (i = beg_left_par; i < end_left_par; i++) {
           int real_id = i;
 
           double par_cache[8];
           {{long inner_step;
 
-          for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 8; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((par_cache)[((inner_step * 1) + inner_g)] =
                      (((cu_cache + (__idy * (8 * cu_cache_length))) +
                        (8 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11825,11 +11699,11 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 8; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((cu_cache + (left_pid * (8 * cu_cache_length))) +
                  (8 * end_cu_par)))[((inner_step * 1) + inner_g)] =
                    (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11845,17 +11719,17 @@ else {
 }
 
 if (1) {
-  for ((i = beg_left_par); ((i + __idx) < end_left_par); (i = (i + __xlen))) {
+  for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
     int real_id = (i + __idx);
 
     double par_cache[8];
     {{long inner_step;
 
-    for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+    for (inner_step = 0; inner_step < 8; inner_step++) {
       {
         long inner_g;
 
-        for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+        for (inner_g = 0; inner_g < 1; inner_g++) {
           ((par_cache)[((inner_step * 1) + inner_g)] =
                (((cu_cache + (__idy * (8 * cu_cache_length))) +
                  (8 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -11868,11 +11742,11 @@ if (1) {
 {
   long inner_step;
 
-  for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+  for (inner_step = 0; inner_step < 8; inner_step++) {
     {
       long inner_g;
 
-      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+      for (inner_g = 0; inner_g < 1; inner_g++) {
         ((((cu_cache + (left_pid * (8 * cu_cache_length))) +
            (8 * (end_cu_par + __idx))))[((inner_step * 1) + inner_g)] =
              (par_cache)[((inner_step * 1) + inner_g)]);
@@ -11905,7 +11779,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN120 = 0;
 
-    for (; (MYGEN120 < 2); (MYGEN120 = (MYGEN120 + __xlen))) {
+    for (; MYGEN120 < 2; MYGEN120 = (MYGEN120 + __xlen)) {
       int ridx = (MYGEN120 + __idx);
 
       if (ridx < 2) {
@@ -11917,7 +11791,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
   {
     long MYGEN121 = 0;
 
-    for (; (MYGEN121 < 4); (MYGEN121 = (MYGEN121 + __xlen))) {
+    for (; MYGEN121 < 4; MYGEN121 = (MYGEN121 + __xlen)) {
       int ridx = (MYGEN121 + __idx);
 
       if (ridx < 4) {
@@ -11941,11 +11815,11 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 1; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               (((cu_xyzw + (4 * left_pid)))[((inner_step * 1) + inner_g)] =
                    (&(new_left_par))[((inner_step * 1) + inner_g)]);
             }
@@ -11962,11 +11836,11 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
           {
             long inner_step;
 
-            for ((inner_step = 0); (inner_step < 1); (inner_step = (inner_step + 1))) {
+            for (inner_step = 0; inner_step < 1; inner_step++) {
               {
                 long inner_g;
 
-                for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+                for (inner_g = 0; inner_g < 1; inner_g++) {
                   (((cu_xyzw + ((4 * __idy) + 3)))[((inner_step * 1) + inner_g)] =
                        (al1)[((inner_step * 1) + inner_g)]);
                 }
@@ -11984,17 +11858,17 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long i;
 
-        for ((i = beg_left_par); (i < end_left_par); (i = (i + 1))) {
+        for (i = beg_left_par; i < end_left_par; i++) {
           int real_id = i;
 
           double par_cache[8];
           {{long inner_step;
 
-          for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+          for (inner_step = 0; inner_step < 8; inner_step++) {
             {
               long inner_g;
 
-              for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+              for (inner_g = 0; inner_g < 1; inner_g++) {
                 ((par_cache)[((inner_step * 1) + inner_g)] =
                      (((cu_cache + (__idy * (8 * cu_cache_length))) +
                        (8 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -12007,11 +11881,11 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       {
         long inner_step;
 
-        for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+        for (inner_step = 0; inner_step < 8; inner_step++) {
           {
             long inner_g;
 
-            for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+            for (inner_g = 0; inner_g < 1; inner_g++) {
               ((((cu_cache + (left_pid * (8 * cu_cache_length))) +
                  (8 * end_cu_par)))[((inner_step * 1) + inner_g)] =
                    (par_cache)[((inner_step * 1) + inner_g)]);
@@ -12027,17 +11901,17 @@ else {
 }
 
 if (1) {
-  for ((i = beg_left_par); ((i + __idx) < end_left_par); (i = (i + __xlen))) {
+  for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
     int real_id = (i + __idx);
 
     double par_cache[8];
     {{long inner_step;
 
-    for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+    for (inner_step = 0; inner_step < 8; inner_step++) {
       {
         long inner_g;
 
-        for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+        for (inner_g = 0; inner_g < 1; inner_g++) {
           ((par_cache)[((inner_step * 1) + inner_g)] =
                (((cu_cache + (__idy * (8 * cu_cache_length))) +
                  (8 * real_id)))[((inner_step * 1) + inner_g)]);
@@ -12050,11 +11924,11 @@ if (1) {
 {
   long inner_step;
 
-  for ((inner_step = 0); (inner_step < 8); (inner_step = (inner_step + 1))) {
+  for (inner_step = 0; inner_step < 8; inner_step++) {
     {
       long inner_g;
 
-      for ((inner_g = 0); (inner_g < 1); (inner_g = (inner_g + 1))) {
+      for (inner_g = 0; inner_g < 1; inner_g++) {
         ((((cu_cache + (left_pid * (8 * cu_cache_length))) +
            (8 * (end_cu_par + __idx))))[((inner_step * 1) + inner_g)] =
              (par_cache)[((inner_step * 1) + inner_g)]);

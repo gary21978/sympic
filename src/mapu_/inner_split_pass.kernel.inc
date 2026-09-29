@@ -426,11 +426,11 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ex_bank(
   const v8fp64 *f0_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
   v8fp64 AllEx = (v8fp64){};
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
       const v8fp64 wyz = ((f0_y1)[idy] * (f0_z1)[idz]);
 #pragma clang loop unroll(full)
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = ((((shE0)[(0 + (3 * (idx + (tile_xlen * (idy + (idz * 5))))))] + 0)) *
                        ((f1_x1)[idx] * wyz));
         AllEx = (AllEx + term);
@@ -446,11 +446,11 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ey_bank(
   const v8fp64 *f0_z1 = pushJ_wt_z_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_x1 = pushJ_wt_x_c(bank, 1, PUSHJ_WT_F0);
   v8fp64 AllEy = (v8fp64){};
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
       const v8fp64 wzx = ((f0_z1)[idy] * (f0_x1)[idz]);
 #pragma clang loop unroll(full)
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = ((((shE0)[(1 + (3 * (idz + (tile_xlen * (idx + (idy * 5))))))] + 0)) *
                        ((f1_y1)[idx] * wzx));
         AllEy = (AllEy + term);
@@ -466,11 +466,11 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ez_bank(
   const v8fp64 *f0_x1 = pushJ_wt_x_c(bank, 1, PUSHJ_WT_F0);
   const v8fp64 *f0_y1 = pushJ_wt_y_c(bank, 1, PUSHJ_WT_F0);
   v8fp64 AllEz = (v8fp64){};
-  for (long idz = 0; idz < 5; idz = (idz + 1)) {
-    for (long idy = 0; idy < 5; idy = (idy + 1)) {
+  for (long idz = 0; idz < 5; idz++) {
+    for (long idy = 0; idy < 5; idy++) {
       const v8fp64 wxy = ((f0_x1)[idy] * (f0_y1)[idz]);
 #pragma clang loop unroll(full)
-      for (long idx = 0; idx < 4; idx = (idx + 1)) {
+      for (long idx = 0; idx < 4; idx++) {
         v8fp64 term = ((((shE0)[(2 + (3 * (idy + (tile_xlen * (idz + (idx * 5))))))] + 0)) *
                        ((f1_z1)[idx] * wxy));
         AllEz = (AllEz + term);
@@ -618,28 +618,28 @@ pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank, const pushJ_v
    * outside the unrolled loop avoids five repeated scalar tests. */
   if (full_batch) {
 #pragma clang loop unroll(full)
-    for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+    for (long xyzx = 0; xyzx < 5; xyzx++) {
       const double geo_x = ctx->deposit_geo_x[xyzx];
       pathX12[xyzx] = geo_x * difX12[xyzx];
       pathX23[xyzx] = geo_x * difX23[xyzx];
     }
   } else {
 #pragma clang loop unroll(full)
-    for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+    for (long xyzx = 0; xyzx < 5; xyzx++) {
       const double geo_x = ctx->deposit_geo_x[xyzx];
       pathX12[xyzx] = geo_x * (st->simd_mask * difX12[xyzx]);
       pathX23[xyzx] = geo_x * (st->simd_mask * difX23[xyzx]);
     }
   }
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       const v8fp64 wyz12 = ((f0_y1)[xyzy] * (f0_z1)[xyzz]);
       const v8fp64 wyz23 = ((f0_y3)[xyzy] * (f0_z3)[xyzz]);
       long xyzx;
 #pragma clang loop unroll(full)
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 accum = shJ_incf[((allidx * 3) + 0)];
         accum = accum + (pathX12[xyzx] * wyz12);
@@ -668,14 +668,14 @@ pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank, const pushJ
 
   if (full_batch) {
 #pragma clang loop unroll(full)
-    for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+    for (long xyzx = 0; xyzx < 5; xyzx++) {
       const v8fp64 base_x = f0_x2[xyzx];
       xFactorY[xyzx] = ctx->deposit_geo_y[xyzx] * base_x;
       xFactorZ[xyzx] = ctx->deposit_geo_z[xyzx] * base_x;
     }
   } else {
 #pragma clang loop unroll(full)
-    for (long xyzx = 0; xyzx < 5; xyzx = (xyzx + 1)) {
+    for (long xyzx = 0; xyzx < 5; xyzx++) {
       const v8fp64 base_x = st->simd_mask * f0_x2[xyzx];
       xFactorY[xyzx] = ctx->deposit_geo_y[xyzx] * base_x;
       xFactorZ[xyzx] = ctx->deposit_geo_z[xyzx] * base_x;
@@ -683,14 +683,14 @@ pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank, const pushJ
   }
 
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       const v8fp64 yzFactorY = (pathY12[xyzy] * f0_z1[xyzz]) + (pathY23[xyzy] * f0_z3[xyzz]);
       const v8fp64 yzFactorZ = pathZ13[xyzz] * f0_y2[xyzy];
       long xyzx;
 #pragma clang loop unroll(full)
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         const int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 accum_y = shJ_incf[((allidx * 3) + 1)];
         v8fp64 accum_z = shJ_incf[((allidx * 3) + 2)];
@@ -1174,7 +1174,7 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
     }
   } else {
     long stmpg1;
-    for ((stmpg1 = 0); (stmpg1 < 6); (stmpg1 = (stmpg1 + 1))) {
+    for (stmpg1 = 0; stmpg1 < 6; stmpg1++) {
 #pragma clang loop unroll(full)
       for (int lane = 0; lane < 8; lane++) {
         const int cid = g_inner + lane;
@@ -1478,7 +1478,7 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   {
     MAPU_LONG l1;
 
-    for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
+    for (l1 = 0; l1 < cu_load; l1++) {
       const int load0 = 1;
 
       use_local_particle_position = 1;
@@ -1516,7 +1516,7 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
      * see package README / aiKnowledge/projects/wiki/07_DECISIONS.md). */
     MAPU_LONG allgid;
 
-    for ((allgid = 0); (allgid < numgrid); (allgid = (allgid + 1))) {
+    for (allgid = 0; allgid < numgrid; allgid++) {
       const int new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
       const MAPU_LONG c_gid = allgid;
 

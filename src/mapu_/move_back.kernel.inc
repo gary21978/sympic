@@ -28,7 +28,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pret = (double *)&(ret);
   double *pinput = (double *)&(input);
   int g;
-  for ((g = 0); (g < 8); (g = (g + 1))) {
+  for (g = 0; g < 8; g++) {
     (pret)[g] = floor((pinput)[g]);
   }
   return ret;
@@ -86,7 +86,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   cu_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ int cur_cu_load;
   cur_cu_load = 0;
-  for (i = 0; (i < cu_load); (i = (i + 64))) {
+  for (i = 0; i < cu_load; i += 64) {
     __mem1__ MAPU_LONG numcp;
     numcp = ((((i + 64) > cu_load)) ? (({ (cu_load - i); })) : (({ 64; })));
 
@@ -105,7 +105,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
 
     if ((__idx == 0)) {
       {
-        for (j = 0; (j < numcp); j++) {
+        for (j = 0; j < numcp; j++) {
           __mem1__ MAPU_LONG allid;
           allid = (i + j);
           __mem1__ MAPU_LONG xyzx;
@@ -244,7 +244,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   cu_load = (cu_xyzw)[(4 * __idy)];
   __mem1__ int cur_cu_load;
   cur_cu_load = 0;
-  for (i = 0; (i < cu_load); (i = (i + 64))) {
+  for (i = 0; i < cu_load; i += 64) {
     __mem1__ MAPU_LONG numcp;
     numcp = ((((i + 64) > cu_load)) ? (({ (cu_load - i); })) : (({ 64; })));
 
@@ -263,7 +263,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
 
     if ((__idx == 0)) {
       {
-        for (j = 0; (j < numcp); j++) {
+        for (j = 0; j < numcp; j++) {
           __mem1__ MAPU_LONG allid;
           allid = (i + j);
           __mem1__ MAPU_LONG xyzx;

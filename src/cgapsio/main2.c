@@ -40,7 +40,7 @@ int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int
 int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   int alllen = strlen(pNameAll);
   int l;
-  for ((l = (alllen - 1)); (l >= 0); (l = (l + -1))) {
+  for (l = (alllen - 1); l >= 0; l--) {
     if (((pNameAll)[l] == '_')) {
       break;
     } else {
@@ -48,7 +48,7 @@ int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   }
   {
     long i;
-    for ((i = 0); (i < (l - 5)); (i = (i + 1))) {
+    for (i = 0; i < (l - 5); i++) {
       (pName)[i] = (pNameAll)[i];
     }
   }
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
   int64_t numblocks = 1;
   {
     long g;
-    for ((g = 0); (g < dim); (g = (g + 1))) {
+    for (g = 0; g < dim; g++) {
       (poutlen)[g] = ((pdimarray)[g] * (pblockarray)[g]);
       oneblock_len = (oneblock_len * (pdimarray)[g]);
       numblocks = (numblocks * (pblockarray)[g]);
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
   int64_t *local_block_id = malloc((sizeof(int64_t) * numblocks));
   {
     long i;
-    for ((i = 1); (i < (argc - 1)); (i = (i + 1))) {
+    for (i = 1; i < (argc - 1); i++) {
       long cur_i = (i - 1);
       fprintf(stderr, "Checking %s\n", (argv)[i]);
       char meta_file_name[512];
@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
       int sj = 0;
       {
         long j;
-        for ((j = 0); (j < l); (j = (j + 1))) {
+        for (j = 0; j < l; j++) {
           if (((meta_file_name)[(l - (1 + j))] == '_')) {
             sj = ((l - (1 + j)) - 4);
             break;
@@ -125,7 +125,7 @@ int main(int argc, char **argv) {
       (meta_data_len)[cur_i] = ((meta_data_len)[cur_i] / sizeof(int64_t));
       {
         long j;
-        for ((j = 0); (j < (meta_data_len)[cur_i]); (j = (j + 1))) {
+        for (j = 0; j < (meta_data_len)[cur_i]; j++) {
           int64_t local_id_m = ((meta_data)[cur_i])[j];
           (file_id)[local_id_m] = cur_i;
           (local_block_id)[local_id_m] = j;
@@ -179,7 +179,7 @@ int main(int argc, char **argv) {
   int64_t opt_write_block = 1;
   int64_t opt_read_block = oneblock_len;
   int dim_current = 0;
-  for (0; (dim_current < dim); (dim_current = (dim_current + 1))) {
+  for (; dim_current < dim; dim_current++) {
     opt_write_block = (opt_write_block * (poutlen)[dim_current]);
     opt_read_block = (opt_read_block * (pblockarray)[dim_current]);
     if ((opt_read_block > BLOCK_THREH)) {
@@ -192,7 +192,7 @@ int main(int argc, char **argv) {
   int64_t one_write_offset = 1;
   {
     long i;
-    for ((i = 0); (i < dim_current); (i = (i + 1))) {
+    for (i = 0; i < dim_current; i++) {
       one_write_offset = (one_write_offset * (poutlen)[i]);
     }
   }
@@ -211,14 +211,14 @@ int main(int argc, char **argv) {
   int64_t *palldim_local = malloc((sizeof(int64_t) * dim));
   {
     long t;
-    for ((t = t_min); (t < t_max); (t = (t + 1))) {
+    for (t = t_min; t < t_max; t++) {
       {
         long b_rd;
-        for ((b_rd = 0); (b_rd < num_reads_per_step); (b_rd = (b_rd + 1))) {
+        for (b_rd = 0; b_rd < num_reads_per_step; b_rd++) {
           int64_t global_offset_new = 0;
           {
             long r_rd;
-            for ((r_rd = 0); (r_rd < num_blocks_per_read); (r_rd = (r_rd + 1))) {
+            for (r_rd = 0; r_rd < num_blocks_per_read; r_rd++) {
               int64_t bid_all = (r_rd + (num_blocks_per_read * b_rd));
               read_one_block_stdio(pgi, read_one_block_buffer, (argv)[(1 + (file_id)[bid_all])], t,
                                    (meta_data_len)[(file_id)[bid_all]], (local_block_id)[bid_all]);
@@ -226,7 +226,7 @@ int main(int argc, char **argv) {
                 int64_t gid = bid_all;
                 {
                   long tmpids;
-                  for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
+                  for (tmpids = 0; tmpids < dim; tmpids++) {
                     (pblkid)[tmpids] = (gid % (pblockarray)[tmpids]);
                     gid = (gid / (pblockarray)[tmpids]);
                   }
@@ -234,12 +234,12 @@ int main(int argc, char **argv) {
               }
               {
                 long l;
-                for ((l = 0); (l < oneblock_len); (l = (l + 1))) {
+                for (l = 0; l < oneblock_len; l++) {
                   {
                     long gid = l;
                     {
                       long tmpids;
-                      for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
+                      for (tmpids = 0; tmpids < dim; tmpids++) {
                         (plocalid)[tmpids] = (gid % (pdimarray)[tmpids]);
                         gid = (gid / (pdimarray)[tmpids]);
                       }
@@ -247,7 +247,7 @@ int main(int argc, char **argv) {
                   }
                   {
                     long a;
-                    for ((a = 0); (a < dim); (a = (a + 1))) {
+                    for (a = 0; a < dim; a++) {
                       (pallid)[a] = ((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a]));
                       (palldim)[a] = ((pdimarray)[a] * (pblockarray)[a]);
                       ((pallid_local)[a] =
@@ -263,7 +263,7 @@ int main(int argc, char **argv) {
                     int64_t stride_len = 1;
                     {
                       long tmpids;
-                      for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
+                      for (tmpids = 0; tmpids < dim; tmpids++) {
                         gid = (gid + ((pallid)[tmpids] * stride_len));
                         stride_len = (stride_len * (palldim)[tmpids]);
                       }
@@ -279,7 +279,7 @@ int main(int argc, char **argv) {
                     int64_t stride_len = 1;
                     {
                       long tmpids;
-                      for ((tmpids = 0); (tmpids < dim); (tmpids = (tmpids + 1))) {
+                      for (tmpids = 0; tmpids < dim; tmpids++) {
                         gid = (gid + ((pallid_local)[tmpids] * stride_len));
                         stride_len = (stride_len * (palldim_local)[tmpids]);
                       }
@@ -295,7 +295,7 @@ int main(int argc, char **argv) {
           }
           {
             long w_rd;
-            for ((w_rd = 0); (w_rd < num_writes_per_read); (w_rd = (w_rd + 1))) {
+            for (w_rd = 0; w_rd < num_writes_per_read; w_rd++) {
               int64_t offset = (global_offset_new + (w_rd * one_write_offset));
               GAPS_IO_DataSeek(pgo, (t - t_opt_offset), offset);
               GAPS_IO_FWrite(pgo, (read_block_buffer + (w_rd * (opt_write_block * typelen))),

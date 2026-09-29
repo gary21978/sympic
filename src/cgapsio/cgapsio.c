@@ -34,14 +34,14 @@ int GAPS_IO_InitDataInfoV2(Gaps_IO_DataFile *pOutfile, char *Prefix, int64_t Typ
   int64_t block_len = 1;
   {
     long i;
-    for ((i = 0); (i < Dim); (i = (i + 1))) {
+    for (i = 0; i < Dim; i++) {
       block_len = (block_len * (pDimarray)[i]);
     }
   }
   pOutfile->locations = (int64_t *)malloc(Num_block_current_proc * sizeof(int64_t));
   {
     long i;
-    for ((i = 0); (i < Num_block_current_proc); (i = (i + 1))) {
+    for (i = 0; i < Num_block_current_proc; i++) {
       ((pOutfile)->locations)[i] = (pLocationarray)[i];
     }
   }
@@ -67,7 +67,7 @@ int GAPS_IO_InitDataInfoV1(Gaps_IO_DataFile *pOutfile, int64_t Type, int64_t Dim
   (pOutfile)->type = Type;
   int64_t alll = 1;
   long g = 0;
-  for (g = 0; (g < Dim); g++) {
+  for (g = 0; g < Dim; g++) {
     alll = (alll * ((pDimarray)[g] * (pBlockarray)[g]));
   }
   (pOutfile)->numperstep = alll;
@@ -88,14 +88,14 @@ int GAPS_IO_InitDataInfo(Gaps_IO_DataFile *pOutfile, int64_t Type, int64_t Dim,
   memcpy((pOutfile)->pdimarray, pDimarray, dimarrlen);
   {
     long i;
-    for ((i = 0); (i < Dim); (i = (i + 1))) {
+    for (i = 0; i < Dim; i++) {
       ((pOutfile)->pblockarray)[i] = 1;
     }
   }
   (pOutfile)->type = Type;
   int64_t alll = 1;
   long g = 0;
-  for (g = 0; (g < Dim); g++) {
+  for (g = 0; g < Dim; g++) {
     alll = (alll * (pDimarray)[g]);
   }
   (pOutfile)->numperstep = alll;
@@ -265,7 +265,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
         (pthis)->num_block_all_reduce_group = num_block_current_proc;
         {
           long n;
-          for ((n = (cur_rank + 1)); (n < (num_reduce_proc * (real_rank + 1))); (n = (n + 1))) {
+          for (n = (cur_rank + 1); n < (num_reduce_proc * (real_rank + 1)); n++) {
             int num_proc;
             MPI_Comm_size(MPI_COMM_WORLD, &(num_proc));
             if ((n >= num_proc)) {
@@ -307,7 +307,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                   int mpi_rdd;
                   int64_t cnt = 1;
                   int64_t cur_rd = 0;
-                  for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                  for (0; cur_rd < cnt; cur_rd += 134217728) {
                     if (((cur_rd + 134217728) < cnt)) {
                       mpi_rdd = 134217728;
                     } else {
@@ -328,7 +328,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                   int mpi_rdd;
                   int64_t cnt = 1;
                   int64_t cur_rd = 0;
-                  for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                  for (0; cur_rd < cnt; cur_rd += 134217728) {
                     if (((cur_rd + 134217728) < cnt)) {
                       mpi_rdd = 134217728;
                     } else {
@@ -349,7 +349,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                   int mpi_rdd;
                   int64_t cnt = 1;
                   int64_t cur_rd = 0;
-                  for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                  for (0; cur_rd < cnt; cur_rd += 134217728) {
                     if (((cur_rd + 134217728) < cnt)) {
                       mpi_rdd = 134217728;
                     } else {
@@ -370,7 +370,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                   int mpi_rdd;
                   int64_t cnt = dim;
                   int64_t cur_rd = 0;
-                  for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                  for (0; cur_rd < cnt; cur_rd += 134217728) {
                     if (((cur_rd + 134217728) < cnt)) {
                       mpi_rdd = 134217728;
                     } else {
@@ -393,7 +393,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                  int mpi_rdd;
                  int64_t cnt = dim;
                  int64_t cur_rd = 0;
-                 for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                 for (0; cur_rd < cnt; cur_rd += 134217728) {
                    if (((cur_rd + 134217728) < cnt)) {
                      mpi_rdd = 134217728;
                    } else {
@@ -535,7 +535,7 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
   } else {
     {
       long i;
-      for ((i = 0); (i < dim); (i = (i + 1))) {
+      for (i = 0; i < dim; i++) {
         (pblockarray)[i] = 1;
       }
     }
@@ -626,7 +626,7 @@ int GAPS_IO_InitIFileV2(Gaps_IO_DataFile *pthis, char *pName, char *pNamePrefix,
   int64_t blklen = 1;
   {
     long i;
-    for ((i = 0); (i < (pthis)->dim); (i = (i + 1))) {
+    for (i = 0; i < (pthis)->dim; i++) {
       blklen = (blklen * ((pthis)->pdimarray)[i]);
     }
   }
@@ -752,7 +752,7 @@ int64_t GAPS_IO_FWrite(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                           int mpi_rdd;
                           int64_t cnt = NumData;
                           int64_t cur_rd = 0;
-                          for (0; (cur_rd < cnt); (cur_rd = (cur_rd + 134217728))) {
+                          for (0; cur_rd < cnt; cur_rd += 134217728) {
                             if (((cur_rd + 134217728) < cnt)) {
                               mpi_rdd = 134217728;
                             } else {

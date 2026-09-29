@@ -42,11 +42,11 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx12(v8fp64 *scr, v8fp64 r
   eval_f0(rx1y, dix1y, f0_y1);
   eval_f0(rx1z, dix1z, f0_z1);
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       long xyzx;
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp =
             simd_mask * (((if1_x2)[xyzx] - (if1_x1)[xyzx]) * ((f0_y1)[xyzy] * (f0_z1)[xyzz]));
@@ -73,11 +73,11 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy12(v8fp64 *scr, v8fp64 r
   eval_f0(rx2x, dix2x, f0_x2);
   eval_f0(rx1z, dix1z, f0_z1);
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       long xyzx;
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp =
             simd_mask * (((if1_y2)[xyzy] - (if1_y1)[xyzy]) * ((f0_x2)[xyzx] * (f0_z1)[xyzz]));
@@ -104,11 +104,11 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jz13(v8fp64 *scr, v8fp64 r
   eval_f0(rx2x, dix2x, f0_x2);
   eval_f0(rx2y, dix2y, f0_y2);
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       long xyzx;
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp =
             simd_mask * (((if1_z3)[xyzz] - (if1_z1)[xyzz]) * ((f0_x2)[xyzx] * (f0_y2)[xyzy]));
@@ -135,11 +135,11 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy23(v8fp64 *scr, v8fp64 r
   eval_f0(rx2x, dix2x, f0_x2);
   eval_f0(rx3z, dix3z, f0_z3);
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       long xyzx;
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp =
             simd_mask * (((if1_y3)[xyzy] - (if1_y2)[xyzy]) * ((f0_x2)[xyzx] * (f0_z3)[xyzz]));
@@ -166,11 +166,11 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx23(v8fp64 *scr, v8fp64 r
   eval_f0(rx3y, dix3y, f0_y3);
   eval_f0(rx3z, dix3z, f0_z3);
   long xyzz;
-  for ((xyzz = 0); (xyzz < 5); (xyzz = (xyzz + 1))) {
+  for (xyzz = 0; xyzz < 5; xyzz++) {
     long xyzy;
-    for ((xyzy = 0); (xyzy < 5); (xyzy = (xyzy + 1))) {
+    for (xyzy = 0; xyzy < 5; xyzy++) {
       long xyzx;
-      for ((xyzx = 0); (xyzx < 5); (xyzx = (xyzx + 1))) {
+      for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
         v8fp64 Jtmp =
             simd_mask * (((if1_x3)[xyzx] - (if1_x2)[xyzx]) * ((f0_y3)[xyzy] * (f0_z3)[xyzz]));
@@ -720,7 +720,7 @@ static __device__ __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
   newxz = (newxz + vbroadcast(0.5));
   {
     long stmpg1;
-    for ((stmpg1 = 0); (stmpg1 < 6); (stmpg1 = (stmpg1 + 1))) {
+    for (stmpg1 = 0; stmpg1 < 6; stmpg1++) {
       for (int lane = 0; lane < 8; lane++) {
         int cid = g_inner + lane;
         if (cid < load0) {

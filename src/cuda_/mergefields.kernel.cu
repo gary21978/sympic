@@ -93,19 +93,19 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpind
 
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
 
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
 
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
 
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
 
                 long lxyzy = (xyzy + field_ymi);
@@ -129,7 +129,7 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpind
                 {
                   long g = 0;
 
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecmain)[((i * blk_all_len) +
@@ -164,7 +164,7 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -250,19 +250,19 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -286,7 +286,7 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecmain)[(
@@ -359,7 +359,7 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -445,19 +445,19 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -481,7 +481,7 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecmain)[(
@@ -594,19 +594,19 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpind
 
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
 
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
 
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
 
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
 
                 long lxyzy = (xyzy + field_ymi);
@@ -630,7 +630,7 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpind
                 {
                   long g = 0;
 
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecovlp)[(
@@ -666,7 +666,7 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -752,19 +752,19 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -788,7 +788,7 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecovlp)[(
@@ -861,7 +861,7 @@ cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -947,19 +947,19 @@ cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -983,7 +983,7 @@ cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecovlp)[(
@@ -1096,19 +1096,19 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpin
 
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
 
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
 
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
 
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
 
                 long lxyzy = (xyzy + field_ymi);
@@ -1132,7 +1132,7 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpin
                 {
                   long g = 0;
 
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecmain)[((i * blk_all_len) +
@@ -1171,7 +1171,7 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -1257,19 +1257,19 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -1293,7 +1293,7 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecmain)[(
@@ -1369,7 +1369,7 @@ cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -1455,19 +1455,19 @@ cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -1491,7 +1491,7 @@ cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecmain)[(
@@ -1607,19 +1607,19 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpin
 
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-  for ((i = local_ymin); (i < local_ymax); i++) {
+  for (i = local_ymin; i < local_ymax; i++) {
     {
       long xyzz;
 
-      for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
         {
           long xyzy;
 
-          for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
             {
               long xyzx;
 
-              for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                 long lxyzx = (xyzx + field_xmi);
 
                 long lxyzy = (xyzy + field_ymi);
@@ -1643,7 +1643,7 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpin
                 {
                   long g = 0;
 
-                  for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                     long realidx = (__idx + (g * __xlen));
 
                     ((vecovlp)[(
@@ -1679,7 +1679,7 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -1765,19 +1765,19 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -1801,7 +1801,7 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecovlp)[(
@@ -1874,7 +1874,7 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
   {
     long ovlpindex;
 
-    for ((ovlpindex = 0); (ovlpindex < 27); (ovlpindex = (ovlpindex + 1))) {
+    for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
         continue;
 
@@ -1960,19 +1960,19 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
 
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
-        for ((i = local_ymin); (i < local_ymax); i++) {
+        for (i = local_ymin; i < local_ymax; i++) {
           {
             long xyzz;
 
-            for ((xyzz = 0); (xyzz < ovlpzma); (xyzz = (xyzz + 1))) {
+            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
               {
                 long xyzy;
 
-                for ((xyzy = 0); (xyzy < ovlpyma); (xyzy = (xyzy + 1))) {
+                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
                   {
                     long xyzx;
 
-                    for ((xyzx = 0); (xyzx < ovlpxma); (xyzx = (xyzx + 1))) {
+                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
                       long lxyzx = (xyzx + field_xmi);
 
                       long lxyzy = (xyzy + field_ymi);
@@ -1996,7 +1996,7 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
                       {
                         long g = 0;
 
-                        for (g = 0; ((__idx + (g * __xlen)) < num_ele); g++) {
+                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
                           long realidx = (__idx + (g * __xlen));
 
                           ((vecovlp)[(

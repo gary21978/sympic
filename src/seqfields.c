@@ -36,7 +36,7 @@ int build_Field_compute_unit_from_mpi_field(Field3D_MPI *pthis, Field3D_MPI *inp
   {
     long i;
 
-    for ((i = 0); (i < (input_E)->num_runtime); (i = (i + 1))) {
+    for (i = 0; i < (input_E)->num_runtime; i++) {
       build_Field_compute_unit_from_seq_field((pthis->data + i), (input_E->data + i));
     }
   }

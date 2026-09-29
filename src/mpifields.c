@@ -204,7 +204,7 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
   size_t ovleal_aio = 0;
 
-  for (i = 0; (i < NUM_SYNC_LAYER); i++) {
+  for (i = 0; i < NUM_SYNC_LAYER; i++) {
     int locali = i;
 
     long bxyzx = (locali % 3);
@@ -1014,7 +1014,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
   int i;
   size_t ovleal_aio = 0;
 
-  for (i = 0; (i < NUM_SYNC_LAYER); i++) {
+  for (i = 0; i < NUM_SYNC_LAYER; i++) {
     int locali = i;
 
     long bxyzx = (locali % 3);
@@ -1858,7 +1858,7 @@ int MPI_YEE_CURL_R(Field3D_MPI *pthis, Field3D_MPI *inB0, double DT) {
   long i = 0;
 
   sync_ovlp_mpi_field(inB0);
-  for (i = 0; (i < num_runtime); i++) {
+  for (i = 0; i < num_runtime; i++) {
     sympic_set_device((data + i)->cuda_device);
     Field3D_Seq_YEE_CURL_R((data + i), ((inB0)->data + i), DT);
   }
@@ -1892,7 +1892,7 @@ int MPI_GEO_YEE_CURL_L(Field3D_MPI *pthis, Field3D_MPI *inB0, double x0, double 
   long i = 0;
 
   sync_ovlp_mpi_field(inB0);
-  for (i = 0; (i < num_runtime); i++) {
+  for (i = 0; i < num_runtime; i++) {
     Field3D_Seq_GEO_YEE_CURL_L((data + i), ((inB0)->data + i), x0, DELTA_X, DELTA_Y, DELTA_Z, DT);
   }
   return 0;

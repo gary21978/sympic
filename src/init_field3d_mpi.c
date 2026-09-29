@@ -47,15 +47,15 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < 3); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < 3; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < 3); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < 3; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < 3); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < 3; xyzx++) {
 
                   // defined from class Field3D_Seq
 
@@ -99,7 +99,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
         (pthis->data)[i] = (tmpdata)[i];
         if (new_num_ele) {
           ((pthis->data + i))->num_ele = new_num_ele;
@@ -174,7 +174,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
   {
     long g;
 
-    for ((g = 0); (g < ndim); (g = (g + 1))) {
+    for (g = 0; g < ndim; g++) {
       alllen = (alllen * onen);
     }
   }
@@ -219,7 +219,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     }
   }
   pthis->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
-  for (i = 0; (i < num_runtime); i++) {
+  for (i = 0; i < num_runtime; i++) {
     (pthis->data)[i] = (sample_field)[0];
     ((pthis->data + i))->CD_type = (cd_types)[i];
     (((pthis->data + i))->numvec = get_cur_num_tid(((num_runtime * cur_rank) + i), numallthreads,
@@ -250,15 +250,15 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
   {
     long xyzz;
 
-    for ((xyzz = 0); (xyzz < 3); (xyzz = (xyzz + 1))) {
+    for (xyzz = 0; xyzz < 3; xyzz++) {
       {
         long xyzy;
 
-        for ((xyzy = 0); (xyzy < 3); (xyzy = (xyzy + 1))) {
+        for (xyzy = 0; xyzy < 3; xyzy++) {
           {
             long xyzx;
 
-            for ((xyzx = 0); (xyzx < 3); (xyzx = (xyzx + 1))) {
+            for (xyzx = 0; xyzx < 3; xyzx++) {
 
               // defined from class Field3D_Seq
 
@@ -338,7 +338,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -362,19 +362,19 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -413,11 +413,11 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -499,7 +499,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -525,19 +525,19 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -547,7 +547,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -616,7 +616,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -640,19 +640,19 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -691,11 +691,11 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -777,7 +777,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -803,19 +803,19 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -825,7 +825,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -894,7 +894,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -918,19 +918,19 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -969,11 +969,11 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -1055,7 +1055,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1081,19 +1081,19 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1103,7 +1103,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -1164,7 +1164,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1188,19 +1188,19 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1239,11 +1239,11 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -1325,7 +1325,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1351,19 +1351,19 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1373,7 +1373,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -1435,7 +1435,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1459,19 +1459,19 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1510,11 +1510,11 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -1596,7 +1596,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1622,19 +1622,19 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1644,7 +1644,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -1721,7 +1721,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1745,19 +1745,19 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+              for (xyzz = 0; xyzz < zlen; xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+                  for (xyzy = 0; xyzy < ylen; xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = 0); (xyzx < 1); (xyzx = (xyzx + 1))) {
+                      for (xyzx = 0; xyzx < 1; xyzx++) {
                         long is = ((global_x_offset)[j] + 0);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1796,11 +1796,11 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                           {
                             long g;
 
-                            for ((g = 0); (g < ((reduce_x) ? (1) : (xlen))); (g = (g + 1))) {
+                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
                               {
                                 long l;
 
-                                for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                                for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
                                     (((((double **)((data + i))->main_data))[0])[(
                                          (j * (((data + i))->xblock *
@@ -1882,7 +1882,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
     {
       long i;
 
-      for ((i = 0); (i < num_runtime); (i = (i + 1))) {
+      for (i = 0; i < num_runtime; i++) {
 
         // defined from class Field3D_Seq
 
@@ -1908,19 +1908,19 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
         {
           long j;
 
-          for ((j = 0); (j < numvec); (j = (j + 1))) {
+          for (j = 0; j < numvec; j++) {
             {
               long xyzz;
 
-              for ((xyzz = -(ovlp)); (xyzz < (zlen + ovlp)); (xyzz = (xyzz + 1))) {
+              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
                 {
                   long xyzy;
 
-                  for ((xyzy = -(ovlp)); (xyzy < (ylen + ovlp)); (xyzy = (xyzy + 1))) {
+                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
                     {
                       long xyzx;
 
-                      for ((xyzx = -(ovlp)); (xyzx < (xlen + ovlp)); (xyzx = (xyzx + 1))) {
+                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
                         long is = ((global_x_offset)[j] + xyzx);
 
                         long js = ((global_y_offset)[j] + xyzy);
@@ -1930,7 +1930,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                         {
                           long l;
 
-                          for ((l = 0); (l < num_ele); (l = (l + 1))) {
+                          for (l = 0; l < num_ele; l++) {
                             (((((double **)((data + i))->main_data))[0])[(
                                  (j * (((data + i))->xblock *
                                        (((data + i))->yblock *
@@ -2004,15 +2004,15 @@ int test_set_mainland(Field3D_MPI *pthis, double val) {
       {
         long xyzz;
 
-        for ((xyzz = 0); (xyzz < zlen); (xyzz = (xyzz + 1))) {
+        for (xyzz = 0; xyzz < zlen; xyzz++) {
           {
             long xyzy;
 
-            for ((xyzy = 0); (xyzy < ylen); (xyzy = (xyzy + 1))) {
+            for (xyzy = 0; xyzy < ylen; xyzy++) {
               {
                 long xyzx;
 
-                for ((xyzx = 0); (xyzx < xlen); (xyzx = (xyzx + 1))) {
+                for (xyzx = 0; xyzx < xlen; xyzx++) {
                   long l = 0;
 
                   for (l = 0; l < num_ele; l++) {

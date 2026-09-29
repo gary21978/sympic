@@ -26,7 +26,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pret = (double *)&(ret);
   double *pinput = (double *)&(input);
   int g;
-  for ((g = 0); (g < 8); (g = (g + 1))) {
+  for (g = 0; g < 8; g++) {
     (pret)[g] = floor((pinput)[g]);
   }
   return ret;
@@ -655,7 +655,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -671,7 +671,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -731,7 +731,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -769,7 +769,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -788,10 +788,10 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -800,7 +800,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 6)))[0] < left_bound)) {
 
@@ -821,7 +821,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -849,7 +849,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 6); (i = (i + 1))) {
+                  for (i = 0; i < 6; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                          ((local_pos_cache + (g * 6)))[i]);
                   }
@@ -938,7 +938,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -960,7 +960,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -1226,8 +1226,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -1310,7 +1309,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -1438,7 +1437,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -1454,7 +1453,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -1514,7 +1513,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -1552,7 +1551,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -1571,10 +1570,10 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -1583,7 +1582,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 6)))[1] < left_bound)) {
 
@@ -1604,7 +1603,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -1632,7 +1631,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 6); (i = (i + 1))) {
+                  for (i = 0; i < 6; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                          ((local_pos_cache + (g * 6)))[i]);
                   }
@@ -1721,7 +1720,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -1743,7 +1742,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -2009,8 +2008,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -2093,7 +2091,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -2221,7 +2219,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -2237,7 +2235,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -2297,7 +2295,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -2335,7 +2333,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -2354,10 +2352,10 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 6)) +
                            (3 + (lg * 6))))[((inner_step * 6) + inner_g)]);
@@ -2366,7 +2364,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 6)))[2] < left_bound)) {
 
@@ -2387,7 +2385,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 6); (i = (i + 1))) {
+                for (i = 0; i < 6; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 6)))[i] =
                        ((local_pos_cache + (g * 6)))[i]);
                 }
@@ -2415,7 +2413,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 6); (i = (i + 1))) {
+                  for (i = 0; i < 6; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 6)))[i] =
                          ((local_pos_cache + (g * 6)))[i]);
                   }
@@ -2504,7 +2502,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -2526,7 +2524,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -2795,8 +2793,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -2879,7 +2876,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -3008,7 +3005,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -3020,7 +3017,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -3041,7 +3038,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
 
             if (is_to_left) {
               {
@@ -3091,7 +3088,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 6) * 1)) {
         {
@@ -3147,7 +3144,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN48;
     MYGEN48 = (num_write_plus * 6);
-    for (0; (MYGEN48 > 0); (MYGEN48 = (MYGEN48 + -__xlen))) {
+    for (0; MYGEN48 > 0; MYGEN48 = (MYGEN48 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN48 + (__idx + -__xlen));
 
@@ -3184,7 +3181,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -3280,7 +3277,7 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -3546,8 +3543,7 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -3630,7 +3626,7 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -3759,7 +3755,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -3771,7 +3767,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -3792,7 +3788,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
 
             if (is_to_left) {
               {
@@ -3842,7 +3838,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 6) * 1)) {
         {
@@ -3898,7 +3894,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN53;
     MYGEN53 = (num_write_plus * 6);
-    for (0; (MYGEN53 > 0); (MYGEN53 = (MYGEN53 + -__xlen))) {
+    for (0; MYGEN53 > 0; MYGEN53 = (MYGEN53 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN53 + (__idx + -__xlen));
 
@@ -3935,7 +3931,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -4031,7 +4027,7 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -4297,8 +4293,7 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -4381,7 +4376,7 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -4510,7 +4505,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -4522,7 +4517,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -4543,7 +4538,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 6); (i = (i + 1))) {
+          for (i = 0; i < 6; i++) {
 
             if (is_to_left) {
               {
@@ -4593,7 +4588,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 6) * 1)) {
         {
@@ -4649,7 +4644,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN58;
     MYGEN58 = (num_write_plus * 6);
-    for (0; (MYGEN58 > 0); (MYGEN58 = (MYGEN58 + -__xlen))) {
+    for (0; MYGEN58 > 0; MYGEN58 = (MYGEN58 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN58 + (__idx + -__xlen));
 
@@ -4686,7 +4681,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -4782,7 +4777,7 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -5051,8 +5046,7 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (6 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -5135,7 +5129,7 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -5240,7 +5234,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
   __mem1__ __DDR double *cu_cache_head;
   cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = i;
     __mem1__ MAPU_LONG bxyzx;
@@ -5275,7 +5269,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
     num_write_main = 0;
     __mem1__ MAPU_LONG num_write_tmp;
     num_write_tmp = 0;
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       __mem1__ int cur_grid_num;
       cur_grid_num = 0;
       __mem1__ int to_left_num;
@@ -5287,8 +5281,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       __mem0__ int trn_shared[IDX_LOCAL_XLEN];
       {
         __mem1__ MAPU_LONG p;
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           __mem1__ int real_p;
           real_p = p;
           __mem1__ int local_p_id;
@@ -5311,7 +5304,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
           is_cur = (if_exist_particle && is_cur);
           {
             __mem1__ MAPU_LONG i;
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
 
               if (is_to_left) {
                 {
@@ -5368,7 +5361,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       (trn_shared)[__idx] = to_right_num;
       __mem1__ MAPU_LONG p;
       p = 0;
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
         if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
           {
@@ -5614,7 +5607,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_cpnum = 0;
             __mem1__ MAPU_LONG __pscmc_one_copy;
             __pscmc_one_copy = (4096 / 4);
-            for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+            for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
               __mem1__ MAPU_LONG cp_size;
               cp_size = __pscmc_one_copy;
 
@@ -5677,7 +5670,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -5689,7 +5682,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -5710,7 +5703,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -5760,7 +5753,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -5816,7 +5809,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
   {
     __mem1__ MAPU_LONG MYGEN72;
     MYGEN72 = (num_write_plus * 8);
-    for (0; (MYGEN72 > 0); (MYGEN72 = (MYGEN72 + -__xlen))) {
+    for (0; MYGEN72 > 0; MYGEN72 = (MYGEN72 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN72 + (__idx + -__xlen));
 
@@ -5853,7 +5846,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -5955,7 +5948,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -5971,7 +5964,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -6031,7 +6024,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -6069,7 +6062,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -6088,10 +6081,10 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -6100,7 +6093,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 8)))[0] < left_bound)) {
 
@@ -6121,7 +6114,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -6149,7 +6142,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 8); (i = (i + 1))) {
+                  for (i = 0; i < 8; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                          ((local_pos_cache + (g * 8)))[i]);
                   }
@@ -6238,7 +6231,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -6260,7 +6253,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -6526,8 +6519,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -6610,7 +6602,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -6715,7 +6707,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
   __mem1__ __DDR double *cu_cache_head;
   cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = i;
     __mem1__ MAPU_LONG bxyzx;
@@ -6750,7 +6742,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
     num_write_main = 0;
     __mem1__ MAPU_LONG num_write_tmp;
     num_write_tmp = 0;
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       __mem1__ int cur_grid_num;
       cur_grid_num = 0;
       __mem1__ int to_left_num;
@@ -6762,8 +6754,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       __mem0__ int trn_shared[IDX_LOCAL_XLEN];
       {
         __mem1__ MAPU_LONG p;
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           __mem1__ int real_p;
           real_p = p;
           __mem1__ int local_p_id;
@@ -6786,7 +6777,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
           is_cur = (if_exist_particle && is_cur);
           {
             __mem1__ MAPU_LONG i;
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
 
               if (is_to_left) {
                 {
@@ -6843,7 +6834,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       (trn_shared)[__idx] = to_right_num;
       __mem1__ MAPU_LONG p;
       p = 0;
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
         if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
           {
@@ -7089,7 +7080,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_cpnum = 0;
             __mem1__ MAPU_LONG __pscmc_one_copy;
             __pscmc_one_copy = (4096 / 4);
-            for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+            for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
               __mem1__ MAPU_LONG cp_size;
               cp_size = __pscmc_one_copy;
 
@@ -7152,7 +7143,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -7164,7 +7155,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -7185,7 +7176,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -7235,7 +7226,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -7291,7 +7282,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
   {
     __mem1__ MAPU_LONG MYGEN85;
     MYGEN85 = (num_write_plus * 8);
-    for (0; (MYGEN85 > 0); (MYGEN85 = (MYGEN85 + -__xlen))) {
+    for (0; MYGEN85 > 0; MYGEN85 = (MYGEN85 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN85 + (__idx + -__xlen));
 
@@ -7328,7 +7319,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -7430,7 +7421,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -7446,7 +7437,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -7506,7 +7497,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -7544,7 +7535,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -7563,10 +7554,10 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -7575,7 +7566,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 8)))[1] < left_bound)) {
 
@@ -7596,7 +7587,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -7624,7 +7615,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 8); (i = (i + 1))) {
+                  for (i = 0; i < 8; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                          ((local_pos_cache + (g * 8)))[i]);
                   }
@@ -7713,7 +7704,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -7735,7 +7726,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -8001,8 +7992,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -8085,7 +8075,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -8190,7 +8180,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       cu_cache + (8 * ((__idy * cu_cache_length) + ((7 * cu_cache_length) / 10)));
   __mem1__ __DDR double *cu_cache_head;
   cu_cache_head = (cu_cache + (8 * (__idy * cu_cache_length)));
-  for (i = 0; (i < (XLEN * (YLEN * ZLEN))); i++) {
+  for (i = 0; i < (XLEN * (YLEN * ZLEN)); i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = i;
     __mem1__ MAPU_LONG bxyzx;
@@ -8225,7 +8215,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
     num_write_main = 0;
     __mem1__ MAPU_LONG num_write_tmp;
     num_write_tmp = 0;
-    for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+    for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
       __mem1__ int cur_grid_num;
       cur_grid_num = 0;
       __mem1__ int to_left_num;
@@ -8237,8 +8227,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       __mem0__ int trn_shared[IDX_LOCAL_XLEN];
       {
         __mem1__ MAPU_LONG p;
-        for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen)));
-             (p = (p + 1))) {
+        for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
           __mem1__ int real_p;
           real_p = p;
           __mem1__ int local_p_id;
@@ -8261,7 +8250,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
           is_cur = (if_exist_particle && is_cur);
           {
             __mem1__ MAPU_LONG i;
-            for ((i = 0); (i < 8); (i = (i + 1))) {
+            for (i = 0; i < 8; i++) {
 
               if (is_to_left) {
                 {
@@ -8318,7 +8307,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       (trn_shared)[__idx] = to_right_num;
       __mem1__ MAPU_LONG p;
       p = 0;
-      for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+      for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
         if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
           {
@@ -8569,7 +8558,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_cpnum = 0;
             __mem1__ MAPU_LONG __pscmc_one_copy;
             __pscmc_one_copy = (4096 / 4);
-            for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+            for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
               __mem1__ MAPU_LONG cp_size;
               cp_size = __pscmc_one_copy;
 
@@ -8632,7 +8621,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -8644,7 +8633,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -8665,7 +8654,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -8715,7 +8704,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -8771,7 +8760,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
   {
     __mem1__ MAPU_LONG MYGEN98;
     MYGEN98 = (num_write_plus * 8);
-    for (0; (MYGEN98 > 0); (MYGEN98 = (MYGEN98 + -__xlen))) {
+    for (0; MYGEN98 > 0; MYGEN98 = (MYGEN98 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN98 + (__idx + -__xlen));
 
@@ -8808,7 +8797,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -8910,7 +8899,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
       cur_this = 0;
       __mem1__ int lg;
       __mem1__ int g;
-      for (lg = 0; (lg < cu_cur_cache_load); (lg = (lg + 64))) {
+      for (lg = 0; lg < cu_cur_cache_load; lg += 64) {
         __mem1__ MAPU_LONG num_read;
         num_read =
             (((lg + 64) > cu_cur_cache_load)) ? (({ (cu_cur_cache_load - lg); })) : (({ 64; }));
@@ -8926,7 +8915,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
             (__pscmc_mapu_internal_barrier__).arrive_and_wait();
           }
         }
-        for (g = 0; (g < num_read); g++) {
+        for (g = 0; g < num_read; g++) {
           __mem1__ int gall;
           gall = (g + lg);
 
@@ -8986,7 +8975,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
       (cu_xyzw_shared)[3] = cur_to_right;
     }
   }
-  for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+  for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
     __mem1__ MAPU_LONG grid_id;
     grid_id = (__idx + (i * __xlen));
 
@@ -9024,7 +9013,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
         num_write_main = 0;
         __mem1__ MAPU_LONG num_write_tmp;
         num_write_tmp = 0;
-        for (lg = 0; (lg < cur_load); (lg = (lg + 64))) {
+        for (lg = 0; lg < cur_load; lg += 64) {
           __mem1__ MAPU_LONG num_read;
           num_read = ((((lg + 64) > cur_load)) ? (({ (cur_load - lg); })) : (({ 64; })));
 
@@ -9043,10 +9032,10 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             {
               __mem1__ MAPU_LONG inner_step;
-              for ((inner_step = 0); (inner_step < num_read); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < num_read; inner_step++) {
                 {
                   __mem1__ MAPU_LONG inner_g;
-                  for ((inner_g = 0); (inner_g < 3); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 3; inner_g++) {
                     ((local_vel_cache)[((inner_step * 3) + inner_g)] =
                          (((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8)) +
                            (3 + (lg * 8))))[((inner_step * 8) + inner_g)]);
@@ -9055,7 +9044,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
               }
             }
           }
-          for (g = 0; (g < num_read); g++) {
+          for (g = 0; g < num_read; g++) {
 
             if ((((local_pos_cache + (g * 8)))[2] < left_bound)) {
 
@@ -9076,7 +9065,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
-                for ((i = 0); (i < 8); (i = (i + 1))) {
+                for (i = 0; i < 8; i++) {
                   (((local_temp_particle_cache_minus + (num_write_minus * 8)))[i] =
                        ((local_pos_cache + (g * 8)))[i]);
                 }
@@ -9104,7 +9093,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                 num_write_tmp = 0;
                 {
                   __mem1__ MAPU_LONG i;
-                  for ((i = 0); (i < 8); (i = (i + 1))) {
+                  for (i = 0; i < 8; i++) {
                     (((local_temp_particle_cache_plus + (num_write_plus * 8)))[i] =
                          ((local_pos_cache + (g * 8)))[i]);
                   }
@@ -9193,7 +9182,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
           {
             __mem1__ MAPU_LONG i;
             i = 0;
-            for (i = 0; (i < 4); i++) {
+            for (i = 0; i < 4; i++) {
             }
           }
         }
@@ -9215,7 +9204,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
   }
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -9484,8 +9473,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -9568,7 +9556,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -9697,7 +9685,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -9709,7 +9697,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -9730,7 +9718,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -9780,7 +9768,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -9836,7 +9824,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN102;
     MYGEN102 = (num_write_plus * 8);
-    for (0; (MYGEN102 > 0); (MYGEN102 = (MYGEN102 + -__xlen))) {
+    for (0; MYGEN102 > 0; MYGEN102 = (MYGEN102 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN102 + (__idx + -__xlen));
 
@@ -9873,7 +9861,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -9969,7 +9957,7 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -10235,8 +10223,7 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -10319,7 +10306,7 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -10448,7 +10435,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -10460,7 +10447,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -10481,7 +10468,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -10531,7 +10518,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -10587,7 +10574,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN107;
     MYGEN107 = (num_write_plus * 8);
-    for (0; (MYGEN107 > 0); (MYGEN107 = (MYGEN107 + -__xlen))) {
+    for (0; MYGEN107 > 0; MYGEN107 = (MYGEN107 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN107 + (__idx + -__xlen));
 
@@ -10624,7 +10611,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -10720,7 +10707,7 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -10986,8 +10973,7 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -11070,7 +11056,7 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -11199,7 +11185,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
   num_write_main = 0;
   __mem1__ MAPU_LONG num_write_tmp;
   num_write_tmp = 0;
-  for (lg = 0; (lg < cur_load); (lg = (lg + (__xlen * __xlen)))) {
+  for (lg = 0; lg < cur_load; lg = (lg + (__xlen * __xlen))) {
     __mem1__ int cur_grid_num;
     cur_grid_num = 0;
     __mem1__ int to_left_num;
@@ -11211,7 +11197,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
     __mem0__ int trn_shared[IDX_LOCAL_XLEN];
     {
       __mem1__ MAPU_LONG p;
-      for ((p = (lg + (__idx * __xlen))); (p < (lg + ((__idx * __xlen) + __xlen))); (p = (p + 1))) {
+      for (p = (lg + (__idx * __xlen)); p < (lg + ((__idx * __xlen) + __xlen)); p++) {
         __mem1__ int real_p;
         real_p = p;
         __mem1__ int local_p_id;
@@ -11232,7 +11218,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
         is_cur = (if_exist_particle && is_cur);
         {
           __mem1__ MAPU_LONG i;
-          for ((i = 0); (i < 8); (i = (i + 1))) {
+          for (i = 0; i < 8; i++) {
 
             if (is_to_left) {
               {
@@ -11282,7 +11268,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
     (trn_shared)[__idx] = to_right_num;
     __mem1__ MAPU_LONG p;
     p = 0;
-    for (p = 0; (p < (__xlen * __xlen)); (p = (p + __xlen))) {
+    for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if ((((cgn_shared)[(p / __xlen)] * 8) * 1)) {
         {
@@ -11338,7 +11324,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
   {
     __mem1__ MAPU_LONG MYGEN112;
     MYGEN112 = (num_write_plus * 8);
-    for (0; (MYGEN112 > 0); (MYGEN112 = (MYGEN112 + -__xlen))) {
+    for (0; MYGEN112 > 0; MYGEN112 = (MYGEN112 + -__xlen)) {
       __mem1__ int ridx;
       ridx = (MYGEN112 + (__idx + -__xlen));
 
@@ -11375,7 +11361,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
           __pscmc_cpnum = 0;
           __mem1__ MAPU_LONG __pscmc_one_copy;
           __pscmc_one_copy = (4096 / 4);
-          for (0; (__pscmc_cpnum < 1); (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+          for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
             __mem1__ MAPU_LONG cp_size;
             cp_size = __pscmc_one_copy;
 
@@ -11471,7 +11457,7 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -11740,8 +11726,7 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
                     __pscmc_cpnum = 0;
                     __mem1__ MAPU_LONG __pscmc_one_copy;
                     __pscmc_one_copy = (4096 / (8 * cur_to_cu_cache));
-                    for (0; (__pscmc_cpnum < 1);
-                         (__pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy))) {
+                    for (0; __pscmc_cpnum < 1; __pscmc_cpnum = (__pscmc_cpnum + __pscmc_one_copy)) {
                       __mem1__ MAPU_LONG cp_size;
                       cp_size = __pscmc_one_copy;
 
@@ -11824,7 +11809,7 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
 
   if (1) {
     {
-      for (i = 0; ((__idx + (i * __xlen)) < xyzalllen); i++) {
+      for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
         __mem1__ MAPU_LONG grid_id;
         grid_id = (__idx + (i * __xlen));
 
@@ -11984,7 +11969,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
           }
           __mem0__ double local_cache[(384 * 6)];
           __mem1__ int i;
-          for ((i = beg_left_par); (i < end_left_par); (i = (i + 384))) {
+          for (i = beg_left_par; i < end_left_par; i += 384) {
             __mem1__ int num_cp;
             num_cp = ((((i + 384) > end_left_par)) ? (({ (end_left_par - i); })) : (({ 384; })));
 
@@ -12000,7 +11985,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
               }
             }
             __mem1__ int ii;
-            for ((ii = 0); (ii < num_cp); ii++) {
+            for (ii = 0; ii < num_cp; ii++) {
               (((local_cache + (ii * 6)))[the_dir_num] =
                    (((local_cache + (ii * 6)))[the_dir_num] + XYZLEN));
             }
@@ -12120,7 +12105,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
           }
           __mem0__ double local_cache[(384 * 6)];
           __mem1__ int i;
-          for ((i = beg_left_par); (i < end_left_par); (i = (i + 384))) {
+          for (i = beg_left_par; i < end_left_par; i += 384) {
             __mem1__ int num_cp;
             num_cp = ((((i + 384) > end_left_par)) ? (({ (end_left_par - i); })) : (({ 384; })));
 
@@ -12136,7 +12121,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
               }
             }
             __mem1__ int ii;
-            for ((ii = 0); (ii < num_cp); ii++) {
+            for (ii = 0; ii < num_cp; ii++) {
               (((local_cache + (ii * 6)))[the_dir_num] =
                    (((local_cache + (ii * 6)))[the_dir_num] + XYZLEN));
             }
@@ -12257,7 +12242,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
           }
           __mem0__ double local_cache[(384 * 8)];
           __mem1__ int i;
-          for ((i = beg_left_par); (i < end_left_par); (i = (i + 384))) {
+          for (i = beg_left_par; i < end_left_par; i += 384) {
             __mem1__ int num_cp;
             num_cp = ((((i + 384) > end_left_par)) ? (({ (end_left_par - i); })) : (({ 384; })));
 
@@ -12273,7 +12258,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
               }
             }
             __mem1__ int ii;
-            for ((ii = 0); (ii < num_cp); ii++) {
+            for (ii = 0; ii < num_cp; ii++) {
               (((local_cache + (ii * 8)))[the_dir_num] =
                    (((local_cache + (ii * 8)))[the_dir_num] + XYZLEN));
             }
@@ -12393,7 +12378,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
           }
           __mem0__ double local_cache[(384 * 8)];
           __mem1__ int i;
-          for ((i = beg_left_par); (i < end_left_par); (i = (i + 384))) {
+          for (i = beg_left_par; i < end_left_par; i += 384) {
             __mem1__ int num_cp;
             num_cp = ((((i + 384) > end_left_par)) ? (({ (end_left_par - i); })) : (({ 384; })));
 
@@ -12409,7 +12394,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
               }
             }
             __mem1__ int ii;
-            for ((ii = 0); (ii < num_cp); ii++) {
+            for (ii = 0; ii < num_cp; ii++) {
               (((local_cache + (ii * 8)))[the_dir_num] =
                    (((local_cache + (ii * 8)))[the_dir_num] + XYZLEN));
             }

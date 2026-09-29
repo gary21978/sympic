@@ -28,7 +28,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
   {
     long k;
 
-    for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
+    for (k = 0; k < num_cds_per_mpi_proc; k++) {
       if ((!(cd_performances)[k])) {
         (cd_performances)[k] = 1;
       }
@@ -45,7 +45,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
   {
     long i;
 
-    for ((i = 0); (i < num_thread); (i = (i + 1))) {
+    for (i = 0; i < num_thread; i++) {
       ((cplx_array)[i] =
            ((fp) ? ((cplx_ori_array)[(ori_vec)[i]])
                  : (floor(call_CAL_FUN_ONE_PARA("get_thread_complexity", (ori_vec)[i])))));
@@ -64,7 +64,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
   {
     long i;
 
-    for ((i = 0); (i < num_thread); (i = (i + 1))) {
+    for (i = 0; i < num_thread; i++) {
       long mpi_id = (current_pid / num_cds_per_mpi_proc);
 
       long dev_id = (current_pid % num_cds_per_mpi_proc);
@@ -74,7 +74,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
       {
         long j;
 
-        for ((j = 0); (j < dev_id); (j = (j + 1))) {
+        for (j = 0; j < dev_id; j++) {
           current_perf_all = (current_perf_all + (cd_performances)[j]);
         }
       }
@@ -117,11 +117,11 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
   {
     long k;
 
-    for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
+    for (k = 0; k < num_cds_per_mpi_proc; k++) {
       total_perf = (total_perf + (cd_performances)[k]);
     }
   }
-  for (i = 0; (i < num_mpi_proc); i++) {
+  for (i = 0; i < num_mpi_proc; i++) {
     long tid_min = global_tid;
 
     long tid_plus = (global_tid + oneprocnum);
@@ -135,7 +135,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
     {
       long k;
 
-      for ((k = 0); (k < num_cds_per_mpi_proc); (k = (k + 1))) {
+      for (k = 0; k < num_cds_per_mpi_proc; k++) {
         (num_thread_array)[(k + (i * num_cds_per_mpi_proc))] = global_tid;
         long old_pid = global_tid;
 
@@ -163,7 +163,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
         {
           long j;
 
-          for ((j = old_pid); (j < global_tid); (j = (j + 1))) {
+          for (j = old_pid; j < global_tid; j++) {
             (local_tid_array)[j] = (j - old_pid);
           }
         }
@@ -252,13 +252,13 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
   {
     long g;
 
-    for ((g = 0); (g < ndim); (g = (g + 1))) {
+    for (g = 0; g < ndim; g++) {
       alllen = (alllen * onen);
     }
   }
   long i = 0;
 
-  for (i = 0; (i < numvec); (i = (i + 1))) {
+  for (i = 0; i < numvec; i++) {
     long cur_thread = (ori_vec)[((num_thread_array)[global_pid] + i)];
 
     long bxyzx = (cur_thread % x_num_thread_block);
@@ -332,15 +332,15 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
     {
       long xyzz;
 
-      for ((xyzz = 0); (xyzz < 3); (xyzz = (xyzz + 1))) {
+      for (xyzz = 0; xyzz < 3; xyzz++) {
         {
           long xyzy;
 
-          for ((xyzy = 0); (xyzy < 3); (xyzy = (xyzy + 1))) {
+          for (xyzy = 0; xyzy < 3; xyzy++) {
             {
               long xyzx;
 
-              for ((xyzx = 0); (xyzx < 3); (xyzx = (xyzx + 1))) {
+              for (xyzx = 0; xyzx < 3; xyzx++) {
                 int xyzlocalall = (0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz))))));
 
                 long adj_id_pre =

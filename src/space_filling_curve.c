@@ -116,7 +116,7 @@ int sp_fill_curve_1d(long *modifiedid, long *ori_id, int m) {
   {
     long i;
 
-    for ((i = 0); (i < m); (i = (i + 1))) {
+    for (i = 0; i < m; i++) {
       (modifiedid)[i] = i;
       (ori_id)[i] = i;
     }

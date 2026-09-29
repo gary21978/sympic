@@ -36,7 +36,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
   {
     long l1;
 
-    for ((l1 = 0); (l1 < cu_load); (l1 = (l1 + 1))) {
+    for (l1 = 0; l1 < cu_load; l1++) {
       long load0 = 1;
 
       use_local_particle_position = 1;
@@ -72,13 +72,13 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
         {
           long g;
 
-          for ((g = 0); (g < 3); (g = (g + 1))) {
+          for (g = 0; g < 3; g++) {
             (enevec)[(g + (3 * __idx))] = 0;
             (avvvec)[(g + (3 * __idx))] = 0;
           }
         }
         (numcpvec)[(1 * __idx)] = 0;
-        for (; (((__idx * 1) + lg) < load0); (lg = (lg + (__xlen * 1)))) {
+        for (; ((__idx * 1) + lg) < load0; lg += __xlen ) {
           double a_rva[(1 * 6)];
           int __idx_all_base = ((__idx * 1) + lg);
 
@@ -88,11 +88,11 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 6); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 6; inner_g++) {
                     (((a_rva + (0 * 6)))[((inner_step * 6) + inner_g)] =
                          (((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
                            (__idx_all_base * 6)))[((inner_step * 6) + inner_g)]);
@@ -116,7 +116,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               double vx = ((a_rva + (g * 6)))[3];
 
               double vy = ((a_rva + (g * 6)))[4];
@@ -150,7 +150,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           {
             long g;
 
-            for ((g = 0); (g < __xlen); (g = (g + 1))) {
+            for (g = 0; g < __xlen; g++) {
               allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
               allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
               allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
@@ -279,7 +279,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
   {
     long allgid;
 
-    for ((allgid = 0); (allgid < numgrid); (allgid = (allgid + 1))) {
+    for (allgid = 0; allgid < numgrid; allgid++) {
       int new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
 
       long c_gid = allgid;
@@ -327,13 +327,13 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
         {
           long g;
 
-          for ((g = 0); (g < 3); (g = (g + 1))) {
+          for (g = 0; g < 3; g++) {
             (enevec)[(g + (3 * __idx))] = 0;
             (avvvec)[(g + (3 * __idx))] = 0;
           }
         }
         (numcpvec)[(1 * __idx)] = 0;
-        for (; (((__idx * 1) + lg) < load0); (lg = (lg + (__xlen * 1)))) {
+        for (; ((__idx * 1) + lg) < load0; lg += __xlen ) {
           double a_rva[(1 * 6)];
           int __idx_all_base = ((__idx * 1) + lg);
 
@@ -343,11 +343,11 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
             {
               long inner_step;
 
-              for ((inner_step = 0); (inner_step < numcp); (inner_step = (inner_step + 1))) {
+              for (inner_step = 0; inner_step < numcp; inner_step++) {
                 {
                   long inner_g;
 
-                  for ((inner_g = 0); (inner_g < 6); (inner_g = (inner_g + 1))) {
+                  for (inner_g = 0; inner_g < 6; inner_g++) {
                     (((a_rva + (0 * 6)))[((inner_step * 6) + inner_g)] =
                          (((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))) +
                            (__idx_all_base * 6)))[((inner_step * 6) + inner_g)]);
@@ -371,7 +371,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           {
             long g;
 
-            for ((g = 0); (g < numcp); (g = (g + 1))) {
+            for (g = 0; g < numcp; g++) {
               double vx = ((a_rva + (g * 6)))[3];
 
               double vy = ((a_rva + (g * 6)))[4];
@@ -405,7 +405,7 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           {
             long g;
 
-            for ((g = 0); (g < __xlen); (g = (g + 1))) {
+            for (g = 0; g < __xlen; g++) {
               allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
               allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
               allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);

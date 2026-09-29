@@ -1393,20 +1393,6 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
           __mem1__ MAPU_LONG lxyzz;
           lxyzz = xyzz + field_zmi;
 
-          if (0) {
-
-            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-              lxyzx = ovlp;
-            }
-
-            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-              lxyzy = ovlp;
-            }
-
-            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-              lxyzz = ovlp;
-            }
-          }
           {
             __mem1__ MAPU_LONG g;
             g = 0;

@@ -240,7 +240,7 @@ int cuda_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
     (pthis->sync_layer_pscmc)[i] = malloc(sizeof(cuda_pscmc_mem));
     (pthis->swap_layer_pscmc)[i] = malloc(sizeof(cuda_pscmc_mem));
-    if (1 && (!ismiddle)) {
+    if (!ismiddle) {
       ovleal_aio = ovleal_aio + ovlp_all_len;
 
     } else {
@@ -1048,7 +1048,7 @@ int mapu_alloc_Field3D_Seq(Field3D_Seq *pthis, int is_init_kernels) {
 
     (pthis->sync_layer_pscmc)[i] = malloc(sizeof(mapu_pscmc_mem));
     (pthis->swap_layer_pscmc)[i] = malloc(sizeof(mapu_pscmc_mem));
-    if (1 && (!ismiddle)) {
+    if (!ismiddle) {
       ovleal_aio = ovleal_aio + ovlp_all_len;
 
     } else {

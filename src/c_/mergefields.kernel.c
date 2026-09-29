@@ -87,20 +87,6 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
           long lxyzy = (xyzy + field_ymi);
           long lxyzz = (xyzz + field_zmi);
 
-          if (0) {
-
-            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-              lxyzx = ovlp;
-            }
-
-            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-              lxyzy = ovlp;
-            }
-
-            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-              lxyzz = ovlp;
-            }
-          }
           {
             long g = 0;
             for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
@@ -205,20 +191,6 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
                 {
                   long g = 0;
                   for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
@@ -359,20 +331,6 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
                 {
                   long g = 0;
                   for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
@@ -471,7 +429,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
           long lxyzy = (xyzy + field_ymi);
           long lxyzz = (xyzz + field_zmi);
 
-          if (1) {
+          {
 
             if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
               lxyzx = ovlp;
@@ -589,7 +547,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
 
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
@@ -743,7 +701,7 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
 
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
@@ -855,7 +813,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
           long lxyzy = (xyzy + field_ymi);
           long lxyzz = (xyzz + field_zmi);
 
-          if (1) {
+          {
 
             if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
               lxyzx = ovlp;
@@ -976,7 +934,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
 
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
@@ -1132,7 +1090,7 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
 
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
@@ -1246,20 +1204,6 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
           long lxyzy = (xyzy + field_ymi);
           long lxyzz = (xyzz + field_zmi);
 
-          if (0) {
-
-            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-              lxyzx = ovlp;
-            }
-
-            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-              lxyzy = ovlp;
-            }
-
-            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-              lxyzz = ovlp;
-            }
-          }
           {
             long g = 0;
             for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
@@ -1364,20 +1308,6 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
                 {
                   long g = 0;
                   for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
@@ -1518,20 +1448,6 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
                 long lxyzy = (xyzy + field_ymi);
                 long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
                 {
                   long g = 0;
                   for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {

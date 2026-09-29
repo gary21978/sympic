@@ -813,7 +813,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -1058,7 +1058,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -1929,7 +1929,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -2175,7 +2175,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -3046,7 +3046,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -3293,7 +3293,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -3571,7 +3571,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -3816,7 +3816,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -4094,7 +4094,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -4340,7 +4340,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -4618,7 +4618,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -4865,7 +4865,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -5736,7 +5736,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -5981,7 +5981,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -6852,7 +6852,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -7098,7 +7098,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -7969,7 +7969,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -8216,7 +8216,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -8494,7 +8494,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -8739,7 +8739,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -9017,7 +9017,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -9263,7 +9263,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -9541,7 +9541,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
   }
   __syncthreads();
   __syncthreads();
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -9788,7 +9788,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
     }
   }
 
-  if (1) {
+  {
     for (i = 0; (__idx + (i * __xlen)) < xyzalllen; i++) {
       long grid_id = (__idx + (i * __xlen));
 
@@ -9890,7 +9890,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = (cu_xyzw_shared)[2];
 
-  if (1 && ((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -9908,7 +9908,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       }
     }
 
-    if (1) {
+    {
       __shared__ int al1[2];
       if (__idx == 0) {
         al1[0] = cu_xyzw_shared[3];
@@ -9930,43 +9930,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
     __syncthreads();
     int i;
 
-    if (0) {
-      long i;
-
-      for (i = beg_left_par; i < end_left_par; i++) {
-        int real_id = i;
-
-        double par_cache[6];
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 6; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (par_cache[inner_step + inner_g] = ((cu_cache + (__idy * (6 * cu_cache_length))) +
-                                                  (6 * real_id))[inner_step + inner_g]);
-            }
-          }
-        }
-        par_cache[the_dir_num] = par_cache[the_dir_num] + XYZLEN;
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 6; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((cu_cache + (left_pid * (6 * cu_cache_length))) +
-                (6 * end_cu_par))[inner_step + inner_g] = par_cache[inner_step + inner_g]);
-            }
-          }
-        }
-        end_cu_par = end_cu_par + 1;
-      }
-    }
-
-    if (1) {
+    {
       for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
         int real_id = (i + __idx);
 
@@ -10045,7 +10009,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = cu_cache_length;
 
-  if (1 && ((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10063,7 +10027,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
       }
     }
 
-    if (1) {
+    {
       __shared__ int al1[2];
       if (__idx == 0) {
         al1[0] = cu_cache_length;
@@ -10084,43 +10048,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
     __syncthreads();
     int i;
 
-    if (0) {
-      long i;
-
-      for (i = beg_left_par; i < end_left_par; i++) {
-        int real_id = i;
-
-        double par_cache[6];
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 6; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (par_cache[inner_step + inner_g] = ((cu_cache + (__idy * (6 * cu_cache_length))) +
-                                                  (6 * real_id))[inner_step + inner_g]);
-            }
-          }
-        }
-        par_cache[the_dir_num] = par_cache[the_dir_num] + XYZLEN;
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 6; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((cu_cache + (left_pid * (6 * cu_cache_length))) +
-                (6 * end_cu_par))[inner_step + inner_g] = par_cache[inner_step + inner_g]);
-            }
-          }
-        }
-        end_cu_par = end_cu_par + 1;
-      }
-    }
-
-    if (1) {
+    {
       for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
         int real_id = (i + __idx);
 
@@ -10199,7 +10127,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = (cu_xyzw_shared)[2];
 
-  if (1 && ((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10217,7 +10145,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       }
     }
 
-    if (1) {
+    {
       __shared__ int al1[2];
       if (__idx == 0) {
         al1[0] = cu_xyzw_shared[3];
@@ -10239,43 +10167,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
     __syncthreads();
     int i;
 
-    if (0) {
-      long i;
-
-      for (i = beg_left_par; i < end_left_par; i++) {
-        int real_id = i;
-
-        double par_cache[8];
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 8; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (par_cache[inner_step + inner_g] = ((cu_cache + (__idy * (8 * cu_cache_length))) +
-                                                  (8 * real_id))[inner_step + inner_g]);
-            }
-          }
-        }
-        par_cache[the_dir_num] = par_cache[the_dir_num] + XYZLEN;
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 8; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((cu_cache + (left_pid * (8 * cu_cache_length))) +
-                (8 * end_cu_par))[inner_step + inner_g] = par_cache[inner_step + inner_g]);
-            }
-          }
-        }
-        end_cu_par = end_cu_par + 1;
-      }
-    }
-
-    if (1) {
+    {
       for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
         int real_id = (i + __idx);
 
@@ -10354,7 +10246,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = cu_cache_length;
 
-  if (1 && ((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10372,7 +10264,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
       }
     }
 
-    if (1) {
+    {
       __shared__ int al1[2];
       if (__idx == 0) {
         al1[0] = cu_cache_length;
@@ -10393,43 +10285,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
     __syncthreads();
     int i;
 
-    if (0) {
-      long i;
-
-      for (i = beg_left_par; i < end_left_par; i++) {
-        int real_id = i;
-
-        double par_cache[8];
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 8; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (par_cache[inner_step + inner_g] = ((cu_cache + (__idy * (8 * cu_cache_length))) +
-                                                  (8 * real_id))[inner_step + inner_g]);
-            }
-          }
-        }
-        par_cache[the_dir_num] = par_cache[the_dir_num] + XYZLEN;
-        {
-          long inner_step;
-
-          for (inner_step = 0; inner_step < 8; inner_step++) {
-            long inner_g;
-
-            for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((cu_cache + (left_pid * (8 * cu_cache_length))) +
-                (8 * end_cu_par))[inner_step + inner_g] = par_cache[inner_step + inner_g]);
-            }
-          }
-        }
-        end_cu_par = end_cu_par + 1;
-      }
-    }
-
-    if (1) {
+    {
       for (i = beg_left_par; (i + __idx) < end_left_par; i = (i + __xlen)) {
         int real_id = (i + __idx);
 

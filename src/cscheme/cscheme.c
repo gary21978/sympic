@@ -2571,16 +2571,7 @@ tailcall_opt:
           element *var = proc->data.lambda_proc.paras;
           element *val = args;
           element *subenv = fstenv;
-          if (0) {
-            fprintf(stderr, "dbg_tail_rec_opt:");
-            fprintf(stderr, ", var=");
-            write_element(var, stderr);
-            fprintf(stderr, ", val=");
-            write_element(val, stderr);
-            fprintf(stderr, ", input=");
-            write_element(input, stderr);
-            fprintf(stderr, "\n");
-          }
+
           while (!isempty(var)) {
             if (var->type == PAIR && val->type == PAIR) {
               add_binding_in_hashtable(car(var), car(val),

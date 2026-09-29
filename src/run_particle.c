@@ -427,9 +427,7 @@ int dump_ene_num_mpi(Particle_in_Cell_MPI *pthis, double dt0) {
     for (i = 0; i < (num_runtime * num_spec); i++) {
       int ptype = (o_particle_type)[(i / num_runtime)];
 
-      if (1 || (ptype == 0)) {
-        dump_ene_num_all((MPI_fieldE.particles + i), (i / num_runtime), num_spec, dt0);
-      }
+      dump_ene_num_all((MPI_fieldE.particles + i), (i / num_runtime), num_spec, dt0); 
     }
   }
   return 0;

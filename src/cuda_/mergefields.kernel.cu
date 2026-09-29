@@ -109,20 +109,6 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpind
 
           long lxyzz = (xyzz + field_zmi);
 
-          if (0) {
-            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-              lxyzx = ovlp;
-            }
-
-            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-              lxyzy = ovlp;
-            }
-
-            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-              lxyzz = ovlp;
-            }
-          }
-
           {
             long g = 0;
 
@@ -258,20 +244,6 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
                 long lxyzy = (xyzy + field_ymi);
 
                 long lxyzz = (xyzz + field_zmi);
-
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
 
                 {
                   long g = 0;
@@ -446,20 +418,6 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
 
                 long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
-
                 {
                   long g = 0;
 
@@ -587,7 +545,7 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpind
 
           long lxyzz = (xyzz + field_zmi);
 
-          if (1) {
+          {
             if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
               lxyzx = ovlp;
             }
@@ -737,7 +695,7 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
 
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
                   }
@@ -924,7 +882,7 @@ cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
 
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
                   }
@@ -1065,7 +1023,7 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpin
 
           long lxyzz = (xyzz + field_zmi);
 
-          if (1) {
+          {
             if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
               lxyzx = ovlp;
             }
@@ -1218,7 +1176,7 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
 
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
                   }
@@ -1407,7 +1365,7 @@ cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
 
                 long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
+                {
                   if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                     lxyzx = ovlp;
                   }
@@ -1550,20 +1508,6 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpin
 
           long lxyzz = (xyzz + field_zmi);
 
-          if (0) {
-            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-              lxyzx = ovlp;
-            }
-
-            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-              lxyzy = ovlp;
-            }
-
-            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-              lxyzz = ovlp;
-            }
-          }
-
           {
             long g = 0;
 
@@ -1699,20 +1643,6 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
                 long lxyzy = (xyzy + field_ymi);
 
                 long lxyzz = (xyzz + field_zmi);
-
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
 
                 {
                   long g = 0;
@@ -1886,20 +1816,6 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
                 long lxyzy = (xyzy + field_ymi);
 
                 long lxyzz = (xyzz + field_zmi);
-
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
-
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
-
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
 
                 {
                   long g = 0;

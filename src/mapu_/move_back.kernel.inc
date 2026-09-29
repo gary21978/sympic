@@ -118,7 +118,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
             grid_load_end = gridload + 1;
             xyzw[4 * allid_grid] = grid_load_end;
 
-            if (6) {
+            {
               const size_t data_size = sizeof((local_temp_particle_cache + (j * 6))[0]);
               memcpy_async(
                   __pscmc_mapu_internal_block__,
@@ -132,7 +132,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
 
         if (!wrted_grid) {
 
-          if (6) {
+          {
             const size_t data_size = sizeof((local_temp_particle_cache + (j * 6))[0]);
             memcpy_async(
                 __pscmc_mapu_internal_block__,
@@ -233,7 +233,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
             grid_load_end = gridload + 1;
             xyzw[4 * allid_grid] = grid_load_end;
 
-            if (8) {
+            {
               const size_t data_size = sizeof((local_temp_particle_cache + (j * 8))[0]);
               memcpy_async(
                   __pscmc_mapu_internal_block__,
@@ -247,7 +247,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
 
         if (!wrted_grid) {
 
-          if (8) {
+          {
             const size_t data_size = sizeof((local_temp_particle_cache + (j * 8))[0]);
             memcpy_async(
                 __pscmc_mapu_internal_block__,

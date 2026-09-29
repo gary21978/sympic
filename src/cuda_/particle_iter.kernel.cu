@@ -85,19 +85,15 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           int numcp = 1;
 
           {
-            {
-              long inner_step;
+            long inner_step;
 
-              for (inner_step = 0; inner_step < numcp; inner_step++) {
-                {
-                  long inner_g;
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
+              long inner_g;
 
-                  for (inner_g = 0; inner_g < 6; inner_g++) {
-                    (a_rva[(inner_step * 6) + inner_g] =
-                         ((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
-                          (__idx_all_base * 6))[(inner_step * 6) + inner_g]);
-                  }
-                }
+              for (inner_g = 0; inner_g < 6; inner_g++) {
+                (a_rva[(inner_step * 6) + inner_g] =
+                     ((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
+                      (__idx_all_base * 6))[(inner_step * 6) + inner_g]);
               }
             }
           }
@@ -333,19 +329,15 @@ __global__ void cuda_dump_ene_num(double *inoutput, int *xyzw, double *cu_cache,
           int numcp = 1;
 
           {
-            {
-              long inner_step;
+            long inner_step;
 
-              for (inner_step = 0; inner_step < numcp; inner_step++) {
-                {
-                  long inner_g;
+            for (inner_step = 0; inner_step < numcp; inner_step++) {
+              long inner_g;
 
-                  for (inner_g = 0; inner_g < 6; inner_g++) {
-                    (a_rva[(inner_step * 6) + inner_g] =
-                         ((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))) +
-                          (__idx_all_base * 6))[(inner_step * 6) + inner_g]);
-                  }
-                }
+              for (inner_g = 0; inner_g < 6; inner_g++) {
+                (a_rva[(inner_step * 6) + inner_g] =
+                     ((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))) +
+                      (__idx_all_base * 6))[(inner_step * 6) + inner_g]);
               }
             }
           }

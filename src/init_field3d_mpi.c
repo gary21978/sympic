@@ -44,53 +44,47 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
     pthis->data = malloc(sizeof(Field3D_Seq) * num_runtime);
     pthis->rqst = malloc(sizeof(PS_MPI_Request *) * num_runtime);
     if (new_num_ele) {
-      {
-        long xyzz;
+      long xyzz;
 
-        for (xyzz = 0; xyzz < 3; xyzz++) {
-          {
-            long xyzy;
+      for (xyzz = 0; xyzz < 3; xyzz++) {
+        long xyzy;
 
-            for (xyzy = 0; xyzy < 3; xyzy++) {
-              {
-                long xyzx;
+        for (xyzy = 0; xyzy < 3; xyzy++) {
+          long xyzx;
 
-                for (xyzx = 0; xyzx < 3; xyzx++) {
+          for (xyzx = 0; xyzx < 3; xyzx++) {
 
-                  // defined from class Field3D_Seq
+            // defined from class Field3D_Seq
 
-                  long xlen = (tmpdata)->xlen;
+            long xlen = (tmpdata)->xlen;
 
-                  long ylen = (tmpdata)->ylen;
+            long ylen = (tmpdata)->ylen;
 
-                  long zlen = (tmpdata)->zlen;
+            long zlen = (tmpdata)->zlen;
 
-                  int ovlp = (tmpdata)->ovlp;
+            int ovlp = (tmpdata)->ovlp;
 
-                  //====================Field3D_Seq
-                  long rxlen = ovlp;
+            //====================Field3D_Seq
+            long rxlen = ovlp;
 
-                  long rylen = ovlp;
+            long rylen = ovlp;
 
-                  long rzlen = ovlp;
+            long rzlen = ovlp;
 
-                  if (xyzx == 1) {
-                    rxlen = xlen;
-                  }
-
-                  if (xyzy == 1) {
-                    rylen = ylen;
-                  }
-
-                  if (xyzz == 1) {
-                    rzlen = zlen;
-                  }
-
-                  ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
-                       (rxlen * (rylen * (rzlen * new_num_ele))));
-                }
-              }
+            if (xyzx == 1) {
+              rxlen = xlen;
             }
+
+            if (xyzy == 1) {
+              rylen = ylen;
+            }
+
+            if (xyzz == 1) {
+              rzlen = zlen;
+            }
+
+            ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
+                 (rxlen * (rylen * (rzlen * new_num_ele))));
           }
         }
       }
@@ -249,50 +243,46 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     long xyzz;
 
     for (xyzz = 0; xyzz < 3; xyzz++) {
-      {
-        long xyzy;
+      long xyzy;
 
-        for (xyzy = 0; xyzy < 3; xyzy++) {
-          {
-            long xyzx;
+      for (xyzy = 0; xyzy < 3; xyzy++) {
+        long xyzx;
 
-            for (xyzx = 0; xyzx < 3; xyzx++) {
+        for (xyzx = 0; xyzx < 3; xyzx++) {
 
-              // defined from class Field3D_Seq
+          // defined from class Field3D_Seq
 
-              long xlen = (sample_field)->xlen;
+          long xlen = (sample_field)->xlen;
 
-              long ylen = (sample_field)->ylen;
+          long ylen = (sample_field)->ylen;
 
-              long zlen = (sample_field)->zlen;
+          long zlen = (sample_field)->zlen;
 
-              int ovlp = (sample_field)->ovlp;
+          int ovlp = (sample_field)->ovlp;
 
-              int num_ele = (sample_field)->num_ele;
+          int num_ele = (sample_field)->num_ele;
 
-              //====================Field3D_Seq
-              long rxlen = ovlp;
+          //====================Field3D_Seq
+          long rxlen = ovlp;
 
-              long rylen = ovlp;
+          long rylen = ovlp;
 
-              long rzlen = ovlp;
+          long rzlen = ovlp;
 
-              if (xyzx == 1) {
-                rxlen = xlen;
-              }
-
-              if (xyzy == 1) {
-                rylen = ylen;
-              }
-
-              if (xyzz == 1) {
-                rzlen = zlen;
-              }
-
-              ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
-                   (rxlen * (rylen * (rzlen * num_ele))));
-            }
+          if (xyzx == 1) {
+            rxlen = xlen;
           }
+
+          if (xyzy == 1) {
+            rylen = ylen;
+          }
+
+          if (xyzz == 1) {
+            rzlen = zlen;
+          }
+
+          ((pthis->sync_layer_len)[(xyzx + (3 * (xyzy + (3 * xyzz))))] =
+               (rxlen * (rylen * (rzlen * num_ele))));
         }
       }
     }
@@ -361,61 +351,96 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -425,60 +450,8 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -493,72 +466,64 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_E(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_E(ks, js, is, l));
                   }
                 }
               }
@@ -637,61 +602,96 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -701,60 +701,8 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -769,72 +717,64 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_B(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_B(ks, js, is, l));
                   }
                 }
               }
@@ -913,61 +853,96 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -977,60 +952,8 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -1045,72 +968,64 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_E0(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_E0(ks, js, is, l));
                   }
                 }
               }
@@ -1181,61 +1096,96 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -1245,60 +1195,8 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -1313,72 +1211,64 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_B0(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_B0(ks, js, is, l));
                   }
                 }
               }
@@ -1450,61 +1340,96 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -1514,60 +1439,8 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -1582,72 +1455,64 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_FILTER_E(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_FILTER_E(ks, js, is, l));
                   }
                 }
               }
@@ -1734,61 +1599,96 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
           long j;
 
           for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+            long xyzz;
 
-              for (xyzz = 0; xyzz < zlen; xyzz++) {
-                {
-                  long xyzy;
+            for (xyzz = 0; xyzz < zlen; xyzz++) {
+              long xyzy;
 
-                  for (xyzy = 0; xyzy < ylen; xyzy++) {
-                    {
-                      long xyzx;
+              for (xyzy = 0; xyzy < ylen; xyzy++) {
+                long xyzx;
 
-                      for (xyzx = 0; xyzx < 1; xyzx++) {
-                        long is = ((global_x_offset)[j] + 0);
+                for (xyzx = 0; xyzx < 1; xyzx++) {
+                  long is = ((global_x_offset)[j] + 0);
 
-                        long js = ((global_y_offset)[j] + xyzy);
+                  long js = ((global_y_offset)[j] + xyzy);
 
-                        long ks = ((global_z_offset)[j] + xyzz);
+                  long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(pgid->dim == 4);
-                        assert(pgid->version == 0);
-                        assert(pgid->type == GAPS_IO_FLOAT64);
-                        assert((pgid->pdimarray)[0] == num_ele);
-                        long imax = ((pgid)->pdimarray)[1];
+                  assert(pgid->dim == 4);
+                  assert(pgid->version == 0);
+                  assert(pgid->type == GAPS_IO_FLOAT64);
+                  assert((pgid->pdimarray)[0] == num_ele);
+                  long imax = ((pgid)->pdimarray)[1];
 
-                        long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = ((pgid)->pdimarray)[2];
 
-                        GAPS_IO_DataSeek(
-                            pgid, 0,
-                            (num_ele *
-                             (((reduce_x) ? (0) : (is)) +
-                              (((reduce_x) ? (1) : (imax)) *
-                               (((reduce_y) ? (0) : (js)) +
-                                (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
-                        GAPS_IO_FRead(
-                            pgid,
-                            &((((double **)(data + i)->main_data)[0])
-                                  [(j * ((data + i)->xblock *
-                                         ((data + i)->yblock *
-                                          ((data + i)->zblock * (data + i)->num_ele)))) +
-                                   ((data + i)->num_ele *
-                                    (((data + i)->ovlp) +
-                                     ((data + i)->xblock *
-                                      ((xyzy + (data + i)->ovlp) +
-                                       ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
-                            (num_ele * ((reduce_x) ? (1) : (xlen))));
-                        if (reduce_dim) {
-                          {
-                            long g;
+                  GAPS_IO_DataSeek(
+                      pgid, 0,
+                      (num_ele * (((reduce_x) ? (0) : (is)) +
+                                  (((reduce_x) ? (1) : (imax)) *
+                                   (((reduce_y) ? (0) : (js)) +
+                                    (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
+                  GAPS_IO_FRead(pgid,
+                                &((((double **)(data + i)->main_data)[0])
+                                      [(j * ((data + i)->xblock *
+                                             ((data + i)->yblock *
+                                              ((data + i)->zblock * (data + i)->num_ele)))) +
+                                       ((data + i)->num_ele *
+                                        (((data + i)->ovlp) +
+                                         ((data + i)->xblock *
+                                          ((xyzy + (data + i)->ovlp) +
+                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                (num_ele * ((reduce_x) ? (1) : (xlen))));
+                  if (reduce_dim) {
+                    long g;
 
-                            for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
-                              {
-                                long l;
+                    for (g = 0; g < ((reduce_x) ? (1) : (xlen)); g++) {
+                      long l;
 
-                                for (l = 0; l < num_ele; l++) {
-                                  if (l < 3) {
+                      for (l = 0; l < num_ele; l++) {
+                        if (l < 3) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   (r_r_r[l] *
+                                    (((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))]));
+                        }
+
+                        if (random_rate) {
+                          ((((double **)(data + i)->main_data)[0])
+                               [(j * ((data + i)->xblock *
+                                      ((data + i)->yblock *
+                                       ((data + i)->zblock * (data + i)->num_ele)))) +
+                                (l + ((data + i)->num_ele *
+                                      ((g + (data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                                   ((((double **)(data + i)->main_data)[0])
+                                        [(j * ((data + i)->xblock *
+                                               ((data + i)->yblock *
+                                                ((data + i)->zblock * (data + i)->num_ele)))) +
+                                         (l + ((data + i)->num_ele *
+                                               ((g + (data + i)->ovlp) +
+                                                ((data + i)->xblock *
+                                                 ((xyzy + (data + i)->ovlp) +
+                                                  ((data + i)->yblock *
+                                                   (xyzz + (data + i)->ovlp)))))))] +
                                     ((((double **)(data + i)->main_data)[0])
                                          [(j * ((data + i)->xblock *
                                                 ((data + i)->yblock *
@@ -1798,60 +1698,8 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                                  ((data + i)->xblock *
                                                   ((xyzy + (data + i)->ovlp) +
                                                    ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             (r_r_r[l] *
-                                              (((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))]));
-                                  }
-
-                                  if (random_rate) {
-                                    ((((double **)(data + i)->main_data)[0])
-                                         [(j * ((data + i)->xblock *
-                                                ((data + i)->yblock *
-                                                 ((data + i)->zblock * (data + i)->num_ele)))) +
-                                          (l + ((data + i)->num_ele *
-                                                ((g + (data + i)->ovlp) +
-                                                 ((data + i)->xblock *
-                                                  ((xyzy + (data + i)->ovlp) +
-                                                   ((data + i)->yblock *
-                                                    (xyzz + (data + i)->ovlp)))))))] =
-                                             ((((double **)(data + i)->main_data)[0])
-                                                  [(j * ((data + i)->xblock *
-                                                         ((data + i)->yblock *
-                                                          ((data + i)->zblock *
-                                                           (data + i)->num_ele)))) +
-                                                   (l + ((data + i)->num_ele *
-                                                         ((g + (data + i)->ovlp) +
-                                                          ((data + i)->xblock *
-                                                           ((xyzy + (data + i)->ovlp) +
-                                                            ((data + i)->yblock *
-                                                             (xyzz + (data + i)->ovlp)))))))] +
-                                              ((((double **)(data + i)->main_data)[0])
-                                                   [(j * ((data + i)->xblock *
-                                                          ((data + i)->yblock *
-                                                           ((data + i)->zblock *
-                                                            (data + i)->num_ele)))) +
-                                                    (l + ((data + i)->num_ele *
-                                                          ((g + (data + i)->ovlp) +
-                                                           ((data + i)->xblock *
-                                                            ((xyzy + (data + i)->ovlp) +
-                                                             ((data + i)->yblock *
-                                                              (xyzz + (data + i)->ovlp)))))))] *
-                                               (random_rate * rand01(0, 1)))));
-                                  }
-                                }
-                              }
-                            }
-                          }
+                                                    (xyzz + (data + i)->ovlp)))))))] *
+                                     (random_rate * rand01(0, 1)))));
                         }
                       }
                     }
@@ -1866,72 +1714,64 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
     GAPS_IO_DeleteDataInfo(pgid);
 
   } else {
-    {
-      long i;
+    long i;
 
-      for (i = 0; i < num_runtime; i++) {
+    for (i = 0; i < num_runtime; i++) {
 
-        // defined from class Field3D_Seq
+      // defined from class Field3D_Seq
 
-        long xlen = (data + i)->xlen;
+      long xlen = (data + i)->xlen;
 
-        long ylen = (data + i)->ylen;
+      long ylen = (data + i)->ylen;
 
-        long zlen = (data + i)->zlen;
+      long zlen = (data + i)->zlen;
 
-        long numvec = (data + i)->numvec;
+      long numvec = (data + i)->numvec;
 
-        int ovlp = (data + i)->ovlp;
+      int ovlp = (data + i)->ovlp;
 
-        int num_ele = (data + i)->num_ele;
+      int num_ele = (data + i)->num_ele;
 
-        long *global_x_offset = (data + i)->global_x_offset;
+      long *global_x_offset = (data + i)->global_x_offset;
 
-        long *global_y_offset = (data + i)->global_y_offset;
+      long *global_y_offset = (data + i)->global_y_offset;
 
-        long *global_z_offset = (data + i)->global_z_offset;
+      long *global_z_offset = (data + i)->global_z_offset;
 
-        //====================Field3D_Seq
-        {
-          long j;
+      //====================Field3D_Seq
+      {
+        long j;
 
-          for (j = 0; j < numvec; j++) {
-            {
-              long xyzz;
+        for (j = 0; j < numvec; j++) {
+          long xyzz;
 
-              for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+          for (xyzz = -(ovlp); xyzz < (zlen + ovlp); xyzz++) {
+            long xyzy;
+
+            for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
+              long xyzx;
+
+              for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
+                long is = ((global_x_offset)[j] + xyzx);
+
+                long js = ((global_y_offset)[j] + xyzy);
+
+                long ks = ((global_z_offset)[j] + xyzz);
+
                 {
-                  long xyzy;
+                  long l;
 
-                  for (xyzy = -(ovlp); xyzy < (ylen + ovlp); xyzy++) {
-                    {
-                      long xyzx;
-
-                      for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                        long is = ((global_x_offset)[j] + xyzx);
-
-                        long js = ((global_y_offset)[j] + xyzy);
-
-                        long ks = ((global_z_offset)[j] + xyzz);
-
-                        {
-                          long l;
-
-                          for (l = 0; l < num_ele; l++) {
-                            ((((double **)(data + i)->main_data)[0])
-                                 [(j * ((data + i)->xblock *
-                                        ((data + i)->yblock *
-                                         ((data + i)->zblock * (data + i)->num_ele)))) +
-                                  (l + ((data + i)->num_ele *
-                                        ((xyzx + (data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                                     call_GET_INIT_FILTER_B(ks, js, is, l));
-                          }
-                        }
-                      }
-                    }
+                  for (l = 0; l < num_ele; l++) {
+                    ((((double **)(data + i)->main_data)[0])
+                         [(j *
+                           ((data + i)->xblock *
+                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                          (l + ((data + i)->num_ele *
+                                ((xyzx + (data + i)->ovlp) +
+                                 ((data + i)->xblock *
+                                  ((xyzy + (data + i)->ovlp) +
+                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                             call_GET_INIT_FILTER_B(ks, js, is, l));
                   }
                 }
               }
@@ -1987,34 +1827,27 @@ int test_set_mainland(Field3D_MPI *pthis, double val) {
     long j = 0;
 
     for (j = 0; j < numvec; j++) {
-      {
-        long xyzz;
+      long xyzz;
 
-        for (xyzz = 0; xyzz < zlen; xyzz++) {
-          {
-            long xyzy;
+      for (xyzz = 0; xyzz < zlen; xyzz++) {
+        long xyzy;
 
-            for (xyzy = 0; xyzy < ylen; xyzy++) {
-              {
-                long xyzx;
+        for (xyzy = 0; xyzy < ylen; xyzy++) {
+          long xyzx;
 
-                for (xyzx = 0; xyzx < xlen; xyzx++) {
-                  long l = 0;
+          for (xyzx = 0; xyzx < xlen; xyzx++) {
+            long l = 0;
 
-                  for (l = 0; l < num_ele; l++) {
-                    ((((double **)(data + i)->main_data)[0])
-                         [(j *
+            for (l = 0; l < num_ele; l++) {
+              ((((double **)(data + i)->main_data)[0])
+                   [(j * ((data + i)->xblock *
+                          ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
+                    (l + ((data + i)->num_ele *
+                          ((xyzx + (data + i)->ovlp) +
                            ((data + i)->xblock *
-                            ((data + i)->yblock * ((data + i)->zblock * (data + i)->num_ele)))) +
-                          (l + ((data + i)->num_ele *
-                                ((xyzx + (data + i)->ovlp) +
-                                 ((data + i)->xblock *
-                                  ((xyzy + (data + i)->ovlp) +
-                                   ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
-                             (val * (0 == l)));
-                  }
-                }
-              }
+                            ((xyzy + (data + i)->ovlp) +
+                             ((data + i)->yblock * (xyzz + (data + i)->ovlp)))))))] =
+                       (val * (0 == l)));
             }
           }
         }

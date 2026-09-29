@@ -50,11 +50,7 @@ int c_pscmc_mem_init(c_pscmc_env *pe, c_pscmc_mem *pm, int type, size_t len) {
   pm->len = len;
 
   if (len == 0) {
-    {
-      len = 1;
-    }
-  } else {
-    { 0; }
+    len = 1;
   }
   size_t datasize;
 
@@ -96,11 +92,7 @@ int c_pscmc_flush(c_pscmc_env *pe) { return 0; }
 void *c_pscmc_get_h_data(c_pscmc_mem *pm, void **h_data) {
 
   if (h_data != NULL) {
-    {
-      h_data[0] = pm->h_data;
-    }
-  } else {
-    { 0; }
+    h_data[0] = pm->h_data;
   }
   return pm->h_data;
 }

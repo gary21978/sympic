@@ -65,14 +65,12 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
               long inner_step;
 
               for (inner_step = 0; inner_step < 6; inner_step++) {
-                {
-                  long inner_g;
+                long inner_g;
 
-                  for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((inoutput +
-                      (6 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
-                         (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
-                  }
+                for (inner_g = 0; inner_g < 1; inner_g++) {
+                  ((inoutput +
+                    (6 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
+                       (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
                 }
               }
             }
@@ -85,14 +83,12 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
             long inner_step;
 
             for (inner_step = 0; inner_step < 6; inner_step++) {
-              {
-                long inner_g;
+              long inner_g;
 
-                for (inner_g = 0; inner_g < 1; inner_g++) {
-                  ((cu_cache +
-                    (6 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
-                       (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
-                }
+              for (inner_g = 0; inner_g < 1; inner_g++) {
+                ((cu_cache +
+                  (6 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
+                     (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
               }
             }
           }
@@ -166,14 +162,12 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
               long inner_step;
 
               for (inner_step = 0; inner_step < 8; inner_step++) {
-                {
-                  long inner_g;
+                long inner_g;
 
-                  for (inner_g = 0; inner_g < 1; inner_g++) {
-                    ((inoutput +
-                      (8 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
-                         (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
-                  }
+                for (inner_g = 0; inner_g < 1; inner_g++) {
+                  ((inoutput +
+                    (8 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
+                       (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
                 }
               }
             }
@@ -186,14 +180,12 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
             long inner_step;
 
             for (inner_step = 0; inner_step < 8; inner_step++) {
-              {
-                long inner_g;
+              long inner_g;
 
-                for (inner_g = 0; inner_g < 1; inner_g++) {
-                  ((cu_cache +
-                    (8 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
-                       (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
-                }
+              for (inner_g = 0; inner_g < 1; inner_g++) {
+                ((cu_cache +
+                  (8 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
+                     (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
               }
             }
           }

@@ -608,9 +608,7 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
     __mem1__ MAPU_LONG ovlpindex;
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
         __mem1__ __DDR double *vecovlp;
         vecovlp = vecovlps + v_offset;
@@ -771,9 +769,7 @@ __global__ void mapu_sync_ovlp_m2o_once(
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
 
         __mem1__ __DDR double *vecovlp;
@@ -1017,9 +1013,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
         __mem1__ __DDR double *vecovlp;
         vecovlp = vecovlps + v_offset;
@@ -1386,66 +1380,43 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
   __mem1__ MAPU_LONG ovlpalllen;
   ovlpalllen = ovlpxma * (ovlpyma * (ovlpzma * num_ele));
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      __mem1__ MAPU_LONG xyzz;
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          __mem1__ MAPU_LONG xyzy;
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              __mem1__ MAPU_LONG xyzx;
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                __mem1__ MAPU_LONG lxyzx;
-                lxyzx = xyzx + field_xmi;
-                __mem1__ MAPU_LONG lxyzy;
-                lxyzy = xyzy + field_ymi;
-                __mem1__ MAPU_LONG lxyzz;
-                lxyzz = xyzz + field_zmi;
+    __mem1__ MAPU_LONG xyzz;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      __mem1__ MAPU_LONG xyzy;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        __mem1__ MAPU_LONG xyzx;
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          __mem1__ MAPU_LONG lxyzx;
+          lxyzx = xyzx + field_xmi;
+          __mem1__ MAPU_LONG lxyzy;
+          lxyzy = xyzy + field_ymi;
+          __mem1__ MAPU_LONG lxyzz;
+          lxyzz = xyzz + field_zmi;
 
-                if (0) {
-                  {
+          if (0) {
 
-                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                      {
-                        lxyzx = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                      {
-                        lxyzy = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                      {
-                        lxyzz = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
-                  }
-                } else {
-                  { 0; }
-                }
-                {
-                  __mem1__ MAPU_LONG g;
-                  g = 0;
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    __mem1__ MAPU_LONG realidx;
-                    realidx = __idx + (g * __xlen);
-                    (vecovlp[(i * ovlpalllen) +
-                             (realidx +
-                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                         vecmain[(i * blk_all_len) +
-                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                  }
-                }
-              }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
+          {
+            __mem1__ MAPU_LONG g;
+            g = 0;
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              __mem1__ MAPU_LONG realidx;
+              realidx = __idx + (g * __xlen);
+              (vecovlp[(i * ovlpalllen) +
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                   vecmain[(i * blk_all_len) +
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
             }
           }
         }

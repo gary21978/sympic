@@ -14,10 +14,8 @@ int read_file(void **pptr, int64_t *plen, char *name) {
   if (name != old_fname) {
     if (fp) {
       fclose(fp);
-    } else {
     }
     (fp = fopen(name, "r"));
-  } else {
   }
   fseek(fp, 0, SEEK_END);
   long l = ftell(fp);
@@ -43,7 +41,6 @@ int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   for (l = alllen - 1; l >= 0; l--) {
     if (pNameAll[l] == '_') {
       break;
-    } else {
     }
   }
   {
@@ -65,7 +62,6 @@ int main(int argc, char **argv) {
   if (argc < 3) {
     fprintf(stderr, "Usage: %s infile(s) outfile\n", argv[0]);
     return 0;
-  } else {
   }
   pgi->version = 2;
   char oriname[512];
@@ -76,7 +72,6 @@ int main(int argc, char **argv) {
   }
   if (2 != pgi->version) {
     fprintf(stderr, "File %s is not version 2\n", argv[1]);
-  } else {
   }
   int64_t version = pgi->version;
   int64_t type = pgi->type;
@@ -116,7 +111,6 @@ int main(int argc, char **argv) {
           if (meta_file_name[l - (1 + j)] == '_') {
             sj = (l - (1 + j)) - 4;
             break;
-          } else {
           }
         }
       }
@@ -142,7 +136,6 @@ int main(int argc, char **argv) {
   if (uds && (strcmp(uds, "1") == 0)) {
     fprintf(stdout, "%ld\n", numsteps);
     exit(0);
-  } else {
   }
   char *min_env_str = "GAPS_IO_MIN_TIME_STEP";
   char *max_env_str = "GAPS_IO_MAX_TIME_STEP";
@@ -154,22 +147,18 @@ int main(int argc, char **argv) {
   long t_max = numsteps;
   if (min_numt) {
     sscanf(min_numt, "%ld", &(t_min));
-  } else {
   }
   fprintf(stderr, "t_min=%ld ns=%ld\n", t_min, numsteps);
   if (t_min >= numsteps) {
     exit(0);
-  } else {
   }
   t_min = (t_min + numsteps) % numsteps;
   if (max_numt) {
     sscanf(max_numt, "%ld", &(t_max));
-  } else {
   }
   long t_opt_offset = t_min;
   if (output_offset_numt) {
     sscanf(output_offset_numt, "%ld", &(t_opt_offset));
-  } else {
   }
   t_max = ((t_max + (numsteps + -1)) % numsteps) + 1;
   fprintf(stderr, "tmin=%ld tmax=%ld topt=%ld\n", t_min, t_max, t_opt_offset);
@@ -186,7 +175,6 @@ int main(int argc, char **argv) {
       opt_write_block = opt_write_block / poutlen[dim_current];
       opt_read_block = opt_read_block / pblockarray[dim_current];
       break;
-    } else {
     }
   }
   int64_t one_write_offset = 1;
@@ -271,7 +259,6 @@ int main(int argc, char **argv) {
                   });
                   if ((l == 0) && (r_rd == 0)) {
                     global_offset_new = global_id_out;
-                  } else {
                   }
                   int64_t global_id = ({
                     int64_t gid = 0;

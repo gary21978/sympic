@@ -447,31 +447,26 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
         long xyzz;
 
         for (xyzz = 0; xyzz < 1; xyzz++) {
-          {
-            long xyzy;
+          long xyzy;
 
-            for (xyzy = 0; xyzy < 1; xyzy++) {
-              {
-                long xyzx;
+          for (xyzy = 0; xyzy < 1; xyzy++) {
+            long xyzx;
 
-                for (xyzx = 0; xyzx < numvec; xyzx++) {
-                  long *cur_adj_id = (adjoint_vec_pids_host + (6 * xyzx));
+            for (xyzx = 0; xyzx < numvec; xyzx++) {
+              long *cur_adj_id = (adjoint_vec_pids_host + (6 * xyzx));
 
-                  (cur_adj_id[0] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (3 * (1 + 3))],
-                                               adj_ids, numvec));
-                  (cur_adj_id[1] = find_vec_id(
-                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (2 + (3 * (1 + 3)))], adj_ids, numvec));
-                  (cur_adj_id[2] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 3))],
-                                               adj_ids, numvec));
-                  (cur_adj_id[3] = find_vec_id(
-                       adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (2 + 3)))], adj_ids, numvec));
-                  (cur_adj_id[4] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 1))],
-                                               adj_ids, numvec));
-                  (cur_adj_id[5] =
-                       find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (1 + (3 * 2))))],
-                                   adj_ids, numvec));
-                }
-              }
+              (cur_adj_id[0] =
+                   find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (3 * (1 + 3))], adj_ids, numvec));
+              (cur_adj_id[1] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (2 + (3 * (1 + 3)))],
+                                           adj_ids, numvec));
+              (cur_adj_id[2] =
+                   find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 3))], adj_ids, numvec));
+              (cur_adj_id[3] = find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (2 + 3)))],
+                                           adj_ids, numvec));
+              (cur_adj_id[4] =
+                   find_vec_id(adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * 1))], adj_ids, numvec));
+              (cur_adj_id[5] = find_vec_id(
+                   adj_ids[(xyzx * NUM_SYNC_LAYER) + (1 + (3 * (1 + (3 * 2))))], adj_ids, numvec));
             }
           }
         }
@@ -645,92 +640,88 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
         long xyzz;
 
         for (xyzz = 0; xyzz < zlen; xyzz++) {
-          {
-            long xyzy;
+          long xyzy;
 
-            for (xyzy = 0; xyzy < ylen; xyzy++) {
-              {
-                long xyzx;
+          for (xyzy = 0; xyzy < ylen; xyzy++) {
+            long xyzx;
 
-                for (xyzx = 0; xyzx < xlen; xyzx++) {
-                  double *grid_r =
-                      grid_r_0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))));
-                  int *grid_xyzw = (xyzw_0 + (4 * (xyzx + (xlen * (xyzy + (ylen * xyzz))))));
+            for (xyzx = 0; xyzx < xlen; xyzx++) {
+              double *grid_r =
+                  grid_r_0 + ((6 * grid_cache_len) * (xyzx + (xlen * (xyzy + (ylen * xyzz)))));
+              int *grid_xyzw = (xyzw_0 + (4 * (xyzx + (xlen * (xyzy + (ylen * xyzz))))));
 
-                  long l = 0;
-                  long grid_load = (call_GET_INIT_DENSITY_DIST(
-                                        cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                                        (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                                        (global_x_offset[cur_pcid] + (xyzx + 0.5))) *
-                                    tgrid_load);
+              long l = 0;
+              long grid_load =
+                  (call_GET_INIT_DENSITY_DIST(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                                              (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                                              (global_x_offset[cur_pcid] + (xyzx + 0.5))) *
+                   tgrid_load);
 
-                  if (grid_load > grid_cache_len) {
-                    fprintf(stderr, "Error, gl=%ld gcl=%ld global_id=%ld cur_picid=%ld\n",
-                            grid_load, grid_cache_len, global_id[cur_pcid], cur_pcid);
-                  }
+              if (grid_load > grid_cache_len) {
+                fprintf(stderr, "Error, gl=%ld gcl=%ld global_id=%ld cur_picid=%ld\n", grid_load,
+                        grid_cache_len, global_id[cur_pcid], cur_pcid);
+              }
 
-                  assert(grid_load <= grid_cache_len);
-                  double vx_ijk = 0;
+              assert(grid_load <= grid_cache_len);
+              double vx_ijk = 0;
 
-                  double vy_ijk = 0;
+              double vy_ijk = 0;
 
-                  double vz_ijk = 0;
+              double vz_ijk = 0;
 
-                  if (USE_INIT_V0) {
-                    (vx_ijk = call_GET_INIT_V0_x(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                                                 (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                                                 (global_x_offset[cur_pcid] + (xyzx + 0.5))));
-                    (vy_ijk = call_GET_INIT_V0_y(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                                                 (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                                                 (global_x_offset[cur_pcid] + (xyzx + 0.5))));
-                    (vz_ijk = call_GET_INIT_V0_z(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                                                 (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                                                 (global_x_offset[cur_pcid] + (xyzx + 0.5))));
-                  }
+              if (USE_INIT_V0) {
+                (vx_ijk = call_GET_INIT_V0_x(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                                             (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                                             (global_x_offset[cur_pcid] + (xyzx + 0.5))));
+                (vy_ijk = call_GET_INIT_V0_y(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                                             (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                                             (global_x_offset[cur_pcid] + (xyzx + 0.5))));
+                (vz_ijk = call_GET_INIT_V0_z(cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                                             (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                                             (global_x_offset[cur_pcid] + (xyzx + 0.5))));
+              }
 
-                  double tempx = 1;
+              double tempx = 1;
 
-                  double tempy = 1;
+              double tempy = 1;
 
-                  double tempz = 1;
+              double tempz = 1;
 
-                  if (USE_NON_UNI_TEMPERATURE) {
-                    (tempx = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                         (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                         (global_x_offset[cur_pcid] + (xyzx + 0.5)), 0));
-                    (tempy = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                         (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                         (global_x_offset[cur_pcid] + (xyzx + 0.5)), 1));
-                    (tempz = call_GET_INIT_TEMPERATURE_DIST(
-                         cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
-                         (global_y_offset[cur_pcid] + (xyzy + 0.5)),
-                         (global_x_offset[cur_pcid] + (xyzx + 0.5)), 2));
-                  }
+              if (USE_NON_UNI_TEMPERATURE) {
+                (tempx = call_GET_INIT_TEMPERATURE_DIST(
+                     cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                     (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                     (global_x_offset[cur_pcid] + (xyzx + 0.5)), 0));
+                (tempy = call_GET_INIT_TEMPERATURE_DIST(
+                     cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                     (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                     (global_x_offset[cur_pcid] + (xyzx + 0.5)), 1));
+                (tempz = call_GET_INIT_TEMPERATURE_DIST(
+                     cur_sp, (global_z_offset[cur_pcid] + (xyzz + 0.5)),
+                     (global_y_offset[cur_pcid] + (xyzy + 0.5)),
+                     (global_x_offset[cur_pcid] + (xyzx + 0.5)), 2));
+              }
 
-                  for (l; l < grid_load; l++) {
-                    grid_xyzw[0] = grid_load;
-                    double *xyzvs = (grid_r + (l * ptlen));
+              for (l; l < grid_load; l++) {
+                grid_xyzw[0] = grid_load;
+                double *xyzvs = (grid_r + (l * ptlen));
 
-                    xyzvs[0] = rand01(xyzx, (xyzx + 1));
-                    xyzvs[1] = rand01(xyzy, (xyzy + 1));
-                    xyzvs[2] = rand01(xyzz, (xyzz + 1));
-                  befmaxinit:
+                xyzvs[0] = rand01(xyzx, (xyzx + 1));
+                xyzvs[1] = rand01(xyzy, (xyzy + 1));
+                xyzvs[2] = rand01(xyzz, (xyzz + 1));
+              befmaxinit:
 
-                    xyzvs[3] = maxwell_dist(vx_ijk, (tempx * VT));
-                    xyzvs[4] = maxwell_dist(vy_ijk, (tempy * VT));
-                    xyzvs[5] = maxwell_dist(vz_ijk, (tempz * VT));
-                    double vx = (xyzvs)[3];
+                xyzvs[3] = maxwell_dist(vx_ijk, (tempx * VT));
+                xyzvs[4] = maxwell_dist(vy_ijk, (tempy * VT));
+                xyzvs[5] = maxwell_dist(vz_ijk, (tempz * VT));
+                double vx = (xyzvs)[3];
 
-                    double vy = (xyzvs)[4];
+                double vy = (xyzvs)[4];
 
-                    double vz = (xyzvs)[5];
+                double vz = (xyzvs)[5];
 
-                    if ((((vx * vx) + (vy * vy)) + (vz * vz)) >= vmax) {
-                      goto befmaxinit;
-                    }
-                  }
+                if ((((vx * vx) + (vy * vy)) + (vz * vz)) >= vmax) {
+                  goto befmaxinit;
                 }
               }
             }

@@ -23,1373 +23,971 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
 
   if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
-      {
 
-        if ((kerstr->inoutput)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_inoutput_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->inoutput)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->inoutput, NULL), write_len,
-               (kerstr->inoutput)->type_len, fp);
-        fclose(fp);
+      if ((kerstr->inoutput)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
       }
-      {
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_inoutput_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->inoutput)->len;
 
-        if ((kerstr->xyzw)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_xyzw_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->xyzw)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->xyzw, NULL), write_len, (kerstr->xyzw)->type_len, fp);
-        fclose(fp);
+      if (write_len <= 0) {
+        write_len = 1;
       }
-      {
-
-        if ((kerstr->cu_cache)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_cache)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache, NULL), write_len,
-               (kerstr->cu_cache)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->cu_xyzw)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_xyzw_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_xyzw)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_xyzw, NULL), write_len, (kerstr->cu_xyzw)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->fieldE)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldE_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->fieldE)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->fieldE, NULL), write_len, (kerstr->fieldE)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->fieldB)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldB_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->fieldB)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->fieldB, NULL), write_len, (kerstr->fieldB)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->FoutJ)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutJ_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->FoutJ)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->FoutJ, NULL), write_len, (kerstr->FoutJ)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->FoutEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutEN_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->FoutEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->FoutEN, NULL), write_len, (kerstr->FoutEN)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->XLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_XLEN_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->XLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->XLEN, NULL), write_len, (kerstr->XLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->YLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_YLEN_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->YLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->YLEN, NULL), write_len, (kerstr->YLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->ZLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ZLEN_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->ZLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->ZLEN, NULL), write_len, (kerstr->ZLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->ovlp)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ovlp_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->ovlp)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->numvec)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->numvec);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_numvec_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->numvec)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->num_ele)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_num_ele_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->num_ele)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->grid_cache_len)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_grid_cache_len_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->grid_cache_len)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->grid_cache_len, NULL), write_len,
-               (kerstr->grid_cache_len)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->cu_cache_length)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_length_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_cache_length)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache_length, NULL), write_len,
-               (kerstr->cu_cache_length)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Mass)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Mass);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Mass_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Mass)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Mass, NULL), write_len, (kerstr->Mass)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Charge)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Charge);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Charge_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Charge)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Charge, NULL), write_len, (kerstr->Charge)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->SPEC)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_SPEC_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->SPEC)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->SPEC, NULL), write_len, (kerstr->SPEC)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->NUM_SPEC)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_NUM_SPEC_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->NUM_SPEC)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->NUM_SPEC, NULL), write_len,
-               (kerstr->NUM_SPEC)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_X)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_X_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_X)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_X, NULL), write_len, (kerstr->DELTA_X)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_Y)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Y_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_Y)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Y, NULL), write_len, (kerstr->DELTA_Y)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_Z)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Z_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_Z)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Z, NULL), write_len, (kerstr->DELTA_Z)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Deltat)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Deltat_before_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Deltat)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Deltat, NULL), write_len, (kerstr->Deltat)->type_len,
-               fp);
-        fclose(fp);
-      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->inoutput, NULL), write_len, (kerstr->inoutput)->type_len,
+             fp);
+      fclose(fp);
     }
-  } else {
-    { 0; }
+    {
+
+      if ((kerstr->xyzw)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_xyzw_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->xyzw)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->xyzw, NULL), write_len, (kerstr->xyzw)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_cache)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_cache)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache, NULL), write_len, (kerstr->cu_cache)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_xyzw)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_xyzw_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_xyzw)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_xyzw, NULL), write_len, (kerstr->cu_xyzw)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->fieldE)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldE_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->fieldE)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->fieldE, NULL), write_len, (kerstr->fieldE)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->fieldB)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldB_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->fieldB)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->fieldB, NULL), write_len, (kerstr->fieldB)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->FoutJ)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutJ_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->FoutJ)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->FoutJ, NULL), write_len, (kerstr->FoutJ)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->FoutEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutEN_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->FoutEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->FoutEN, NULL), write_len, (kerstr->FoutEN)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->XLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_XLEN_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->XLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->XLEN, NULL), write_len, (kerstr->XLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->YLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_YLEN_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->YLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->YLEN, NULL), write_len, (kerstr->YLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->ZLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ZLEN_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->ZLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->ZLEN, NULL), write_len, (kerstr->ZLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->ovlp)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ovlp_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->ovlp)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->numvec)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->numvec);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_numvec_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->numvec)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->num_ele)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_num_ele_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->num_ele)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->grid_cache_len)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_grid_cache_len_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->grid_cache_len)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->grid_cache_len, NULL), write_len,
+             (kerstr->grid_cache_len)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_cache_length)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_length_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_cache_length)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache_length, NULL), write_len,
+             (kerstr->cu_cache_length)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Mass)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Mass);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Mass_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Mass)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Mass, NULL), write_len, (kerstr->Mass)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Charge)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Charge);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Charge_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Charge)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Charge, NULL), write_len, (kerstr->Charge)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->SPEC)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_SPEC_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->SPEC)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->SPEC, NULL), write_len, (kerstr->SPEC)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->NUM_SPEC)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_NUM_SPEC_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->NUM_SPEC)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->NUM_SPEC, NULL), write_len, (kerstr->NUM_SPEC)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_X)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_X_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_X)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_X, NULL), write_len, (kerstr->DELTA_X)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_Y)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Y_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_Y)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Y, NULL), write_len, (kerstr->DELTA_Y)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_Z)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Z_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_Z)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Z, NULL), write_len, (kerstr->DELTA_Z)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Deltat)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Deltat_before_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Deltat)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Deltat, NULL), write_len, (kerstr->Deltat)->type_len,
+             fp);
+      fclose(fp);
+    }
   }
 
   if (scmc_internal_g_ylen < 65536) {
-    {
-      mapu_dump_ene_num<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR int *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR int *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->fieldE->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->fieldB->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->FoutJ->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
-          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
-          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
-          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
-          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
-          ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
-          ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
-          ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
-          ((double *)kerstr->Deltat->h_data)[0]);
-    }
+    mapu_dump_ene_num<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR int *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR int *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->fieldE->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->fieldB->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->FoutJ->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+        ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+        ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+        ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+        ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
+        ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
+        ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
+        ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
+        ((double *)kerstr->Deltat->h_data)[0]);
   } else {
-    {
-      dim3 multiylen = 1;
-      multiylen.x = 64;
-      multiylen.y = scmc_internal_g_ylen / 64;
-      int rest = (scmc_internal_g_ylen % 64);
+    dim3 multiylen = 1;
+    multiylen.x = 64;
+    multiylen.y = scmc_internal_g_ylen / 64;
+    int rest = (scmc_internal_g_ylen % 64);
 
-      if (rest != 0) {
-        {
-          fprintf(stderr,
-                  "Warning: if __ylen>=65536 then __ylen must be divisible by "
-                  "64, __ylen=%d\n",
-                  scmc_internal_g_ylen);
-        }
-      } else {
-        { 0; }
-      }
-      mapu_dump_ene_num<<<multiylen, scmc_internal_g_xlen>>>(
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR int *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR int *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->fieldE->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->fieldB->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->FoutJ->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((__DDR double *)({
-            uint64_t __d_data_address_tmp2;
-            mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
-            __d_data_address_tmp2;
-          })),
-          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
-          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
-          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
-          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
-          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
-          ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
-          ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
-          ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
-          ((double *)kerstr->Deltat->h_data)[0]);
+    if (rest != 0) {
+      fprintf(stderr,
+              "Warning: if __ylen>=65536 then __ylen must be divisible by "
+              "64, __ylen=%d\n",
+              scmc_internal_g_ylen);
     }
+    mapu_dump_ene_num<<<multiylen, scmc_internal_g_xlen>>>(
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR int *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR int *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->fieldE->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->fieldB->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->FoutJ->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((__DDR double *)({
+          uint64_t __d_data_address_tmp2;
+          mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
+          __d_data_address_tmp2;
+        })),
+        ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+        ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+        ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+        ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+        ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
+        ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
+        ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
+        ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
+        ((double *)kerstr->Deltat->h_data)[0]);
   }
 
   if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
-      {
 
-        if ((kerstr->inoutput)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_inoutput_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->inoutput)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->inoutput, NULL), write_len,
-               (kerstr->inoutput)->type_len, fp);
-        fclose(fp);
+      if ((kerstr->inoutput)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
       }
-      {
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_inoutput_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->inoutput)->len;
 
-        if ((kerstr->xyzw)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_xyzw_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->xyzw)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->xyzw, NULL), write_len, (kerstr->xyzw)->type_len, fp);
-        fclose(fp);
+      if (write_len <= 0) {
+        write_len = 1;
       }
-      {
-
-        if ((kerstr->cu_cache)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_cache)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache, NULL), write_len,
-               (kerstr->cu_cache)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->cu_xyzw)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_xyzw_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_xyzw)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_xyzw, NULL), write_len, (kerstr->cu_xyzw)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->fieldE)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldE_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->fieldE)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->fieldE, NULL), write_len, (kerstr->fieldE)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->fieldB)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldB_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->fieldB)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->fieldB, NULL), write_len, (kerstr->fieldB)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->FoutJ)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutJ_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->FoutJ)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->FoutJ, NULL), write_len, (kerstr->FoutJ)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->FoutEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutEN_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->FoutEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->FoutEN, NULL), write_len, (kerstr->FoutEN)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->XLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_XLEN_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->XLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->XLEN, NULL), write_len, (kerstr->XLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->YLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_YLEN_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->YLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->YLEN, NULL), write_len, (kerstr->YLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->ZLEN)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ZLEN_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->ZLEN)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->ZLEN, NULL), write_len, (kerstr->ZLEN)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->ovlp)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ovlp_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->ovlp)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->numvec)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->numvec);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_numvec_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->numvec)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->num_ele)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_num_ele_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->num_ele)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->grid_cache_len)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_grid_cache_len_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->grid_cache_len)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->grid_cache_len, NULL), write_len,
-               (kerstr->grid_cache_len)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->cu_cache_length)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_length_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->cu_cache_length)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache_length, NULL), write_len,
-               (kerstr->cu_cache_length)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Mass)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Mass);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Mass_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Mass)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Mass, NULL), write_len, (kerstr->Mass)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Charge)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Charge);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Charge_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Charge)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Charge, NULL), write_len, (kerstr->Charge)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->SPEC)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_SPEC_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->SPEC)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->SPEC, NULL), write_len, (kerstr->SPEC)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->NUM_SPEC)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_NUM_SPEC_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->NUM_SPEC)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->NUM_SPEC, NULL), write_len,
-               (kerstr->NUM_SPEC)->type_len, fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_X)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_X_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_X)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_X, NULL), write_len, (kerstr->DELTA_X)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_Y)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Y_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_Y)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Y, NULL), write_len, (kerstr->DELTA_Y)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->DELTA_Z)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Z_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->DELTA_Z)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Z, NULL), write_len, (kerstr->DELTA_Z)->type_len,
-               fp);
-        fclose(fp);
-      }
-      {
-
-        if ((kerstr->Deltat)->len > 0) {
-          {
-            mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
-          }
-        } else {
-          { 0; }
-        }
-        char fname[256];
-        snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Deltat_after_exec",
-                 _pscmc_mapu_global_dump_times);
-        FILE *fp = fopen(fname, "wb");
-        size_t write_len = (kerstr->Deltat)->len;
-
-        if (write_len <= 0) {
-          {
-            write_len = 1;
-          }
-        } else {
-          { 0; }
-        }
-        fwrite(mapu_pscmc_get_h_data(kerstr->Deltat, NULL), write_len, (kerstr->Deltat)->type_len,
-               fp);
-        fclose(fp);
-      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->inoutput, NULL), write_len, (kerstr->inoutput)->type_len,
+             fp);
+      fclose(fp);
     }
-  } else {
-    { 0; }
+    {
+
+      if ((kerstr->xyzw)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_xyzw_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->xyzw)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->xyzw, NULL), write_len, (kerstr->xyzw)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_cache)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_cache)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache, NULL), write_len, (kerstr->cu_cache)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_xyzw)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_xyzw_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_xyzw)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_xyzw, NULL), write_len, (kerstr->cu_xyzw)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->fieldE)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldE_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->fieldE)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->fieldE, NULL), write_len, (kerstr->fieldE)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->fieldB)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_fieldB_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->fieldB)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->fieldB, NULL), write_len, (kerstr->fieldB)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->FoutJ)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutJ_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->FoutJ)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->FoutJ, NULL), write_len, (kerstr->FoutJ)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->FoutEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_FoutEN_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->FoutEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->FoutEN, NULL), write_len, (kerstr->FoutEN)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->XLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_XLEN_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->XLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->XLEN, NULL), write_len, (kerstr->XLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->YLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_YLEN_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->YLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->YLEN, NULL), write_len, (kerstr->YLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->ZLEN)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ZLEN_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->ZLEN)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->ZLEN, NULL), write_len, (kerstr->ZLEN)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->ovlp)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_ovlp_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->ovlp)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->ovlp, NULL), write_len, (kerstr->ovlp)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->numvec)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->numvec);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_numvec_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->numvec)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->numvec, NULL), write_len, (kerstr->numvec)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->num_ele)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_num_ele_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->num_ele)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->num_ele, NULL), write_len, (kerstr->num_ele)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->grid_cache_len)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_grid_cache_len_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->grid_cache_len)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->grid_cache_len, NULL), write_len,
+             (kerstr->grid_cache_len)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->cu_cache_length)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_cu_cache_length_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->cu_cache_length)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->cu_cache_length, NULL), write_len,
+             (kerstr->cu_cache_length)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Mass)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Mass);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Mass_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Mass)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Mass, NULL), write_len, (kerstr->Mass)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Charge)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Charge);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Charge_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Charge)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Charge, NULL), write_len, (kerstr->Charge)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->SPEC)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_SPEC_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->SPEC)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->SPEC, NULL), write_len, (kerstr->SPEC)->type_len, fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->NUM_SPEC)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_NUM_SPEC_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->NUM_SPEC)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->NUM_SPEC, NULL), write_len, (kerstr->NUM_SPEC)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_X)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_X_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_X)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_X, NULL), write_len, (kerstr->DELTA_X)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_Y)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Y_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_Y)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Y, NULL), write_len, (kerstr->DELTA_Y)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->DELTA_Z)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_DELTA_Z_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->DELTA_Z)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->DELTA_Z, NULL), write_len, (kerstr->DELTA_Z)->type_len,
+             fp);
+      fclose(fp);
+    }
+    {
+
+      if ((kerstr->Deltat)->len > 0) {
+        mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
+      }
+      char fname[256];
+      snprintf(fname, 256, "Debug_%d_mapu_dump_ene_num_Deltat_after_exec",
+               _pscmc_mapu_global_dump_times);
+      FILE *fp = fopen(fname, "wb");
+      size_t write_len = (kerstr->Deltat)->len;
+
+      if (write_len <= 0) {
+        write_len = 1;
+      }
+      fwrite(mapu_pscmc_get_h_data(kerstr->Deltat, NULL), write_len, (kerstr->Deltat)->type_len,
+             fp);
+      fclose(fp);
+    }
   }
   _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;

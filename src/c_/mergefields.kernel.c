@@ -28,11 +28,7 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -52,8 +48,6 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (xlo == 2) {
       field_xmi = xb - ovlp;
       field_xma = xb;
-    } else {
-      0;
     }
   }
 
@@ -65,8 +59,6 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (ylo == 2) {
       field_ymi = yb - ovlp;
       field_yma = yb;
-    } else {
-      0;
     }
   }
 
@@ -78,8 +70,6 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (zlo == 2) {
       field_zmi = zb - ovlp;
       field_zma = zb;
-    } else {
-      0;
     }
   }
   long ovlpxma = (field_xma - field_xmi);
@@ -87,61 +77,38 @@ void c_sync_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
-                long lxyzy = (xyzy + field_ymi);
-                long lxyzz = (xyzz + field_zmi);
+    long xyzz;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
+          long lxyzy = (xyzy + field_ymi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-                  {
+          if (0) {
 
-                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                      {
-                        lxyzx = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                      {
-                        lxyzy = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                      {
-                        lxyzz = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
-                  }
-                } else {
-                  { 0; }
-                }
-                {
-                  long g = 0;
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
-                    (vecmain[(i * blk_all_len) +
-                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                         vecovlp[(i * ovlpalllen) +
-                                 (realidx +
-                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                  }
-                }
-              }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
+          {
+            long g = 0;
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
+              (vecmain[(i * blk_all_len) +
+                       (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                   vecovlp[(i * ovlpalllen) +
+                           (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
             }
           }
         }
@@ -166,146 +133,108 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps + v_offset);
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps + v_offset);
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = 0;
+          field_xma = ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = 0;
-            field_xma = ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = 0;
+          field_yma = ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - ovlp;
-              field_xma = xb;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = 0;
-            field_yma = ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = 0;
+          field_zma = ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - ovlp;
-              field_yma = yb;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = 0;
-            field_zma = ovlp;
-          } else {
+                if (0) {
 
-            if (zlo == 2) {
-              field_zmi = zb - ovlp;
-              field_zma = zb;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (0) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecmain[(i * blk_all_len) +
-                                     (realidx +
-                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                                 vecovlp[(i * ovlpalllen) +
-                                         (realidx +
-                                          (num_ele *
-                                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         vecovlp[(i * ovlpalllen) +
+                                 (realidx +
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
                   }
                 }
               }
             }
           }
-          v_offset = v_offset + (ovlpalllen * numvec);
         }
+        v_offset = v_offset + (ovlpalllen * numvec);
       }
     }
   }
@@ -358,139 +287,101 @@ void c_sync_ovlp_o2m_once_scmc_kernel(
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps)[ovlpindex];
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps)[ovlpindex];
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = 0;
+          field_xma = ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = 0;
-            field_xma = ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = 0;
+          field_yma = ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - ovlp;
-              field_xma = xb;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = 0;
-            field_yma = ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = 0;
+          field_zma = ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - ovlp;
-              field_yma = yb;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = 0;
-            field_zma = ovlp;
-          } else {
+                if (0) {
 
-            if (zlo == 2) {
-              field_zmi = zb - ovlp;
-              field_zma = zb;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (0) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecmain[(i * blk_all_len) +
-                                     (realidx +
-                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                                 vecovlp[(i * ovlpalllen) +
-                                         (realidx +
-                                          (num_ele *
-                                           (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         vecovlp[(i * ovlpalllen) +
+                                 (realidx +
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
                   }
                 }
               }
@@ -521,11 +412,7 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -545,8 +432,6 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (xlo == 2) {
       field_xmi = xb - (ovlp + ovlp);
       field_xma = xb - ovlp;
-    } else {
-      0;
     }
   }
 
@@ -558,8 +443,6 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (ylo == 2) {
       field_ymi = yb - (ovlp + ovlp);
       field_yma = yb - ovlp;
-    } else {
-      0;
     }
   }
 
@@ -571,8 +454,6 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
     if (zlo == 2) {
       field_zmi = zb - (ovlp + ovlp);
       field_zma = zb - ovlp;
-    } else {
-      0;
     }
   }
   long ovlpxma = (field_xma - field_xmi);
@@ -580,61 +461,38 @@ void c_sync_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpindex
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
-                long lxyzy = (xyzy + field_ymi);
-                long lxyzz = (xyzz + field_zmi);
+    long xyzz;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
+          long lxyzy = (xyzy + field_ymi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
-                  {
+          if (1) {
 
-                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                      {
-                        lxyzx = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                      {
-                        lxyzy = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                      {
-                        lxyzz = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
-                  }
-                } else {
-                  { 0; }
-                }
-                {
-                  long g = 0;
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
-                    (vecovlp[(i * ovlpalllen) +
-                             (realidx +
-                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                         vecmain[(i * blk_all_len) +
-                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                  }
-                }
-              }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
+          {
+            long g = 0;
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
+              (vecovlp[(i * ovlpalllen) +
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                   vecmain[(i * blk_all_len) +
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
             }
           }
         }
@@ -659,145 +517,108 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps + v_offset);
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps + v_offset);
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = ovlp;
+          field_xma = ovlp + ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - (ovlp + ovlp);
+            field_xma = xb - ovlp;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = ovlp;
-            field_xma = ovlp + ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = ovlp;
+          field_yma = ovlp + ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - (ovlp + ovlp);
-              field_xma = xb - ovlp;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - (ovlp + ovlp);
+            field_yma = yb - ovlp;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = ovlp;
-            field_yma = ovlp + ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = ovlp;
+          field_zma = ovlp + ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - (ovlp + ovlp);
-              field_yma = yb - ovlp;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - (ovlp + ovlp);
+            field_zma = zb - ovlp;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = ovlp;
-            field_zma = ovlp + ovlp;
-          } else {
+                if (1) {
 
-            if (zlo == 2) {
-              field_zmi = zb - (ovlp + ovlp);
-              field_zma = zb - ovlp;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (1) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecovlp[(i * ovlpalllen) +
-                                     (realidx +
-                                      (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                                 vecmain[(i * blk_all_len) +
-                                         (realidx +
-                                          (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
             }
           }
-          v_offset = v_offset + (ovlpalllen * numvec);
         }
+        v_offset = v_offset + (ovlpalllen * numvec);
       }
     }
   }
@@ -850,138 +671,101 @@ void c_sync_ovlp_m2o_once_scmc_kernel(
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps)[ovlpindex];
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps)[ovlpindex];
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = ovlp;
+          field_xma = ovlp + ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - (ovlp + ovlp);
+            field_xma = xb - ovlp;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = ovlp;
-            field_xma = ovlp + ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = ovlp;
+          field_yma = ovlp + ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - (ovlp + ovlp);
-              field_xma = xb - ovlp;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - (ovlp + ovlp);
+            field_yma = yb - ovlp;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = ovlp;
-            field_yma = ovlp + ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = ovlp;
+          field_zma = ovlp + ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - (ovlp + ovlp);
-              field_yma = yb - ovlp;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - (ovlp + ovlp);
+            field_zma = zb - ovlp;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = ovlp;
-            field_zma = ovlp + ovlp;
-          } else {
+                if (1) {
 
-            if (zlo == 2) {
-              field_zmi = zb - (ovlp + ovlp);
-              field_zma = zb - ovlp;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (1) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecovlp[(i * ovlpalllen) +
-                                     (realidx +
-                                      (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                                 vecmain[(i * blk_all_len) +
-                                         (realidx +
-                                          (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
@@ -1012,11 +796,7 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -1036,8 +816,6 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (xlo == 2) {
       field_xmi = xb - (ovlp + ovlp);
       field_xma = xb - ovlp;
-    } else {
-      0;
     }
   }
 
@@ -1049,8 +827,6 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (ylo == 2) {
       field_ymi = yb - (ovlp + ovlp);
       field_yma = yb - ovlp;
-    } else {
-      0;
     }
   }
 
@@ -1062,8 +838,6 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (zlo == 2) {
       field_zmi = zb - (ovlp + ovlp);
       field_zma = zb - ovlp;
-    } else {
-      0;
     }
   }
   long ovlpxma = (field_xma - field_xmi);
@@ -1071,63 +845,41 @@ void c_merge_ovlp_o2m_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
-                long lxyzy = (xyzy + field_ymi);
-                long lxyzz = (xyzz + field_zmi);
+    long xyzz;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
+          long lxyzy = (xyzy + field_ymi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
-                  {
+          if (1) {
 
-                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                      {
-                        lxyzx = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                      {
-                        lxyzy = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                      {
-                        lxyzz = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
-                  }
-                } else {
-                  { 0; }
-                }
-                {
-                  long g = 0;
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
-                    (vecmain[(i * blk_all_len) +
-                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                         (vecmain[(i * blk_all_len) +
-                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                          vecovlp[(i * ovlpalllen) +
-                                  (realidx +
-                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                  }
-                }
-              }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
+          {
+            long g = 0;
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
+              (vecmain[(i * blk_all_len) +
+                       (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                   (vecmain[(i * blk_all_len) +
+                            (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                    vecovlp[(i * ovlpalllen) +
+                            (realidx +
+                             (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
             }
           }
         }
@@ -1152,149 +904,110 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps + v_offset);
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps + v_offset);
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = ovlp;
+          field_xma = ovlp + ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - (ovlp + ovlp);
+            field_xma = xb - ovlp;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = ovlp;
-            field_xma = ovlp + ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = ovlp;
+          field_yma = ovlp + ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - (ovlp + ovlp);
-              field_xma = xb - ovlp;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - (ovlp + ovlp);
+            field_yma = yb - ovlp;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = ovlp;
-            field_yma = ovlp + ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = ovlp;
+          field_zma = ovlp + ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - (ovlp + ovlp);
-              field_yma = yb - ovlp;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - (ovlp + ovlp);
+            field_zma = zb - ovlp;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = ovlp;
-            field_zma = ovlp + ovlp;
-          } else {
+                if (1) {
 
-            if (zlo == 2) {
-              field_zmi = zb - (ovlp + ovlp);
-              field_zma = zb - ovlp;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (1) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecmain[(i * blk_all_len) +
-                                     (realidx +
-                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                                 (vecmain[(i * blk_all_len) +
-                                          (realidx +
-                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                                  vecovlp[(i * ovlpalllen) +
-                                          (realidx +
-                                           (num_ele *
-                                            (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         (vecmain[(i * blk_all_len) +
+                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                          vecovlp[(i * ovlpalllen) +
+                                  (realidx +
+                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
                   }
                 }
               }
             }
           }
-          v_offset = v_offset + (ovlpalllen * numvec);
         }
+        v_offset = v_offset + (ovlpalllen * numvec);
       }
     }
   }
@@ -1347,142 +1060,103 @@ void c_merge_ovlp_o2m_once_scmc_kernel(
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps)[ovlpindex];
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps)[ovlpindex];
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = ovlp;
+          field_xma = ovlp + ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - (ovlp + ovlp);
+            field_xma = xb - ovlp;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = ovlp;
-            field_xma = ovlp + ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = ovlp;
+          field_yma = ovlp + ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - (ovlp + ovlp);
-              field_xma = xb - ovlp;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - (ovlp + ovlp);
+            field_yma = yb - ovlp;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = ovlp;
-            field_yma = ovlp + ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = ovlp;
+          field_zma = ovlp + ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - (ovlp + ovlp);
-              field_yma = yb - ovlp;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - (ovlp + ovlp);
+            field_zma = zb - ovlp;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = ovlp;
-            field_zma = ovlp + ovlp;
-          } else {
+                if (1) {
 
-            if (zlo == 2) {
-              field_zmi = zb - (ovlp + ovlp);
-              field_zma = zb - ovlp;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (1) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecmain[(i * blk_all_len) +
-                                     (realidx +
-                                      (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                                 (vecmain[(i * blk_all_len) +
-                                          (realidx +
-                                           (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                                  vecovlp[(i * ovlpalllen) +
-                                          (realidx +
-                                           (num_ele *
-                                            (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         (vecmain[(i * blk_all_len) +
+                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                          vecovlp[(i * ovlpalllen) +
+                                  (realidx +
+                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
                   }
                 }
               }
@@ -1513,11 +1187,7 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   int xlo = (ovlpindex % 3);
   int ylo = ((ovlpindex / 3) % 3);
@@ -1537,8 +1207,6 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (xlo == 2) {
       field_xmi = xb - ovlp;
       field_xma = xb;
-    } else {
-      0;
     }
   }
 
@@ -1550,8 +1218,6 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (ylo == 2) {
       field_ymi = yb - ovlp;
       field_yma = yb;
-    } else {
-      0;
     }
   }
 
@@ -1563,8 +1229,6 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
     if (zlo == 2) {
       field_zmi = zb - ovlp;
       field_zma = zb;
-    } else {
-      0;
     }
   }
   long ovlpxma = (field_xma - field_xmi);
@@ -1572,61 +1236,38 @@ void c_merge_ovlp_m2o_scmc_kernel(double *vecmain, double *vecovlp, int ovlpinde
   long ovlpzma = (field_zma - field_zmi);
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
-                long lxyzy = (xyzy + field_ymi);
-                long lxyzz = (xyzz + field_zmi);
+    long xyzz;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
+          long lxyzy = (xyzy + field_ymi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-                  {
+          if (0) {
 
-                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                      {
-                        lxyzx = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                      {
-                        lxyzy = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                      {
-                        lxyzz = ovlp;
-                      }
-                    } else {
-                      { 0; }
-                    }
-                  }
-                } else {
-                  { 0; }
-                }
-                {
-                  long g = 0;
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
-                    (vecovlp[(i * ovlpalllen) +
-                             (realidx +
-                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                         vecmain[(i * blk_all_len) +
-                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                  }
-                }
-              }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
+          {
+            long g = 0;
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
+              (vecovlp[(i * ovlpalllen) +
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                   vecmain[(i * blk_all_len) +
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
             }
           }
         }
@@ -1651,145 +1292,108 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps + v_offset);
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps + v_offset);
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = 0;
+          field_xma = ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = 0;
-            field_xma = ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = 0;
+          field_yma = ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - ovlp;
-              field_xma = xb;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = 0;
-            field_yma = ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = 0;
+          field_zma = ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - ovlp;
-              field_yma = yb;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = 0;
-            field_zma = ovlp;
-          } else {
+                if (0) {
 
-            if (zlo == 2) {
-              field_zmi = zb - ovlp;
-              field_zma = zb;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (0) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecovlp[(i * ovlpalllen) +
-                                     (realidx +
-                                      (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                                 vecmain[(i * blk_all_len) +
-                                         (realidx +
-                                          (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
             }
           }
-          v_offset = v_offset + (ovlpalllen * numvec);
         }
+        v_offset = v_offset + (ovlpalllen * numvec);
       }
     }
   }
@@ -1842,138 +1446,101 @@ void c_merge_ovlp_m2o_once_scmc_kernel(
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
       if (ovlpindex == 13) {
-        {
-          continue;
-        }
+        continue;
       } else {
-        {
-          double *vecovlp = (vecovlps)[ovlpindex];
-          long i = 0;
-          long local_ynum = (((numvec - 1) / __ylen) + 1);
-          long local_ymin = (__idy * local_ynum);
-          long local_ymax = ((1 + __idy) * local_ynum);
-          long xb = xblock;
-          long yb = yblock;
-          long zb = zblock;
-          long blk_all_len = (xb * (yb * (zb * num_ele)));
+        double *vecovlp = (vecovlps)[ovlpindex];
+        long i = 0;
+        long local_ynum = (((numvec - 1) / __ylen) + 1);
+        long local_ymin = (__idy * local_ynum);
+        long local_ymax = ((1 + __idy) * local_ynum);
+        long xb = xblock;
+        long yb = yblock;
+        long zb = zblock;
+        long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-          if (local_ymax >= numvec) {
-            {
-              local_ymax = numvec;
-            }
-          } else {
-            { 0; }
+        if (local_ymax >= numvec) {
+          local_ymax = numvec;
+        }
+        int xlo = (ovlpindex % 3);
+        int ylo = ((ovlpindex / 3) % 3);
+        int zlo = ((ovlpindex / 3) / 3);
+        int field_xmi = ovlp;
+        int field_ymi = ovlp;
+        int field_zmi = ovlp;
+        long field_xma = (xb - ovlp);
+        long field_yma = (yb - ovlp);
+        long field_zma = (zb - ovlp);
+
+        if (xlo == 0) {
+          field_xmi = 0;
+          field_xma = ovlp;
+        } else {
+
+          if (xlo == 2) {
+            field_xmi = xb - ovlp;
+            field_xma = xb;
           }
-          int xlo = (ovlpindex % 3);
-          int ylo = ((ovlpindex / 3) % 3);
-          int zlo = ((ovlpindex / 3) / 3);
-          int field_xmi = ovlp;
-          int field_ymi = ovlp;
-          int field_zmi = ovlp;
-          long field_xma = (xb - ovlp);
-          long field_yma = (yb - ovlp);
-          long field_zma = (zb - ovlp);
+        }
 
-          if (xlo == 0) {
-            field_xmi = 0;
-            field_xma = ovlp;
-          } else {
+        if (ylo == 0) {
+          field_ymi = 0;
+          field_yma = ovlp;
+        } else {
 
-            if (xlo == 2) {
-              field_xmi = xb - ovlp;
-              field_xma = xb;
-            } else {
-              0;
-            }
+          if (ylo == 2) {
+            field_ymi = yb - ovlp;
+            field_yma = yb;
           }
+        }
 
-          if (ylo == 0) {
-            field_ymi = 0;
-            field_yma = ovlp;
-          } else {
+        if (zlo == 0) {
+          field_zmi = 0;
+          field_zma = ovlp;
+        } else {
 
-            if (ylo == 2) {
-              field_ymi = yb - ovlp;
-              field_yma = yb;
-            } else {
-              0;
-            }
+          if (zlo == 2) {
+            field_zmi = zb - ovlp;
+            field_zma = zb;
           }
+        }
+        long ovlpxma = (field_xma - field_xmi);
+        long ovlpyma = (field_yma - field_ymi);
+        long ovlpzma = (field_zma - field_zmi);
+        long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
+        for (i = local_ymin; i < local_ymax; i++) {
+          long xyzz;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
+                long lxyzy = (xyzy + field_ymi);
+                long lxyzz = (xyzz + field_zmi);
 
-          if (zlo == 0) {
-            field_zmi = 0;
-            field_zma = ovlp;
-          } else {
+                if (0) {
 
-            if (zlo == 2) {
-              field_zmi = zb - ovlp;
-              field_zma = zb;
-            } else {
-              0;
-            }
-          }
-          long ovlpxma = (field_xma - field_xmi);
-          long ovlpyma = (field_yma - field_ymi);
-          long ovlpzma = (field_zma - field_zmi);
-          long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
-          for (i = local_ymin; i < local_ymax; i++) {
-            {
-              long xyzz;
-              for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
+
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
+
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
                 {
-                  long xyzy;
-                  for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                    {
-                      long xyzx;
-                      for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                        long lxyzx = (xyzx + field_xmi);
-                        long lxyzy = (xyzy + field_ymi);
-                        long lxyzz = (xyzz + field_zmi);
-
-                        if (0) {
-                          {
-
-                            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                              {
-                                lxyzx = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                              {
-                                lxyzy = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-
-                            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                              {
-                                lxyzz = ovlp;
-                              }
-                            } else {
-                              { 0; }
-                            }
-                          }
-                        } else {
-                          { 0; }
-                        }
-                        {
-                          long g = 0;
-                          for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                            long realidx = (__idx + (g * __xlen));
-                            (vecovlp[(i * ovlpalllen) +
-                                     (realidx +
-                                      (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                                 vecmain[(i * blk_all_len) +
-                                         (realidx +
-                                          (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                          }
-                        }
-                      }
-                    }
+                  long g = 0;
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }

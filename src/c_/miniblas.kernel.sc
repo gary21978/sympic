@@ -18,11 +18,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
   long zb = zblock;
   long blk_all_len = (xb * (yb * (zb * num_ele)));
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   double reduce_tmp_arr[IDX_OPT_MAX];
   double reduce_tmp = 0.0;
@@ -31,104 +27,75 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
     for (i = local_ymin; i < local_ymax; i++) {
 
       if (blk_all_len <= 1) {
+        double fast_y[1];
         {
-          double fast_y[1];
-          {
-            {
-              long inner_step;
-              for (inner_step = 0; inner_step < 1; inner_step++) {
-                {
-                  long inner_g;
-                  for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                    (fast_y[(inner_step * blk_all_len) + inner_g] =
-                         (y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
-                  }
-                }
-              }
+          long inner_step;
+          for (inner_step = 0; inner_step < 1; inner_step++) {
+            long inner_g;
+            for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
+              (fast_y[(inner_step * blk_all_len) + inner_g] =
+                   (y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
             }
           }
-          double fast_x[1];
-          {
-            {
-              long inner_step;
-              for (inner_step = 0; inner_step < 1; inner_step++) {
-                {
-                  long inner_g;
-                  for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                    (fast_x[(inner_step * blk_all_len) + inner_g] =
-                         (x + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
-                  }
-                }
-              }
+        }
+        double fast_x[1];
+        {
+          long inner_step;
+          for (inner_step = 0; inner_step < 1; inner_step++) {
+            long inner_g;
+            for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
+              (fast_x[(inner_step * blk_all_len) + inner_g] =
+                   (x + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
             }
           }
-          {
-            long xyzz;
-            for (xyzz = 0; xyzz < ZLEN; xyzz++) {
-              {
-                long xyzy;
-                for (xyzy = 0; xyzy < YLEN; xyzy++) {
-                  {
-                    long xyzx;
-                    for (xyzx = 0; xyzx < 1; xyzx++) {
-                      {
-                        long realidx;
-                        for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                          (fast_y[(num_ele *
-                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                  realidx] =
-                               (fast_y[(num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                       realidx] +
-                                (a * fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                      (yb * (xyzz + ovlp)))))) +
-                                            realidx])));
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          {
-            long inner_step;
-            for (inner_step = 0; inner_step < 1; inner_step++) {
-              {
-                long inner_g;
-                for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                  ((y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g] =
-                       fast_y[(inner_step * blk_all_len) + inner_g]);
+        }
+        {
+          long xyzz;
+          for (xyzz = 0; xyzz < ZLEN; xyzz++) {
+            long xyzy;
+            for (xyzy = 0; xyzy < YLEN; xyzy++) {
+              long xyzx;
+              for (xyzx = 0; xyzx < 1; xyzx++) {
+                long realidx;
+                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
+                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
+                          realidx] =
+                       (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
+                               realidx] +
+                        (a *
+                         fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
+                                realidx])));
                 }
               }
             }
           }
         }
-      } else {
         {
-          {
-            long xyzz;
-            for (xyzz = 0; xyzz < ZLEN; xyzz++) {
+          long inner_step;
+          for (inner_step = 0; inner_step < 1; inner_step++) {
+            long inner_g;
+            for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
+              ((y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g] =
+                   fast_y[(inner_step * blk_all_len) + inner_g]);
+            }
+          }
+        }
+      } else {
+        long xyzz;
+        for (xyzz = 0; xyzz < ZLEN; xyzz++) {
+          long xyzy;
+          for (xyzy = 0; xyzy < YLEN; xyzy++) {
+            long xyzx;
+            for (xyzx = 0; xyzx < 1; xyzx++) {
+              long blk_offset_t1 = (blk_all_len * i);
+              long blk_offset = (blk_all_len * i) +
+                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
               {
-                long xyzy;
-                for (xyzy = 0; xyzy < YLEN; xyzy++) {
-                  {
-                    long xyzx;
-                    for (xyzx = 0; xyzx < 1; xyzx++) {
-                      long blk_offset_t1 = (blk_all_len * i);
-                      long blk_offset =
-                          (blk_all_len * i) +
-                          (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
-                      {
-                        long g = 0;
-                        for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                          long realidx = (__idx + (g * __xlen));
-                          (y[blk_offset + realidx] =
-                               (y[blk_offset + realidx] + (a * x[blk_offset + realidx])));
-                        }
-                      }
-                    }
-                  }
+                long g = 0;
+                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
+                  long realidx = (__idx + (g * __xlen));
+                  (y[blk_offset + realidx] =
+                       (y[blk_offset + realidx] + (a * x[blk_offset + realidx])));
                 }
               }
             }
@@ -160,11 +127,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
   if (local_ymax >= numvec) {
-    {
-      local_ymax = numvec;
-    }
-  } else {
-    { 0; }
+    local_ymax = numvec;
   }
   double zeros[128];
   long lg = 0;

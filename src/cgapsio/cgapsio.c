@@ -123,7 +123,7 @@ int GAPS_IO_FileFlush(Gaps_IO_DataFile *pthis) {
     if (version >= 2) {
       fflush(pfile);
     } else {
-      { MPI_File_sync(((MPI_File *)pfile)[0]); }
+      MPI_File_sync(((MPI_File *)pfile)[0]);
     }
   }
   return 0;
@@ -257,38 +257,32 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
   if (version > 1) {
     snprintf(pNameReal, max_len, "%s%s_META_%ld", pNamePrefix, pName, rank);
     if ((version < 2) || ((cur_rank == send_to_proc) || (!num_reduce_proc))) {
+      FILE *fp = fopen(pNameReal, "w+");
+      fwrite(locations, sizeof(int64_t), num_block_current_proc, fp);
+      pthis->num_block_all_reduce_group = num_block_current_proc;
       {
-        FILE *fp = fopen(pNameReal, "w+");
-        fwrite(locations, sizeof(int64_t), num_block_current_proc, fp);
-        pthis->num_block_all_reduce_group = num_block_current_proc;
-        {
-          long n;
-          for (n = cur_rank + 1; n < (num_reduce_proc * (real_rank + 1)); n++) {
-            int num_proc;
-            MPI_Comm_size(MPI_COMM_WORLD, &(num_proc));
-            if (n >= num_proc) {
-              break;
-            } else {
-              0;
-            }
-            int64_t nxt_size;
-            MPI_Status s1;
-            MPI_Recv(&(nxt_size), 1, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
-            (pthis->num_block_all_reduce_group = (pthis->num_block_all_reduce_group + nxt_size));
-            int64_t *meta_offs = (int64_t *)malloc(sizeof(int64_t) * nxt_size);
-            MPI_Recv(meta_offs, nxt_size, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
-            fwrite(meta_offs, sizeof(int64_t), nxt_size, fp);
-            free(meta_offs);
+        long n;
+        for (n = cur_rank + 1; n < (num_reduce_proc * (real_rank + 1)); n++) {
+          int num_proc;
+          MPI_Comm_size(MPI_COMM_WORLD, &(num_proc));
+          if (n >= num_proc) {
+            break;
           }
+          int64_t nxt_size;
+          MPI_Status s1;
+          MPI_Recv(&(nxt_size), 1, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
+          (pthis->num_block_all_reduce_group = (pthis->num_block_all_reduce_group + nxt_size));
+          int64_t *meta_offs = (int64_t *)malloc(sizeof(int64_t) * nxt_size);
+          MPI_Recv(meta_offs, nxt_size, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
+          fwrite(meta_offs, sizeof(int64_t), nxt_size, fp);
+          free(meta_offs);
         }
-        fclose(fp);
       }
+      fclose(fp);
     } else {
-      {
-        MPI_Send(&(num_block_current_proc), 1, MPI_INT64_T, send_to_proc, cur_rank, MPI_COMM_WORLD);
-        MPI_Send(locations, num_block_current_proc, MPI_INT64_T, send_to_proc, cur_rank,
-                 MPI_COMM_WORLD);
-      }
+      MPI_Send(&(num_block_current_proc), 1, MPI_INT64_T, send_to_proc, cur_rank, MPI_COMM_WORLD);
+      MPI_Send(locations, num_block_current_proc, MPI_INT64_T, send_to_proc, cur_rank,
+               MPI_COMM_WORLD);
     }
   }
   if (timestep != -1) {
@@ -403,11 +397,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                    }
                    readed;
                  })));
-        } else {
-          0;
         }
-      } else {
-        0;
       }
     }
   }
@@ -529,11 +519,9 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
              readed;
            })));
   } else {
-    {
-      long i;
-      for (i = 0; i < dim; i++) {
-        pblockarray[i] = 1;
-      }
+    long i;
+    for (i = 0; i < dim; i++) {
+      pblockarray[i] = 1;
     }
   }
   pthis->pblockarray = pblockarray;

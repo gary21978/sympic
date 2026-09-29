@@ -94,52 +94,45 @@ __global__ void cuda_sync_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpind
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
+    long xyzz;
 
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
 
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
 
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
 
-                long lxyzy = (xyzy + field_ymi);
+          long lxyzy = (xyzy + field_ymi);
 
-                long lxyzz = (xyzz + field_zmi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
+          if (0) {
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
 
-                {
-                  long g = 0;
+          {
+            long g = 0;
 
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
 
-                    (vecmain[(i * blk_all_len) +
-                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                         vecovlp[(i * ovlpalllen) +
-                                 (realidx +
-                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                  }
-                }
-              }
+              (vecmain[(i * blk_all_len) +
+                       (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                   vecovlp[(i * ovlpalllen) +
+                           (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
             }
           }
         }
@@ -251,54 +244,46 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (0) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (0) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecmain[(i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                               vecovlp[(i * ovlpalllen) +
-                                       (realidx +
-                                        (num_ele *
-                                         (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         vecovlp[(i * ovlpalllen) +
+                                 (realidx +
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
                   }
                 }
               }
@@ -446,54 +431,46 @@ cuda_sync_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (0) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (0) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecmain[(i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                               vecovlp[(i * ovlpalllen) +
-                                       (realidx +
-                                        (num_ele *
-                                         (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         vecovlp[(i * ovlpalllen) +
+                                 (realidx +
+                                  (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]);
                   }
                 }
               }
@@ -595,52 +572,45 @@ __global__ void cuda_sync_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpind
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
+    long xyzz;
 
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
 
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
 
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
 
-                long lxyzy = (xyzy + field_ymi);
+          long lxyzy = (xyzy + field_ymi);
 
-                long lxyzz = (xyzz + field_zmi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
+          if (1) {
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
 
-                {
-                  long g = 0;
+          {
+            long g = 0;
 
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
 
-                    (vecovlp[(i * ovlpalllen) +
-                             (realidx +
-                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                         vecmain[(i * blk_all_len) +
-                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                  }
-                }
-              }
+              (vecovlp[(i * ovlpalllen) +
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                   vecmain[(i * blk_all_len) +
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
             }
           }
         }
@@ -752,53 +722,46 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (1) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (1) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecovlp[(i * ovlpalllen) +
-                                   (realidx +
-                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                               vecmain[(i * blk_all_len) +
-                                       (realidx +
-                                        (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
@@ -946,53 +909,46 @@ cuda_sync_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, dou
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (1) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (1) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecovlp[(i * ovlpalllen) +
-                                   (realidx +
-                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                               vecmain[(i * blk_all_len) +
-                                       (realidx +
-                                        (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
@@ -1094,54 +1050,48 @@ __global__ void cuda_merge_ovlp_o2m(double *vecmain, double *vecovlp, int ovlpin
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
+    long xyzz;
 
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
 
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
 
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
 
-                long lxyzy = (xyzy + field_ymi);
+          long lxyzy = (xyzy + field_ymi);
 
-                long lxyzz = (xyzz + field_zmi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (1) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
+          if (1) {
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
 
-                {
-                  long g = 0;
+          {
+            long g = 0;
 
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
 
-                    (vecmain[(i * blk_all_len) +
-                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                         (vecmain[(i * blk_all_len) +
-                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                          vecovlp[(i * ovlpalllen) +
-                                  (realidx +
-                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                  }
-                }
-              }
+              (vecmain[(i * blk_all_len) +
+                       (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                   (vecmain[(i * blk_all_len) +
+                            (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                    vecovlp[(i * ovlpalllen) +
+                            (realidx +
+                             (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
             }
           }
         }
@@ -1253,57 +1203,48 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (1) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (1) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecmain[(i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                               (vecmain[(i * blk_all_len) +
-                                        (realidx +
-                                         (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                                vecovlp[(i * ovlpalllen) +
-                                        (realidx +
-                                         (num_ele *
-                                          (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                        }
-                      }
-                    }
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         (vecmain[(i * blk_all_len) +
+                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                          vecovlp[(i * ovlpalllen) +
+                                  (realidx +
+                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
                   }
                 }
               }
@@ -1451,57 +1392,48 @@ cuda_merge_ovlp_o2m_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (1) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (1) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecmain[(i * blk_all_len) +
-                                   (realidx +
-                                    (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
-                               (vecmain[(i * blk_all_len) +
-                                        (realidx +
-                                         (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
-                                vecovlp[(i * ovlpalllen) +
-                                        (realidx +
-                                         (num_ele *
-                                          (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
-                        }
-                      }
-                    }
+                    (vecmain[(i * blk_all_len) +
+                             (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] =
+                         (vecmain[(i * blk_all_len) +
+                                  (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))] +
+                          vecovlp[(i * ovlpalllen) +
+                                  (realidx +
+                                   (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))]));
                   }
                 }
               }
@@ -1603,52 +1535,45 @@ __global__ void cuda_merge_ovlp_m2o(double *vecmain, double *vecovlp, int ovlpin
   long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
   for (i = local_ymin; i < local_ymax; i++) {
-    {
-      long xyzz;
+    long xyzz;
 
-      for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-        {
-          long xyzy;
+    for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+      long xyzy;
 
-          for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-            {
-              long xyzx;
+      for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+        long xyzx;
 
-              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                long lxyzx = (xyzx + field_xmi);
+        for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+          long lxyzx = (xyzx + field_xmi);
 
-                long lxyzy = (xyzy + field_ymi);
+          long lxyzy = (xyzy + field_ymi);
 
-                long lxyzz = (xyzz + field_zmi);
+          long lxyzz = (xyzz + field_zmi);
 
-                if (0) {
-                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                    lxyzx = ovlp;
-                  }
+          if (0) {
+            if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+              lxyzx = ovlp;
+            }
 
-                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                    lxyzy = ovlp;
-                  }
+            if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+              lxyzy = ovlp;
+            }
 
-                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                    lxyzz = ovlp;
-                  }
-                }
+            if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+              lxyzz = ovlp;
+            }
+          }
 
-                {
-                  long g = 0;
+          {
+            long g = 0;
 
-                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                    long realidx = (__idx + (g * __xlen));
+            for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+              long realidx = (__idx + (g * __xlen));
 
-                    (vecovlp[(i * ovlpalllen) +
-                             (realidx +
-                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                         vecmain[(i * blk_all_len) +
-                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                  }
-                }
-              }
+              (vecovlp[(i * ovlpalllen) +
+                       (realidx + (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                   vecmain[(i * blk_all_len) +
+                           (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
             }
           }
         }
@@ -1760,53 +1685,46 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (0) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (0) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecovlp[(i * ovlpalllen) +
-                                   (realidx +
-                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                               vecmain[(i * blk_all_len) +
-                                       (realidx +
-                                        (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }
@@ -1954,53 +1872,46 @@ cuda_merge_ovlp_m2o_once(double *vecmain, double *vecovlp0, double *vecovlp1, do
         long ovlpalllen = (ovlpxma * (ovlpyma * (ovlpzma * num_ele)));
 
         for (i = local_ymin; i < local_ymax; i++) {
-          {
-            long xyzz;
+          long xyzz;
 
-            for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
-              {
-                long xyzy;
+          for (xyzz = 0; xyzz < ovlpzma; xyzz++) {
+            long xyzy;
 
-                for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
-                  {
-                    long xyzx;
+            for (xyzy = 0; xyzy < ovlpyma; xyzy++) {
+              long xyzx;
 
-                    for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
-                      long lxyzx = (xyzx + field_xmi);
+              for (xyzx = 0; xyzx < ovlpxma; xyzx++) {
+                long lxyzx = (xyzx + field_xmi);
 
-                      long lxyzy = (xyzy + field_ymi);
+                long lxyzy = (xyzy + field_ymi);
 
-                      long lxyzz = (xyzz + field_zmi);
+                long lxyzz = (xyzz + field_zmi);
 
-                      if (0) {
-                        if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
-                          lxyzx = ovlp;
-                        }
+                if (0) {
+                  if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
+                    lxyzx = ovlp;
+                  }
 
-                        if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
-                          lxyzy = ovlp;
-                        }
+                  if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
+                    lxyzy = ovlp;
+                  }
 
-                        if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
-                          lxyzz = ovlp;
-                        }
-                      }
+                  if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
+                    lxyzz = ovlp;
+                  }
+                }
 
-                      {
-                        long g = 0;
+                {
+                  long g = 0;
 
-                        for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
-                          long realidx = (__idx + (g * __xlen));
+                  for (g = 0; (__idx + (g * __xlen)) < num_ele; g++) {
+                    long realidx = (__idx + (g * __xlen));
 
-                          (vecovlp[(i * ovlpalllen) +
-                                   (realidx +
-                                    (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
-                               vecmain[(i * blk_all_len) +
-                                       (realidx +
-                                        (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
-                        }
-                      }
-                    }
+                    (vecovlp[(i * ovlpalllen) +
+                             (realidx +
+                              (num_ele * (xyzx + (ovlpxma * (xyzy + (ovlpyma * xyzz))))))] =
+                         vecmain[(i * blk_all_len) +
+                                 (realidx + (num_ele * (lxyzx + (xb * (lxyzy + (yb * lxyzz))))))]);
                   }
                 }
               }

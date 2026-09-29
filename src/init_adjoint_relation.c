@@ -333,32 +333,28 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
       long xyzz;
 
       for (xyzz = 0; xyzz < 3; xyzz++) {
-        {
-          long xyzy;
+        long xyzy;
 
-          for (xyzy = 0; xyzy < 3; xyzy++) {
-            {
-              long xyzx;
+        for (xyzy = 0; xyzy < 3; xyzy++) {
+          long xyzx;
 
-              for (xyzx = 0; xyzx < 3; xyzx++) {
-                int xyzlocalall = (xyzx + (3 * (xyzy + (3 * xyzz))));
+          for (xyzx = 0; xyzx < 3; xyzx++) {
+            int xyzlocalall = (xyzx + (3 * (xyzy + (3 * xyzz))));
 
-                long adj_id_pre =
-                    ((((bxyzx + (xyzx - 1)) + x_num_thread_block) % x_num_thread_block) +
-                     (x_num_thread_block *
-                      ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
-                       (y_num_thread_block *
-                        (((bxyzz + (xyzz - 1)) + z_num_thread_block) % z_num_thread_block)))));
+            long adj_id_pre =
+                ((((bxyzx + (xyzx - 1)) + x_num_thread_block) % x_num_thread_block) +
+                 (x_num_thread_block *
+                  ((((bxyzy + (xyzy - 1)) + y_num_thread_block) % y_num_thread_block) +
+                   (y_num_thread_block *
+                    (((bxyzz + (xyzz - 1)) + z_num_thread_block) % z_num_thread_block)))));
 
-                long cur_adj_id = (ovvec)[adj_id_pre];
+            long cur_adj_id = (ovvec)[adj_id_pre];
 
-                adj_ids[(i * NUM_SYNC_LAYER) + xyzlocalall] = cur_adj_id;
-                long cur_adj_pid = find_the_proc_id(cur_adj_id, num_proc, num_thread_array);
+            adj_ids[(i * NUM_SYNC_LAYER) + xyzlocalall] = cur_adj_id;
+            long cur_adj_pid = find_the_proc_id(cur_adj_id, num_proc, num_thread_array);
 
-                adj_processes[(i * NUM_SYNC_LAYER) + xyzlocalall] = cur_adj_pid;
-                (adj_local_tid[(i * NUM_SYNC_LAYER) + xyzlocalall] = local_tid_array[cur_adj_id]);
-              }
-            }
+            adj_processes[(i * NUM_SYNC_LAYER) + xyzlocalall] = cur_adj_pid;
+            (adj_local_tid[(i * NUM_SYNC_LAYER) + xyzlocalall] = local_tid_array[cur_adj_id]);
           }
         }
       }

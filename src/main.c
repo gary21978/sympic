@@ -665,15 +665,13 @@ int main(int argc, char **argv) {
       // set B=B1
       blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB1));
       if ((rank == 0) && (M_DISABLE_TS_LOG == 0)) {
-        {
-          double tnow = wclk_now();
+        double tnow = wclk_now();
 
-          double tused = (tnow - tend);
+        double tused = (tnow - tend);
 
-          tend = tnow;
-          fprintf(stderr, "step=%ld time used=%fs, ips=%f, allips=%f\n", t, tused, (1 / tused),
-                  ((t + 1) / (tend - tbeg)));
-        }
+        tend = tnow;
+        fprintf(stderr, "step=%ld time used=%fs, ips=%f, allips=%f\n", t, tused, (1 / tused),
+                ((t + 1) / (tend - tbeg)));
       }
     }
     GAPS_IO_DeleteDataInfo(pgid);

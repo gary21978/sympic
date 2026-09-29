@@ -57,7 +57,7 @@ double TEMPERATURE_DIST_global_procedure(long cursp, double z, double y, double 
 
     long offset_pos = (current_cache_pos - TEMPERATURE_DIST_gid_cache_pos);
 
-    if (((TEMPERATURE_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
+    if ((TEMPERATURE_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64))) {
       GAPS_IO_DataSeek(pTEMPERATURE_DIST_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pTEMPERATURE_DIST_gid_global_var, TEMPERATURE_DIST_gid_cache_var, 64);
       TEMPERATURE_DIST_gid_cache_pos = current_cache_pos;
@@ -88,7 +88,7 @@ double DENSITY_DIST_global_procedure(long cursp, double z, double y, double x) {
 
     long offset_pos = (current_cache_pos - DENSITY_DIST_gid_cache_pos);
 
-    if (((DENSITY_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
+    if ((DENSITY_DIST_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64))) {
       GAPS_IO_DataSeek(pDENSITY_DIST_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pDENSITY_DIST_gid_global_var, DENSITY_DIST_gid_cache_var, 64);
       DENSITY_DIST_gid_cache_pos = current_cache_pos;
@@ -119,7 +119,7 @@ double V0_x_global_procedure(long cursp, double z, double y, double x) {
 
     long offset_pos = (current_cache_pos - V0_x_gid_cache_pos);
 
-    if (((V0_x_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
+    if ((V0_x_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64))) {
       GAPS_IO_DataSeek(pV0_x_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_x_gid_global_var, V0_x_gid_cache_var, 64);
       V0_x_gid_cache_pos = current_cache_pos;
@@ -150,7 +150,7 @@ double V0_y_global_procedure(long cursp, double z, double y, double x) {
 
     long offset_pos = (current_cache_pos - V0_y_gid_cache_pos);
 
-    if (((V0_y_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
+    if ((V0_y_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64))) {
       GAPS_IO_DataSeek(pV0_y_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_y_gid_global_var, V0_y_gid_cache_var, 64);
       V0_y_gid_cache_pos = current_cache_pos;
@@ -181,7 +181,7 @@ double V0_z_global_procedure(long cursp, double z, double y, double x) {
 
     long offset_pos = (current_cache_pos - V0_z_gid_cache_pos);
 
-    if (((V0_z_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64)))) {
+    if ((V0_z_gid_cache_pos == -1) || ((offset_pos < 0) || (offset_pos >= 64))) {
       GAPS_IO_DataSeek(pV0_z_gid_global_var, 0, current_cache_pos);
       GAPS_IO_FRead(pV0_z_gid_global_var, V0_z_gid_cache_var, 64);
       V0_z_gid_cache_pos = current_cache_pos;
@@ -208,10 +208,10 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      pV0_z_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
+      pV0_z_gid_global_var = malloc(sizeof(Gaps_IO_DataFile));
       GAPS_IO_InitIFile(pV0_z_gid_global_var, nm);
-      assert((pV0_z_gid_global_var->version == 0));
-      assert((pV0_z_gid_global_var->dim == 4));
+      assert(pV0_z_gid_global_var->version == 0);
+      assert(pV0_z_gid_global_var->dim == 4);
       GET_INIT_V0_z_inner_procedure = V0_z_global_procedure;
     }
   }
@@ -222,10 +222,10 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      pV0_y_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
+      pV0_y_gid_global_var = malloc(sizeof(Gaps_IO_DataFile));
       GAPS_IO_InitIFile(pV0_y_gid_global_var, nm);
-      assert((pV0_y_gid_global_var->version == 0));
-      assert((pV0_y_gid_global_var->dim == 4));
+      assert(pV0_y_gid_global_var->version == 0);
+      assert(pV0_y_gid_global_var->dim == 4);
       GET_INIT_V0_y_inner_procedure = V0_y_global_procedure;
     }
   }
@@ -236,10 +236,10 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      pV0_x_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
+      pV0_x_gid_global_var = malloc(sizeof(Gaps_IO_DataFile));
       GAPS_IO_InitIFile(pV0_x_gid_global_var, nm);
-      assert((pV0_x_gid_global_var->version == 0));
-      assert((pV0_x_gid_global_var->dim == 4));
+      assert(pV0_x_gid_global_var->version == 0);
+      assert(pV0_x_gid_global_var->dim == 4);
       GET_INIT_V0_x_inner_procedure = V0_x_global_procedure;
     }
   }
@@ -250,10 +250,10 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      pDENSITY_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
+      pDENSITY_DIST_gid_global_var = malloc(sizeof(Gaps_IO_DataFile));
       GAPS_IO_InitIFile(pDENSITY_DIST_gid_global_var, nm);
-      assert((pDENSITY_DIST_gid_global_var->version == 0));
-      assert((pDENSITY_DIST_gid_global_var->dim == 4));
+      assert(pDENSITY_DIST_gid_global_var->version == 0);
+      assert(pDENSITY_DIST_gid_global_var->dim == 4);
       GET_INIT_DENSITY_DIST_inner_procedure = DENSITY_DIST_global_procedure;
     }
   }
@@ -264,16 +264,16 @@ int main(int argc, char **argv) {
 
     if (fp) {
       fprintf(stderr, "found %s for input\n", nm);
-      pTEMPERATURE_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
+      pTEMPERATURE_DIST_gid_global_var = malloc(sizeof(Gaps_IO_DataFile));
       GAPS_IO_InitIFile(pTEMPERATURE_DIST_gid_global_var, nm);
-      assert((pTEMPERATURE_DIST_gid_global_var->version == 0));
-      assert((pTEMPERATURE_DIST_gid_global_var->dim == 5));
+      assert(pTEMPERATURE_DIST_gid_global_var->version == 0);
+      assert(pTEMPERATURE_DIST_gid_global_var->dim == 5);
       GET_INIT_TEMPERATURE_DIST_inner_procedure = TEMPERATURE_DIST_global_procedure;
     }
   }
   int n = NUM_PROCESS;
 
-  if ((NUM_PROCESS == 0)) {
+  if (NUM_PROCESS == 0) {
     PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(n));
     NUM_PROCESS = n;
   }
@@ -296,7 +296,7 @@ int main(int argc, char **argv) {
   int rank;
 
   PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(rank));
-  assert((rank < n));
+  assert(rank < n);
   /* Device communicator unique ID exchange. */
   SymPIC_Device_UniqueId device_comm_id;
   if (rank == 0) {
@@ -329,22 +329,22 @@ int main(int argc, char **argv) {
 
   double M_USE_SAME_RANDOM_SEED = call_GET_VAR("USE_SAME_RANDOM_SEED");
 
-  if ((M_DELTA_X == 0)) {
+  if (M_DELTA_X == 0) {
     M_DELTA_X = 1;
   }
 
-  if ((M_DELTA_Y == 0)) {
+  if (M_DELTA_Y == 0) {
     M_DELTA_Y = 1;
   }
 
-  if ((M_DELTA_Z == 0)) {
+  if (M_DELTA_Z == 0) {
     M_DELTA_Z = 1;
   }
 
   srand_seed = rank + 1;
   long local_seed = (rank + (1 + ((M_USE_TIME_AS_RANDOM_SEED) ? (time(NULL)) : (M_RAND_SEED))));
 
-  if ((!M_USE_SAME_RANDOM_SEED)) {
+  if (!M_USE_SAME_RANDOM_SEED) {
     srand(srand_seed);
 
   } else {
@@ -352,7 +352,7 @@ int main(int argc, char **argv) {
   }
 
   long tids[(num_runtime * n)];
-  int64_t *local_tid_array = malloc((sizeof(int64_t) * numt));
+  int64_t *local_tid_array = malloc(sizeof(int64_t) * numt);
 
   Field3D_MPI testfield;
 
@@ -387,7 +387,7 @@ int main(int argc, char **argv) {
 
   double G_USE_DIFFERENT_DEV_PERFORMANCE = call_GET_VAR("USE_DIFFERENT_DEV_PERFORMANCE");
 
-  if ((G_GAPSIO_VERSION < 2)) {
+  if (G_GAPSIO_VERSION < 2) {
     G_GAPSIO_NUM_REDUCEWRITE = 0;
   }
 
@@ -426,11 +426,11 @@ int main(int argc, char **argv) {
 
   int overlap_len = 2;
 
-  if ((G_OVERLAP_LEN != 0)) {
+  if (G_OVERLAP_LEN != 0) {
     overlap_len = G_OVERLAP_LEN;
   }
 
-  if ((rank == 0)) {
+  if (rank == 0) {
     fprintf(stderr, "overlap=%d\n", overlap_len);
   }
 
@@ -448,7 +448,7 @@ int main(int argc, char **argv) {
   ptestfield->device_comm = device_comms;
   init_Field3D_MPI_from_new_num_ele(ptestfieldSPEC, ptestfield, (7 * NUM_SPEC));
 
-  double *pnpm = malloc((sizeof(double) * NUM_SPEC));
+  double *pnpm = malloc(sizeof(double) * NUM_SPEC);
 
   {
     long i;
@@ -457,7 +457,7 @@ int main(int argc, char **argv) {
       pnpm[i] = call_GET_NPM(i);
     }
   }
-  double *pchg = malloc((sizeof(double) * NUM_SPEC));
+  double *pchg = malloc(sizeof(double) * NUM_SPEC);
 
   {
     long i;
@@ -466,7 +466,7 @@ int main(int argc, char **argv) {
       pchg[i] = call_GET_CHARGE(i);
     }
   }
-  double *pmass = malloc((sizeof(double) * NUM_SPEC));
+  double *pmass = malloc(sizeof(double) * NUM_SPEC);
 
   {
     long i;
@@ -475,7 +475,7 @@ int main(int argc, char **argv) {
       pmass[i] = call_GET_MASS(i);
     }
   }
-  long *pgcache = malloc((sizeof(long) * NUM_SPEC));
+  long *pgcache = malloc(sizeof(long) * NUM_SPEC);
 
   {
     long i;
@@ -484,7 +484,7 @@ int main(int argc, char **argv) {
       pgcache[i] = call_GET_GRID_CACHE_LEN(i);
     }
   }
-  long *pcucache = malloc((sizeof(long) * NUM_SPEC));
+  long *pcucache = malloc(sizeof(long) * NUM_SPEC);
 
   {
     long i;
@@ -501,12 +501,12 @@ int main(int argc, char **argv) {
 
   double M_NUM_MULTI_STEP_SORT = call_GET_VAR("NUM_MULTI_STEP_SORT");
 
-  int num_multi_step_sort = (((M_NUM_MULTI_STEP_SORT == 0)) ? (1) : (M_NUM_MULTI_STEP_SORT));
+  int num_multi_step_sort = ((M_NUM_MULTI_STEP_SORT == 0) ? (1) : (M_NUM_MULTI_STEP_SORT));
 
-  assert((num_multi_step_sort > 0));
+  assert(num_multi_step_sort > 0);
   double T_TORI_X0 = call_GET_VAR("TORI_X0");
 
-  int *p_particle_type = malloc((sizeof(int) * NUM_SPEC));
+  int *p_particle_type = malloc(sizeof(int) * NUM_SPEC);
 
   {
     long i;
@@ -522,7 +522,7 @@ int main(int argc, char **argv) {
                         M_REDUCE_DIM_Z_RAT, M_REDUCE_DIM_RANDOM_RATE, M_USE_VLO, 0);
   double M_INIT_VMAX = call_GET_VAR("INIT_VMAX");
 
-  if ((M_INIT_VMAX == 0)) {
+  if (M_INIT_VMAX == 0) {
     M_INIT_VMAX = 1;
   }
 
@@ -561,8 +561,8 @@ int main(int argc, char **argv) {
     double tend = tbeg;
 
     for (0; t < NUM_TIMESTEP; t++) {
-      if ((0 == (t % NUM_DUMP_TIMESTEP))) {
-        if ((rank == 0)) {
+      if (0 == (t % NUM_DUMP_TIMESTEP)) {
+        if (rank == 0) {
           fprintf(stderr, "outputing...");
         }
 
@@ -590,7 +590,7 @@ int main(int argc, char **argv) {
         }
 
         tbeg = wclk_now() - tbeg;
-        if ((rank == 0)) {
+        if (rank == 0) {
           fprintf(stderr, "done, time used=%fs\n", tbeg);
         }
 
@@ -627,7 +627,7 @@ int main(int argc, char **argv) {
                                     pmass, pchg, (0.5 * DELTAT), T_TORI_X0, 0, 0, 0, 0, 0);
       }
       // sort particle if it is the sort time-step
-      if (((t % num_multi_step_sort) == 0)) {
+      if ((t % num_multi_step_sort) == 0) {
         call_particle_sort_mpi(&(ppis->MPI_fieldE), 0, 0);
         call_particle_sort_mpi(&(ppis->MPI_fieldE), 1, 0);
         call_particle_sort_mpi(&(ppis->MPI_fieldE), 2, 0);
@@ -664,7 +664,7 @@ int main(int argc, char **argv) {
 
       // set B=B1
       blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB1));
-      if (((rank == 0) && (M_DISABLE_TS_LOG == 0))) {
+      if ((rank == 0) && (M_DISABLE_TS_LOG == 0)) {
         {
           double tnow = wclk_now();
 
@@ -677,7 +677,7 @@ int main(int argc, char **argv) {
       }
     }
     GAPS_IO_DeleteDataInfo(pgid);
-    if ((rank == 0)) {
+    if (rank == 0) {
       fprintf(stderr, "task complete: ");
       {
         long i;
@@ -689,7 +689,7 @@ int main(int argc, char **argv) {
       fprintf(stderr, "\n");
     }
   }
-  if ((rank == 0)) {
+  if (rank == 0) {
     fprintf(stderr, "Calling Finalize\n");
   }
 

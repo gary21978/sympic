@@ -22,11 +22,11 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
                                   long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -46,7 +46,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp0)->len > 0)) {
+        if ((kerstr->vecovlp0)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp0);
           }
@@ -66,7 +66,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp1)->len > 0)) {
+        if ((kerstr->vecovlp1)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp1);
           }
@@ -86,7 +86,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp2)->len > 0)) {
+        if ((kerstr->vecovlp2)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp2);
           }
@@ -106,7 +106,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp3)->len > 0)) {
+        if ((kerstr->vecovlp3)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp3);
           }
@@ -126,7 +126,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp4)->len > 0)) {
+        if ((kerstr->vecovlp4)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp4);
           }
@@ -146,7 +146,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp5)->len > 0)) {
+        if ((kerstr->vecovlp5)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp5);
           }
@@ -166,7 +166,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp6)->len > 0)) {
+        if ((kerstr->vecovlp6)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp6);
           }
@@ -186,7 +186,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp7)->len > 0)) {
+        if ((kerstr->vecovlp7)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp7);
           }
@@ -206,7 +206,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp8)->len > 0)) {
+        if ((kerstr->vecovlp8)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp8);
           }
@@ -226,7 +226,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp9)->len > 0)) {
+        if ((kerstr->vecovlp9)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp9);
           }
@@ -246,7 +246,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp10)->len > 0)) {
+        if ((kerstr->vecovlp10)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp10);
           }
@@ -266,7 +266,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp11)->len > 0)) {
+        if ((kerstr->vecovlp11)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp11);
           }
@@ -286,7 +286,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp12)->len > 0)) {
+        if ((kerstr->vecovlp12)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp12);
           }
@@ -306,7 +306,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp14)->len > 0)) {
+        if ((kerstr->vecovlp14)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp14);
           }
@@ -326,7 +326,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp15)->len > 0)) {
+        if ((kerstr->vecovlp15)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp15);
           }
@@ -346,7 +346,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp16)->len > 0)) {
+        if ((kerstr->vecovlp16)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp16);
           }
@@ -366,7 +366,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp17)->len > 0)) {
+        if ((kerstr->vecovlp17)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp17);
           }
@@ -386,7 +386,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp18)->len > 0)) {
+        if ((kerstr->vecovlp18)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp18);
           }
@@ -406,7 +406,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp19)->len > 0)) {
+        if ((kerstr->vecovlp19)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp19);
           }
@@ -426,7 +426,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp20)->len > 0)) {
+        if ((kerstr->vecovlp20)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp20);
           }
@@ -446,7 +446,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp21)->len > 0)) {
+        if ((kerstr->vecovlp21)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp21);
           }
@@ -466,7 +466,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp22)->len > 0)) {
+        if ((kerstr->vecovlp22)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp22);
           }
@@ -486,7 +486,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp23)->len > 0)) {
+        if ((kerstr->vecovlp23)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp23);
           }
@@ -506,7 +506,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp24)->len > 0)) {
+        if ((kerstr->vecovlp24)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp24);
           }
@@ -526,7 +526,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp25)->len > 0)) {
+        if ((kerstr->vecovlp25)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp25);
           }
@@ -546,7 +546,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp26)->len > 0)) {
+        if ((kerstr->vecovlp26)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp26);
           }
@@ -566,7 +566,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -586,7 +586,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -606,7 +606,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -626,7 +626,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -646,7 +646,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -666,7 +666,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -686,7 +686,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
     }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_merge_ovlp_m2o_once<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -824,9 +824,9 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
             mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   } else {
     {
@@ -835,7 +835,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -981,17 +981,17 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
             mapsMemobjGetPhysicalAddress(kerstr->vecovlp26->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -1011,7 +1011,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp0)->len > 0)) {
+        if ((kerstr->vecovlp0)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp0);
           }
@@ -1031,7 +1031,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp1)->len > 0)) {
+        if ((kerstr->vecovlp1)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp1);
           }
@@ -1051,7 +1051,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp2)->len > 0)) {
+        if ((kerstr->vecovlp2)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp2);
           }
@@ -1071,7 +1071,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp3)->len > 0)) {
+        if ((kerstr->vecovlp3)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp3);
           }
@@ -1091,7 +1091,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp4)->len > 0)) {
+        if ((kerstr->vecovlp4)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp4);
           }
@@ -1111,7 +1111,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp5)->len > 0)) {
+        if ((kerstr->vecovlp5)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp5);
           }
@@ -1131,7 +1131,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp6)->len > 0)) {
+        if ((kerstr->vecovlp6)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp6);
           }
@@ -1151,7 +1151,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp7)->len > 0)) {
+        if ((kerstr->vecovlp7)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp7);
           }
@@ -1171,7 +1171,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp8)->len > 0)) {
+        if ((kerstr->vecovlp8)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp8);
           }
@@ -1191,7 +1191,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp9)->len > 0)) {
+        if ((kerstr->vecovlp9)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp9);
           }
@@ -1211,7 +1211,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp10)->len > 0)) {
+        if ((kerstr->vecovlp10)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp10);
           }
@@ -1231,7 +1231,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp11)->len > 0)) {
+        if ((kerstr->vecovlp11)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp11);
           }
@@ -1251,7 +1251,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp12)->len > 0)) {
+        if ((kerstr->vecovlp12)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp12);
           }
@@ -1271,7 +1271,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp14)->len > 0)) {
+        if ((kerstr->vecovlp14)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp14);
           }
@@ -1291,7 +1291,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp15)->len > 0)) {
+        if ((kerstr->vecovlp15)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp15);
           }
@@ -1311,7 +1311,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp16)->len > 0)) {
+        if ((kerstr->vecovlp16)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp16);
           }
@@ -1331,7 +1331,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp17)->len > 0)) {
+        if ((kerstr->vecovlp17)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp17);
           }
@@ -1351,7 +1351,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp18)->len > 0)) {
+        if ((kerstr->vecovlp18)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp18);
           }
@@ -1371,7 +1371,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp19)->len > 0)) {
+        if ((kerstr->vecovlp19)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp19);
           }
@@ -1391,7 +1391,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp20)->len > 0)) {
+        if ((kerstr->vecovlp20)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp20);
           }
@@ -1411,7 +1411,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp21)->len > 0)) {
+        if ((kerstr->vecovlp21)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp21);
           }
@@ -1431,7 +1431,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp22)->len > 0)) {
+        if ((kerstr->vecovlp22)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp22);
           }
@@ -1451,7 +1451,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp23)->len > 0)) {
+        if ((kerstr->vecovlp23)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp23);
           }
@@ -1471,7 +1471,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp24)->len > 0)) {
+        if ((kerstr->vecovlp24)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp24);
           }
@@ -1491,7 +1491,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp25)->len > 0)) {
+        if ((kerstr->vecovlp25)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp25);
           }
@@ -1511,7 +1511,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->vecovlp26)->len > 0)) {
+        if ((kerstr->vecovlp26)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlp26);
           }
@@ -1531,7 +1531,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -1551,7 +1551,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -1571,7 +1571,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -1591,7 +1591,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -1611,7 +1611,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -1631,7 +1631,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -1702,7 +1702,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       FILE *fp = fopen(fname, "wb");
       size_t write_len = (kerstr->vecovlps)->len;
 
-      if ((write_len <= 0)) {
+      if (write_len <= 0) {
         write_len = 1;
       }
 
@@ -1823,7 +1823,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
     }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_merge_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1836,9 +1836,9 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   } else {
     {
@@ -1847,7 +1847,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1866,17 +1866,17 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -1896,7 +1896,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -1916,7 +1916,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -1936,7 +1936,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -1956,7 +1956,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -1976,7 +1976,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -1996,7 +1996,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -2016,7 +2016,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -2131,11 +2131,11 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -2155,7 +2155,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -2175,7 +2175,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -2195,7 +2195,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -2215,7 +2215,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -2235,7 +2235,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -2255,7 +2255,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -2275,7 +2275,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -2295,7 +2295,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
     }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_merge_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2308,9 +2308,9 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   } else {
     {
@@ -2319,7 +2319,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2340,17 +2340,17 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -2370,7 +2370,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -2390,7 +2390,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -2410,7 +2410,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -2430,7 +2430,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -2450,7 +2450,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -2470,7 +2470,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -2490,7 +2490,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -2591,11 +2591,11 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
                                        long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -2615,7 +2615,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -2635,7 +2635,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -2655,7 +2655,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -2675,7 +2675,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -2695,7 +2695,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -2715,7 +2715,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -2735,7 +2735,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -2755,7 +2755,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
     }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sync_ovlp_m2o_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2768,9 +2768,9 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   } else {
     {
@@ -2779,7 +2779,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2800,17 +2800,17 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -2830,7 +2830,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -2850,7 +2850,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -2870,7 +2870,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -2890,7 +2890,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -2910,7 +2910,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -2930,7 +2930,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -2950,7 +2950,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -3049,11 +3049,11 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
                                        long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -3073,7 +3073,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -3093,7 +3093,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -3113,7 +3113,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -3133,7 +3133,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -3153,7 +3153,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -3173,7 +3173,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -3193,7 +3193,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -3213,7 +3213,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
     }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sync_ovlp_o2m_all_in_one<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3226,9 +3226,9 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   } else {
     {
@@ -3237,7 +3237,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3258,17 +3258,17 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
             mapsMemobjGetPhysicalAddress(kerstr->vecovlps->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->xblock->h_data))[0], (((MAPU_LONG *)kerstr->yblock->h_data))[0],
-          (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->ovlp->h_data))[0]);
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->xblock->h_data)[0], ((MAPU_LONG *)kerstr->yblock->h_data)[0],
+          ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->ovlp->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->vecmain)->len > 0)) {
+        if ((kerstr->vecmain)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecmain);
           }
@@ -3288,7 +3288,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->vecovlps)->len > 0)) {
+        if ((kerstr->vecovlps)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->vecovlps);
           }
@@ -3308,7 +3308,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -3328,7 +3328,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -3348,7 +3348,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->xblock)->len > 0)) {
+        if ((kerstr->xblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xblock);
           }
@@ -3368,7 +3368,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->yblock)->len > 0)) {
+        if ((kerstr->yblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->yblock);
           }
@@ -3388,7 +3388,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->zblock)->len > 0)) {
+        if ((kerstr->zblock)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->zblock);
           }
@@ -3408,7 +3408,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }

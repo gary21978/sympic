@@ -21,7 +21,7 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
                                  long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_move_back_kernel_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -44,10 +44,9 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
             mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -56,7 +55,7 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -87,10 +86,9 @@ int mapu_move_back_kernel_8_exec(mapu_move_back_kernel_8_struct *kerstr, long sc
             mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -165,7 +163,7 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
                                  long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_move_back_kernel_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -188,10 +186,9 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
             mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -200,7 +197,7 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -231,10 +228,9 @@ int mapu_move_back_kernel_6_exec(mapu_move_back_kernel_6_struct *kerstr, long sc
             mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 

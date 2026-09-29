@@ -5,7 +5,7 @@ static size_t cid;
 int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, long s, long x,
                           long y, long z, long dx, long dy, long dz, long dx2, long dy2, long dz2,
                           long dx3, long dy3, long dz3) {
-  if ((s == 1)) {
+  if (s == 1) {
     long rid = (x + (xlen * (y + (ylen * z))));
 
     modifiedid[rid] = cid;
@@ -14,39 +14,39 @@ int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, 
 
   } else {
     s = s / 2;
-    if ((dx < 0)) {
+    if (dx < 0) {
       x = x - (s * dx);
     }
 
-    if ((dy < 0)) {
+    if (dy < 0) {
       y = y - (s * dy);
     }
 
-    if ((dz < 0)) {
+    if (dz < 0) {
       z = z - (s * dz);
     }
 
-    if ((dx2 < 0)) {
+    if (dx2 < 0) {
       x = x - (s * dx2);
     }
 
-    if ((dy2 < 0)) {
+    if (dy2 < 0) {
       y = y - (s * dy2);
     }
 
-    if ((dz2 < 0)) {
+    if (dz2 < 0) {
       z = z - (s * dz2);
     }
 
-    if ((dx3 < 0)) {
+    if (dx3 < 0) {
       x = x - (s * dx3);
     }
 
-    if ((dy3 < 0)) {
+    if (dy3 < 0) {
       y = y - (s * dy3);
     }
 
-    if ((dz3 < 0)) {
+    if (dz3 < 0) {
       z = z - (s * dz3);
     }
 
@@ -78,7 +78,7 @@ int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, 
 }
 int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y, long xi, long xj,
                           long yi, long yj, long xlen) {
-  if ((n == 0)) {
+  if (n == 0) {
     long realx = (((x + ((xi + xj) / 2)) - 1) / 2);
 
     long realy = (((y + ((yi + yj) / 2)) - 1) / 2);

@@ -556,14 +556,14 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
     sympic_set_device(data[i].cuda_device);
     Field3D_Seq_ovlp_merge_ovlp_m2o_all_in_one((data + i), 1);
 
-    long xlen = ((data + i))->xlen;
-    long ylen = ((data + i))->ylen;
-    long zlen = ((data + i))->zlen;
-    long xblock = ((data + i))->xblock;
-    long yblock = ((data + i))->yblock;
-    long zblock = ((data + i))->zblock;
-    long numvec = ((data + i))->numvec;
-    int num_ele = ((data + i))->num_ele;
+    long xlen = (data + i)->xlen;
+    long ylen = (data + i)->ylen;
+    long zlen = (data + i)->zlen;
+    long xblock = (data + i)->xblock;
+    long yblock = (data + i)->yblock;
+    long zblock = (data + i)->zblock;
+    long numvec = (data + i)->numvec;
+    int num_ele = (data + i)->num_ele;
 
     (all_sync_len[i] =
          (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
@@ -597,7 +597,7 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
   for (i = 0; i < num_data; i++) {
     sympic_set_device(data[i].cuda_device);
 
-    void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
+    void **swap_layer_pscmc = (data + i)->swap_layer_pscmc;
 
     Field3D_Seq_ovlp_merge_ovlp_o2m_all_in_one((data + i), 0);
   }
@@ -625,14 +625,14 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
     sympic_set_device(data[i].cuda_device);
     Field3D_Seq_ovlp_sync_ovlp_m2o_all_in_one((data + i), 1);
 
-    long xlen = ((data + i))->xlen;
-    long ylen = ((data + i))->ylen;
-    long zlen = ((data + i))->zlen;
-    long xblock = ((data + i))->xblock;
-    long yblock = ((data + i))->yblock;
-    long zblock = ((data + i))->zblock;
-    long numvec = ((data + i))->numvec;
-    int num_ele = ((data + i))->num_ele;
+    long xlen = (data + i)->xlen;
+    long ylen = (data + i)->ylen;
+    long zlen = (data + i)->zlen;
+    long xblock = (data + i)->xblock;
+    long yblock = (data + i)->yblock;
+    long zblock = (data + i)->zblock;
+    long numvec = (data + i)->numvec;
+    int num_ele = (data + i)->num_ele;
 
     (all_sync_len[i] =
          (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
@@ -666,7 +666,7 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
   for (i = 0; i < num_data; i++) {
     sympic_set_device(data[i].cuda_device);
 
-    void **swap_layer_pscmc = ((data + i))->swap_layer_pscmc;
+    void **swap_layer_pscmc = (data + i)->swap_layer_pscmc;
 
     Field3D_Seq_ovlp_sync_ovlp_o2m_all_in_one((data + i), 0);
   }
@@ -686,7 +686,7 @@ int sync_main_data_d2h(Field3D_MPI *pthis) {
 
     // defined from class Field3D_Seq
 
-    void *main_data = ((data + i))->main_data;
+    void *main_data = (data + i)->main_data;
 
     //====================Field3D_Seq
 #ifdef SYMPIC_CUDA
@@ -711,7 +711,7 @@ int sync_main_data_h2d(Field3D_MPI *pthis) {
 
     // defined from class Field3D_Seq
 
-    void *main_data = ((data + i))->main_data;
+    void *main_data = (data + i)->main_data;
 
     //====================Field3D_Seq
 #ifdef SYMPIC_CUDA

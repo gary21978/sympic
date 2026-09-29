@@ -103,7 +103,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   grid_base_offset = __idy * (numgrid * (grid_cache_len * 6));
   __shared__ barrier_t cuload_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(cuload_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -112,7 +112,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   }
   __shared__ barrier_t get_sync_block_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(get_sync_block_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -146,20 +146,17 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
       if (load0) {
         {
           __mem1__ int Midx;
-          Midx =
-              (use_local_particle_position)
-                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]); }))
-                  : (({ mdx; }));
+          Midx = (use_local_particle_position)
+                     ? ({ floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[0]); })
+                     : ({ mdx; });
           __mem1__ int Midy;
-          Midy =
-              (use_local_particle_position)
-                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]); }))
-                  : (({ mdy; }));
+          Midy = (use_local_particle_position)
+                     ? ({ floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[1]); })
+                     : ({ mdy; });
           __mem1__ int Midz;
-          Midz =
-              (use_local_particle_position)
-                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]); }))
-                  : (({ mdz; }));
+          Midz = (use_local_particle_position)
+                     ? ({ floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[2]); })
+                     : ({ mdz; });
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
@@ -183,20 +180,19 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
               avvvec[g + (3 * __idx)] = 0;
             }
           }
-          numcpvec[1 * __idx] = 0;
+          numcpvec[__idx] = 0;
           for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
             __mem0__ double a_rva[64 * 6];
             __mem1__ int __idx_all_base;
             __idx_all_base = (__idx * 64) + lg;
             __mem1__ int numcp;
-            numcp = (((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
-                                                       : (({ 64; }));
+            numcp = ((__idx_all_base + 64) >= load0) ? ({ (load0 - __idx_all_base); }) : ({ 64; });
 
-            if ((numcp * 6)) {
+            if (numcp * 6) {
               {
                 const size_t data_size =
-                    sizeof((((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
-                             (__idx_all_base * 6)))[0]);
+                    sizeof(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
+                            (__idx_all_base * 6))[0]);
                 memcpy_async(
                     __pscmc_mapu_internal_block__, ((unsigned *)(a_rva + (0 * 6))),
                     ((__DDR unsigned *)((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
@@ -223,17 +219,17 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
               __mem1__ MAPU_LONG g;
               for (g = 0; g < numcp; g++) {
                 __mem1__ double vx;
-                vx = ((a_rva + (g * 6)))[3];
+                vx = (a_rva + (g * 6))[3];
                 __mem1__ double vy;
-                vy = ((a_rva + (g * 6)))[4];
+                vy = (a_rva + (g * 6))[4];
                 __mem1__ double vz;
-                vz = ((a_rva + (g * 6)))[5];
+                vz = (a_rva + (g * 6))[5];
                 __mem1__ double curene_x;
-                curene_x = Mass * (0.5 * +((vx * vx)));
+                curene_x = Mass * (0.5 * +(vx * vx));
                 __mem1__ double curene_y;
-                curene_y = Mass * (0.5 * +((vy * vy)));
+                curene_y = Mass * (0.5 * +(vy * vy));
                 __mem1__ double curene_z;
-                curene_z = Mass * (0.5 * +((vz * vz)));
+                curene_z = Mass * (0.5 * +(vz * vz));
                 ene0_x = ene0_x + curene_x;
                 ene0_y = ene0_y + curene_y;
                 ene0_z = ene0_z + curene_z;
@@ -250,7 +246,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             avvvec[(3 * __idx) + 2] = avvvec[(3 * __idx) + 2] + aver_vz;
             numcpvec[__idx] = numcpvec[__idx] + numcp;
           }
-          if ((__idx == 0)) {
+          if (__idx == 0) {
             {
               {
                 __mem1__ MAPU_LONG g;
@@ -264,55 +260,55 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                   allnumcp = allnumcp + numcpvec[g];
                 }
               }
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[0] += (allene0_x));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[1] += (allene0_y));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[2] += (allene0_z));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[3] += (allavv_x));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[4] += (allavv_y));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[5] += (allavv_z));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[6] += (allnumcp));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[0] += (allene0_x));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[1] += (allene0_y));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[2] += (allene0_z));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[3] += (allavv_x));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[4] += (allavv_y));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[5] += (allavv_z));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[6] += (allnumcp));
             }
           }
         }
@@ -340,20 +336,20 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
       if (load0) {
         {
           __mem1__ int Midx;
-          Midx = (use_local_particle_position) ? (({
-            floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[0]);
-          }))
-                                               : (({ mdx; }));
+          Midx = (use_local_particle_position) ? ({
+            floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[0]);
+          })
+                                               : ({ mdx; });
           __mem1__ int Midy;
-          Midy = (use_local_particle_position) ? (({
-            floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[1]);
-          }))
-                                               : (({ mdy; }));
+          Midy = (use_local_particle_position) ? ({
+            floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[1]);
+          })
+                                               : ({ mdy; });
           __mem1__ int Midz;
-          Midz = (use_local_particle_position) ? (({
-            floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[2]);
-          }))
-                                               : (({ mdz; }));
+          Midz = (use_local_particle_position) ? ({
+            floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[2]);
+          })
+                                               : ({ mdz; });
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
@@ -377,20 +373,19 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
               avvvec[g + (3 * __idx)] = 0;
             }
           }
-          numcpvec[1 * __idx] = 0;
+          numcpvec[__idx] = 0;
           for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
             __mem0__ double a_rva[64 * 6];
             __mem1__ int __idx_all_base;
             __idx_all_base = (__idx * 64) + lg;
             __mem1__ int numcp;
-            numcp = (((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
-                                                       : (({ 64; }));
+            numcp = ((__idx_all_base + 64) >= load0) ? ({ (load0 - __idx_all_base); }) : ({ 64; });
 
-            if ((numcp * 6)) {
+            if (numcp * 6) {
               {
                 const size_t data_size =
-                    sizeof((((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))) +
-                             (__idx_all_base * 6)))[0]);
+                    sizeof(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))) +
+                            (__idx_all_base * 6))[0]);
                 memcpy_async(__pscmc_mapu_internal_block__, ((unsigned *)(a_rva + (0 * 6))),
                              ((__DDR unsigned *)((inoutput + (grid_base_offset +
                                                               (6 * (allgid * grid_cache_len)))) +
@@ -418,17 +413,17 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
               __mem1__ MAPU_LONG g;
               for (g = 0; g < numcp; g++) {
                 __mem1__ double vx;
-                vx = ((a_rva + (g * 6)))[3];
+                vx = (a_rva + (g * 6))[3];
                 __mem1__ double vy;
-                vy = ((a_rva + (g * 6)))[4];
+                vy = (a_rva + (g * 6))[4];
                 __mem1__ double vz;
-                vz = ((a_rva + (g * 6)))[5];
+                vz = (a_rva + (g * 6))[5];
                 __mem1__ double curene_x;
-                curene_x = Mass * (0.5 * +((vx * vx)));
+                curene_x = Mass * (0.5 * +(vx * vx));
                 __mem1__ double curene_y;
-                curene_y = Mass * (0.5 * +((vy * vy)));
+                curene_y = Mass * (0.5 * +(vy * vy));
                 __mem1__ double curene_z;
-                curene_z = Mass * (0.5 * +((vz * vz)));
+                curene_z = Mass * (0.5 * +(vz * vz));
                 ene0_x = ene0_x + curene_x;
                 ene0_y = ene0_y + curene_y;
                 ene0_z = ene0_z + curene_z;
@@ -445,7 +440,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
             avvvec[(3 * __idx) + 2] = avvvec[(3 * __idx) + 2] + aver_vz;
             numcpvec[__idx] = numcpvec[__idx] + numcp;
           }
-          if ((__idx == 0)) {
+          if (__idx == 0) {
             {
               {
                 __mem1__ MAPU_LONG g;
@@ -459,61 +454,61 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                   allnumcp = allnumcp + numcpvec[g];
                 }
               }
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[0] += (allene0_x));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[1] += (allene0_y));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[2] += (allene0_z));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[3] += (allavv_x));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[4] += (allavv_y));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[5] += (allavv_z));
-              (((FoutEN +
-                 ((((NUM_SPEC * 7) *
-                    (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-                   (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                                            ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
-                                                                              (Midz + ovlp)))))))) +
-                  (SPEC * 7))))[6] += (allnumcp));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[0] += (allene0_x));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[1] += (allene0_y));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[2] += (allene0_z));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[3] += (allavv_x));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[4] += (allavv_y));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[5] += (allavv_z));
+              ((FoutEN +
+                ((((NUM_SPEC * 7) *
+                   (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+                  (0 + ((NUM_SPEC * 7) * ((Midx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                                           ((Midy + ovlp) + ((YLEN + (2 * ovlp)) *
+                                                                             (Midz + ovlp)))))))) +
+                 (SPEC * 7)))[6] += (allnumcp));
             }
           }
         }
       }
 
-      if ((load0 != new_load)) {
+      if (load0 != new_load) {
         {
           xyzw[4 * ((__idy * numgrid) + allgid)] = new_load;
         }
@@ -530,13 +525,13 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
 
 #ifdef __PSCMC_TIMER_PROF
 
-  if ((__global_idx == 0)) {
+  if (__global_idx == 0) {
     {
       printf("default %f\n", ((__pscmc_clock_default * 1.0) / 1));
     }
   }
 
-  if ((__global_idx == 0)) {
+  if (__global_idx == 0) {
     {
       printf("pushJ_shJ %f\n", ((__pscmc_clock_pushJ_shJ * 1.0) / __pscmc_clock_default));
     }

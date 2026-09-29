@@ -21,11 +21,11 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
                            long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->inoutput)->len > 0)) {
+        if ((kerstr->inoutput)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
           }
@@ -38,7 +38,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->inoutput)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -51,7 +51,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->xyzw)->len > 0)) {
+        if ((kerstr->xyzw)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
           }
@@ -64,7 +64,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xyzw)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -76,7 +76,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_cache)->len > 0)) {
+        if ((kerstr->cu_cache)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
           }
@@ -89,7 +89,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_cache)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -102,7 +102,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_xyzw)->len > 0)) {
+        if ((kerstr->cu_xyzw)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
           }
@@ -115,7 +115,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_xyzw)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -128,7 +128,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->fieldE)->len > 0)) {
+        if ((kerstr->fieldE)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
           }
@@ -141,7 +141,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->fieldE)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -154,7 +154,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->fieldB)->len > 0)) {
+        if ((kerstr->fieldB)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
           }
@@ -167,7 +167,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->fieldB)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -180,7 +180,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->FoutJ)->len > 0)) {
+        if ((kerstr->FoutJ)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
           }
@@ -193,7 +193,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->FoutJ)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -206,7 +206,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->FoutEN)->len > 0)) {
+        if ((kerstr->FoutEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
           }
@@ -219,7 +219,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->FoutEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -232,7 +232,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->XLEN)->len > 0)) {
+        if ((kerstr->XLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
           }
@@ -245,7 +245,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->XLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -257,7 +257,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->YLEN)->len > 0)) {
+        if ((kerstr->YLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
           }
@@ -270,7 +270,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->YLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -282,7 +282,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->ZLEN)->len > 0)) {
+        if ((kerstr->ZLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
           }
@@ -295,7 +295,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ZLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -307,7 +307,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -320,7 +320,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -332,7 +332,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -345,7 +345,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -358,7 +358,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -371,7 +371,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -384,7 +384,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->grid_cache_len)->len > 0)) {
+        if ((kerstr->grid_cache_len)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
           }
@@ -397,7 +397,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->grid_cache_len)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -410,7 +410,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_cache_length)->len > 0)) {
+        if ((kerstr->cu_cache_length)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
           }
@@ -423,7 +423,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_cache_length)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -436,7 +436,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Mass)->len > 0)) {
+        if ((kerstr->Mass)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Mass);
           }
@@ -449,7 +449,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Mass)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -461,7 +461,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Charge)->len > 0)) {
+        if ((kerstr->Charge)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Charge);
           }
@@ -474,7 +474,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Charge)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -487,7 +487,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->SPEC)->len > 0)) {
+        if ((kerstr->SPEC)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
           }
@@ -500,7 +500,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->SPEC)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -512,7 +512,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->NUM_SPEC)->len > 0)) {
+        if ((kerstr->NUM_SPEC)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
           }
@@ -525,7 +525,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->NUM_SPEC)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -538,7 +538,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_X)->len > 0)) {
+        if ((kerstr->DELTA_X)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
           }
@@ -551,7 +551,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_X)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -564,7 +564,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_Y)->len > 0)) {
+        if ((kerstr->DELTA_Y)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
           }
@@ -577,7 +577,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_Y)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -590,7 +590,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_Z)->len > 0)) {
+        if ((kerstr->DELTA_Z)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
           }
@@ -603,7 +603,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_Z)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -616,7 +616,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Deltat)->len > 0)) {
+        if ((kerstr->Deltat)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
           }
@@ -629,7 +629,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Deltat)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -645,7 +645,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
     { 0; }
   }
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_dump_ene_num<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -688,15 +688,15 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
             mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((double *)kerstr->Mass->h_data))[0], (((double *)kerstr->Charge->h_data))[0],
-          (((int *)kerstr->SPEC->h_data))[0], (((int *)kerstr->NUM_SPEC->h_data))[0],
-          (((double *)kerstr->DELTA_X->h_data))[0], (((double *)kerstr->DELTA_Y->h_data))[0],
-          (((double *)kerstr->DELTA_Z->h_data))[0], (((double *)kerstr->Deltat->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
+          ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
+          ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
+          ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
+          ((double *)kerstr->Deltat->h_data)[0]);
     }
   } else {
     {
@@ -705,7 +705,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -756,23 +756,23 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
             mapsMemobjGetPhysicalAddress(kerstr->FoutEN->d_data, &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((double *)kerstr->Mass->h_data))[0], (((double *)kerstr->Charge->h_data))[0],
-          (((int *)kerstr->SPEC->h_data))[0], (((int *)kerstr->NUM_SPEC->h_data))[0],
-          (((double *)kerstr->DELTA_X->h_data))[0], (((double *)kerstr->DELTA_Y->h_data))[0],
-          (((double *)kerstr->DELTA_Z->h_data))[0], (((double *)kerstr->Deltat->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((double *)kerstr->Mass->h_data)[0],
+          ((double *)kerstr->Charge->h_data)[0], ((int *)kerstr->SPEC->h_data)[0],
+          ((int *)kerstr->NUM_SPEC->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
+          ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_Z->h_data)[0],
+          ((double *)kerstr->Deltat->h_data)[0]);
     }
   }
 
-  if ((dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_mapu_global_dump_kernel_variables) {
     {
       {
 
-        if (((kerstr->inoutput)->len > 0)) {
+        if ((kerstr->inoutput)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->inoutput);
           }
@@ -785,7 +785,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->inoutput)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -798,7 +798,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->xyzw)->len > 0)) {
+        if ((kerstr->xyzw)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->xyzw);
           }
@@ -811,7 +811,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->xyzw)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -823,7 +823,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_cache)->len > 0)) {
+        if ((kerstr->cu_cache)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_cache);
           }
@@ -836,7 +836,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_cache)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -849,7 +849,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_xyzw)->len > 0)) {
+        if ((kerstr->cu_xyzw)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_xyzw);
           }
@@ -862,7 +862,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_xyzw)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -875,7 +875,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->fieldE)->len > 0)) {
+        if ((kerstr->fieldE)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->fieldE);
           }
@@ -888,7 +888,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->fieldE)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -901,7 +901,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->fieldB)->len > 0)) {
+        if ((kerstr->fieldB)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->fieldB);
           }
@@ -914,7 +914,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->fieldB)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -927,7 +927,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->FoutJ)->len > 0)) {
+        if ((kerstr->FoutJ)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->FoutJ);
           }
@@ -940,7 +940,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->FoutJ)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -953,7 +953,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->FoutEN)->len > 0)) {
+        if ((kerstr->FoutEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->FoutEN);
           }
@@ -966,7 +966,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->FoutEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -979,7 +979,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->XLEN)->len > 0)) {
+        if ((kerstr->XLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->XLEN);
           }
@@ -992,7 +992,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->XLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1004,7 +1004,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->YLEN)->len > 0)) {
+        if ((kerstr->YLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->YLEN);
           }
@@ -1017,7 +1017,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->YLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1029,7 +1029,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->ZLEN)->len > 0)) {
+        if ((kerstr->ZLEN)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ZLEN);
           }
@@ -1042,7 +1042,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ZLEN)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1054,7 +1054,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->ovlp)->len > 0)) {
+        if ((kerstr->ovlp)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->ovlp);
           }
@@ -1067,7 +1067,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->ovlp)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1079,7 +1079,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->numvec)->len > 0)) {
+        if ((kerstr->numvec)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->numvec);
           }
@@ -1092,7 +1092,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->numvec)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1105,7 +1105,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->num_ele)->len > 0)) {
+        if ((kerstr->num_ele)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->num_ele);
           }
@@ -1118,7 +1118,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->num_ele)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1131,7 +1131,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->grid_cache_len)->len > 0)) {
+        if ((kerstr->grid_cache_len)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->grid_cache_len);
           }
@@ -1144,7 +1144,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->grid_cache_len)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1157,7 +1157,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->cu_cache_length)->len > 0)) {
+        if ((kerstr->cu_cache_length)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->cu_cache_length);
           }
@@ -1170,7 +1170,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->cu_cache_length)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1183,7 +1183,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Mass)->len > 0)) {
+        if ((kerstr->Mass)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Mass);
           }
@@ -1196,7 +1196,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Mass)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1208,7 +1208,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Charge)->len > 0)) {
+        if ((kerstr->Charge)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Charge);
           }
@@ -1221,7 +1221,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Charge)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1234,7 +1234,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->SPEC)->len > 0)) {
+        if ((kerstr->SPEC)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->SPEC);
           }
@@ -1247,7 +1247,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->SPEC)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1259,7 +1259,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->NUM_SPEC)->len > 0)) {
+        if ((kerstr->NUM_SPEC)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->NUM_SPEC);
           }
@@ -1272,7 +1272,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->NUM_SPEC)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1285,7 +1285,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_X)->len > 0)) {
+        if ((kerstr->DELTA_X)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_X);
           }
@@ -1298,7 +1298,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_X)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1311,7 +1311,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_Y)->len > 0)) {
+        if ((kerstr->DELTA_Y)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Y);
           }
@@ -1324,7 +1324,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_Y)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1337,7 +1337,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->DELTA_Z)->len > 0)) {
+        if ((kerstr->DELTA_Z)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->DELTA_Z);
           }
@@ -1350,7 +1350,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->DELTA_Z)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1363,7 +1363,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       }
       {
 
-        if (((kerstr->Deltat)->len > 0)) {
+        if ((kerstr->Deltat)->len > 0) {
           {
             mapu_pscmc_mem_sync_d2h(kerstr->Deltat);
           }
@@ -1376,7 +1376,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = (kerstr->Deltat)->len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }

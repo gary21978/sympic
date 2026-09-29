@@ -72,15 +72,15 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
         double ZO = (zoffset)[i_idy];
 
         double Midx = ((use_local_particle_position)
-                           ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]))
+                           ? (floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[0]))
                            : (mdx));
 
         double Midy = ((use_local_particle_position)
-                           ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]))
+                           ? (floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[1]))
                            : (mdy));
 
         double Midz = ((use_local_particle_position)
-                           ? (floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]))
+                           ? (floor((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6)))[2]))
                            : (mdz));
 
         if (Midx < 0) {
@@ -174,17 +174,17 @@ __global__ void cuda_geo_nr_Bfield_pushJ_vlo(
 
         double Midx =
             (use_local_particle_position)
-                ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[0]))
+                ? (floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[0]))
                 : (mdx);
 
         double Midy =
             (use_local_particle_position)
-                ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[1]))
+                ? (floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[1]))
                 : (mdy);
 
         double Midz =
             (use_local_particle_position)
-                ? (floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[2]))
+                ? (floor((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len))))[2]))
                 : (mdz);
 
         if (Midx < 0) {

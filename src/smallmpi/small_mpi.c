@@ -50,7 +50,7 @@ int PS_MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag
                 MPI_Status *status) {
   PS_MPI_Status s0;
 
-  if ((!status)) {
+  if (!status) {
     status = &(s0);
 
   } else {
@@ -68,7 +68,7 @@ int PS_MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype, int des
                     MPI_Comm comm, MPI_Status *status) {
   PS_MPI_Status s0;
 
-  if ((!status)) {
+  if (!status) {
     status = &(s0);
 
   } else {
@@ -81,7 +81,7 @@ int PS_MPI_Sendrecv(void *sendbuf, int sendcount, MPI_Datatype sendtype, int des
 int PS_MPI_Wait(MPI_Request *request, MPI_Status *status) {
   PS_MPI_Status s0;
 
-  if ((!status)) {
+  if (!status) {
     status = &(s0);
 
   } else {

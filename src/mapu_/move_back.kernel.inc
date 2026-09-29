@@ -59,7 +59,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   xyzalllen = XLEN * (YLEN * ZLEN);
   __shared__ barrier_t get_sync_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -68,7 +68,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   }
   __shared__ barrier_t put_sync_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -86,64 +86,64 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   cur_cu_load = 0;
   for (i = 0; i < cu_load; i += 64) {
     __mem1__ MAPU_LONG numcp;
-    numcp = (((i + 64) > cu_load)) ? (({ (cu_load - i); })) : (({ 64; }));
+    numcp = ((i + 64) > cu_load) ? ({ (cu_load - i); }) : ({ 64; });
 
-    if (((numcp * 6) * 1)) {
+    if (numcp * 6) {
       {
-        const size_t data_size = sizeof(((cu_cache + (((cu_cache_length * __idy) + i) * 6)))[0]);
+        const size_t data_size = sizeof((cu_cache + (((cu_cache_length * __idy) + i) * 6))[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)(local_temp_particle_cache + (0 * 6))),
                      ((__DDR unsigned *)(cu_cache + (((cu_cache_length * __idy) + i) * 6))),
-                     ((uint64_t)(1 * ((numcp * 6) * data_size))), __pscmc_mapu_internal_barrier__);
+                     ((uint64_t)((numcp * 6) * data_size)), __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
     } else {
       { 0; }
     }
 
-    if ((__idx == 0)) {
+    if (__idx == 0) {
       {
         for (j = 0; j < numcp; j++) {
           __mem1__ MAPU_LONG allid;
           allid = i + j;
           __mem1__ MAPU_LONG xyzx;
-          xyzx = floor(((local_temp_particle_cache + (j * 6)))[0]);
+          xyzx = floor((local_temp_particle_cache + (j * 6))[0]);
           __mem1__ MAPU_LONG xyzy;
-          xyzy = floor(((local_temp_particle_cache + (j * 6)))[1]);
+          xyzy = floor((local_temp_particle_cache + (j * 6))[1]);
           __mem1__ MAPU_LONG xyzz;
-          xyzz = floor(((local_temp_particle_cache + (j * 6)))[2]);
+          xyzz = floor((local_temp_particle_cache + (j * 6))[2]);
           __mem1__ double dxyzx;
-          dxyzx = ((local_temp_particle_cache + (j * 6)))[0];
+          dxyzx = (local_temp_particle_cache + (j * 6))[0];
           __mem1__ double dxyzy;
-          dxyzy = ((local_temp_particle_cache + (j * 6)))[1];
+          dxyzy = (local_temp_particle_cache + (j * 6))[1];
           __mem1__ double dxyzz;
-          dxyzz = ((local_temp_particle_cache + (j * 6)))[2];
+          dxyzz = (local_temp_particle_cache + (j * 6))[2];
           __mem1__ int wrted_grid;
           wrted_grid = 0;
 
-          if ((mapu_is_in(xyzx, 0, XLEN) &&
-               (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN)))) {
+          if (mapu_is_in(xyzx, 0, XLEN) &&
+              (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN))) {
             {
               __mem1__ MAPU_LONG allid_grid;
-              allid_grid = (0 + (1 * (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))))) + cu_offset;
+              allid_grid = (0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset;
               __mem1__ int gridload;
               gridload = xyzw[4 * allid_grid];
 
-              if ((gridload < grid_cache_len)) {
+              if (gridload < grid_cache_len) {
                 {
                   __mem1__ MAPU_LONG grid_load_end;
                   grid_load_end = gridload + 1;
                   xyzw[4 * allid_grid] = grid_load_end;
 
-                  if ((6 * 1)) {
+                  if (6) {
                     {
-                      const size_t data_size = sizeof(((local_temp_particle_cache + (j * 6)))[0]);
+                      const size_t data_size = sizeof((local_temp_particle_cache + (j * 6))[0]);
                       memcpy_async(
                           __pscmc_mapu_internal_block__,
                           ((__DDR unsigned *)(inoutput +
                                               (6 * ((allid_grid * grid_cache_len) + gridload)))),
                           ((unsigned *)(local_temp_particle_cache + (j * 6))),
-                          ((uint64_t)(1 * (6 * data_size))), put_sync_id);
+                          ((uint64_t)(6 * data_size)), put_sync_id);
                     }
                   } else {
                     { 0; }
@@ -158,17 +158,17 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
             { 0; }
           }
 
-          if ((!wrted_grid)) {
+          if (!wrted_grid) {
             {
 
-              if ((6 * 1)) {
+              if (6) {
                 {
-                  const size_t data_size = sizeof(((local_temp_particle_cache + (j * 6)))[0]);
+                  const size_t data_size = sizeof((local_temp_particle_cache + (j * 6))[0]);
                   memcpy_async(__pscmc_mapu_internal_block__,
                                ((__DDR unsigned *)(cu_cache + (6 * ((__idy * cu_cache_length) +
                                                                     cur_cu_load)))),
                                ((unsigned *)(local_temp_particle_cache + (j * 6))),
-                               ((uint64_t)(1 * (6 * data_size))), put_sync_id);
+                               ((uint64_t)(6 * data_size)), put_sync_id);
                 }
               } else {
                 { 0; }
@@ -185,7 +185,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
     }
     put_sync_id.arrive_and_wait();
   }
-  if ((__idx == 0)) {
+  if (__idx == 0) {
     {
       cu_xyzw[__idy * 4] = cur_cu_load;
     }
@@ -217,7 +217,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   xyzalllen = XLEN * (YLEN * ZLEN);
   __shared__ barrier_t get_sync_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -226,7 +226,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   }
   __shared__ barrier_t put_sync_id;
 
-  if ((threadIdx.x == 0)) {
+  if (threadIdx.x == 0) {
     {
       init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
     }
@@ -244,64 +244,64 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   cur_cu_load = 0;
   for (i = 0; i < cu_load; i += 64) {
     __mem1__ MAPU_LONG numcp;
-    numcp = (((i + 64) > cu_load)) ? (({ (cu_load - i); })) : (({ 64; }));
+    numcp = ((i + 64) > cu_load) ? ({ (cu_load - i); }) : ({ 64; });
 
-    if (((numcp * 8) * 1)) {
+    if (numcp * 8) {
       {
-        const size_t data_size = sizeof(((cu_cache + (((cu_cache_length * __idy) + i) * 8)))[0]);
+        const size_t data_size = sizeof((cu_cache + (((cu_cache_length * __idy) + i) * 8))[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)(local_temp_particle_cache + (0 * 8))),
                      ((__DDR unsigned *)(cu_cache + (((cu_cache_length * __idy) + i) * 8))),
-                     ((uint64_t)(1 * ((numcp * 8) * data_size))), __pscmc_mapu_internal_barrier__);
+                     ((uint64_t)((numcp * 8) * data_size)), __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
     } else {
       { 0; }
     }
 
-    if ((__idx == 0)) {
+    if (__idx == 0) {
       {
         for (j = 0; j < numcp; j++) {
           __mem1__ MAPU_LONG allid;
           allid = i + j;
           __mem1__ MAPU_LONG xyzx;
-          xyzx = floor(((local_temp_particle_cache + (j * 8)))[0]);
+          xyzx = floor((local_temp_particle_cache + (j * 8))[0]);
           __mem1__ MAPU_LONG xyzy;
-          xyzy = floor(((local_temp_particle_cache + (j * 8)))[1]);
+          xyzy = floor((local_temp_particle_cache + (j * 8))[1]);
           __mem1__ MAPU_LONG xyzz;
-          xyzz = floor(((local_temp_particle_cache + (j * 8)))[2]);
+          xyzz = floor((local_temp_particle_cache + (j * 8))[2]);
           __mem1__ double dxyzx;
-          dxyzx = ((local_temp_particle_cache + (j * 8)))[0];
+          dxyzx = (local_temp_particle_cache + (j * 8))[0];
           __mem1__ double dxyzy;
-          dxyzy = ((local_temp_particle_cache + (j * 8)))[1];
+          dxyzy = (local_temp_particle_cache + (j * 8))[1];
           __mem1__ double dxyzz;
-          dxyzz = ((local_temp_particle_cache + (j * 8)))[2];
+          dxyzz = (local_temp_particle_cache + (j * 8))[2];
           __mem1__ int wrted_grid;
           wrted_grid = 0;
 
-          if ((mapu_is_in(xyzx, 0, XLEN) &&
-               (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN)))) {
+          if (mapu_is_in(xyzx, 0, XLEN) &&
+              (mapu_is_in(xyzy, 0, YLEN) && mapu_is_in(xyzz, 0, ZLEN))) {
             {
               __mem1__ MAPU_LONG allid_grid;
-              allid_grid = (0 + (1 * (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))))) + cu_offset;
+              allid_grid = (0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset;
               __mem1__ int gridload;
               gridload = xyzw[4 * allid_grid];
 
-              if ((gridload < grid_cache_len)) {
+              if (gridload < grid_cache_len) {
                 {
                   __mem1__ MAPU_LONG grid_load_end;
                   grid_load_end = gridload + 1;
                   xyzw[4 * allid_grid] = grid_load_end;
 
-                  if ((8 * 1)) {
+                  if (8) {
                     {
-                      const size_t data_size = sizeof(((local_temp_particle_cache + (j * 8)))[0]);
+                      const size_t data_size = sizeof((local_temp_particle_cache + (j * 8))[0]);
                       memcpy_async(
                           __pscmc_mapu_internal_block__,
                           ((__DDR unsigned *)(inoutput +
                                               (8 * ((allid_grid * grid_cache_len) + gridload)))),
                           ((unsigned *)(local_temp_particle_cache + (j * 8))),
-                          ((uint64_t)(1 * (8 * data_size))), put_sync_id);
+                          ((uint64_t)(8 * data_size)), put_sync_id);
                     }
                   } else {
                     { 0; }
@@ -316,17 +316,17 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
             { 0; }
           }
 
-          if ((!wrted_grid)) {
+          if (!wrted_grid) {
             {
 
-              if ((8 * 1)) {
+              if (8) {
                 {
-                  const size_t data_size = sizeof(((local_temp_particle_cache + (j * 8)))[0]);
+                  const size_t data_size = sizeof((local_temp_particle_cache + (j * 8))[0]);
                   memcpy_async(__pscmc_mapu_internal_block__,
                                ((__DDR unsigned *)(cu_cache + (8 * ((__idy * cu_cache_length) +
                                                                     cur_cu_load)))),
                                ((unsigned *)(local_temp_particle_cache + (j * 8))),
-                               ((uint64_t)(1 * (8 * data_size))), put_sync_id);
+                               ((uint64_t)(8 * data_size)), put_sync_id);
                 }
               } else {
                 { 0; }
@@ -343,7 +343,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
     }
     put_sync_id.arrive_and_wait();
   }
-  if ((__idx == 0)) {
+  if (__idx == 0) {
     {
       cu_xyzw[__idy * 4] = cur_cu_load;
     }

@@ -16,7 +16,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
                                long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -25,7 +25,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -42,7 +42,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp0_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -59,7 +59,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp1_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -76,7 +76,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp2_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -93,7 +93,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp3_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -110,7 +110,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp4_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -127,7 +127,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp5_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -144,7 +144,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp6_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -161,7 +161,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp7_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -178,7 +178,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp8_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -195,7 +195,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp9_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -212,7 +212,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp10_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -229,7 +229,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp11_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -246,7 +246,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp12_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -263,7 +263,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp14_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -280,7 +280,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp15_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -297,7 +297,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp16_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -314,7 +314,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp17_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -331,7 +331,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp18_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -348,7 +348,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp19_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -365,7 +365,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp20_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -382,7 +382,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp21_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -399,7 +399,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp22_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -416,7 +416,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp23_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -433,7 +433,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp24_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -450,7 +450,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp25_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -467,7 +467,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp26_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -484,7 +484,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -501,7 +501,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -518,7 +518,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -535,7 +535,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -552,7 +552,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -569,7 +569,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -601,7 +601,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
           (kerstr->yblock)[0], (kerstr->zblock)[0], (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -610,7 +610,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -627,7 +627,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp0_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -644,7 +644,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp1_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -661,7 +661,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp2_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -678,7 +678,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp3_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -695,7 +695,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp4_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -712,7 +712,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp5_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -729,7 +729,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp6_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -746,7 +746,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp7_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -763,7 +763,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp8_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -780,7 +780,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp9_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -797,7 +797,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp10_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -814,7 +814,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp11_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -831,7 +831,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp12_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -848,7 +848,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp14_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -865,7 +865,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp15_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -882,7 +882,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp16_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -899,7 +899,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp17_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -916,7 +916,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp18_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -933,7 +933,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp19_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -950,7 +950,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp20_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -967,7 +967,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp21_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -984,7 +984,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp22_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1001,7 +1001,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp23_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1018,7 +1018,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp24_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1035,7 +1035,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp25_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1052,7 +1052,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp26_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1069,7 +1069,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1086,7 +1086,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1103,7 +1103,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1120,7 +1120,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1137,7 +1137,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1154,7 +1154,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1350,7 +1350,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
                                      long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -1359,7 +1359,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1376,7 +1376,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlps_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1393,7 +1393,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1410,7 +1410,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1427,7 +1427,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1444,7 +1444,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1461,7 +1461,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1478,7 +1478,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1505,7 +1505,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
           scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -1514,7 +1514,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1531,7 +1531,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlps_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1548,7 +1548,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1565,7 +1565,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1582,7 +1582,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1599,7 +1599,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1616,7 +1616,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1633,7 +1633,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1698,7 +1698,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -1707,7 +1707,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1724,7 +1724,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1741,7 +1741,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlpindex_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1758,7 +1758,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1775,7 +1775,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1792,7 +1792,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1809,7 +1809,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1826,7 +1826,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1843,7 +1843,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -1870,7 +1870,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
                                    scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -1879,7 +1879,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1896,7 +1896,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1913,7 +1913,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlpindex_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1930,7 +1930,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1947,7 +1947,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1964,7 +1964,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1981,7 +1981,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -1998,7 +1998,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2015,7 +2015,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2079,7 +2079,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
                                long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -2088,7 +2088,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2105,7 +2105,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp0_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2122,7 +2122,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp1_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2139,7 +2139,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp2_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2156,7 +2156,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp3_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2173,7 +2173,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp4_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2190,7 +2190,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp5_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2207,7 +2207,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp6_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2224,7 +2224,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp7_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2241,7 +2241,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp8_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2258,7 +2258,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp9_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2275,7 +2275,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp10_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2292,7 +2292,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp11_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2309,7 +2309,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp12_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2326,7 +2326,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp14_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2343,7 +2343,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp15_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2360,7 +2360,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp16_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2377,7 +2377,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp17_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2394,7 +2394,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp18_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2411,7 +2411,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp19_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2428,7 +2428,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp20_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2445,7 +2445,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp21_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2462,7 +2462,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp22_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2479,7 +2479,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp23_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2496,7 +2496,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp24_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2513,7 +2513,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp25_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2530,7 +2530,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp26_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2547,7 +2547,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2564,7 +2564,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2581,7 +2581,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2598,7 +2598,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2615,7 +2615,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2632,7 +2632,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -2664,7 +2664,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
           (kerstr->yblock)[0], (kerstr->zblock)[0], (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -2673,7 +2673,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2690,7 +2690,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp0_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2707,7 +2707,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp1_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2724,7 +2724,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp2_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2741,7 +2741,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp3_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2758,7 +2758,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp4_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2775,7 +2775,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp5_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2792,7 +2792,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp6_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2809,7 +2809,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp7_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2826,7 +2826,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp8_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2843,7 +2843,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp9_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2860,7 +2860,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp10_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2877,7 +2877,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp11_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2894,7 +2894,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp12_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2911,7 +2911,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp14_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2928,7 +2928,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp15_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2945,7 +2945,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp16_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2962,7 +2962,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp17_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2979,7 +2979,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp18_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -2996,7 +2996,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp19_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3013,7 +3013,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp20_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3030,7 +3030,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp21_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3047,7 +3047,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp22_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3064,7 +3064,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp23_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3081,7 +3081,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp24_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3098,7 +3098,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp25_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3115,7 +3115,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp26_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3132,7 +3132,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3149,7 +3149,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3166,7 +3166,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3183,7 +3183,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3200,7 +3200,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3217,7 +3217,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3413,7 +3413,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
                                      long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -3422,7 +3422,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3439,7 +3439,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlps_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3456,7 +3456,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3473,7 +3473,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3490,7 +3490,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3507,7 +3507,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3524,7 +3524,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3541,7 +3541,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3568,7 +3568,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
           scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -3577,7 +3577,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3594,7 +3594,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlps_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3611,7 +3611,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3628,7 +3628,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3645,7 +3645,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3662,7 +3662,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3679,7 +3679,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3696,7 +3696,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3761,7 +3761,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -3770,7 +3770,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3787,7 +3787,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3804,7 +3804,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlpindex_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3821,7 +3821,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3838,7 +3838,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3855,7 +3855,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3872,7 +3872,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3889,7 +3889,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3906,7 +3906,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -3933,7 +3933,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
                                    scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -3942,7 +3942,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3959,7 +3959,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3976,7 +3976,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlpindex_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -3993,7 +3993,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4010,7 +4010,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4027,7 +4027,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4044,7 +4044,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4061,7 +4061,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4078,7 +4078,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4142,7 +4142,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
                               long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -4151,7 +4151,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4168,7 +4168,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp0_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4185,7 +4185,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp1_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4202,7 +4202,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp2_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4219,7 +4219,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp3_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4236,7 +4236,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp4_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4253,7 +4253,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp5_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4270,7 +4270,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp6_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4287,7 +4287,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp7_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4304,7 +4304,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp8_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4321,7 +4321,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp9_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4338,7 +4338,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp10_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4355,7 +4355,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp11_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4372,7 +4372,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp12_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4389,7 +4389,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp14_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4406,7 +4406,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp15_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4423,7 +4423,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp16_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4440,7 +4440,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp17_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4457,7 +4457,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp18_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4474,7 +4474,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp19_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4491,7 +4491,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp20_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4508,7 +4508,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp21_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4525,7 +4525,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp22_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4542,7 +4542,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp23_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4559,7 +4559,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp24_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4576,7 +4576,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp25_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4593,7 +4593,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp26_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4610,7 +4610,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4627,7 +4627,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4644,7 +4644,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4661,7 +4661,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4678,7 +4678,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4695,7 +4695,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -4727,7 +4727,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
           (kerstr->yblock)[0], (kerstr->zblock)[0], (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -4736,7 +4736,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4753,7 +4753,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp0_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4770,7 +4770,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp1_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4787,7 +4787,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp2_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4804,7 +4804,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp3_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4821,7 +4821,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp4_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4838,7 +4838,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp5_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4855,7 +4855,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp6_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4872,7 +4872,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp7_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4889,7 +4889,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp8_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4906,7 +4906,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp9_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4923,7 +4923,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp10_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4940,7 +4940,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp11_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4957,7 +4957,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp12_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4974,7 +4974,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp14_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -4991,7 +4991,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp15_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5008,7 +5008,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp16_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5025,7 +5025,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp17_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5042,7 +5042,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp18_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5059,7 +5059,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp19_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5076,7 +5076,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp20_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5093,7 +5093,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp21_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5110,7 +5110,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp22_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5127,7 +5127,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp23_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5144,7 +5144,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp24_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5161,7 +5161,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp25_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5178,7 +5178,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp26_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5195,7 +5195,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5212,7 +5212,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5229,7 +5229,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5246,7 +5246,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5263,7 +5263,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5280,7 +5280,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5476,7 +5476,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -5485,7 +5485,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5502,7 +5502,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlps_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5519,7 +5519,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5536,7 +5536,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5553,7 +5553,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5570,7 +5570,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5587,7 +5587,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5604,7 +5604,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5631,7 +5631,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
                                              (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -5640,7 +5640,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5657,7 +5657,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlps_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5674,7 +5674,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5691,7 +5691,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5708,7 +5708,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5725,7 +5725,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5742,7 +5742,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5759,7 +5759,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -5824,7 +5824,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
                          long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -5833,7 +5833,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5850,7 +5850,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5867,7 +5867,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlpindex_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5884,7 +5884,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5901,7 +5901,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5918,7 +5918,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5935,7 +5935,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5952,7 +5952,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5969,7 +5969,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -5996,7 +5996,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
                                   scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -6005,7 +6005,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6022,7 +6022,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6039,7 +6039,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlpindex_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6056,7 +6056,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6073,7 +6073,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6090,7 +6090,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6107,7 +6107,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6124,7 +6124,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6141,7 +6141,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6204,7 +6204,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
                               long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -6213,7 +6213,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6230,7 +6230,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp0_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6247,7 +6247,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp1_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6264,7 +6264,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp2_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6281,7 +6281,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp3_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6298,7 +6298,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp4_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6315,7 +6315,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp5_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6332,7 +6332,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp6_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6349,7 +6349,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp7_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6366,7 +6366,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp8_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6383,7 +6383,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp9_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6400,7 +6400,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp10_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6417,7 +6417,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp11_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6434,7 +6434,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp12_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6451,7 +6451,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp14_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6468,7 +6468,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp15_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6485,7 +6485,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp16_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6502,7 +6502,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp17_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6519,7 +6519,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp18_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6536,7 +6536,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp19_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6553,7 +6553,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp20_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6570,7 +6570,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp21_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6587,7 +6587,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp22_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6604,7 +6604,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp23_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6621,7 +6621,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp24_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6638,7 +6638,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp25_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6655,7 +6655,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp26_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6672,7 +6672,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6689,7 +6689,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6706,7 +6706,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6723,7 +6723,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6740,7 +6740,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6757,7 +6757,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -6789,7 +6789,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
           (kerstr->yblock)[0], (kerstr->zblock)[0], (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -6798,7 +6798,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6815,7 +6815,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp0_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6832,7 +6832,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp1_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6849,7 +6849,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp2_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6866,7 +6866,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp3_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6883,7 +6883,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp4_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6900,7 +6900,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp5_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6917,7 +6917,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp6_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6934,7 +6934,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp7_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6951,7 +6951,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp8_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6968,7 +6968,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp9_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -6985,7 +6985,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp10_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7002,7 +7002,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp11_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7019,7 +7019,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp12_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7036,7 +7036,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp14_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7053,7 +7053,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp15_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7070,7 +7070,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp16_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7087,7 +7087,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp17_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7104,7 +7104,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp18_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7121,7 +7121,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp19_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7138,7 +7138,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp20_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7155,7 +7155,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp21_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7172,7 +7172,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp22_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7189,7 +7189,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp23_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7206,7 +7206,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp24_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7223,7 +7223,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp25_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7240,7 +7240,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp26_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7257,7 +7257,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7274,7 +7274,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7291,7 +7291,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7308,7 +7308,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7325,7 +7325,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7342,7 +7342,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7538,7 +7538,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -7547,7 +7547,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7564,7 +7564,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlps_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7581,7 +7581,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7598,7 +7598,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7615,7 +7615,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7632,7 +7632,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7649,7 +7649,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7666,7 +7666,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7693,7 +7693,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
                                              (kerstr->ovlp)[0], yid, scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -7702,7 +7702,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7719,7 +7719,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlps_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7736,7 +7736,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7753,7 +7753,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7770,7 +7770,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7787,7 +7787,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7804,7 +7804,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7821,7 +7821,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -7886,7 +7886,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
                          long scmc_internal_g_ylen) {
   {
 
-    if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+    if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
       {
         {
           char fname[256];
@@ -7895,7 +7895,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecmain_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7912,7 +7912,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->vecovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7929,7 +7929,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlpindex_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7946,7 +7946,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->numvec_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7963,7 +7963,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->num_ele_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7980,7 +7980,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->xblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -7997,7 +7997,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->yblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -8014,7 +8014,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->zblock_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -8031,7 +8031,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
           FILE *fp = fopen(fname, "wb");
           size_t write_len = kerstr->ovlp_len;
 
-          if ((write_len <= 0)) {
+          if (write_len <= 0) {
             {
               write_len = 1;
             }
@@ -8058,7 +8058,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
                                   scmc_internal_g_ylen);
     }
   }
-  if ((dump_kernel_variables || _pscmc_c_global_dump_kernel_variables)) {
+  if (dump_kernel_variables || _pscmc_c_global_dump_kernel_variables) {
     {
       {
         char fname[256];
@@ -8067,7 +8067,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecmain_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8084,7 +8084,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->vecovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8101,7 +8101,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlpindex_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8118,7 +8118,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->numvec_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8135,7 +8135,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->num_ele_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8152,7 +8152,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->xblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8169,7 +8169,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->yblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8186,7 +8186,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->zblock_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }
@@ -8203,7 +8203,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
         FILE *fp = fopen(fname, "wb");
         size_t write_len = kerstr->ovlp_len;
 
-        if ((write_len <= 0)) {
+        if (write_len <= 0) {
           {
             write_len = 1;
           }

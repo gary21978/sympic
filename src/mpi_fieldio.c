@@ -22,7 +22,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
   //====================Field3D_MPI
   int64_t pdimarr[4];
   int64_t pblkarr[4];
-  if ((version == 0)) {
+  if (version == 0) {
     {
 
       // defined from class Field3D_Seq
@@ -90,13 +90,13 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
               // defined from class Field3D_Seq
 
-              long numvec = ((data + i))->numvec;
+              long numvec = (data + i)->numvec;
 
               //====================Field3D_Seq
               numvec_total = numvec_total + numvec;
             }
           }
-          int64_t *plocations = malloc((sizeof(int64_t) * numvec_total));
+          int64_t *plocations = malloc(sizeof(int64_t) * numvec_total);
 
           long numvec_offset = 0;
 
@@ -107,23 +107,23 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
               // defined from class Field3D_Seq
 
-              long xlen = ((data + r))->xlen;
+              long xlen = (data + r)->xlen;
 
-              long ylen = ((data + r))->ylen;
+              long ylen = (data + r)->ylen;
 
-              long zlen = ((data + r))->zlen;
+              long zlen = (data + r)->zlen;
 
-              long numvec = ((data + r))->numvec;
+              long numvec = (data + r)->numvec;
 
-              long x_num_thread_block = ((data + r))->x_num_thread_block;
+              long x_num_thread_block = (data + r)->x_num_thread_block;
 
-              long y_num_thread_block = ((data + r))->y_num_thread_block;
+              long y_num_thread_block = (data + r)->y_num_thread_block;
 
-              long *global_x_offset = ((data + r))->global_x_offset;
+              long *global_x_offset = (data + r)->global_x_offset;
 
-              long *global_y_offset = ((data + r))->global_y_offset;
+              long *global_y_offset = (data + r)->global_y_offset;
 
-              long *global_z_offset = ((data + r))->global_z_offset;
+              long *global_z_offset = (data + r)->global_z_offset;
 
               //====================Field3D_Seq
               {
@@ -152,7 +152,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
     }
   }
 
-  if ((version >= 2)) {
+  if (version >= 2) {
     GAPS_IO_InitOFile_with_TimeStepV2(gid, pName, gid->prefix, time_step);
 
   } else {
@@ -177,7 +177,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
   //====================Field3D_MPI
   long i = 0;
 
-  if ((gid->version == 2)) {
+  if (gid->version == 2) {
     GAPS_IO_DataSeek(gid, timestep, 0);
   }
 
@@ -187,57 +187,57 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     // defined from class Field3D_Seq
 
-    long xlen = ((data + i))->xlen;
+    long xlen = (data + i)->xlen;
 
-    long ylen = ((data + i))->ylen;
+    long ylen = (data + i)->ylen;
 
-    long zlen = ((data + i))->zlen;
+    long zlen = (data + i)->zlen;
 
-    long xblock = ((data + i))->xblock;
+    long xblock = (data + i)->xblock;
 
-    long yblock = ((data + i))->yblock;
+    long yblock = (data + i)->yblock;
 
-    long zblock = ((data + i))->zblock;
+    long zblock = (data + i)->zblock;
 
-    long numvec = ((data + i))->numvec;
+    long numvec = (data + i)->numvec;
 
-    long x_num_thread_block = ((data + i))->x_num_thread_block;
+    long x_num_thread_block = (data + i)->x_num_thread_block;
 
-    long y_num_thread_block = ((data + i))->y_num_thread_block;
+    long y_num_thread_block = (data + i)->y_num_thread_block;
 
-    int ovlp = ((data + i))->ovlp;
+    int ovlp = (data + i)->ovlp;
 
-    int num_ele = ((data + i))->num_ele;
+    int num_ele = (data + i)->num_ele;
 
-    long *global_x_offset = ((data + i))->global_x_offset;
+    long *global_x_offset = (data + i)->global_x_offset;
 
-    long *global_y_offset = ((data + i))->global_y_offset;
+    long *global_y_offset = (data + i)->global_y_offset;
 
-    long *global_z_offset = ((data + i))->global_z_offset;
+    long *global_z_offset = (data + i)->global_z_offset;
 
-    void *main_data = ((data + i))->main_data;
+    void *main_data = (data + i)->main_data;
 
     //====================Field3D_Seq
-    double *odata = (((double **)main_data))[0];
+    double *odata = ((double **)main_data)[0];
 
     size_t oneblocklen = (xblock * (yblock * (zblock * num_ele)));
 
     size_t realoneblklen = (xlen * (ylen * (zlen * num_ele)));
 
-    if ((!write_buffer)) {
-      write_buffer = malloc((sizeof(double) * realoneblklen));
+    if (!write_buffer) {
+      write_buffer = malloc(sizeof(double) * realoneblklen);
     }
 
     long vid = 0;
 
-    if ((gid->version == 2)) {
-      if (((cur_rank != gid->send_to_proc) && gid->num_reduce_proc)) {
+    if (gid->version == 2) {
+      if ((cur_rank != gid->send_to_proc) && gid->num_reduce_proc) {
         MPI_Send(&(numvec), 1, PS_MPI_LONG, gid->send_to_proc, cur_rank, PS_MPI_COMM_WORLD);
       }
     }
 
     for (vid = 0; vid < numvec; vid++) {
-      if ((gid->version == 0)) {
+      if (gid->version == 0) {
         {
           long xyzz;
 
@@ -274,14 +274,14 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
         }
       } else {
         int64_t offsetlen =
-            ((gid->version == 1))
-                ? ((realoneblklen * ((global_x_offset[vid] / xlen) +
-                                     (x_num_thread_block *
-                                      ((global_y_offset[vid] / ylen) +
-                                       (y_num_thread_block * (global_z_offset[vid] / zlen)))))))
-                : ((realoneblklen * vid));
+            (gid->version == 1)
+                ? (realoneblklen *
+                   ((global_x_offset[vid] / xlen) +
+                    (x_num_thread_block * ((global_y_offset[vid] / ylen) +
+                                           (y_num_thread_block * (global_z_offset[vid] / zlen))))))
+                : (realoneblklen * vid);
 
-        if ((gid->version == 1)) {
+        if (gid->version == 1) {
           GAPS_IO_DataSeek(gid, timestep, offsetlen);
         }
 
@@ -316,11 +316,11 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
           }
         }
         GAPS_IO_FWrite(gid, write_buffer, realoneblklen);
-        if (((gid->version == 2) && gid->num_reduce_proc)) {
+        if ((gid->version == 2) && gid->num_reduce_proc) {
           int cur_rank;
 
           PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(cur_rank));
-          if ((gid->cur_rank != gid->send_to_proc)) {
+          if (gid->cur_rank != gid->send_to_proc) {
             PS_MPI_Send(write_buffer, realoneblklen, PS_MPI_DOUBLE, gid->send_to_proc, cur_rank,
                         PS_MPI_COMM_WORLD);
           }
@@ -332,23 +332,23 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     // defined from class Field3D_Seq
 
-    long xlen = ((data + i))->xlen;
+    long xlen = (data + i)->xlen;
 
-    long ylen = ((data + i))->ylen;
+    long ylen = (data + i)->ylen;
 
-    long zlen = ((data + i))->zlen;
+    long zlen = (data + i)->zlen;
 
-    int num_ele = ((data + i))->num_ele;
+    int num_ele = (data + i)->num_ele;
 
     //====================Field3D_Seq
 
     size_t realoneblklen = (xlen * (ylen * (zlen * num_ele)));
 
-    if (((gid->version == 2) && gid->num_reduce_proc)) {
+    if ((gid->version == 2) && gid->num_reduce_proc) {
       int cur_rank;
 
       PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(cur_rank));
-      if ((gid->cur_rank != gid->send_to_proc)) {
+      if (gid->cur_rank != gid->send_to_proc) {
 
       } else {
         {
@@ -365,7 +365,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
               int num_proc;
 
               PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(num_proc));
-              if ((n >= num_proc)) {
+              if (n >= num_proc) {
                 break;
               }
 

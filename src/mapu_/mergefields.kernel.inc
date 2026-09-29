@@ -342,7 +342,7 @@ __global__ void mapu_sync_ovlp_o2m_once(
 
   __mem1__ MAPU_LONG ovlpindex;
   for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
-    if ((ovlpindex == 13)) {
+    if (ovlpindex == 13) {
       continue;
     } else {
       __mem1__ __DDR double *vecovlp;
@@ -536,7 +536,7 @@ __global__ void mapu_sync_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp,
     field_yma = yb - ovlp;
   }
 
-  if ((zlo == 0)) {
+  if (zlo == 0) {
     field_zmi = ovlp;
     field_zma = ovlp + ovlp;
   } else if (zlo == 2) {
@@ -607,7 +607,7 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
   {
     __mem1__ MAPU_LONG ovlpindex;
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
-      if ((ovlpindex == 13)) {
+      if (ovlpindex == 13) {
         {
           continue;
         }
@@ -770,7 +770,7 @@ __global__ void mapu_sync_ovlp_m2o_once(
     __mem1__ MAPU_LONG ovlpindex;
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
-      if ((ovlpindex == 13)) {
+      if (ovlpindex == 13) {
         {
           continue;
         }
@@ -1016,7 +1016,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
     __mem1__ MAPU_LONG ovlpindex;
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
 
-      if ((ovlpindex == 13)) {
+      if (ovlpindex == 13) {
         {
           continue;
         }
@@ -1184,7 +1184,7 @@ __global__ void mapu_merge_ovlp_o2m_once(
   {
     __mem1__ MAPU_LONG ovlpindex;
     for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
-      if ((ovlpindex == 13)) {
+      if (ovlpindex == 13) {
         continue;
       } else {
         __mem1__ __DDR double *vecovlp;
@@ -1350,7 +1350,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
     field_xma = ovlp + 0;
   } else {
 
-    if ((xlo == 2)) {
+    if (xlo == 2) {
       field_xmi = xb - (ovlp + 0);
       field_xma = xb - 0;
     }
@@ -1361,18 +1361,18 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
     field_yma = ovlp + 0;
   } else {
 
-    if ((ylo == 2)) {
+    if (ylo == 2) {
       field_ymi = yb - (ovlp + 0);
       field_yma = yb - 0;
     }
   }
 
-  if ((zlo == 0)) {
+  if (zlo == 0) {
     field_zmi = 0;
     field_zma = ovlp + 0;
   } else {
 
-    if ((zlo == 2)) {
+    if (zlo == 2) {
       field_zmi = zb - (ovlp + 0);
       field_zma = zb - 0;
     }
@@ -1405,7 +1405,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
                 if (0) {
                   {
 
-                    if (((lxyzx < ovlp) || (lxyzx >= (xb - ovlp)))) {
+                    if ((lxyzx < ovlp) || (lxyzx >= (xb - ovlp))) {
                       {
                         lxyzx = ovlp;
                       }
@@ -1413,7 +1413,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
                       { 0; }
                     }
 
-                    if (((lxyzy < ovlp) || (lxyzy >= (yb - ovlp)))) {
+                    if ((lxyzy < ovlp) || (lxyzy >= (yb - ovlp))) {
                       {
                         lxyzy = ovlp;
                       }
@@ -1421,7 +1421,7 @@ __global__ void mapu_merge_ovlp_m2o(__DDR double *vecmain, __DDR double *vecovlp
                       { 0; }
                     }
 
-                    if (((lxyzz < ovlp) || (lxyzz >= (zb - ovlp)))) {
+                    if ((lxyzz < ovlp) || (lxyzz >= (zb - ovlp))) {
                       {
                         lxyzz = ovlp;
                       }
@@ -1470,7 +1470,7 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
 
   __mem1__ MAPU_LONG ovlpindex;
   for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
-    if ((ovlpindex == 13)) {
+    if (ovlpindex == 13) {
       continue;
     } else {
       __mem1__ __DDR double *vecovlp;
@@ -1625,7 +1625,7 @@ __global__ void mapu_merge_ovlp_m2o_once(
 
   __mem1__ MAPU_LONG ovlpindex;
   for (ovlpindex = 0; ovlpindex < 27; ovlpindex++) {
-    if ((ovlpindex == 13)) {
+    if (ovlpindex == 13) {
       continue;
     } else {
       __mem1__ __DDR double *vecovlp;

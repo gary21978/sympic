@@ -17,7 +17,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
   long yb = yblock;
   long zb = zblock;
   long blk_all_len = (xb * (yb * (zb * num_ele)));
-  if ((local_ymax >= numvec)) {
+  if (local_ymax >= numvec) {
     {
       local_ymax = numvec;
     }
@@ -30,7 +30,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
     long i;
     for (i = local_ymin; i < local_ymax; i++) {
 
-      if ((blk_all_len <= 1)) {
+      if (blk_all_len <= 1) {
         {
           double fast_y[1];
           {
@@ -41,7 +41,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                   long inner_g;
                   for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
                     (fast_y[(inner_step * blk_all_len) + inner_g] =
-                         ((y + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g]);
+                         (y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
                   }
                 }
               }
@@ -56,7 +56,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                   long inner_g;
                   for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
                     (fast_x[(inner_step * blk_all_len) + inner_g] =
-                         ((x + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g]);
+                         (x + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g]);
                   }
                 }
               }
@@ -98,7 +98,7 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
               {
                 long inner_g;
                 for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                  (((y + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g] =
+                  ((y + (i * blk_all_len))[(inner_step * blk_all_len) + inner_g] =
                        fast_y[(inner_step * blk_all_len) + inner_g]);
                 }
               }
@@ -160,7 +160,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
   long zb = zblock;
   long blk_all_len = (xb * (yb * (zb * num_ele)));
 
-  if ((local_ymax >= numvec)) {
+  if (local_ymax >= numvec) {
     {
       local_ymax = numvec;
     }
@@ -178,12 +178,12 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
       long blk_offset_t1 = (blk_all_len * i);
       long j = 0;
       for (j = 0; j < blk_all_len; j = (j + LOCAL_CACHE_LEN)) {
-        int numcp = ((((j + LOCAL_CACHE_LEN) < blk_all_len)) ? (({ LOCAL_CACHE_LEN; }))
-                                                             : (({ (blk_all_len - j); })));
+        int numcp = (((j + LOCAL_CACHE_LEN) < blk_all_len) ? ({ LOCAL_CACHE_LEN; })
+                                                           : ({ (blk_all_len - j); }));
         {
           long Gll_P9918;
           for (Gll_P9918 = 0; Gll_P9918 < numcp; Gll_P9918++) {
-            ((y + (blk_offset_t1 + j)))[Gll_P9918] = zeros[Gll_P9918];
+            (y + (blk_offset_t1 + j))[Gll_P9918] = zeros[Gll_P9918];
           }
         }
       }

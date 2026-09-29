@@ -22,7 +22,7 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_cu_swap_r_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -41,8 +41,8 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   } else {
     dim3 multiylen = 1;
@@ -50,7 +50,7 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
     multiylen.y = scmc_internal_g_ylen / 64;
     int rest = (scmc_internal_g_ylen % 64);
 
-    if ((rest != 0)) {
+    if (rest != 0) {
 
       fprintf(stderr,
               "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -73,8 +73,8 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
           mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
           __d_data_address_tmp2;
         })),
-        (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-        (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+        ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
+        ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
   }
 
   return 0;
@@ -130,7 +130,7 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_cu_swap_l_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -149,8 +149,8 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   } else {
     {
@@ -159,7 +159,7 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -186,8 +186,8 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   }
 
@@ -242,7 +242,7 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_cu_swap_r_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -261,8 +261,8 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   } else {
     {
@@ -271,7 +271,7 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -298,8 +298,8 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   }
 
@@ -354,7 +354,7 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
                           long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_cu_swap_l_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -373,8 +373,8 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   } else {
     {
@@ -383,7 +383,7 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -410,8 +410,8 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0],
-          (((int *)kerstr->the_dir_num->h_data))[0], (((MAPU_LONG *)kerstr->XYZLEN->h_data))[0]);
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0],
+          ((int *)kerstr->the_dir_num->h_data)[0], ((MAPU_LONG *)kerstr->XYZLEN->h_data)[0]);
     }
   }
 
@@ -469,7 +469,7 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_z_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -498,11 +498,11 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -511,7 +511,7 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -548,11 +548,11 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -647,7 +647,7 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_z_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -676,11 +676,11 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -689,7 +689,7 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -726,11 +726,11 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -824,7 +824,7 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_y_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -853,11 +853,11 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -866,7 +866,7 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -903,11 +903,11 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1002,7 +1002,7 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_y_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1031,11 +1031,11 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1044,7 +1044,7 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1081,11 +1081,11 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1179,7 +1179,7 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_x_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1208,11 +1208,11 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1221,7 +1221,7 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1258,11 +1258,11 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1357,7 +1357,7 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_x_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1386,11 +1386,11 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1399,7 +1399,7 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1436,11 +1436,11 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1533,7 +1533,7 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_z_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1562,11 +1562,11 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1575,7 +1575,7 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1612,11 +1612,11 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1710,7 +1710,7 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_z_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1739,11 +1739,11 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1752,7 +1752,7 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1789,11 +1789,11 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -1887,7 +1887,7 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_y_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -1916,11 +1916,11 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -1929,7 +1929,7 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -1966,11 +1966,11 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2063,7 +2063,7 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_y_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2092,11 +2092,11 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2105,7 +2105,7 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2142,11 +2142,11 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2239,7 +2239,7 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_x_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2268,11 +2268,11 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2281,7 +2281,7 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2318,11 +2318,11 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2415,7 +2415,7 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_x_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2444,11 +2444,11 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2457,7 +2457,7 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2494,11 +2494,11 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2591,7 +2591,7 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_z_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2620,11 +2620,11 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2633,7 +2633,7 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2670,11 +2670,11 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2769,7 +2769,7 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_z_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2798,11 +2798,11 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2811,7 +2811,7 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -2848,11 +2848,11 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -2945,7 +2945,7 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_y_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -2974,11 +2974,11 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -2987,7 +2987,7 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3024,11 +3024,11 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -3123,7 +3123,7 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_y_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3152,11 +3152,11 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -3165,7 +3165,7 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3202,11 +3202,11 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -3299,7 +3299,7 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_x_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3328,11 +3328,11 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -3341,7 +3341,7 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3378,11 +3378,11 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -3477,7 +3477,7 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
                                         long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_x_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3506,11 +3506,11 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -3519,7 +3519,7 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3556,11 +3556,11 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -3653,7 +3653,7 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_z_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3682,11 +3682,11 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -3695,7 +3695,7 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3732,11 +3732,11 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -3841,7 +3841,7 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_z_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -3870,11 +3870,11 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -3883,7 +3883,7 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -3920,11 +3920,11 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -4017,7 +4017,7 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_y_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -4046,11 +4046,11 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -4059,7 +4059,7 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -4096,11 +4096,11 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -4193,7 +4193,7 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_y_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -4222,11 +4222,11 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -4235,7 +4235,7 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -4272,11 +4272,11 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -4369,7 +4369,7 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
                                 long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_sort_one_grid_x_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -4398,11 +4398,11 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -4411,7 +4411,7 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -4448,11 +4448,11 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 
@@ -4545,7 +4545,7 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
                                     long scmc_internal_g_xlen, long scmc_internal_g_ylen) {
   mapsSetDevice((kerstr->pe)->device_id);
 
-  if ((scmc_internal_g_ylen < 65536)) {
+  if (scmc_internal_g_ylen < 65536) {
     {
       mapu_gpu_sort_one_grid_x_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
           ((__DDR double *)({
@@ -4574,11 +4574,11 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   } else {
     {
@@ -4587,7 +4587,7 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
       multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
-      if ((rest != 0)) {
+      if (rest != 0) {
         {
           fprintf(stderr,
                   "Warning: if __ylen>=65536 then __ylen must be divisible by "
@@ -4624,11 +4624,11 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
                                          &(__d_data_address_tmp2));
             __d_data_address_tmp2;
           })),
-          (((MAPU_LONG *)kerstr->XLEN->h_data))[0], (((MAPU_LONG *)kerstr->YLEN->h_data))[0],
-          (((MAPU_LONG *)kerstr->ZLEN->h_data))[0], (((int *)kerstr->ovlp->h_data))[0],
-          (((MAPU_LONG *)kerstr->numvec->h_data))[0],
-          (((MAPU_LONG *)kerstr->grid_cache_len->h_data))[0],
-          (((MAPU_LONG *)kerstr->cu_cache_length->h_data))[0]);
+          ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
+          ((MAPU_LONG *)kerstr->ZLEN->h_data)[0], ((int *)kerstr->ovlp->h_data)[0],
+          ((MAPU_LONG *)kerstr->numvec->h_data)[0],
+          ((MAPU_LONG *)kerstr->grid_cache_len->h_data)[0],
+          ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0]);
     }
   }
 

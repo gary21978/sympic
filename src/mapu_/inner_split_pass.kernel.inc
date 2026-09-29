@@ -432,7 +432,7 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ex_bank(
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
         v8fp64 term =
-            ((shE0[0 + (3 * (idx + (tile_xlen * (idy + (idz * 5)))))] + 0)) * (f1_x1[idx] * wyz);
+            (shE0[0 + (3 * (idx + (tile_xlen * (idy + (idz * 5)))))] + 0) * (f1_x1[idx] * wyz);
         AllEx = AllEx + term;
       }
     }
@@ -452,7 +452,7 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ey_bank(
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
         v8fp64 term =
-            ((shE0[1 + (3 * (idz + (tile_xlen * (idx + (idy * 5)))))] + 0)) * (f1_y1[idx] * wzx);
+            (shE0[1 + (3 * (idz + (tile_xlen * (idx + (idy * 5)))))] + 0) * (f1_y1[idx] * wzx);
         AllEy = AllEy + term;
       }
     }
@@ -472,7 +472,7 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ez_bank(
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
         v8fp64 term =
-            ((shE0[2 + (3 * (idy + (tile_xlen * (idz + (idx * 5)))))] + 0)) * (f1_z1[idx] * wxy);
+            (shE0[2 + (3 * (idy + (tile_xlen * (idz + (idx * 5)))))] + 0) * (f1_z1[idx] * wxy);
         AllEz = AllEz + term;
       }
     }

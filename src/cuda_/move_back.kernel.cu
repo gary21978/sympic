@@ -26,7 +26,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
   int cur_cu_load = 0;
 
   for (i = 0; i < cu_load; i += 64) {
-    long numcp = ((((i + 64) > cu_load)) ? ((cu_load - i)) : (64));
+    long numcp = (((i + 64) > cu_load) ? (cu_load - i) : (64));
 
     {
       long MYGEN5 = 0;
@@ -35,8 +35,8 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
         int ridx = (MYGEN5 + __idx);
 
         if (ridx < (numcp * 6)) {
-          (((local_temp_particle_cache + (0 * 6)))[ridx] =
-               ((cu_cache + (((cu_cache_length * __idy) + i) * 6)))[ridx]);
+          ((local_temp_particle_cache + (0 * 6))[ridx] =
+               (cu_cache + (((cu_cache_length * __idy) + i) * 6))[ridx]);
         }
       }
     }
@@ -44,17 +44,16 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
     if (__idx == 0) {
       for (j = 0; j < numcp; j++) {
 
-        long xyzx = floor(((local_temp_particle_cache + (j * 6)))[0]);
+        long xyzx = floor((local_temp_particle_cache + (j * 6))[0]);
 
-        long xyzy = floor(((local_temp_particle_cache + (j * 6)))[1]);
+        long xyzy = floor((local_temp_particle_cache + (j * 6))[1]);
 
-        long xyzz = floor(((local_temp_particle_cache + (j * 6)))[2]);
+        long xyzz = floor((local_temp_particle_cache + (j * 6))[2]);
 
         int wrted_grid = 0;
 
-        if ((cuda_is_in(xyzx, 0, XLEN) &&
-             (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN)))) {
-          long allid_grid = ((0 + (1 * (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))))) + cu_offset);
+        if (cuda_is_in(xyzx, 0, XLEN) && (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN))) {
+          long allid_grid = ((0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset);
 
           int gridload = (xyzw)[(4 * allid_grid)];
 
@@ -70,9 +69,9 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    (((inoutput + (6 * ((allid_grid * grid_cache_len) +
-                                        gridload))))[(inner_step * 1) + inner_g] =
-                         ((local_temp_particle_cache + (j * 6)))[(inner_step * 1) + inner_g]);
+                    ((inoutput +
+                      (6 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
+                         (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
                   }
                 }
               }
@@ -90,9 +89,9 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
                 long inner_g;
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
-                  (((cu_cache +
-                     (6 * ((__idy * cu_cache_length) + cur_cu_load))))[(inner_step * 1) + inner_g] =
-                       ((local_temp_particle_cache + (j * 6)))[(inner_step * 1) + inner_g]);
+                  ((cu_cache +
+                    (6 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
+                       (local_temp_particle_cache + (j * 6))[inner_step + inner_g]);
                 }
               }
             }
@@ -128,7 +127,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
   int cur_cu_load = 0;
 
   for (i = 0; i < cu_load; i += 64) {
-    long numcp = ((((i + 64) > cu_load)) ? ((cu_load - i)) : (64));
+    long numcp = (((i + 64) > cu_load) ? (cu_load - i) : (64));
 
     {
       long MYGEN6 = 0;
@@ -137,8 +136,8 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
         int ridx = (MYGEN6 + __idx);
 
         if (ridx < (numcp * 8)) {
-          (((local_temp_particle_cache + (0 * 8)))[ridx] =
-               ((cu_cache + (((cu_cache_length * __idy) + i) * 8)))[ridx]);
+          ((local_temp_particle_cache + (0 * 8))[ridx] =
+               (cu_cache + (((cu_cache_length * __idy) + i) * 8))[ridx]);
         }
       }
     }
@@ -146,17 +145,16 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
     if (__idx == 0) {
       for (j = 0; j < numcp; j++) {
 
-        long xyzx = floor(((local_temp_particle_cache + (j * 8)))[0]);
+        long xyzx = floor((local_temp_particle_cache + (j * 8))[0]);
 
-        long xyzy = floor(((local_temp_particle_cache + (j * 8)))[1]);
+        long xyzy = floor((local_temp_particle_cache + (j * 8))[1]);
 
-        long xyzz = floor(((local_temp_particle_cache + (j * 8)))[2]);
+        long xyzz = floor((local_temp_particle_cache + (j * 8))[2]);
 
         int wrted_grid = 0;
 
-        if ((cuda_is_in(xyzx, 0, XLEN) &&
-             (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN)))) {
-          long allid_grid = ((0 + (1 * (xyzx + (XLEN * (xyzy + (YLEN * xyzz)))))) + cu_offset);
+        if (cuda_is_in(xyzx, 0, XLEN) && (cuda_is_in(xyzy, 0, YLEN) && cuda_is_in(xyzz, 0, ZLEN))) {
+          long allid_grid = ((0 + (xyzx + (XLEN * (xyzy + (YLEN * xyzz))))) + cu_offset);
 
           int gridload = (xyzw)[(4 * allid_grid)];
 
@@ -172,9 +170,9 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
                   long inner_g;
 
                   for (inner_g = 0; inner_g < 1; inner_g++) {
-                    (((inoutput + (8 * ((allid_grid * grid_cache_len) +
-                                        gridload))))[(inner_step * 1) + inner_g] =
-                         ((local_temp_particle_cache + (j * 8)))[(inner_step * 1) + inner_g]);
+                    ((inoutput +
+                      (8 * ((allid_grid * grid_cache_len) + gridload)))[inner_step + inner_g] =
+                         (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
                   }
                 }
               }
@@ -192,9 +190,9 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
                 long inner_g;
 
                 for (inner_g = 0; inner_g < 1; inner_g++) {
-                  (((cu_cache +
-                     (8 * ((__idy * cu_cache_length) + cur_cu_load))))[(inner_step * 1) + inner_g] =
-                       ((local_temp_particle_cache + (j * 8)))[(inner_step * 1) + inner_g]);
+                  ((cu_cache +
+                    (8 * ((__idy * cu_cache_length) + cur_cu_load)))[inner_step + inner_g] =
+                       (local_temp_particle_cache + (j * 8))[inner_step + inner_g]);
                 }
               }
             }

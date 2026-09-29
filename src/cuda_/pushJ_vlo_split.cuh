@@ -366,7 +366,7 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *s
                                                 v8fp64 tmppowvar = vbroadcast(DELTA_Z);
                                                 tmppowvar *tmppowvar;
                                               })) *
-                                             (-1 * (Deltat * (QE_MASS * 0.0))));
+                                             (-(Deltat * (QE_MASS * 0.0))));
 
   st->s_rx3z = (st->z3 - vbroadcast(ZO - zmid)) - geo_floor_simd(st->z3 - vbroadcast(ZO - zmid));
   st->s_dix3z = geo_floor_simd(st->z3 - vbroadcast(ZO - zmid)) - vbroadcast(Midz);
@@ -381,32 +381,32 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, 
               v8fp64 tmppowvar = vbroadcast(TX0);
               tmppowvar *tmppowvar;
             }) *
-            ((-1 * (Deltat * (QE_MASS * iBy))) * (1.0 / ({
-                                                    v8fp64 tmppowvar =
-                                                        (({
-                                                           v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                                           tmppowvar *tmppowvar;
-                                                         }) *
-                                                         ({
-                                                           v8fp64 tmppowvar = vbroadcast(TX0);
-                                                           tmppowvar *tmppowvar;
-                                                         })) +
-                                                        ((2.0 * (({
-                                                                   v8fp64 tmppowvar =
-                                                                       vbroadcast(DELTA_Y);
-                                                                   tmppowvar *tmppowvar;
-                                                                 }) *
-                                                                 (TX0 * st->x2))) +
-                                                         (({
-                                                            v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                                            tmppowvar *tmppowvar;
-                                                          }) *
-                                                          ({
-                                                            v8fp64 tmppowvar = st->x2;
-                                                            tmppowvar *tmppowvar;
-                                                          })));
-                                                    tmppowvar;
-                                                  }))));
+            ((-(Deltat * (QE_MASS * iBy))) * (1.0 / ({
+                                                v8fp64 tmppowvar =
+                                                    (({
+                                                       v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                                       tmppowvar *tmppowvar;
+                                                     }) *
+                                                     ({
+                                                       v8fp64 tmppowvar = vbroadcast(TX0);
+                                                       tmppowvar *tmppowvar;
+                                                     })) +
+                                                    ((2.0 * (({
+                                                               v8fp64 tmppowvar =
+                                                                   vbroadcast(DELTA_Y);
+                                                               tmppowvar *tmppowvar;
+                                                             }) *
+                                                             (TX0 * st->x2))) +
+                                                     (({
+                                                        v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                                        tmppowvar *tmppowvar;
+                                                      }) *
+                                                      ({
+                                                        v8fp64 tmppowvar = st->x2;
+                                                        tmppowvar *tmppowvar;
+                                                      })));
+                                                tmppowvar;
+                                              }))));
 
   st->s_rx3y = (st->y3 - vbroadcast(YO)) - geo_floor_simd(st->y3 - vbroadcast(YO));
   st->s_dix3y = geo_floor_simd(st->y3 - vbroadcast(YO)) - vbroadcast(Midy);
@@ -511,7 +511,7 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, 
                v8fp64 tmppowvar = vbroadcast(DELTA_X);
                tmppowvar *tmppowvar;
              })) *
-            (-1 * (Deltat * (QE_MASS * iBx))));
+            (-(Deltat * (QE_MASS * iBx))));
 
   st->s_rx3x = (st->x3 - vbroadcast(XO)) - geo_floor_simd(st->x3 - vbroadcast(XO));
   st->s_dix3x = geo_floor_simd(st->x3 - vbroadcast(XO)) - vbroadcast(Midx);

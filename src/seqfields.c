@@ -32,7 +32,7 @@ int build_Field_compute_unit_from_mpi_field(Field3D_MPI *pthis, Field3D_MPI *inp
 
   //====================Field3D_MPI
   (pthis)[0] = input_E[0];
-  pthis->data = malloc((sizeof(Field3D_Seq) * input_E->num_runtime));
+  pthis->data = malloc(sizeof(Field3D_Seq) * input_E->num_runtime);
   {
     long i;
 

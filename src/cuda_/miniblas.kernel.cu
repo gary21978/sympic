@@ -2257,7 +2257,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
       long i1;
 
       for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        reduce_tmp = reduce_tmp + (reduce_tmp_arr[i1]);
+        reduce_tmp += reduce_tmp_arr[i1];
       }
     }
     rdcd_sum[__idy] = reduce_tmp;
@@ -2335,7 +2335,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
           long g;
 
           for (g = 0; g < numcp; g++) {
-            reduce_tmp = reduce_tmp + ((fast_x + g)[0] * (fast_y + g)[0]);
+            reduce_tmp += ((fast_x + g)[0] * (fast_y + g)[0]);
           }
         }
         {
@@ -2378,7 +2378,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
       long i1;
 
       for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        reduce_tmp = reduce_tmp + (reduce_tmp_arr[i1]);
+        reduce_tmp += reduce_tmp_arr[i1];
       }
     }
     rdcd_sum[__idy] = reduce_tmp;
@@ -2474,7 +2474,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
                 for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                   long realidx = (__idx + (g * __xlen));
 
-                  reduce_tmp = reduce_tmp + y[blk_offset + realidx];
+                  reduce_tmp += y[blk_offset + realidx];
                 }
               }
             }
@@ -2490,7 +2490,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
       long i1;
 
       for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        reduce_tmp = reduce_tmp + reduce_tmp_arr[i1];
+        reduce_tmp += reduce_tmp_arr[i1];
       }
     }
     rdcd_sum[__idy] = reduce_tmp;
@@ -2555,7 +2555,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
           long g;
 
           for (g = 0; g < numcp; g++) {
-            reduce_tmp = reduce_tmp + (fast_y + g)[0];
+            reduce_tmp += (fast_y + g)[0];
           }
         }
         {
@@ -2586,7 +2586,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
       long i1;
 
       for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        reduce_tmp = reduce_tmp + reduce_tmp_arr[i1];
+        reduce_tmp += reduce_tmp_arr[i1];
       }
     }
     rdcd_sum[__idy] = reduce_tmp;

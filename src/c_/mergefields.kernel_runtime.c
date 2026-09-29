@@ -896,7 +896,7 @@ int c_merge_ovlp_m2o_once_exec(c_merge_ovlp_m2o_once_struct *kerstr, long scmc_i
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_m2o_once_scmc_set_parameter_vecmain(c_merge_ovlp_m2o_once_struct *kerstr,
@@ -1303,7 +1303,7 @@ int c_merge_ovlp_m2o_all_in_one_exec(c_merge_ovlp_m2o_all_in_one_struct *kerstr,
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
@@ -1604,7 +1604,7 @@ int c_merge_ovlp_m2o_exec(c_merge_ovlp_m2o_struct *kerstr, long scmc_internal_g_
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_m2o_scmc_set_parameter_vecmain(c_merge_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
@@ -2534,7 +2534,7 @@ int c_merge_ovlp_o2m_once_exec(c_merge_ovlp_o2m_once_struct *kerstr, long scmc_i
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_o2m_once_scmc_set_parameter_vecmain(c_merge_ovlp_o2m_once_struct *kerstr,
@@ -2941,7 +2941,7 @@ int c_merge_ovlp_o2m_all_in_one_exec(c_merge_ovlp_o2m_all_in_one_struct *kerstr,
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
@@ -3242,7 +3242,7 @@ int c_merge_ovlp_o2m_exec(c_merge_ovlp_o2m_struct *kerstr, long scmc_internal_g_
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_merge_ovlp_o2m_scmc_set_parameter_vecmain(c_merge_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {
@@ -4172,7 +4172,7 @@ int c_sync_ovlp_m2o_once_exec(c_sync_ovlp_m2o_once_struct *kerstr, long scmc_int
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_m2o_once_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_once_struct *kerstr,
@@ -4579,7 +4579,7 @@ int c_sync_ovlp_m2o_all_in_one_exec(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_all_in_one_struct *kerstr,
@@ -4880,7 +4880,7 @@ int c_sync_ovlp_m2o_exec(c_sync_ovlp_m2o_struct *kerstr, long scmc_internal_g_xl
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_m2o_scmc_set_parameter_vecmain(c_sync_ovlp_m2o_struct *kerstr, c_pscmc_mem *pm) {
@@ -5809,7 +5809,7 @@ int c_sync_ovlp_o2m_once_exec(c_sync_ovlp_o2m_once_struct *kerstr, long scmc_int
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_o2m_once_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_once_struct *kerstr,
@@ -6216,7 +6216,7 @@ int c_sync_ovlp_o2m_all_in_one_exec(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_all_in_one_struct *kerstr,
@@ -6517,7 +6517,7 @@ int c_sync_ovlp_o2m_exec(c_sync_ovlp_o2m_struct *kerstr, long scmc_internal_g_xl
       fclose(fp);
     }
   }
-  _pscmc_c_global_dump_times = _pscmc_c_global_dump_times + 1;
+  _pscmc_c_global_dump_times++;
   return 0;
 }
 int c_sync_ovlp_o2m_scmc_set_parameter_vecmain(c_sync_ovlp_o2m_struct *kerstr, c_pscmc_mem *pm) {

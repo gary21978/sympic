@@ -140,7 +140,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
                 ((unsigned *)(local_temp_particle_cache + (j * 6))), ((uint64_t)(6 * data_size)),
                 put_sync_id);
           }
-          cur_cu_load = cur_cu_load + 1;
+          cur_cu_load++;
         }
       }
     }
@@ -255,7 +255,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
                 ((unsigned *)(local_temp_particle_cache + (j * 8))), ((uint64_t)(8 * data_size)),
                 put_sync_id);
           }
-          cur_cu_load = cur_cu_load + 1;
+          cur_cu_load++;
         }
       }
     }

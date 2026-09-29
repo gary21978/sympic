@@ -821,7 +821,7 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
     long i;
 
     for (i = 0; i < num_spec; i++) {
-      use_small_ts = use_small_ts + particle_types[i];
+      use_small_ts += particle_types[i];
     }
   }
   pthis->use_pml_abc_dir = pml_abc_dir;

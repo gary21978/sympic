@@ -33,7 +33,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
         cd_performances[k] = 1;
       }
 
-      total_perf = total_perf + cd_performances[k];
+      total_perf += cd_performances[k];
     }
   }
   if (fp) {
@@ -50,7 +50,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
            ((fp) ? (cplx_ori_array[ori_vec[i]])
                  : (floor(call_CAL_FUN_ONE_PARA("get_thread_complexity", ori_vec[i])))));
       assert(cplx_array[i] >= 0);
-      total_complexity = total_complexity + cplx_array[i];
+      total_complexity += cplx_array[i];
     }
   }
   assert(total_complexity);
@@ -75,7 +75,7 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
         long j;
 
         for (j = 0; j < dev_id; j++) {
-          current_perf_all = current_perf_all + cd_performances[j];
+          current_perf_all += cd_performances[j];
         }
       }
       if ((global_cplx * ((num_proc / num_cds_per_mpi_proc) * total_perf)) >=
@@ -85,13 +85,13 @@ int init_complexity_tid(unsigned long num_proc, unsigned long num_thread, size_t
         }
 
         if (current_pid < num_proc) {
-          current_pid = current_pid + 1;
+          current_pid++;
           l_tid = -1;
         }
       }
 
-      global_cplx = global_cplx + cplx_array[i];
-      l_tid = l_tid + 1;
+      global_cplx += cplx_array[i];
+      l_tid++;
       local_tid_array[i] = l_tid;
     }
   }
@@ -118,7 +118,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
     long k;
 
     for (k = 0; k < num_cds_per_mpi_proc; k++) {
-      total_perf = total_perf + cd_performances[k];
+      total_perf += cd_performances[k];
     }
   }
   for (i = 0; i < num_mpi_proc; i++) {
@@ -127,7 +127,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
     long tid_plus = (global_tid + oneprocnum);
 
     if (i < plusone) {
-      tid_plus = tid_plus + 1;
+      tid_plus++;
     }
 
     long num_t_one_mpi_proc = (tid_plus - tid_min);
@@ -149,7 +149,7 @@ int init_uniform_tid(unsigned long num_proc, unsigned long num_thread, long *num
           global_tid = tid_min + num_t_one_mpi_proc;
 
         } else {
-          global_tid = global_tid + cur_proc_num_threads;
+          global_tid += cur_proc_num_threads;
         }
 
         if (global_tid > num_thread) {
@@ -253,7 +253,7 @@ int init_adjoint_relations(Field3D_Seq *pthis, long n, long ndim, long adj_type,
     long g;
 
     for (g = 0; g < ndim; g++) {
-      alllen = alllen * onen;
+      alllen *= onen;
     }
   }
   long i = 0;

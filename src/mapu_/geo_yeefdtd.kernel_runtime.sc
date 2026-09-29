@@ -68,7 +68,7 @@ int mapu_YEE_CURL_R_exec(mapu_YEE_CURL_R_struct *kerstr, long scmc_internal_g_xl
       ((MAPU_LONG *)kerstr->zblock->h_data)[0], ((int *)kerstr->num_ele->h_data)[0],
       ((double *)kerstr->DT->h_data)[0]);
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_YEE_CURL_R_scmc_set_parameter_inoutE1(mapu_YEE_CURL_R_struct *kerstr, mapu_pscmc_mem *pm) {
@@ -213,7 +213,7 @@ int mapu_GEO_YEE_CURL_L_exec(mapu_GEO_YEE_CURL_L_struct *kerstr, long scmc_inter
       ((double *)kerstr->DELTA_Y->h_data)[0], ((double *)kerstr->DELTA_X->h_data)[0],
       ((double *)kerstr->x0->h_data)[0]);
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1(mapu_GEO_YEE_CURL_L_struct *kerstr,

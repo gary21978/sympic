@@ -713,7 +713,7 @@ __global__ void mapu_sync_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doubl
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -1123,7 +1123,7 @@ __global__ void mapu_merge_ovlp_o2m_all_in_one(__DDR double *vecmain, __DDR doub
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -1528,7 +1528,7 @@ __global__ void mapu_merge_ovlp_m2o_all_in_one(__DDR double *vecmain, __DDR doub
           }
         }
       }
-      v_offset = v_offset + (ovlpalllen * numvec);
+      v_offset += (ovlpalllen * numvec);
     }
   }
 #endif

@@ -92,7 +92,7 @@ __global__ void cuda_move_back_kernel_6(double *inoutput, int *xyzw, double *cu_
               }
             }
           }
-          cur_cu_load = cur_cu_load + 1;
+          cur_cu_load++;
         }
       }
     }
@@ -189,7 +189,7 @@ __global__ void cuda_move_back_kernel_8(double *inoutput, int *xyzw, double *cu_
               }
             }
           }
-          cur_cu_load = cur_cu_load + 1;
+          cur_cu_load++;
         }
       }
     }

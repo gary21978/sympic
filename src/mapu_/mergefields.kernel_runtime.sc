@@ -1507,7 +1507,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
     }
   }
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 
@@ -1868,7 +1868,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
     }
   }
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 
@@ -2298,7 +2298,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
     }
   }
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
@@ -2714,7 +2714,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
     }
   }
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
@@ -3128,7 +3128,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
     }
   }
 
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(

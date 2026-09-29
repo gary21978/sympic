@@ -167,7 +167,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     long g;
 
     for (g = 0; g < ndim; g++) {
-      alllen = alllen * onen;
+      alllen *= onen;
     }
   }
   size_t *ovvec = malloc(sizeof(size_t) * alllen);

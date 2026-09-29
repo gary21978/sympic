@@ -87,8 +87,8 @@ int main(int argc, char **argv) {
     long g;
     for (g = 0; g < dim; g++) {
       poutlen[g] = pdimarray[g] * pblockarray[g];
-      oneblock_len = oneblock_len * pdimarray[g];
-      numblocks = numblocks * pblockarray[g];
+      oneblock_len *= pdimarray[g];
+      numblocks *= pblockarray[g];
     }
   }
   int num_files = (argc - 2);
@@ -169,11 +169,11 @@ int main(int argc, char **argv) {
   int64_t opt_read_block = oneblock_len;
   int dim_current = 0;
   for (; dim_current < dim; dim_current++) {
-    opt_write_block = opt_write_block * poutlen[dim_current];
-    opt_read_block = opt_read_block * pblockarray[dim_current];
+    opt_write_block *= poutlen[dim_current];
+    opt_read_block *= pblockarray[dim_current];
     if (opt_read_block > BLOCK_THREH) {
-      opt_write_block = opt_write_block / poutlen[dim_current];
-      opt_read_block = opt_read_block / pblockarray[dim_current];
+      opt_write_block /= poutlen[dim_current];
+      opt_read_block /= pblockarray[dim_current];
       break;
     }
   }
@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
   {
     long i;
     for (i = 0; i < dim_current; i++) {
-      one_write_offset = one_write_offset * poutlen[i];
+      one_write_offset *= poutlen[i];
     }
   }
   int64_t one_write_stride_num =
@@ -216,7 +216,7 @@ int main(int argc, char **argv) {
                   long tmpids;
                   for (tmpids = 0; tmpids < dim; tmpids++) {
                     pblkid[tmpids] = gid % pblockarray[tmpids];
-                    gid = gid / pblockarray[tmpids];
+                    gid /= pblockarray[tmpids];
                   }
                 }
               }
@@ -229,7 +229,7 @@ int main(int argc, char **argv) {
                       long tmpids;
                       for (tmpids = 0; tmpids < dim; tmpids++) {
                         plocalid[tmpids] = gid % pdimarray[tmpids];
-                        gid = gid / pdimarray[tmpids];
+                        gid /= pdimarray[tmpids];
                       }
                     }
                   }

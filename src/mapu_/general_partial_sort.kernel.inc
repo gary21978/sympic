@@ -677,7 +677,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -705,7 +705,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -790,7 +790,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                   ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -814,7 +814,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                              ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -841,7 +841,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                       ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -859,7 +859,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
               ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -1074,7 +1074,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -1313,7 +1313,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -1341,7 +1341,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -1426,7 +1426,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                   ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -1450,7 +1450,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                              ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -1477,7 +1477,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                       ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -1495,7 +1495,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
               ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -1710,7 +1710,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -1949,7 +1949,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -1977,7 +1977,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -2062,7 +2062,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                   ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -2086,7 +2086,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                              ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -2113,7 +2113,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
                       ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -2131,7 +2131,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 6))),
               ((uint64_t)((num_write_tmp * 6) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -2348,7 +2348,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -2619,15 +2619,15 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -2647,7 +2647,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
@@ -2658,7 +2658,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
@@ -2669,7 +2669,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -2937,7 +2937,7 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -3207,15 +3207,15 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -3235,7 +3235,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
@@ -3246,7 +3246,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
@@ -3257,7 +3257,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -3525,7 +3525,7 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -3795,15 +3795,15 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -3823,7 +3823,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
@@ -3834,7 +3834,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
@@ -3845,7 +3845,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -4115,7 +4115,7 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 6) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -4403,15 +4403,15 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -4434,7 +4434,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -4445,7 +4445,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -4456,7 +4456,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
       }
     }
     __mem1__ int is_most_left;
@@ -4482,7 +4482,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
         num_copy_real_11516lap = grid_cache_len - num_write_main;
 
-        if (((end_plus - beg_plus) - (grid_cache_len - num_write_main))) {
+        if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
           const size_t data_size = sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                                           8))[(8 * (beg_plus - grid_cache_len))]) +
                                            (num_copy_real_11516lap * 8))[0]);
@@ -4515,7 +4515,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     {
       __mem1__ int num_copy_real_11516lap;
@@ -4524,7 +4524,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
         num_copy_real_11516lap = grid_cache_len - beg_left_main;
 
-        if ((num_write_minus - (grid_cache_len - beg_left_main))) {
+        if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -4550,7 +4550,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - 1)] = beg_left_main;
@@ -4566,7 +4566,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > cap_tmp) {
         num_copy_real_11516lap = cap_tmp;
 
-        if ((num_write_plus - cap_tmp)) {
+        if (num_write_plus - cap_tmp) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -4577,7 +4577,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       if (num_copy_real_11516lap * 8) {
@@ -4591,7 +4591,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     __mem0__ int xm4[4];
     xm4[0] = num_write_main;
@@ -4709,15 +4709,15 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -4737,7 +4737,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -4748,7 +4748,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -4759,7 +4759,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -4901,7 +4901,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -4929,7 +4929,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -5014,7 +5014,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                   ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -5038,7 +5038,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                              ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -5065,7 +5065,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                       ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -5083,7 +5083,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
               ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -5298,7 +5298,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -5585,15 +5585,15 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -5616,7 +5616,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -5627,7 +5627,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -5638,7 +5638,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
       }
     }
     __mem1__ int is_most_left;
@@ -5664,7 +5664,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
         num_copy_real_11516lap = grid_cache_len - num_write_main;
 
-        if (((end_plus - beg_plus) - (grid_cache_len - num_write_main))) {
+        if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
           const size_t data_size =
               sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                      8))[(8 * (beg_plus - (XLEN * grid_cache_len)))]) +
@@ -5698,7 +5698,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     {
       __mem1__ int num_copy_real_11516lap;
@@ -5707,7 +5707,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
         num_copy_real_11516lap = grid_cache_len - beg_left_main;
 
-        if ((num_write_minus - (grid_cache_len - beg_left_main))) {
+        if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -5733,7 +5733,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - XLEN)] = beg_left_main;
@@ -5749,7 +5749,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > cap_tmp) {
         num_copy_real_11516lap = cap_tmp;
 
-        if ((num_write_plus - cap_tmp)) {
+        if (num_write_plus - cap_tmp) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -5760,7 +5760,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       if (num_copy_real_11516lap * 8) {
@@ -5774,7 +5774,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     __mem0__ int xm4[4];
     xm4[0] = num_write_main;
@@ -5892,15 +5892,15 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -5920,7 +5920,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -5931,7 +5931,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -5942,7 +5942,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -6084,7 +6084,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -6112,7 +6112,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -6197,7 +6197,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                   ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -6221,7 +6221,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                              ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -6248,7 +6248,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                       ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -6266,7 +6266,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
               ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -6481,7 +6481,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -6768,15 +6768,15 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -6799,7 +6799,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -6810,7 +6810,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -6821,7 +6821,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
       }
     }
     __mem1__ int is_most_left;
@@ -6847,7 +6847,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - num_write_main)) {
         num_copy_real_11516lap = grid_cache_len - num_write_main;
 
-        if (((end_plus - beg_plus) - (grid_cache_len - num_write_main))) {
+        if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
           const size_t data_size =
               sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                      8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))]) +
@@ -6883,7 +6883,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     {
       __mem1__ int num_copy_real_11516lap;
@@ -6892,7 +6892,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > (grid_cache_len - beg_left_main)) {
         num_copy_real_11516lap = grid_cache_len - beg_left_main;
 
-        if ((num_write_minus - (grid_cache_len - beg_left_main))) {
+        if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -6919,7 +6919,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - (XLEN * YLEN))] = beg_left_main;
@@ -6935,7 +6935,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       if (num_copy_real_11516lap > cap_tmp) {
         num_copy_real_11516lap = cap_tmp;
 
-        if ((num_write_plus - cap_tmp)) {
+        if (num_write_plus - cap_tmp) {
           const size_t data_size =
               sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
@@ -6946,7 +6946,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       if (num_copy_real_11516lap * 8) {
@@ -6960,7 +6960,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
             __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     __mem0__ int xm4[4];
     xm4[0] = num_write_main;
@@ -7078,15 +7078,15 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -7106,7 +7106,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -7117,7 +7117,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -7128,7 +7128,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -7270,7 +7270,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                          __pscmc_mapu_internal_barrier__);
             __pscmc_mapu_internal_barrier__.arrive_and_wait();
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
 
@@ -7298,7 +7298,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                            __pscmc_mapu_internal_barrier__);
               __pscmc_mapu_internal_barrier__.arrive_and_wait();
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -7383,7 +7383,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                   ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                   ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               __mem1__ MAPU_LONG i;
@@ -7407,7 +7407,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                              ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                              ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 __mem1__ MAPU_LONG i;
@@ -7434,7 +7434,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                       ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
                       ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -7452,7 +7452,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
               ((unsigned *)(local_pos_cache + ((g - num_write_tmp) * 8))),
               ((uint64_t)((num_write_tmp * 8) * data_size)), put_sync_id);
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
         put_sync_id.arrive_and_wait();
         get_sync_id.arrive_and_wait();
@@ -7669,7 +7669,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -7940,15 +7940,15 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -7968,7 +7968,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -7979,7 +7979,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -7990,7 +7990,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -8258,7 +8258,7 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -8528,15 +8528,15 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -8556,7 +8556,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -8567,7 +8567,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -8578,7 +8578,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -8846,7 +8846,7 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -9116,15 +9116,15 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -9144,7 +9144,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
@@ -9155,7 +9155,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
         const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
@@ -9166,7 +9166,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
                      __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
     }
   }
   {
@@ -9436,7 +9436,7 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
                          ((uint64_t)((num_cur_to_cu_cache * 8) * data_size)), put_sync_id);
           }
         }
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -9642,7 +9642,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __mem1__ int end_left_par;
     end_left_par = cu_xyzw_shared[2];
 
-    if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+    if ((left_pid != -1) && (beg_left_par != end_left_par)) {
       __mem1__ int end_cu_par;
       end_cu_par = cu_xyzw[(left_pid * 4)];
       __mem1__ int new_left_par;
@@ -9694,7 +9694,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        end_cu_par = end_cu_par + num_cp;
+        end_cu_par += num_cp;
       }
       put_sync_id.arrive_and_wait();
     }
@@ -9753,7 +9753,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __mem1__ MAPU_LONG end_left_par;
     end_left_par = cu_cache_length;
 
-    if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+    if ((left_pid != -1) && (beg_left_par != end_left_par)) {
       __mem1__ int end_cu_par;
       end_cu_par = cu_xyzw[(left_pid * 4)];
       __mem1__ int new_left_par;
@@ -9804,7 +9804,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        end_cu_par = end_cu_par + num_cp;
+        end_cu_par += num_cp;
       }
       put_sync_id.arrive_and_wait();
     }
@@ -9863,7 +9863,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __mem1__ int end_left_par;
     end_left_par = cu_xyzw_shared[2];
 
-    if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+    if ((left_pid != -1) && (beg_left_par != end_left_par)) {
       __mem1__ int end_cu_par;
       end_cu_par = cu_xyzw[(left_pid * 4)];
       __mem1__ int new_left_par;
@@ -9915,7 +9915,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        end_cu_par = end_cu_par + num_cp;
+        end_cu_par += num_cp;
       }
       put_sync_id.arrive_and_wait();
     }
@@ -9974,7 +9974,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __mem1__ MAPU_LONG end_left_par;
     end_left_par = cu_cache_length;
 
-    if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+    if ((left_pid != -1) && (beg_left_par != end_left_par)) {
       __mem1__ int end_cu_par;
       end_cu_par = cu_xyzw[(left_pid * 4)];
       __mem1__ int new_left_par;
@@ -10025,7 +10025,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
                        __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
         }
-        end_cu_par = end_cu_par + num_cp;
+        end_cu_par += num_cp;
       }
       put_sync_id.arrive_and_wait();
     }

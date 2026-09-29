@@ -206,7 +206,7 @@ void c_sync_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -576,7 +576,7 @@ void c_sync_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, l
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -965,7 +965,7 @@ void c_merge_ovlp_o2m_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -1323,7 +1323,7 @@ void c_merge_ovlp_m2o_all_in_one_scmc_kernel(double *vecmain, double *vecovlps, 
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }

@@ -290,7 +290,7 @@ int main(int argc, char **argv) {
     long g;
 
     for (g = 0; g < NUM_N_HILBERT_DIMENSION; g++) {
-      numt = numt * len_hilbert;
+      numt *= len_hilbert;
     }
   }
   int rank;
@@ -594,7 +594,7 @@ int main(int argc, char **argv) {
           fprintf(stderr, "done, time used=%fs\n", tbeg);
         }
 
-        tsave = tsave + 1;
+        tsave++;
       }
 
       // set B1=B

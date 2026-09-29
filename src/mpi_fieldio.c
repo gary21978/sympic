@@ -133,7 +133,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
                                              (y_num_thread_block * (global_z_offset[i] / zlen))))));
               }
             }
-            numvec_offset = numvec_offset + numvec;
+            numvec_offset += numvec;
           }
         }
         GAPS_IO_InitDataInfoV2(gid, "", GAPS_IO_FLOAT64, 4, pdimarr, pblkarr, plocations,

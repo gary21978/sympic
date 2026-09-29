@@ -113,15 +113,15 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -146,7 +146,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN7 = 0;
 
@@ -159,7 +159,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN8 = 0;
 
@@ -172,7 +172,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -230,7 +230,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -268,7 +268,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - 1)] = beg_left_main;
@@ -296,7 +296,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -311,7 +311,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -398,15 +398,15 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -429,7 +429,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN16 = 0;
 
@@ -442,7 +442,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN17 = 0;
 
@@ -455,7 +455,7 @@ __global__ void cuda_gpu_sort_one_grid_x_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -558,7 +558,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 6))[0] > XLEN) {
@@ -590,7 +590,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -671,7 +671,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -699,7 +699,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -728,7 +728,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -750,7 +750,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -973,7 +973,7 @@ __global__ void cuda_sort_one_grid_x_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -1229,15 +1229,15 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -1262,7 +1262,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN20 = 0;
 
@@ -1275,7 +1275,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN21 = 0;
 
@@ -1288,7 +1288,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -1346,7 +1346,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -1384,7 +1384,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - XLEN)] = beg_left_main;
@@ -1412,7 +1412,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -1427,7 +1427,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -1514,15 +1514,15 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -1545,7 +1545,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN29 = 0;
 
@@ -1558,7 +1558,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN30 = 0;
 
@@ -1571,7 +1571,7 @@ __global__ void cuda_gpu_sort_one_grid_y_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -1674,7 +1674,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 6))[1] > YLEN) {
@@ -1706,7 +1706,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -1787,7 +1787,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -1815,7 +1815,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -1844,7 +1844,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -1866,7 +1866,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -2090,7 +2090,7 @@ __global__ void cuda_sort_one_grid_y_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -2346,15 +2346,15 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -2379,7 +2379,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN33 = 0;
 
@@ -2392,7 +2392,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN34 = 0;
 
@@ -2405,7 +2405,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -2463,7 +2463,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -2501,7 +2501,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - (XLEN * YLEN))] = beg_left_main;
@@ -2529,7 +2529,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -2544,7 +2544,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -2631,15 +2631,15 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -2662,7 +2662,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN42 = 0;
 
@@ -2675,7 +2675,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN43 = 0;
 
@@ -2688,7 +2688,7 @@ __global__ void cuda_gpu_sort_one_grid_z_6(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -2791,7 +2791,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 6))[2] > ZLEN) {
@@ -2823,7 +2823,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -2904,7 +2904,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -2932,7 +2932,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -2961,7 +2961,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -2983,7 +2983,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -3208,7 +3208,7 @@ __global__ void cuda_sort_one_grid_z_6(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -3447,15 +3447,15 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -3478,7 +3478,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN46 = 0;
 
@@ -3491,7 +3491,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN47 = 0;
 
@@ -3504,7 +3504,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -3731,7 +3731,7 @@ __global__ void cuda_sort_one_grid_x_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -3970,15 +3970,15 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -4001,7 +4001,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN51 = 0;
 
@@ -4014,7 +4014,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN52 = 0;
 
@@ -4027,7 +4027,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -4255,7 +4255,7 @@ __global__ void cuda_sort_one_grid_y_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -4494,15 +4494,15 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -4525,7 +4525,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN56 = 0;
 
@@ -4538,7 +4538,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN57 = 0;
 
@@ -4551,7 +4551,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -4780,7 +4780,7 @@ __global__ void cuda_sort_one_grid_z_vlo_6(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -5036,15 +5036,15 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -5069,7 +5069,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN61 = 0;
 
@@ -5082,7 +5082,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN62 = 0;
 
@@ -5095,7 +5095,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -5153,7 +5153,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -5191,7 +5191,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - 1)] = beg_left_main;
@@ -5219,7 +5219,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -5234,7 +5234,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -5321,15 +5321,15 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -5352,7 +5352,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN70 = 0;
 
@@ -5365,7 +5365,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN71 = 0;
 
@@ -5378,7 +5378,7 @@ __global__ void cuda_gpu_sort_one_grid_x_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -5481,7 +5481,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 8))[0] > XLEN) {
@@ -5513,7 +5513,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -5594,7 +5594,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -5622,7 +5622,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -5651,7 +5651,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -5673,7 +5673,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -5896,7 +5896,7 @@ __global__ void cuda_sort_one_grid_x_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -6152,15 +6152,15 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -6185,7 +6185,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN74 = 0;
 
@@ -6198,7 +6198,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN75 = 0;
 
@@ -6211,7 +6211,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -6269,7 +6269,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -6307,7 +6307,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - XLEN)] = beg_left_main;
@@ -6335,7 +6335,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -6350,7 +6350,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -6437,15 +6437,15 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -6468,7 +6468,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN83 = 0;
 
@@ -6481,7 +6481,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN84 = 0;
 
@@ -6494,7 +6494,7 @@ __global__ void cuda_gpu_sort_one_grid_y_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -6597,7 +6597,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 8))[1] > YLEN) {
@@ -6629,7 +6629,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -6710,7 +6710,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -6738,7 +6738,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -6767,7 +6767,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -6789,7 +6789,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -7013,7 +7013,7 @@ __global__ void cuda_sort_one_grid_y_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -7269,15 +7269,15 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
           if (is_cur) {
-            cur_grid_num = cur_grid_num + 1;
+            cur_grid_num++;
           }
 
           if (is_to_left) {
-            to_left_num = to_left_num + 1;
+            to_left_num++;
           }
 
           if (is_to_right) {
-            to_right_num = to_right_num + 1;
+            to_right_num++;
           }
         }
       }
@@ -7302,7 +7302,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_main = num_write_main + cgn_shared[p / __xlen];
+        num_write_main += cgn_shared[p / __xlen];
         {
           long MYGEN87 = 0;
 
@@ -7315,7 +7315,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_minus = num_write_minus + tln_shared[p / __xlen];
+        num_write_minus += tln_shared[p / __xlen];
         {
           long MYGEN88 = 0;
 
@@ -7328,7 +7328,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        num_write_plus = num_write_plus + trn_shared[p / __xlen];
+        num_write_plus += trn_shared[p / __xlen];
         __syncthreads();
       }
     }
@@ -7386,7 +7386,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + num_copy_real_11516lap;
+      num_write_main += num_copy_real_11516lap;
     }
     __syncthreads();
     {
@@ -7424,7 +7424,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      beg_left_main = beg_left_main + num_copy_real_11516lap;
+      beg_left_main += num_copy_real_11516lap;
     }
     if ((!is_most_left) && (__idx == 0)) {
       xyzw[4 * ((cu_offset + grid_id) - (XLEN * YLEN))] = beg_left_main;
@@ -7452,7 +7452,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
             }
           }
         }
-        cu_cur_cache_load = cu_cur_cache_load + (num_write_plus - cap_tmp);
+        cu_cur_cache_load += (num_write_plus - cap_tmp);
       }
 
       {
@@ -7467,7 +7467,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      total_cache_num = total_cache_num + num_copy_real_11516lap;
+      total_cache_num += num_copy_real_11516lap;
     }
     int xm4[4];
     xm4[0] = num_write_main;
@@ -7554,15 +7554,15 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -7585,7 +7585,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN96 = 0;
 
@@ -7598,7 +7598,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN97 = 0;
 
@@ -7611,7 +7611,7 @@ __global__ void cuda_gpu_sort_one_grid_z_8(double *inoutput, int *xyzw, double *
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -7714,7 +7714,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
               }
             }
           }
-          cur_to_left = cur_to_left + 1;
+          cur_to_left++;
 
         } else {
           if ((local_pos_cache + (g * 8))[2] > ZLEN) {
@@ -7746,7 +7746,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            cur_this = cur_this + 1;
+            cur_this++;
           }
         }
       }
@@ -7827,7 +7827,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                 }
               }
             }
-            num_write_main = num_write_main + num_write_tmp;
+            num_write_main += num_write_tmp;
             num_write_tmp = 0;
             {
               long i;
@@ -7855,7 +7855,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                   }
                 }
               }
-              num_write_main = num_write_main + num_write_tmp;
+              num_write_main += num_write_tmp;
               num_write_tmp = 0;
               {
                 long i;
@@ -7884,7 +7884,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
                     }
                   }
                 }
-                num_write_main = num_write_main + num_write_tmp;
+                num_write_main += num_write_tmp;
                 num_write_tmp = 0;
 
               } else {
@@ -7906,7 +7906,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
             }
           }
         }
-        num_write_main = num_write_main + num_write_tmp;
+        num_write_main += num_write_tmp;
         num_write_tmp = 0;
       }
       int x_main = num_write_main;
@@ -8131,7 +8131,7 @@ __global__ void cuda_sort_one_grid_z_8(double *inoutput, int *xyzw, double *cu_c
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -8370,15 +8370,15 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -8401,7 +8401,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN100 = 0;
 
@@ -8414,7 +8414,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN101 = 0;
 
@@ -8427,7 +8427,7 @@ __global__ void cuda_gpu_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -8654,7 +8654,7 @@ __global__ void cuda_sort_one_grid_x_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -8893,15 +8893,15 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -8924,7 +8924,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN105 = 0;
 
@@ -8937,7 +8937,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN106 = 0;
 
@@ -8950,7 +8950,7 @@ __global__ void cuda_gpu_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -9178,7 +9178,7 @@ __global__ void cuda_sort_one_grid_y_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -9417,15 +9417,15 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
         if (is_cur) {
-          cur_grid_num = cur_grid_num + 1;
+          cur_grid_num++;
         }
 
         if (is_to_left) {
-          to_left_num = to_left_num + 1;
+          to_left_num++;
         }
 
         if (is_to_right) {
-          to_right_num = to_right_num + 1;
+          to_right_num++;
         }
       }
     }
@@ -9448,7 +9448,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_main = num_write_main + cgn_shared[p / __xlen];
+      num_write_main += cgn_shared[p / __xlen];
       {
         long MYGEN110 = 0;
 
@@ -9461,7 +9461,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_minus = num_write_minus + tln_shared[p / __xlen];
+      num_write_minus += tln_shared[p / __xlen];
       {
         long MYGEN111 = 0;
 
@@ -9474,7 +9474,7 @@ __global__ void cuda_gpu_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, doub
           }
         }
       }
-      num_write_plus = num_write_plus + trn_shared[p / __xlen];
+      num_write_plus += trn_shared[p / __xlen];
       __syncthreads();
     }
   }
@@ -9703,7 +9703,7 @@ __global__ void cuda_sort_one_grid_z_vlo_8(double *inoutput, int *xyzw, double *
           }
         }
 
-        beg_minus = beg_minus + num_from_left;
+        beg_minus += num_from_left;
         cur_xyzw[0] = beg_minus;
         cur_xyzw[1] = beg_minus;
         prev_zw[1] = beg_plus + num_to_left;
@@ -9890,7 +9890,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = (cu_xyzw_shared)[2];
 
-  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if ((left_pid != -1) && (beg_left_par != end_left_par)) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -9961,7 +9961,7 @@ __global__ void cuda_cu_swap_l_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
             }
           }
         }
-        end_cu_par = end_cu_par + __xlen;
+        end_cu_par += __xlen;
       }
     }
 
@@ -10009,7 +10009,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = cu_cache_length;
 
-  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if ((left_pid != -1) && (beg_left_par != end_left_par)) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10079,7 +10079,7 @@ __global__ void cuda_cu_swap_r_6(double *cu_cache, int *cu_xyzw, long *adjoint_v
             }
           }
         }
-        end_cu_par = end_cu_par + __xlen;
+        end_cu_par += __xlen;
       }
     }
 
@@ -10127,7 +10127,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = (cu_xyzw_shared)[2];
 
-  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if ((left_pid != -1) && (beg_left_par != end_left_par)) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10198,7 +10198,7 @@ __global__ void cuda_cu_swap_l_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
             }
           }
         }
-        end_cu_par = end_cu_par + __xlen;
+        end_cu_par += __xlen;
       }
     }
 
@@ -10246,7 +10246,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
 
   int end_left_par = cu_cache_length;
 
-  if (((left_pid != -1) && (beg_left_par != end_left_par))) {
+  if ((left_pid != -1) && (beg_left_par != end_left_par)) {
     int end_cu_par = (cu_xyzw)[(left_pid * 4)];
 
     int new_left_par = (end_cu_par + (end_left_par - beg_left_par));
@@ -10316,7 +10316,7 @@ __global__ void cuda_cu_swap_r_8(double *cu_cache, int *cu_xyzw, long *adjoint_v
             }
           }
         }
-        end_cu_par = end_cu_par + __xlen;
+        end_cu_par += __xlen;
       }
     }
 

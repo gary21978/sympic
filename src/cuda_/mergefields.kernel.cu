@@ -262,7 +262,7 @@ __global__ void cuda_sync_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps,
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -726,7 +726,7 @@ __global__ void cuda_sync_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps,
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -1209,7 +1209,7 @@ __global__ void cuda_merge_ovlp_o2m_all_in_one(double *vecmain, double *vecovlps
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }
@@ -1661,7 +1661,7 @@ __global__ void cuda_merge_ovlp_m2o_all_in_one(double *vecmain, double *vecovlps
             }
           }
         }
-        v_offset = v_offset + (ovlpalllen * numvec);
+        v_offset += (ovlpalllen * numvec);
       }
     }
   }

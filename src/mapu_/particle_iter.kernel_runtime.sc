@@ -989,7 +989,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
       fclose(fp);
     }
   }
-  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
+  _pscmc_mapu_global_dump_times++;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_inoutput(mapu_dump_ene_num_struct *kerstr,

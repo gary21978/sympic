@@ -219,10 +219,10 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     size_t pelen;
 
 #ifdef SYMPIC_CUDA
-    cuda_pscmc_get_env_len(&(pelen));
+    cuda_pscmc_get_env_len(&pelen);
 #endif
 #ifdef SYMPIC_MAPU
-    mapu_pscmc_get_env_len(&(pelen));
+    mapu_pscmc_get_env_len(&pelen);
 #endif
 
     (pthis->data + i)->pe = malloc(pelen);
@@ -320,7 +320,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -381,15 +381,15 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;
@@ -571,7 +571,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -632,15 +632,15 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;
@@ -822,7 +822,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -883,15 +883,15 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;
@@ -1065,7 +1065,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -1126,15 +1126,15 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;
@@ -1309,7 +1309,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -1370,15 +1370,15 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;
@@ -1568,7 +1568,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
     fprintf(stderr, "found %s for input\n", nm);
     Gaps_IO_DataFile gid;
 
-    Gaps_IO_DataFile *pgid = &(gid);
+    Gaps_IO_DataFile *pgid = &gid;
 
     GAPS_IO_InitIFile(pgid, nm);
     {
@@ -1629,15 +1629,15 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                    (((reduce_y) ? (0) : (js)) +
                                     (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                   GAPS_IO_FRead(pgid,
-                                &((((double **)(data + i)->main_data)[0])
-                                      [(j * ((data + i)->xblock *
-                                             ((data + i)->yblock *
-                                              ((data + i)->zblock * (data + i)->num_ele)))) +
-                                       ((data + i)->num_ele *
-                                        (((data + i)->ovlp) +
-                                         ((data + i)->xblock *
-                                          ((xyzy + (data + i)->ovlp) +
-                                           ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))]),
+                                &(((double **)(data + i)->main_data)[0])
+                                    [(j * ((data + i)->xblock *
+                                           ((data + i)->yblock *
+                                            ((data + i)->zblock * (data + i)->num_ele)))) +
+                                     ((data + i)->num_ele *
+                                      (((data + i)->ovlp) +
+                                       ((data + i)->xblock *
+                                        ((xyzy + (data + i)->ovlp) +
+                                         ((data + i)->yblock * (xyzz + (data + i)->ovlp))))))],
                                 (num_ele * ((reduce_x) ? (1) : (xlen))));
                   if (reduce_dim) {
                     long g;

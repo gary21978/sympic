@@ -48,7 +48,7 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -60,12 +60,12 @@ __global__ void mapu_move_back_kernel_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -163,7 +163,7 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -175,12 +175,12 @@ __global__ void mapu_move_back_kernel_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;

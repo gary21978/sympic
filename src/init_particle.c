@@ -99,7 +99,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     {
       size_t structlen;
 
-      cuda_geo_nr_Bfield_pushJ_vlo_get_struct_len(&(structlen));
+      cuda_geo_nr_Bfield_pushJ_vlo_get_struct_len(&structlen);
 
       (pthis->nonrel_test_kernel)[0] = malloc(structlen);
       cuda_geo_nr_Bfield_pushJ_vlo_init(pe, (pthis->nonrel_test_kernel)[0]);
@@ -795,22 +795,22 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   int use_rel_ncr = (pthis)->use_rel_ncr;
 
   //====================Particle_in_Cell_MPI
-  init_Field3D_MPI_from(&(pthis->MPI_fieldE), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldB), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldE_ext), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldB_ext), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldE_filter), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldB_filter), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldEtmp), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldEtmp1), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldE1), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldEtmp2), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_fieldBtmp), fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldE, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldB, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldE_ext, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldB_ext, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldE_filter, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldB_filter, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldEtmp, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldEtmp1, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldE1, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldEtmp2, fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldBtmp, fE);
   pthis->use_rel_ncr = use_rel_ncr1;
   use_rel_ncr = use_rel_ncr1;
   if (use_rel_ncr) {
-    init_Field3D_MPI_from(&(pthis->MPI_fieldE01_2x), fE2x);
-    init_Field3D_MPI_from(&(pthis->MPI_fieldB0_2x), fE2x);
+    init_Field3D_MPI_from(&pthis->MPI_fieldE01_2x, fE2x);
+    init_Field3D_MPI_from(&pthis->MPI_fieldB0_2x, fE2x);
   }
 
   pthis->o_particle_type = particle_types;
@@ -828,76 +828,76 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   pthis->use_pml_level = pml_level;
   pthis->use_pml_sigma_max = pml_sigma_max;
   if (pml_abc_dir) {
-    init_Field3D_MPI_from(&(pthis->MPI_fieldPMLB), fE);
-    init_Field3D_MPI_from(&(pthis->MPI_fieldPMLE), fE);
-    blas_yiszero_Field3D_MPI(&(pthis->MPI_fieldPMLB), &(pthis->MPI_fieldPMLB));
-    blas_yiszero_Field3D_MPI(&(pthis->MPI_fieldPMLE), &(pthis->MPI_fieldPMLE));
+    init_Field3D_MPI_from(&pthis->MPI_fieldPMLB, fE);
+    init_Field3D_MPI_from(&pthis->MPI_fieldPMLE, fE);
+    blas_yiszero_Field3D_MPI(&pthis->MPI_fieldPMLB, &pthis->MPI_fieldPMLB);
+    blas_yiszero_Field3D_MPI(&pthis->MPI_fieldPMLE, &pthis->MPI_fieldPMLE);
     pthis->allxmax = allxyzmax[0];
     pthis->allymax = allxyzmax[1];
     pthis->allzmax = allxyzmax[2];
   }
 
   if ((USE_FILTER == 2) || use_small_ts) {
-    init_Field3D_MPI_from(&(pthis->MPI_fieldBtmp1), fE);
+    init_Field3D_MPI_from(&pthis->MPI_fieldBtmp1, fE);
   }
 
-  init_Field3D_MPI_from(&(pthis->MPI_fieldB1), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_FoutJ), fE);
-  init_Field3D_MPI_from(&(pthis->MPI_FoutJtmp), fE);
+  init_Field3D_MPI_from(&pthis->MPI_fieldB1, fE);
+  init_Field3D_MPI_from(&pthis->MPI_FoutJ, fE);
+  init_Field3D_MPI_from(&pthis->MPI_FoutJtmp, fE);
   pthis->use_small_grid = 0;
   if (use_small_num_grids == 1) {
-    init_Field3D_MPI_from_new_num_ele(&(pthis->MPI_LFoutJ), fE, 375);
+    init_Field3D_MPI_from_new_num_ele(&pthis->MPI_LFoutJ, fE, 375);
     pthis->use_small_grid = 1;
 
   } else {
     if (use_small_num_grids == 2) {
-      build_Field_compute_unit_from_mpi_field(&(pthis->MPI_LFoutJ), fE);
+      build_Field_compute_unit_from_mpi_field(&pthis->MPI_LFoutJ, fE);
       pthis->use_small_grid = 2;
     }
   }
 
   pthis->pMPI_FoutEN = fEN;
   if (USE_FILTER) {
-    init_external_field3d_FILTER_E(&(pthis->MPI_fieldE_filter));
-    init_external_field3d_FILTER_B(&(pthis->MPI_fieldB_filter));
-    sync_main_data_h2d(&(pthis->MPI_fieldE_filter));
-    sync_main_data_h2d(&(pthis->MPI_fieldB_filter));
+    init_external_field3d_FILTER_E(&pthis->MPI_fieldE_filter);
+    init_external_field3d_FILTER_B(&pthis->MPI_fieldB_filter);
+    sync_main_data_h2d(&pthis->MPI_fieldE_filter);
+    sync_main_data_h2d(&pthis->MPI_fieldB_filter);
   }
 
   if (USE_INIT_EXT_EB) {
-    init_external_field3d_E_2d_extend(&(pthis->MPI_fieldE_ext), reduce_dim, r_x_rat, r_y_rat,
+    init_external_field3d_E_2d_extend(&pthis->MPI_fieldE_ext, reduce_dim, r_x_rat, r_y_rat,
                                       r_z_rat);
-    init_external_field3d_B_2d_extend(&(pthis->MPI_fieldB_ext), reduce_dim, (r_y_rat * r_z_rat),
+    init_external_field3d_B_2d_extend(&pthis->MPI_fieldB_ext, reduce_dim, (r_y_rat * r_z_rat),
                                       (r_x_rat * r_z_rat), (r_x_rat * r_y_rat));
-    sync_main_data_h2d(&(pthis->MPI_fieldE_ext));
-    sync_main_data_h2d(&(pthis->MPI_fieldB_ext));
+    sync_main_data_h2d(&pthis->MPI_fieldE_ext);
+    sync_main_data_h2d(&pthis->MPI_fieldB_ext);
   }
 
   if (USE_INIT_EB0) {
-    init_external_field3d_E0_2d_extend_rand(&(pthis->MPI_fieldE), reduce_dim, r_x_rat, r_y_rat,
+    init_external_field3d_E0_2d_extend_rand(&pthis->MPI_fieldE, reduce_dim, r_x_rat, r_y_rat,
                                             r_z_rat, random_rate);
-    init_external_field3d_B0_2d_extend_rand(&(pthis->MPI_fieldB), reduce_dim, (r_y_rat * r_z_rat),
+    init_external_field3d_B0_2d_extend_rand(&pthis->MPI_fieldB, reduce_dim, (r_y_rat * r_z_rat),
                                             (r_x_rat * r_z_rat), (r_x_rat * r_y_rat), random_rate);
 
   } else {
-    test_set_mainland(&(pthis->MPI_fieldB), 0.0);
-    test_set_mainland(&(pthis->MPI_fieldE), 0.0);
+    test_set_mainland(&pthis->MPI_fieldB, 0.0);
+    test_set_mainland(&pthis->MPI_fieldE, 0.0);
   }
 
-  sync_main_data_h2d(&(pthis->MPI_fieldE));
-  sync_main_data_h2d(&(pthis->MPI_fieldB));
-  blas_yisax_Field3D_MPI(&(pthis->MPI_fieldB1), &(pthis->MPI_fieldB1), 1.0, &(pthis->MPI_fieldB));
+  sync_main_data_h2d(&pthis->MPI_fieldE);
+  sync_main_data_h2d(&pthis->MPI_fieldB);
+  blas_yisax_Field3D_MPI(&pthis->MPI_fieldB1, &pthis->MPI_fieldB1, 1.0, &pthis->MPI_fieldB);
   if (use_rel_ncr) {
-    blas_yiszero_synced_Field3D_MPI(&(pthis->MPI_fieldE01_2x), &(pthis->MPI_fieldE01_2x));
-    blas_yiszero_synced_Field3D_MPI(&(pthis->MPI_fieldB0_2x), &(pthis->MPI_fieldB0_2x));
-    blas_yisax_enlarge_Field3D_MPI(&(pthis->MPI_fieldE), &(pthis->MPI_fieldE01_2x), 1.0,
-                                   &(pthis->MPI_fieldE));
-    blas_yisax_enlarge_Field3D_MPI(&(pthis->MPI_fieldB), &(pthis->MPI_fieldB0_2x), 1,
-                                   &(pthis->MPI_fieldB));
+    blas_yiszero_synced_Field3D_MPI(&pthis->MPI_fieldE01_2x, &pthis->MPI_fieldE01_2x);
+    blas_yiszero_synced_Field3D_MPI(&pthis->MPI_fieldB0_2x, &pthis->MPI_fieldB0_2x);
+    blas_yisax_enlarge_Field3D_MPI(&pthis->MPI_fieldE, &pthis->MPI_fieldE01_2x, 1.0,
+                                   &pthis->MPI_fieldE);
+    blas_yisax_enlarge_Field3D_MPI(&pthis->MPI_fieldB, &pthis->MPI_fieldB0_2x, 1,
+                                   &pthis->MPI_fieldB);
   }
 
-  pthis->pMPI_FoutJ = &(pthis->MPI_FoutJ);
-  init_particle_mpi(&(pthis->MPI_fieldE), num_spec, massp, chargep, npm, grid_cache_len,
+  pthis->pMPI_FoutJ = &pthis->MPI_FoutJ;
+  init_particle_mpi(&pthis->MPI_fieldE, num_spec, massp, chargep, npm, grid_cache_len,
                     cu_cache_len);
   int num_runtime = ((pthis)->MPI_fieldE).num_runtime;
 

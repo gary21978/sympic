@@ -605,7 +605,7 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -618,12 +618,12 @@ __global__ void mapu_sort_one_grid_x_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -1241,7 +1241,7 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -1254,12 +1254,12 @@ __global__ void mapu_sort_one_grid_y_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -1877,7 +1877,7 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -1890,12 +1890,12 @@ __global__ void mapu_sort_one_grid_z_6(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -2521,7 +2521,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -2639,7 +2639,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(cu_cache_head[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(6 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(6 * (lg + p))])),
@@ -2650,7 +2650,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(6 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(6 * (lg + p))])),
@@ -2661,7 +2661,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(6 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(6 * (lg + p))])),
@@ -2680,17 +2680,16 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int
       ridx = MYGEN48 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(6 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 6));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &(cu_cache_head[0])) / 6));
-  (xm4[3] =
-       ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 6));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 6));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &cu_cache_head[0]) / 6));
+  (xm4[3] = ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 6));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -2740,7 +2739,7 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -2753,12 +2752,12 @@ __global__ void mapu_sort_one_grid_x_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -3109,7 +3108,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -3227,7 +3226,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(cu_cache_head[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(6 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(6 * (lg + p))])),
@@ -3238,7 +3237,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(6 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(6 * (lg + p))])),
@@ -3249,7 +3248,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(6 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(6 * (lg + p))])),
@@ -3268,17 +3267,16 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int
       ridx = MYGEN53 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(6 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 6));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &(cu_cache_head[0])) / 6));
-  (xm4[3] =
-       ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 6));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 6));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &cu_cache_head[0]) / 6));
+  (xm4[3] = ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 6));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -3328,7 +3326,7 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -3341,12 +3339,12 @@ __global__ void mapu_sort_one_grid_y_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -3697,7 +3695,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -3815,7 +3813,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(cu_cache_head[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(6 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(6 * (lg + p))])),
@@ -3826,7 +3824,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(6 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(6 * (lg + p))])),
@@ -3837,7 +3835,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 6) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(6 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(6 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(6 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(6 * (lg + p))])),
@@ -3856,17 +3854,16 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int
       ridx = MYGEN58 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(6 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 6));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &(cu_cache_head[0])) / 6));
-  (xm4[3] =
-       ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 6));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 6));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(6 * num_write_minus)]) - &cu_cache_head[0]) / 6));
+  (xm4[3] = ((&(cu_cache_head[(6 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 6));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -3916,7 +3913,7 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -3929,12 +3926,12 @@ __global__ void mapu_sort_one_grid_z_vlo_6(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -4288,7 +4285,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -4424,7 +4421,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
 
         if (cgn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof(
-              (&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))]))[0]);
+              (&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                                    8))[(8 * num_write_main)])),
@@ -4437,7 +4434,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
         num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -4448,7 +4445,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
         num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -4483,14 +4480,14 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
         num_copy_real_11516lap = grid_cache_len - num_write_main;
 
         if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
-          const size_t data_size = sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                                          8))[(8 * (beg_plus - grid_cache_len))]) +
+          const size_t data_size = sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                         8))[(8 * (beg_plus - grid_cache_len))] +
                                            (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                                 8))[(8 * (beg_plus - grid_cache_len))]) +
+              ((__DDR unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                8))[(8 * (beg_plus - grid_cache_len))] +
                                   (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))) *
                           data_size)),
@@ -4502,17 +4499,15 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size =
-            sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                   8))[(8 * (beg_plus - grid_cache_len))]))[0]);
-        memcpy_async(
-            __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
-                          (num_write_main * 8))),
-            ((__DDR unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                              8))[(8 * (beg_plus - grid_cache_len))])),
-            ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
-            __pscmc_mapu_internal_barrier__);
+        const size_t data_size = sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                       8))[(8 * (beg_plus - grid_cache_len))])[0]);
+        memcpy_async(__pscmc_mapu_internal_block__,
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
+                                   (num_write_main * 8))),
+                     ((__DDR unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                       8))[(8 * (beg_plus - grid_cache_len))])),
+                     ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
+                     __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
       num_write_main += num_copy_real_11516lap;
@@ -4526,11 +4521,11 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_minus - (grid_cache_len - beg_left_main))) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -4540,10 +4535,10 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[0]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[0])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
-                     ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                                  8))[(8 * (0 + -grid_cache_len))]) +
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                 8))[(8 * (0 + -grid_cache_len))] +
                                    (beg_left_main * 8))),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[0])),
                      ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
@@ -4568,11 +4563,11 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_plus - cap_tmp) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_plus - cap_tmp)) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -4581,14 +4576,13 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[0]))[0]);
-        memcpy_async(
-            __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
-                          (total_cache_num * 8))),
-            ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
-            ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
-            __pscmc_mapu_internal_barrier__);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[0])[0]);
+        memcpy_async(__pscmc_mapu_internal_block__,
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
+                                   (total_cache_num * 8))),
+                     ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
+                     ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
+                     __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
       total_cache_num += num_copy_real_11516lap;
@@ -4729,7 +4723,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -4740,7 +4734,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -4751,7 +4745,7 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -4770,17 +4764,16 @@ __global__ void mapu_gpu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xy
       ridx = MYGEN72 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -4829,7 +4822,7 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -4842,12 +4835,12 @@ __global__ void mapu_sort_one_grid_x_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -5470,7 +5463,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -5606,7 +5599,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
 
         if (cgn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof(
-              (&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))]))[0]);
+              (&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                                    8))[(8 * num_write_main)])),
@@ -5619,7 +5612,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
         num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -5630,7 +5623,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
         num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -5666,14 +5659,14 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
 
         if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
           const size_t data_size =
-              sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                     8))[(8 * (beg_plus - (XLEN * grid_cache_len)))]) +
+              sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                    8))[(8 * (beg_plus - (XLEN * grid_cache_len)))] +
                       (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                                 8))[(8 * (beg_plus - (XLEN * grid_cache_len)))]) +
+              ((__DDR unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                8))[(8 * (beg_plus - (XLEN * grid_cache_len)))] +
                                   (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))) *
                           data_size)),
@@ -5686,11 +5679,11 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
 
       if (num_copy_real_11516lap * 8) {
         const size_t data_size =
-            sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                   8))[(8 * (beg_plus - (XLEN * grid_cache_len)))]))[0]);
+            sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                  8))[(8 * (beg_plus - (XLEN * grid_cache_len)))])[0]);
         memcpy_async(
             __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
+            ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
                           (num_write_main * 8))),
             ((__DDR unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                               8))[(8 * (beg_plus - (XLEN * grid_cache_len)))])),
@@ -5709,11 +5702,11 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_minus - (grid_cache_len - beg_left_main))) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -5723,10 +5716,10 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[0]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[0])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
-                     ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                                  8))[(8 * (0 + -(XLEN * grid_cache_len)))]) +
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                                 8))[(8 * (0 + -(XLEN * grid_cache_len)))] +
                                    (beg_left_main * 8))),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[0])),
                      ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
@@ -5751,11 +5744,11 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_plus - cap_tmp) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_plus - cap_tmp)) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -5764,14 +5757,13 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[0]))[0]);
-        memcpy_async(
-            __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
-                          (total_cache_num * 8))),
-            ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
-            ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
-            __pscmc_mapu_internal_barrier__);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[0])[0]);
+        memcpy_async(__pscmc_mapu_internal_block__,
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
+                                   (total_cache_num * 8))),
+                     ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
+                     ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
+                     __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
       total_cache_num += num_copy_real_11516lap;
@@ -5912,7 +5904,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -5923,7 +5915,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -5934,7 +5926,7 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -5953,17 +5945,16 @@ __global__ void mapu_gpu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xy
       ridx = MYGEN85 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -6012,7 +6003,7 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -6025,12 +6016,12 @@ __global__ void mapu_sort_one_grid_y_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -6653,7 +6644,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -6789,7 +6780,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
 
         if (cgn_shared[p / __xlen] * 8) {
           const size_t data_size = sizeof(
-              (&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))]))[0]);
+              (&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
                                                    8))[(8 * num_write_main)])),
@@ -6802,7 +6793,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
         num_write_main += cgn_shared[p / __xlen];
 
         if (tln_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -6813,7 +6804,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
         num_write_minus += tln_shared[p / __xlen];
 
         if (trn_shared[p / __xlen] * 8) {
-          const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+          const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
           memcpy_async(__pscmc_mapu_internal_block__,
                        ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                        ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -6849,15 +6840,15 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
 
         if ((end_plus - beg_plus) - (grid_cache_len - num_write_main)) {
           const size_t data_size =
-              sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                     8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))]) +
+              sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                    8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))] +
                       (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&((inoutput +
-                                     (((cu_offset + grid_id) * grid_cache_len) *
-                                      8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))]) +
+              ((__DDR unsigned *)(&(inoutput +
+                                    (((cu_offset + grid_id) * grid_cache_len) *
+                                     8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))] +
                                   (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * ((end_plus - beg_plus) - (grid_cache_len - num_write_main))) *
                           data_size)),
@@ -6870,17 +6861,16 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
 
       if (num_copy_real_11516lap * 8) {
         const size_t data_size =
-            sizeof((&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                   8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))]))[0]);
-        memcpy_async(
-            __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
-                          (num_write_main * 8))),
-            ((__DDR unsigned *)&(
-                (inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                             8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))])),
-            ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
-            __pscmc_mapu_internal_barrier__);
+            sizeof((&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                  8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))])[0]);
+        memcpy_async(__pscmc_mapu_internal_block__,
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
+                                   (num_write_main * 8))),
+                     ((__DDR unsigned *)&(
+                         (inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                      8))[(8 * (beg_plus - ((XLEN * YLEN) * grid_cache_len)))])),
+                     ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
+                     __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
       num_write_main += num_copy_real_11516lap;
@@ -6894,11 +6884,11 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_minus - (grid_cache_len - beg_left_main)) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_left[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_left[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_minus - (grid_cache_len - beg_left_main))) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -6908,11 +6898,11 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[0]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[0])[0]);
         memcpy_async(
             __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) *
-                                         8))[(8 * (0 + -((XLEN * YLEN) * grid_cache_len)))]) +
+            ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) *
+                                        8))[(8 * (0 + -((XLEN * YLEN) * grid_cache_len)))] +
                           (beg_left_main * 8))),
             ((__DDR unsigned *)&(for_sort_grid_memory_left[0])),
             ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
@@ -6937,11 +6927,11 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
 
         if (num_write_plus - cap_tmp) {
           const size_t data_size =
-              sizeof((&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))[0]);
+              sizeof((&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))[0]);
           memcpy_async(
               __pscmc_mapu_internal_block__,
               ((unsigned *)(cu_cache_head + (8 * cu_cur_cache_load))),
-              ((__DDR unsigned *)(&(for_sort_grid_memory_right[0]) + (num_copy_real_11516lap * 8))),
+              ((__DDR unsigned *)(&for_sort_grid_memory_right[0] + (num_copy_real_11516lap * 8))),
               ((uint64_t)((8 * (num_write_plus - cap_tmp)) * data_size)),
               __pscmc_mapu_internal_barrier__);
           __pscmc_mapu_internal_barrier__.arrive_and_wait();
@@ -6950,14 +6940,13 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       }
 
       if (num_copy_real_11516lap * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[0]))[0]);
-        memcpy_async(
-            __pscmc_mapu_internal_block__,
-            ((unsigned *)(&((inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0]) +
-                          (total_cache_num * 8))),
-            ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
-            ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
-            __pscmc_mapu_internal_barrier__);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[0])[0]);
+        memcpy_async(__pscmc_mapu_internal_block__,
+                     ((unsigned *)(&(inoutput + (((cu_offset + grid_id) * grid_cache_len) * 8))[0] +
+                                   (total_cache_num * 8))),
+                     ((__DDR unsigned *)&(for_sort_grid_memory_right[0])),
+                     ((uint64_t)((num_copy_real_11516lap * 8) * data_size)),
+                     __pscmc_mapu_internal_barrier__);
         __pscmc_mapu_internal_barrier__.arrive_and_wait();
       }
       total_cache_num += num_copy_real_11516lap;
@@ -7098,7 +7087,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -7109,7 +7098,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -7120,7 +7109,7 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -7139,17 +7128,16 @@ __global__ void mapu_gpu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xy
       ridx = MYGEN98 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -7198,7 +7186,7 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -7211,12 +7199,12 @@ __global__ void mapu_sort_one_grid_z_8(__DDR double *inoutput, __DDR int *xyzw,
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -7842,7 +7830,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -7960,7 +7948,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -7971,7 +7959,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -7982,7 +7970,7 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -8001,17 +7989,16 @@ __global__ void mapu_gpu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int
       ridx = MYGEN102 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -8061,7 +8048,7 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -8074,12 +8061,12 @@ __global__ void mapu_sort_one_grid_x_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -8430,7 +8417,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -8548,7 +8535,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -8559,7 +8546,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -8570,7 +8557,7 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -8589,17 +8576,16 @@ __global__ void mapu_gpu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int
       ridx = MYGEN107 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -8649,7 +8635,7 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -8662,12 +8648,12 @@ __global__ void mapu_sort_one_grid_y_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -9018,7 +9004,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9136,7 +9122,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
     for (p = 0; p < (__xlen * __xlen); p = (p + __xlen)) {
 
       if (cgn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(cu_cache_head[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&cu_cache_head[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(cu_cache_head[(8 * num_write_main)])),
                      ((__DDR unsigned *)&(cu_cache_head[(8 * (lg + p))])),
@@ -9147,7 +9133,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
       num_write_main += cgn_shared[p / __xlen];
 
       if (tln_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_left[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_left[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_left[(8 * num_write_minus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_left[(8 * (lg + p))])),
@@ -9158,7 +9144,7 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
       num_write_minus += tln_shared[p / __xlen];
 
       if (trn_shared[p / __xlen] * 8) {
-        const size_t data_size = sizeof((&(for_sort_grid_memory_right[(8 * (lg + p))]))[0]);
+        const size_t data_size = sizeof((&for_sort_grid_memory_right[(8 * (lg + p))])[0]);
         memcpy_async(__pscmc_mapu_internal_block__,
                      ((unsigned *)&(for_sort_grid_memory_right[(8 * num_write_plus)])),
                      ((__DDR unsigned *)&(for_sort_grid_memory_right[(8 * (lg + p))])),
@@ -9177,17 +9163,16 @@ __global__ void mapu_gpu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int
       ridx = MYGEN112 + (__idx + -__xlen);
 
       if (ridx >= 0) {
-        ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]))[ridx] =
-             (&(for_sort_grid_memory_right[0]))[ridx]);
+        ((&cu_cache_head[(8 * (cu_cache_length - num_write_plus))])[ridx] =
+             (&for_sort_grid_memory_right[0])[ridx]);
       }
     }
   }
   __mem0__ int xm4[4];
   xm4[0] = num_write_main;
-  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &(cu_cache_head[0])) / 8));
-  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &(cu_cache_head[0])) / 8));
-  (xm4[3] =
-       ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &(cu_cache_head[0])) / 8));
+  (xm4[1] = ((&(for_sort_grid_memory_left[0]) - &cu_cache_head[0]) / 8));
+  (xm4[2] = ((&(for_sort_grid_memory_left[(8 * num_write_minus)]) - &cu_cache_head[0]) / 8));
+  (xm4[3] = ((&(cu_cache_head[(8 * (cu_cache_length - num_write_plus))]) - &cu_cache_head[0]) / 8));
 
   if (__idx == 0) {
     __mem0__ double __tmp_array[4096];
@@ -9237,7 +9222,7 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9250,12 +9235,12 @@ __global__ void mapu_sort_one_grid_z_vlo_8(__DDR double *inoutput, __DDR int *xy
   __shared__ barrier_t get_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t put_sync_id;
 
   if (threadIdx.x == 0) {
-    init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ MAPU_LONG i;
   i = 0;
@@ -9601,7 +9586,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9613,12 +9598,12 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __shared__ barrier_t get_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
     __shared__ barrier_t put_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
 
     {
@@ -9649,7 +9634,7 @@ __global__ void mapu_cu_swap_l_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
       new_left_par = end_cu_par + (end_left_par - beg_left_par);
 
       {
-        const size_t data_size = sizeof((&(new_left_par))[0]);
+        const size_t data_size = sizeof((&new_left_par)[0]);
         memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(cu_xyzw + (4 * left_pid))),
                      ((unsigned *)&(new_left_par)), ((uint64_t)(data_size)), put_sync_id);
       }
@@ -9712,7 +9697,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9724,12 +9709,12 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __shared__ barrier_t get_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
     __shared__ barrier_t put_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
 
     {
@@ -9760,7 +9745,7 @@ __global__ void mapu_cu_swap_r_6(__DDR double *cu_cache, __DDR int *cu_xyzw,
       new_left_par = end_cu_par + (end_left_par - beg_left_par);
 
       {
-        const size_t data_size = sizeof((&(new_left_par))[0]);
+        const size_t data_size = sizeof((&new_left_par)[0]);
         memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(cu_xyzw + (4 * left_pid))),
                      ((unsigned *)&(new_left_par)), ((uint64_t)(data_size)), put_sync_id);
       }
@@ -9822,7 +9807,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9834,12 +9819,12 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __shared__ barrier_t get_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
     __shared__ barrier_t put_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
 
     {
@@ -9870,7 +9855,7 @@ __global__ void mapu_cu_swap_l_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
       new_left_par = end_cu_par + (end_left_par - beg_left_par);
 
       {
-        const size_t data_size = sizeof((&(new_left_par))[0]);
+        const size_t data_size = sizeof((&new_left_par)[0]);
         memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(cu_xyzw + (4 * left_pid))),
                      ((unsigned *)&(new_left_par)), ((uint64_t)(data_size)), put_sync_id);
       }
@@ -9933,7 +9918,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG __idx = 0;
@@ -9945,12 +9930,12 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
     __shared__ barrier_t get_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(get_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&get_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
     __shared__ barrier_t put_sync_id;
 
     if (threadIdx.x == 0) {
-      init(&(put_sync_id), (blockDim.x * (blockDim.y * blockDim.z)));
+      init(&put_sync_id, (blockDim.x * (blockDim.y * blockDim.z)));
     }
 
     {
@@ -9981,7 +9966,7 @@ __global__ void mapu_cu_swap_r_8(__DDR double *cu_cache, __DDR int *cu_xyzw,
       new_left_par = end_cu_par + (end_left_par - beg_left_par);
 
       {
-        const size_t data_size = sizeof((&(new_left_par))[0]);
+        const size_t data_size = sizeof((&new_left_par)[0]);
         memcpy_async(__pscmc_mapu_internal_block__, ((__DDR unsigned *)(cu_xyzw + (4 * left_pid))),
                      ((unsigned *)&(new_left_par)), ((uint64_t)(data_size)), put_sync_id);
       }

@@ -97,8 +97,8 @@ int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y,
     hilbert_curve_2d_core(modifiedid, ori_id, n, (x + xi), (y + xj), xi, xj, yi, yj, xlen);
     hilbert_curve_2d_core(modifiedid, ori_id, n, ((x + xi) + yi), (y + (xj + yj)), xi, xj, yi, yj,
                           xlen);
-    hilbert_curve_2d_core(modifiedid, ori_id, n, (x + (xi + (2 * yi))), (y + (xj + (2 * yj))),
-                          -(yi), -(yj), -(xi), -(xj), xlen);
+    hilbert_curve_2d_core(modifiedid, ori_id, n, (x + (xi + (2 * yi))), (y + (xj + (2 * yj))), -yi,
+                          -yj, -xi, -xj, xlen);
   }
 
   return 0;

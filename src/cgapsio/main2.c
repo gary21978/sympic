@@ -54,11 +54,11 @@ int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   return 0;
 }
 int main(int argc, char **argv) {
-  MPI_Init(&(argc), &(argv));
+  MPI_Init(&argc, &argv);
   Gaps_IO_DataFile gi;
-  Gaps_IO_DataFile *pgi = &(gi);
+  Gaps_IO_DataFile *pgi = &gi;
   Gaps_IO_DataFile go;
-  Gaps_IO_DataFile *pgo = &(go);
+  Gaps_IO_DataFile *pgo = &go;
   if (argc < 3) {
     fprintf(stderr, "Usage: %s infile(s) outfile\n", argv[0]);
     return 0;
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
   char oriname[512];
   {
     int rank;
-    obtain_pname_and_rank(oriname, &(rank), argv[1]);
+    obtain_pname_and_rank(oriname, &rank, argv[1]);
     GAPS_IO_InitIFileV2(pgi, oriname, "", rank);
   }
   if (2 != pgi->version) {
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
   }
   int64_t numsteps = 0;
   int64_t numresd = 0;
-  GAPS_IO_DataNumStepsAndResidue(pgi, &(numsteps), &(numresd));
+  GAPS_IO_DataNumStepsAndResidue(pgi, &numsteps, &numresd);
   char *display_steps = "GAPS_IO_DISPLAY_NUM_STEPS";
   char *uds = getenv(display_steps);
   fprintf(stderr, "0x%p 0x%p\n", display_steps, uds);
@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
   long t_min = 0;
   long t_max = numsteps;
   if (min_numt) {
-    sscanf(min_numt, "%ld", &(t_min));
+    sscanf(min_numt, "%ld", &t_min);
   }
   fprintf(stderr, "t_min=%ld ns=%ld\n", t_min, numsteps);
   if (t_min >= numsteps) {
@@ -154,11 +154,11 @@ int main(int argc, char **argv) {
   }
   t_min = (t_min + numsteps) % numsteps;
   if (max_numt) {
-    sscanf(max_numt, "%ld", &(t_max));
+    sscanf(max_numt, "%ld", &t_max);
   }
   long t_opt_offset = t_min;
   if (output_offset_numt) {
-    sscanf(output_offset_numt, "%ld", &(t_opt_offset));
+    sscanf(output_offset_numt, "%ld", &t_opt_offset);
   }
   t_max = ((t_max + (numsteps + -1)) % numsteps) + 1;
   fprintf(stderr, "tmin=%ld tmax=%ld topt=%ld\n", t_min, t_max, t_opt_offset);

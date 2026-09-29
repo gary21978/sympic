@@ -227,7 +227,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
     if (gid->version == 2) {
       if ((cur_rank != gid->send_to_proc) && gid->num_reduce_proc) {
-        MPI_Send(&(numvec), 1, PS_MPI_LONG, gid->send_to_proc, cur_rank, PS_MPI_COMM_WORLD);
+        MPI_Send(&numvec, 1, PS_MPI_LONG, gid->send_to_proc, cur_rank, PS_MPI_COMM_WORLD);
       }
     }
 
@@ -301,7 +301,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
         if ((gid->version == 2) && gid->num_reduce_proc) {
           int cur_rank;
 
-          PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(cur_rank));
+          PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &cur_rank);
           if (gid->cur_rank != gid->send_to_proc) {
             PS_MPI_Send(write_buffer, realoneblklen, PS_MPI_DOUBLE, gid->send_to_proc, cur_rank,
                         PS_MPI_COMM_WORLD);
@@ -329,7 +329,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
     if ((gid->version == 2) && gid->num_reduce_proc) {
       int cur_rank;
 
-      PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(cur_rank));
+      PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &cur_rank);
       if (gid->cur_rank != gid->send_to_proc) {
 
       } else {
@@ -345,7 +345,7 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
           for (n = cur_rank + 1; n < (num_reduce_proc * (real_rank + 1)); n++) {
             int num_proc;
 
-            PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(num_proc));
+            PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &num_proc);
             if (n >= num_proc) {
               break;
             }
@@ -354,13 +354,13 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
 
             MPI_Status s1;
 
-            PS_MPI_Recv(&(remote_numvec), 1, PS_MPI_LONG, n, n, PS_MPI_COMM_WORLD, &(s1));
+            PS_MPI_Recv(&remote_numvec, 1, PS_MPI_LONG, n, n, PS_MPI_COMM_WORLD, &s1);
             {
               long g;
 
               for (g = 0; g < remote_numvec; g++) {
                 PS_MPI_Recv(write_buffer, realoneblklen, PS_MPI_DOUBLE, n, n, PS_MPI_COMM_WORLD,
-                            &(s1));
+                            &s1);
                 GAPS_IO_FWrite(gid, write_buffer, realoneblklen);
               }
             }

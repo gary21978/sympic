@@ -33,7 +33,7 @@ double wclk_now() {
 
   struct timezone tz1;
 
-  gettimeofday(&(tv1), &(tz1));
+  gettimeofday(&tv1, &tz1);
   double time_start1 = (((double)tv1.tv_sec) + (1e-06 * ((double)tv1.tv_usec)));
 
   return time_start1;
@@ -200,7 +200,7 @@ long srand_seed = 0;
 int main(int argc, char **argv) {
   main_proc(argc, argv);
   get_constants();
-  PS_MPI_Init(&(argc), &(argv));
+  PS_MPI_Init(&argc, &argv);
   {
     char *nm = "V0_z_file";
 
@@ -274,7 +274,7 @@ int main(int argc, char **argv) {
   int n = NUM_PROCESS;
 
   if (NUM_PROCESS == 0) {
-    PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &(n));
+    PS_MPI_Comm_size(PS_MPI_COMM_WORLD, &n);
     NUM_PROCESS = n;
   }
 
@@ -295,7 +295,7 @@ int main(int argc, char **argv) {
   }
   int rank;
 
-  PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &(rank));
+  PS_MPI_Comm_rank(PS_MPI_COMM_WORLD, &rank);
   assert(rank < n);
   /* Device communicator unique ID exchange. */
   SymPIC_Device_UniqueId device_comm_id;
@@ -356,19 +356,19 @@ int main(int argc, char **argv) {
 
   Field3D_MPI testfield;
 
-  Field3D_MPI *ptestfield = &(testfield);
+  Field3D_MPI *ptestfield = &testfield;
 
   Field3D_MPI testfieldSPEC;
 
-  Field3D_MPI *ptestfieldSPEC = &(testfieldSPEC);
+  Field3D_MPI *ptestfieldSPEC = &testfieldSPEC;
 
   Field3D_Seq fstest;
 
   Field3D_Seq fstestSPEC;
 
-  Field3D_Seq *pfstestSPEC = &(fstestSPEC);
+  Field3D_Seq *pfstestSPEC = &fstestSPEC;
 
-  Field3D_Seq *pfstest = &(fstest);
+  Field3D_Seq *pfstest = &fstest;
 
   int cd_types[NUM_MAX_RUNTIME];
   int dev_ids[NUM_MAX_RUNTIME];
@@ -495,7 +495,7 @@ int main(int argc, char **argv) {
   }
   Particle_in_Cell_MPI pis;
 
-  Particle_in_Cell_MPI *ppis = &(pis);
+  Particle_in_Cell_MPI *ppis = &pis;
 
   double M_USE_SMALL_NUM_GRIDS = call_GET_VAR("USE_SMALL_NUM_GRIDS");
 
@@ -526,21 +526,21 @@ int main(int argc, char **argv) {
     M_INIT_VMAX = 1;
   }
 
-  init_non_uni_particle_fmpi(&(ppis->MPI_fieldE), M_INIT_VMAX);
+  init_non_uni_particle_fmpi(&ppis->MPI_fieldE, M_INIT_VMAX);
 
-  blas_yiszero_synced_Field3D_MPI(&(ppis->MPI_FoutJ), &(ppis->MPI_FoutJ));
+  blas_yiszero_synced_Field3D_MPI(&ppis->MPI_FoutJ, &ppis->MPI_FoutJ);
 
   Gaps_IO_DataFile gid;
 
-  Gaps_IO_DataFile *pgid = &(gid);
+  Gaps_IO_DataFile *pgid = &gid;
 
   Gaps_IO_DataFile gidj;
 
-  Gaps_IO_DataFile *pgidj = &(gidj);
+  Gaps_IO_DataFile *pgidj = &gidj;
 
   Gaps_IO_DataFile gide;
 
-  Gaps_IO_DataFile *pgide = &(gide);
+  Gaps_IO_DataFile *pgide = &gide;
 
   double M_USE_OUTPUT_PERFORMANCE = call_GET_VAR("USE_OUTPUT_PERFORMANCE");
 
@@ -572,11 +572,11 @@ int main(int argc, char **argv) {
 
         double tbeg = wclk_now();
 
-        sync_main_data_d2h(&(ppis->MPI_fieldB));
-        sync_main_data_d2h(&(ppis->MPI_fieldE));
+        sync_main_data_d2h(&ppis->MPI_fieldB);
+        sync_main_data_d2h(&ppis->MPI_fieldE);
         sync_main_data_d2h(ppis->pMPI_FoutJ);
-        mpi_field_write_to_file(&(ppis->MPI_fieldE), pgid, (tsave * 2));
-        mpi_field_write_to_file(&(ppis->MPI_fieldB), pgid, ((tsave * 2) + 1));
+        mpi_field_write_to_file(&ppis->MPI_fieldE, pgid, (tsave * 2));
+        mpi_field_write_to_file(&ppis->MPI_fieldB, pgid, ((tsave * 2) + 1));
         mpi_field_write_to_file(ppis->pMPI_FoutJ, pgidj, tsave);
         blas_yiszero_Field3D_MPI(ptestfieldSPEC, ptestfieldSPEC);
         dump_ene_num_mpi(ppis, 0);
@@ -598,15 +598,15 @@ int main(int argc, char **argv) {
       }
 
       // set B1=B
-      blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldB1), 1.0, &(ppis->MPI_fieldB));
-      MPI_YEE_CURL_R(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldE), DELTAT);
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldE), &(ppis->MPI_fieldE), 1, &(ppis->MPI_fieldE_ext));
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB_ext));
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldB1), 1, &(ppis->MPI_fieldB_ext));
-      sync_ovlp_mpi_field(&(ppis->MPI_fieldE));
-      sync_ovlp_mpi_field(&(ppis->MPI_fieldB));
-      sync_ovlp_mpi_field(&(ppis->MPI_fieldB1));
-      blas_yiszero_synced_Field3D_MPI(&(ppis->MPI_FoutJ), &(ppis->MPI_FoutJ));
+      blas_yisax_Field3D_MPI(&ppis->MPI_fieldB1, &ppis->MPI_fieldB1, 1.0, &ppis->MPI_fieldB);
+      MPI_YEE_CURL_R(&ppis->MPI_fieldB1, &ppis->MPI_fieldE, DELTAT);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldE, &ppis->MPI_fieldE, 1, &ppis->MPI_fieldE_ext);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldB, &ppis->MPI_fieldB, 1, &ppis->MPI_fieldB_ext);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldB1, &ppis->MPI_fieldB1, 1, &ppis->MPI_fieldB_ext);
+      sync_ovlp_mpi_field(&ppis->MPI_fieldE);
+      sync_ovlp_mpi_field(&ppis->MPI_fieldB);
+      sync_ovlp_mpi_field(&ppis->MPI_fieldB1);
+      blas_yiszero_synced_Field3D_MPI(&ppis->MPI_FoutJ, &ppis->MPI_FoutJ);
       {
 
         // defined from class Particle_in_Cell_MPI
@@ -619,29 +619,28 @@ int main(int argc, char **argv) {
         Field3D_MPI *pMPI_FoutJ = ppis->pMPI_FoutJ;
 
         //====================Particle_in_Cell_MPI
-        Field3D_MPI *pMPI_fieldE = &(MPI_fieldE);
+        Field3D_MPI *pMPI_fieldE = &MPI_fieldE;
 
-        Field3D_MPI *pMPI_fieldB = &(MPI_fieldB);
+        Field3D_MPI *pMPI_fieldB = &MPI_fieldB;
 
-        MPI_geo_nr_Bfield_pushJ_vlo(ppis, pMPI_fieldE, pMPI_fieldB, &(MPI_fieldB1), pMPI_FoutJ,
-                                    pmass, pchg, (0.5 * DELTAT), T_TORI_X0, 0, 0, 0, 0, 0);
+        MPI_geo_nr_Bfield_pushJ_vlo(ppis, pMPI_fieldE, pMPI_fieldB, &MPI_fieldB1, pMPI_FoutJ, pmass,
+                                    pchg, (0.5 * DELTAT), T_TORI_X0, 0, 0, 0, 0, 0);
       }
       // sort particle if it is the sort time-step
       if ((t % num_multi_step_sort) == 0) {
-        call_particle_sort_mpi(&(ppis->MPI_fieldE), 0, 0);
-        call_particle_sort_mpi(&(ppis->MPI_fieldE), 1, 0);
-        call_particle_sort_mpi(&(ppis->MPI_fieldE), 2, 0);
+        call_particle_sort_mpi(&ppis->MPI_fieldE, 0, 0);
+        call_particle_sort_mpi(&ppis->MPI_fieldE, 1, 0);
+        call_particle_sort_mpi(&ppis->MPI_fieldE, 2, 0);
       }
 
-      merge_ovlp_mpi_field(&(ppis->MPI_FoutJ));
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldE), &(ppis->MPI_fieldE), -1, &(ppis->MPI_fieldE_ext));
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), -1, &(ppis->MPI_fieldB_ext));
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldB1), &(ppis->MPI_fieldB1), -1,
-                            &(ppis->MPI_fieldB_ext));
+      merge_ovlp_mpi_field(&ppis->MPI_FoutJ);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldE, &ppis->MPI_fieldE, -1, &ppis->MPI_fieldE_ext);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldB, &ppis->MPI_fieldB, -1, &ppis->MPI_fieldB_ext);
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldB1, &ppis->MPI_fieldB1, -1, &ppis->MPI_fieldB_ext);
 
       // add current to Electric field E
-      blas_axpy_Field3D_MPI(&(ppis->MPI_fieldE), &(ppis->MPI_fieldE), -1, &(ppis->MPI_FoutJ));
-      MPI_GEO_YEE_CURL_L(&(ppis->MPI_fieldE), &(ppis->MPI_fieldB1), T_TORI_X0, M_DELTA_X, M_DELTA_Y,
+      blas_axpy_Field3D_MPI(&ppis->MPI_fieldE, &ppis->MPI_fieldE, -1, &ppis->MPI_FoutJ);
+      MPI_GEO_YEE_CURL_L(&ppis->MPI_fieldE, &ppis->MPI_fieldB1, T_TORI_X0, M_DELTA_X, M_DELTA_Y,
                          M_DELTA_Z, DELTAT);
 
 #ifdef SYMPIC_MAPU
@@ -663,7 +662,7 @@ int main(int argc, char **argv) {
       // }
 
       // set B=B1
-      blas_yisax_Field3D_MPI(&(ppis->MPI_fieldB), &(ppis->MPI_fieldB), 1, &(ppis->MPI_fieldB1));
+      blas_yisax_Field3D_MPI(&ppis->MPI_fieldB, &ppis->MPI_fieldB, 1, &ppis->MPI_fieldB1);
       if ((rank == 0) && (M_DISABLE_TS_LOG == 0)) {
         double tnow = wclk_now();
 

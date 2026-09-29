@@ -101,103 +101,103 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
   cuda_dump_ene_num_scmc_set_parameter_inoutput(dump_ene_num_kernel, inoutput);
   cuda_pscmc_mem cuda_alloc_prefix_Deltat;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_Deltat), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_Deltat, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_Deltat).h_data)[0] = Deltat;
-  cuda_dump_ene_num_scmc_set_parameter_Deltat(dump_ene_num_kernel, &(cuda_alloc_prefix_Deltat));
+  cuda_dump_ene_num_scmc_set_parameter_Deltat(dump_ene_num_kernel, &cuda_alloc_prefix_Deltat);
   cuda_pscmc_mem cuda_alloc_prefix_DELTA_Z;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DELTA_Z), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_DELTA_Z, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_DELTA_Z).h_data)[0] = DELTA_Z;
-  cuda_dump_ene_num_scmc_set_parameter_DELTA_Z(dump_ene_num_kernel, &(cuda_alloc_prefix_DELTA_Z));
+  cuda_dump_ene_num_scmc_set_parameter_DELTA_Z(dump_ene_num_kernel, &cuda_alloc_prefix_DELTA_Z);
   cuda_pscmc_mem cuda_alloc_prefix_DELTA_Y;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DELTA_Y), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_DELTA_Y, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_DELTA_Y).h_data)[0] = DELTA_Y;
-  cuda_dump_ene_num_scmc_set_parameter_DELTA_Y(dump_ene_num_kernel, &(cuda_alloc_prefix_DELTA_Y));
+  cuda_dump_ene_num_scmc_set_parameter_DELTA_Y(dump_ene_num_kernel, &cuda_alloc_prefix_DELTA_Y);
   cuda_pscmc_mem cuda_alloc_prefix_DELTA_X;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_DELTA_X), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_DELTA_X, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_DELTA_X).h_data)[0] = DELTA_X;
-  cuda_dump_ene_num_scmc_set_parameter_DELTA_X(dump_ene_num_kernel, &(cuda_alloc_prefix_DELTA_X));
+  cuda_dump_ene_num_scmc_set_parameter_DELTA_X(dump_ene_num_kernel, &cuda_alloc_prefix_DELTA_X);
   cuda_pscmc_mem cuda_alloc_prefix_NUM_SPEC;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_NUM_SPEC), PS_INT_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_NUM_SPEC, PS_INT_NUM, 0);
   ((int *)(cuda_alloc_prefix_NUM_SPEC).h_data)[0] = NUM_SPEC;
-  cuda_dump_ene_num_scmc_set_parameter_NUM_SPEC(dump_ene_num_kernel, &(cuda_alloc_prefix_NUM_SPEC));
+  cuda_dump_ene_num_scmc_set_parameter_NUM_SPEC(dump_ene_num_kernel, &cuda_alloc_prefix_NUM_SPEC);
   cuda_pscmc_mem cuda_alloc_prefix_SPEC;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_SPEC), PS_INT_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_SPEC, PS_INT_NUM, 0);
   ((int *)(cuda_alloc_prefix_SPEC).h_data)[0] = SPEC;
-  cuda_dump_ene_num_scmc_set_parameter_SPEC(dump_ene_num_kernel, &(cuda_alloc_prefix_SPEC));
+  cuda_dump_ene_num_scmc_set_parameter_SPEC(dump_ene_num_kernel, &cuda_alloc_prefix_SPEC);
   cuda_pscmc_mem cuda_alloc_prefix_Charge;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_Charge), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_Charge, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_Charge).h_data)[0] = Charge;
-  cuda_dump_ene_num_scmc_set_parameter_Charge(dump_ene_num_kernel, &(cuda_alloc_prefix_Charge));
+  cuda_dump_ene_num_scmc_set_parameter_Charge(dump_ene_num_kernel, &cuda_alloc_prefix_Charge);
   cuda_pscmc_mem cuda_alloc_prefix_Mass;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_Mass), PS_DOUBLE_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_Mass, PS_DOUBLE_NUM, 0);
   ((double *)(cuda_alloc_prefix_Mass).h_data)[0] = Mass;
-  cuda_dump_ene_num_scmc_set_parameter_Mass(dump_ene_num_kernel, &(cuda_alloc_prefix_Mass));
+  cuda_dump_ene_num_scmc_set_parameter_Mass(dump_ene_num_kernel, &cuda_alloc_prefix_Mass);
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_cu_cache_length, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_cu_cache_length).h_data)[0] = cu_cache_length;
   cuda_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel,
-                                                       &(cuda_alloc_prefix_cu_cache_length));
+                                                       &cuda_alloc_prefix_cu_cache_length);
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_grid_cache_len, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_grid_cache_len).h_data)[0] = grid_cache_len;
   cuda_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel,
-                                                      &(cuda_alloc_prefix_grid_cache_len));
+                                                      &cuda_alloc_prefix_grid_cache_len);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_num_ele, PS_INT_NUM, 0);
   ((int *)(cuda_alloc_prefix_num_ele).h_data)[0] = num_ele;
-  cuda_dump_ene_num_scmc_set_parameter_num_ele(dump_ene_num_kernel, &(cuda_alloc_prefix_num_ele));
+  cuda_dump_ene_num_scmc_set_parameter_num_ele(dump_ene_num_kernel, &cuda_alloc_prefix_num_ele);
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_numvec, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_numvec).h_data)[0] = numvec;
-  cuda_dump_ene_num_scmc_set_parameter_numvec(dump_ene_num_kernel, &(cuda_alloc_prefix_numvec));
+  cuda_dump_ene_num_scmc_set_parameter_numvec(dump_ene_num_kernel, &cuda_alloc_prefix_numvec);
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_ovlp, PS_INT_NUM, 0);
   ((int *)(cuda_alloc_prefix_ovlp).h_data)[0] = ovlp;
-  cuda_dump_ene_num_scmc_set_parameter_ovlp(dump_ene_num_kernel, &(cuda_alloc_prefix_ovlp));
+  cuda_dump_ene_num_scmc_set_parameter_ovlp(dump_ene_num_kernel, &cuda_alloc_prefix_ovlp);
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_ZLEN, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_ZLEN).h_data)[0] = ZLEN;
-  cuda_dump_ene_num_scmc_set_parameter_ZLEN(dump_ene_num_kernel, &(cuda_alloc_prefix_ZLEN));
+  cuda_dump_ene_num_scmc_set_parameter_ZLEN(dump_ene_num_kernel, &cuda_alloc_prefix_ZLEN);
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_YLEN, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_YLEN).h_data)[0] = YLEN;
-  cuda_dump_ene_num_scmc_set_parameter_YLEN(dump_ene_num_kernel, &(cuda_alloc_prefix_YLEN));
+  cuda_dump_ene_num_scmc_set_parameter_YLEN(dump_ene_num_kernel, &cuda_alloc_prefix_YLEN);
   cuda_pscmc_mem cuda_alloc_prefix_XLEN;
 
-  cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
+  cuda_pscmc_mem_init(pe, &cuda_alloc_prefix_XLEN, PS_LONG_NUM, 0);
   ((long *)(cuda_alloc_prefix_XLEN).h_data)[0] = XLEN;
-  cuda_dump_ene_num_scmc_set_parameter_XLEN(dump_ene_num_kernel, &(cuda_alloc_prefix_XLEN));
+  cuda_dump_ene_num_scmc_set_parameter_XLEN(dump_ene_num_kernel, &cuda_alloc_prefix_XLEN);
   cuda_dump_ene_num_exec(dump_ene_num_kernel, the_xlen, numvec);
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_Deltat));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_DELTA_Z));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_DELTA_Y));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_DELTA_X));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_NUM_SPEC));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_SPEC));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_Charge));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_Mass));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_cu_cache_length));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_grid_cache_len));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_num_ele));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_numvec));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ovlp));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
-  cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_Deltat);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_DELTA_Z);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_DELTA_Y);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_DELTA_X);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_NUM_SPEC);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_SPEC);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_Charge);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_Mass);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_cu_cache_length);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_grid_cache_len);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_num_ele);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_numvec);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_ovlp);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_ZLEN);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_YLEN);
+  cuda_pscmc_mem_destroy(&cuda_alloc_prefix_XLEN);
   return 0;
 }
 #endif
@@ -290,103 +290,103 @@ int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
   mapu_dump_ene_num_scmc_set_parameter_inoutput(dump_ene_num_kernel, inoutput);
   mapu_pscmc_mem mapu_alloc_prefix_Deltat;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_Deltat), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_Deltat, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_Deltat).h_data)[0] = Deltat;
-  mapu_dump_ene_num_scmc_set_parameter_Deltat(dump_ene_num_kernel, &(mapu_alloc_prefix_Deltat));
+  mapu_dump_ene_num_scmc_set_parameter_Deltat(dump_ene_num_kernel, &mapu_alloc_prefix_Deltat);
   mapu_pscmc_mem mapu_alloc_prefix_DELTA_Z;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DELTA_Z), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_DELTA_Z, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_DELTA_Z).h_data)[0] = DELTA_Z;
-  mapu_dump_ene_num_scmc_set_parameter_DELTA_Z(dump_ene_num_kernel, &(mapu_alloc_prefix_DELTA_Z));
+  mapu_dump_ene_num_scmc_set_parameter_DELTA_Z(dump_ene_num_kernel, &mapu_alloc_prefix_DELTA_Z);
   mapu_pscmc_mem mapu_alloc_prefix_DELTA_Y;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DELTA_Y), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_DELTA_Y, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_DELTA_Y).h_data)[0] = DELTA_Y;
-  mapu_dump_ene_num_scmc_set_parameter_DELTA_Y(dump_ene_num_kernel, &(mapu_alloc_prefix_DELTA_Y));
+  mapu_dump_ene_num_scmc_set_parameter_DELTA_Y(dump_ene_num_kernel, &mapu_alloc_prefix_DELTA_Y);
   mapu_pscmc_mem mapu_alloc_prefix_DELTA_X;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_DELTA_X), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_DELTA_X, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_DELTA_X).h_data)[0] = DELTA_X;
-  mapu_dump_ene_num_scmc_set_parameter_DELTA_X(dump_ene_num_kernel, &(mapu_alloc_prefix_DELTA_X));
+  mapu_dump_ene_num_scmc_set_parameter_DELTA_X(dump_ene_num_kernel, &mapu_alloc_prefix_DELTA_X);
   mapu_pscmc_mem mapu_alloc_prefix_NUM_SPEC;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_NUM_SPEC), PS_INT_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_NUM_SPEC, PS_INT_NUM, 0);
   ((int *)(mapu_alloc_prefix_NUM_SPEC).h_data)[0] = NUM_SPEC;
-  mapu_dump_ene_num_scmc_set_parameter_NUM_SPEC(dump_ene_num_kernel, &(mapu_alloc_prefix_NUM_SPEC));
+  mapu_dump_ene_num_scmc_set_parameter_NUM_SPEC(dump_ene_num_kernel, &mapu_alloc_prefix_NUM_SPEC);
   mapu_pscmc_mem mapu_alloc_prefix_SPEC;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_SPEC), PS_INT_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_SPEC, PS_INT_NUM, 0);
   ((int *)(mapu_alloc_prefix_SPEC).h_data)[0] = SPEC;
-  mapu_dump_ene_num_scmc_set_parameter_SPEC(dump_ene_num_kernel, &(mapu_alloc_prefix_SPEC));
+  mapu_dump_ene_num_scmc_set_parameter_SPEC(dump_ene_num_kernel, &mapu_alloc_prefix_SPEC);
   mapu_pscmc_mem mapu_alloc_prefix_Charge;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_Charge), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_Charge, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_Charge).h_data)[0] = Charge;
-  mapu_dump_ene_num_scmc_set_parameter_Charge(dump_ene_num_kernel, &(mapu_alloc_prefix_Charge));
+  mapu_dump_ene_num_scmc_set_parameter_Charge(dump_ene_num_kernel, &mapu_alloc_prefix_Charge);
   mapu_pscmc_mem mapu_alloc_prefix_Mass;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_Mass), PS_DOUBLE_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_Mass, PS_DOUBLE_NUM, 0);
   ((double *)(mapu_alloc_prefix_Mass).h_data)[0] = Mass;
-  mapu_dump_ene_num_scmc_set_parameter_Mass(dump_ene_num_kernel, &(mapu_alloc_prefix_Mass));
+  mapu_dump_ene_num_scmc_set_parameter_Mass(dump_ene_num_kernel, &mapu_alloc_prefix_Mass);
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_cu_cache_length, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_cu_cache_length).h_data)[0] = cu_cache_length;
   mapu_dump_ene_num_scmc_set_parameter_cu_cache_length(dump_ene_num_kernel,
-                                                       &(mapu_alloc_prefix_cu_cache_length));
+                                                       &mapu_alloc_prefix_cu_cache_length);
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_grid_cache_len, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_grid_cache_len).h_data)[0] = grid_cache_len;
   mapu_dump_ene_num_scmc_set_parameter_grid_cache_len(dump_ene_num_kernel,
-                                                      &(mapu_alloc_prefix_grid_cache_len));
+                                                      &mapu_alloc_prefix_grid_cache_len);
   mapu_pscmc_mem mapu_alloc_prefix_num_ele;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_num_ele), PS_INT_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_num_ele, PS_INT_NUM, 0);
   ((int *)(mapu_alloc_prefix_num_ele).h_data)[0] = num_ele;
-  mapu_dump_ene_num_scmc_set_parameter_num_ele(dump_ene_num_kernel, &(mapu_alloc_prefix_num_ele));
+  mapu_dump_ene_num_scmc_set_parameter_num_ele(dump_ene_num_kernel, &mapu_alloc_prefix_num_ele);
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_numvec, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_numvec).h_data)[0] = numvec;
-  mapu_dump_ene_num_scmc_set_parameter_numvec(dump_ene_num_kernel, &(mapu_alloc_prefix_numvec));
+  mapu_dump_ene_num_scmc_set_parameter_numvec(dump_ene_num_kernel, &mapu_alloc_prefix_numvec);
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_ovlp, PS_INT_NUM, 0);
   ((int *)(mapu_alloc_prefix_ovlp).h_data)[0] = ovlp;
-  mapu_dump_ene_num_scmc_set_parameter_ovlp(dump_ene_num_kernel, &(mapu_alloc_prefix_ovlp));
+  mapu_dump_ene_num_scmc_set_parameter_ovlp(dump_ene_num_kernel, &mapu_alloc_prefix_ovlp);
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_ZLEN, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_ZLEN).h_data)[0] = ZLEN;
-  mapu_dump_ene_num_scmc_set_parameter_ZLEN(dump_ene_num_kernel, &(mapu_alloc_prefix_ZLEN));
+  mapu_dump_ene_num_scmc_set_parameter_ZLEN(dump_ene_num_kernel, &mapu_alloc_prefix_ZLEN);
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_YLEN, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_YLEN).h_data)[0] = YLEN;
-  mapu_dump_ene_num_scmc_set_parameter_YLEN(dump_ene_num_kernel, &(mapu_alloc_prefix_YLEN));
+  mapu_dump_ene_num_scmc_set_parameter_YLEN(dump_ene_num_kernel, &mapu_alloc_prefix_YLEN);
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
 
-  mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
+  mapu_pscmc_mem_init(pe, &mapu_alloc_prefix_XLEN, PS_LONG_NUM, 0);
   ((long *)(mapu_alloc_prefix_XLEN).h_data)[0] = XLEN;
-  mapu_dump_ene_num_scmc_set_parameter_XLEN(dump_ene_num_kernel, &(mapu_alloc_prefix_XLEN));
+  mapu_dump_ene_num_scmc_set_parameter_XLEN(dump_ene_num_kernel, &mapu_alloc_prefix_XLEN);
   mapu_dump_ene_num_exec(dump_ene_num_kernel, the_xlen, numvec);
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_Deltat));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_DELTA_Z));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_DELTA_Y));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_DELTA_X));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_NUM_SPEC));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_SPEC));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_Charge));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_Mass));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_cu_cache_length));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_grid_cache_len));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_num_ele));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_numvec));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ovlp));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ZLEN));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
-  mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_Deltat);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_DELTA_Z);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_DELTA_Y);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_DELTA_X);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_NUM_SPEC);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_SPEC);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_Charge);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_Mass);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_cu_cache_length);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_grid_cache_len);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_num_ele);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_numvec);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_ovlp);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_ZLEN);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_YLEN);
+  mapu_pscmc_mem_destroy(&mapu_alloc_prefix_XLEN);
   return 0;
 }
 #endif

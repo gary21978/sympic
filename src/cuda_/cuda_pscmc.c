@@ -86,7 +86,7 @@ int cuda_pscmc_mem_init(cuda_pscmc_env *pe, cuda_pscmc_mem *pm, int type, size_t
   cudaSetDevice(pe->device_id);
   int err;
 
-  int *perr = &(err);
+  int *perr = &err;
 
   pm->len = len;
   pm->pe = pe;
@@ -152,7 +152,7 @@ int cuda_pscmc_mem_sync_h2d(cuda_pscmc_mem *pm) {
   cudaSetDevice((pm->pe)->device_id);
   int err;
 
-  int *perr = &(err);
+  int *perr = &err;
 
   if (pm->len > 0) {
     cudaMemcpy(pm->d_data, pm->h_data, (pm->len * pm->type_len), cudaMemcpyHostToDevice);
@@ -165,7 +165,7 @@ int cuda_pscmc_mem_sync_h2d(cuda_pscmc_mem *pm) {
 int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm) {
   int err;
 
-  int *perr = &(err);
+  int *perr = &err;
 
   cudaSetDevice((pm->pe)->device_id);
   if (pm->len > 0) {
@@ -179,7 +179,7 @@ int cuda_pscmc_mem_sync_d2h(cuda_pscmc_mem *pm) {
 int cuda_pscmc_env_init(cuda_pscmc_env *pe, int dev_num, void *fv) {
   int err;
 
-  int *perr = &(err);
+  int *perr = &err;
 
   cudaGetLastError();
   cudaSetDevice(dev_num);

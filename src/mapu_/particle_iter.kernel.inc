@@ -55,7 +55,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   __shared__ barrier_t __pscmc_mapu_internal_barrier__;
 
   static __mem0__ __attribute__((used)) int __pscmc_mapu_dummy_variable_v2;
-  init(&(__pscmc_mapu_internal_barrier__), 1);
+  init(&__pscmc_mapu_internal_barrier__, 1);
   __mem1__ int __mapu_dma_index;
   __mapu_dma_index = 0;
   const MAPU_LONG pscmc_compute_unit_id = 0;
@@ -104,12 +104,12 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
   __shared__ barrier_t cuload_id;
 
   if (threadIdx.x == 0) {
-    init(&(cuload_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&cuload_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __shared__ barrier_t get_sync_block_id;
 
   if (threadIdx.x == 0) {
-    init(&(get_sync_block_id), (blockDim.x * (blockDim.y * blockDim.z)));
+    init(&get_sync_block_id, (blockDim.x * (blockDim.y * blockDim.z)));
   }
   __mem1__ int cu_load;
   cu_load = cu_xyzw[4 * __idy];

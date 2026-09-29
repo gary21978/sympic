@@ -101,7 +101,7 @@ __global__ void mapu_blas_yisax_enlarge(__DDR double *y, __DDR double *x, double
   auto block = cooperative_groups::this_thread_block();
   using barrier_t = scale::barrier<scale::thread_scope_block>;
   __shared__ barrier_t bar;
-  init(&(bar), 1);
+  init(&bar, 1);
 
   MAPU_LONG xb_2x = 2 * ovlp + (XLEN == 1 ? 1 : XLEN * 2);
   MAPU_LONG yb_2x = 2 * ovlp + (YLEN == 1 ? 1 : YLEN * 2);

@@ -13,7 +13,7 @@ static int GAPS_IO_GlobalTypeLen[] = {4, 8, 2, 4, 8, 2, 4, 8, 16, 16, 16, 1, 1};
 int GAPS_IO_SetNumReduceProc(Gaps_IO_DataFile *pOutfile, int Num_reduce_proc) {
   pOutfile->num_reduce_proc = Num_reduce_proc;
   int cur_rank;
-  MPI_Comm_rank(MPI_COMM_WORLD, &(cur_rank));
+  MPI_Comm_rank(MPI_COMM_WORLD, &cur_rank);
   pOutfile->cur_rank = cur_rank;
   pOutfile->real_rank = cur_rank / Num_reduce_proc;
   pOutfile->send_to_proc = (cur_rank / Num_reduce_proc) * Num_reduce_proc;
@@ -192,7 +192,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2(Gaps_IO_DataFile *pthis, char *pName, char
   int send_to_proc = (pthis)->send_to_proc;
   int real_rank = (pthis)->real_rank;
   int rank = 0;
-  MPI_Comm_rank(MPI_COMM_WORLD, &(rank));
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   if (num_reduce_proc) {
     rank = rank / num_reduce_proc;
   }
@@ -264,23 +264,23 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
         long n;
         for (n = cur_rank + 1; n < (num_reduce_proc * (real_rank + 1)); n++) {
           int num_proc;
-          MPI_Comm_size(MPI_COMM_WORLD, &(num_proc));
+          MPI_Comm_size(MPI_COMM_WORLD, &num_proc);
           if (n >= num_proc) {
             break;
           }
           int64_t nxt_size;
           MPI_Status s1;
-          MPI_Recv(&(nxt_size), 1, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
+          MPI_Recv(&nxt_size, 1, MPI_INT64_T, n, n, MPI_COMM_WORLD, &s1);
           (pthis->num_block_all_reduce_group = (pthis->num_block_all_reduce_group + nxt_size));
           int64_t *meta_offs = (int64_t *)malloc(sizeof(int64_t) * nxt_size);
-          MPI_Recv(meta_offs, nxt_size, MPI_INT64_T, n, n, MPI_COMM_WORLD, &(s1));
+          MPI_Recv(meta_offs, nxt_size, MPI_INT64_T, n, n, MPI_COMM_WORLD, &s1);
           fwrite(meta_offs, sizeof(int64_t), nxt_size, fp);
           free(meta_offs);
         }
       }
       fclose(fp);
     } else {
-      MPI_Send(&(num_block_current_proc), 1, MPI_INT64_T, send_to_proc, cur_rank, MPI_COMM_WORLD);
+      MPI_Send(&num_block_current_proc, 1, MPI_INT64_T, send_to_proc, cur_rank, MPI_COMM_WORLD);
       MPI_Send(locations, num_block_current_proc, MPI_INT64_T, send_to_proc, cur_rank,
                MPI_COMM_WORLD);
     }
@@ -290,7 +290,7 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
   } else {
     if ((0 == rank) || (version == 2)) {
       if ((version < 2) || ((cur_rank == send_to_proc) || (!num_reduce_proc))) {
-        assert(1 == ((version >= 2) ? (fwrite(&(version), sizeof(int64_t), 1, pfile)) : ({
+        assert(1 == ((version >= 2) ? (fwrite(&version, sizeof(int64_t), 1, pfile)) : ({
                  MPI_Datatype mdt = MPI_LONG_LONG;
 
                  MPI_Status stat;
@@ -306,13 +306,13 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                    }
                    MPI_File_write(((MPI_File *)pfile)[0],
                                   (((void *)&(version)) + (cur_rd * sizeof(int64_t))), mpi_rdd, mdt,
-                                  &(stat));
-                   MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                  &stat);
+                   MPI_Get_count(&stat, mdt, &mpi_rdd);
                    readed = readed + mpi_rdd;
                  }
                  readed;
                })));
-        assert(1 == ((version >= 2) ? (fwrite(&(type), sizeof(int64_t), 1, pfile)) : ({
+        assert(1 == ((version >= 2) ? (fwrite(&type, sizeof(int64_t), 1, pfile)) : ({
                  MPI_Datatype mdt = MPI_LONG_LONG;
                  MPI_Status stat;
                  int64_t readed = 0;
@@ -327,13 +327,13 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                    }
                    MPI_File_write(((MPI_File *)pfile)[0],
                                   (((void *)&(type)) + (cur_rd * sizeof(int64_t))), mpi_rdd, mdt,
-                                  &(stat));
-                   MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                  &stat);
+                   MPI_Get_count(&stat, mdt, &mpi_rdd);
                    readed = readed + mpi_rdd;
                  }
                  readed;
                })));
-        assert(1 == ((version >= 2) ? (fwrite(&(dim), sizeof(int64_t), 1, pfile)) : ({
+        assert(1 == ((version >= 2) ? (fwrite(&dim, sizeof(int64_t), 1, pfile)) : ({
                  MPI_Datatype mdt = MPI_LONG_LONG;
                  MPI_Status stat;
                  int64_t readed = 0;
@@ -348,8 +348,8 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                    }
                    MPI_File_write(((MPI_File *)pfile)[0],
                                   (((void *)&(dim)) + (cur_rd * sizeof(int64_t))), mpi_rdd, mdt,
-                                  &(stat));
-                   MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                  &stat);
+                   MPI_Get_count(&stat, mdt, &mpi_rdd);
                    readed = readed + mpi_rdd;
                  }
                  readed;
@@ -369,8 +369,8 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                    }
                    MPI_File_write(((MPI_File *)pfile)[0],
                                   (((void *)pdimarray) + (cur_rd * sizeof(int64_t))), mpi_rdd, mdt,
-                                  &(stat));
-                   MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                  &stat);
+                   MPI_Get_count(&stat, mdt, &mpi_rdd);
                    readed = readed + mpi_rdd;
                  }
                  readed;
@@ -391,8 +391,8 @@ int GAPS_IO_InitOFile_with_TimeStepV2_withrank(Gaps_IO_DataFile *pthis, char *pN
                      }
                      MPI_File_write(((MPI_File *)pfile)[0],
                                     (((void *)pblockarray) + (cur_rd * sizeof(int64_t))), mpi_rdd,
-                                    mdt, &(stat));
-                     MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                    mdt, &stat);
+                     MPI_Get_count(&stat, mdt, &mpi_rdd);
                      readed = readed + mpi_rdd;
                    }
                    readed;
@@ -467,32 +467,32 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
   int real_rank = (pthis)->real_rank;
   pfile = fp;
   pthis->pfile = pfile;
-  assert(1 == ((version >= 2) ? (fread(&(version), sizeof(int64_t), 1, pfile)) : ({
+  assert(1 == ((version >= 2) ? (fread(&version, sizeof(int64_t), 1, pfile)) : ({
            MPI_Datatype mdt = MPI_LONG_LONG;
            MPI_Status stat;
            int readed;
-           MPI_File_read(((MPI_File *)pfile)[0], &(version), 1, mdt, &(stat));
-           MPI_Get_count(&(stat), mdt, &(readed));
+           MPI_File_read(((MPI_File *)pfile)[0], &version, 1, mdt, &stat);
+           MPI_Get_count(&stat, mdt, &readed);
            readed;
          })));
   assert((version == 0) || ((version == 1) || (version == 2)));
   pthis->version = version;
-  assert(1 == ((version >= 2) ? (fread(&(type), sizeof(int64_t), 1, pfile)) : ({
+  assert(1 == ((version >= 2) ? (fread(&type, sizeof(int64_t), 1, pfile)) : ({
            MPI_Datatype mdt = MPI_LONG_LONG;
            MPI_Status stat;
            int readed;
-           MPI_File_read(((MPI_File *)pfile)[0], &(type), 1, mdt, &(stat));
-           MPI_Get_count(&(stat), mdt, &(readed));
+           MPI_File_read(((MPI_File *)pfile)[0], &type, 1, mdt, &stat);
+           MPI_Get_count(&stat, mdt, &readed);
            readed;
          })));
   assert((type * sizeof(int)) < sizeof(GAPS_IO_GlobalTypeLen));
   pthis->type = type;
-  assert(1 == ((version >= 2) ? (fread(&(dim), sizeof(int64_t), 1, pfile)) : ({
+  assert(1 == ((version >= 2) ? (fread(&dim, sizeof(int64_t), 1, pfile)) : ({
            MPI_Datatype mdt = MPI_LONG_LONG;
            MPI_Status stat;
            int readed;
-           MPI_File_read(((MPI_File *)pfile)[0], &(dim), 1, mdt, &(stat));
-           MPI_Get_count(&(stat), mdt, &(readed));
+           MPI_File_read(((MPI_File *)pfile)[0], &dim, 1, mdt, &stat);
+           MPI_Get_count(&stat, mdt, &readed);
            readed;
          })));
   pthis->dim = dim;
@@ -504,8 +504,8 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
            MPI_Datatype mdt = MPI_LONG_LONG;
            MPI_Status stat;
            int readed;
-           MPI_File_read(((MPI_File *)pfile)[0], pdimarray, dim, mdt, &(stat));
-           MPI_Get_count(&(stat), mdt, &(readed));
+           MPI_File_read(((MPI_File *)pfile)[0], pdimarray, dim, mdt, &stat);
+           MPI_Get_count(&stat, mdt, &readed);
            readed;
          })));
   pthis->pdimarray = pdimarray;
@@ -514,8 +514,8 @@ int GAPS_IO_InitIFilePointer(Gaps_IO_DataFile *pthis, FILE *fp) {
              MPI_Datatype mdt = MPI_LONG_LONG;
              MPI_Status stat;
              int readed;
-             MPI_File_read(((MPI_File *)pfile)[0], pblockarray, dim, mdt, &(stat));
-             MPI_Get_count(&(stat), mdt, &(readed));
+             MPI_File_read(((MPI_File *)pfile)[0], pblockarray, dim, mdt, &stat);
+             MPI_Get_count(&stat, mdt, &readed);
              readed;
            })));
   } else {
@@ -684,8 +684,8 @@ int GAPS_IO_FRead(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                           : ((GAPS_IO_GlobalTypeLen[type] == 8) ? (MPI_LONG_LONG) : 0)));
     MPI_Status stat;
     int readed;
-    MPI_File_read(((MPI_File *)pfile)[0], pData, NumData, mdt, &(stat));
-    MPI_Get_count(&(stat), mdt, &(readed));
+    MPI_File_read(((MPI_File *)pfile)[0], pData, NumData, mdt, &stat);
+    MPI_Get_count(&stat, mdt, &readed);
     readed;
   });
 }
@@ -738,8 +738,8 @@ int64_t GAPS_IO_FWrite(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                    }
                    MPI_File_write(((MPI_File *)pfile)[0],
                                   (((void *)pData) + (cur_rd * GAPS_IO_GlobalTypeLen[type])),
-                                  mpi_rdd, mdt, &(stat));
-                   MPI_Get_count(&(stat), mdt, &(mpi_rdd));
+                                  mpi_rdd, mdt, &stat);
+                   MPI_Get_count(&stat, mdt, &mpi_rdd);
                    readed = readed + mpi_rdd;
                  }
                  readed;
@@ -781,8 +781,8 @@ int GAPS_IO_FWriteALL(Gaps_IO_DataFile *pthis, void *pData, int64_t NumData) {
                           : ((GAPS_IO_GlobalTypeLen[type] == 8) ? (MPI_LONG_LONG) : 0)));
     MPI_Status stat;
     int readed;
-    MPI_File_write_all(((MPI_File *)pfile)[0], pData, NumData, mdt, &(stat));
-    MPI_Get_count(&(stat), mdt, &(readed));
+    MPI_File_write_all(((MPI_File *)pfile)[0], pData, NumData, mdt, &stat);
+    MPI_Get_count(&stat, mdt, &readed);
     readed;
   });
 }
@@ -815,7 +815,7 @@ int GAPS_IO_DataNumStepsAndResidue(Gaps_IO_DataFile *pthis, int64_t *pNumsteps, 
   })
                                  : ({
                                      MPI_Offset end_pos;
-                                     MPI_File_get_size(((MPI_File *)pfile)[0], &(end_pos));
+                                     MPI_File_get_size(((MPI_File *)pfile)[0], &end_pos);
                                      end_pos;
                                    }));
   (end_pos =

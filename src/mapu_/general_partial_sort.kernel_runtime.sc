@@ -26,17 +26,17 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_r_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -57,17 +57,17 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_r_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -131,17 +131,17 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_l_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -161,17 +161,17 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_l_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -233,17 +233,17 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_r_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -263,17 +263,17 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_r_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -335,17 +335,17 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_l_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -365,17 +365,17 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
     mapu_cu_swap_l_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->cu_cache_length->h_data)[0], ((int *)kerstr->the_dir_num->h_data)[0],
@@ -440,27 +440,27 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
     mapu_sort_one_grid_z_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -482,27 +482,27 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
     mapu_sort_one_grid_z_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -606,27 +606,27 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
     mapu_gpu_sort_one_grid_z_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -648,27 +648,27 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
     mapu_gpu_sort_one_grid_z_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -771,27 +771,27 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
     mapu_sort_one_grid_y_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -813,27 +813,27 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
     mapu_sort_one_grid_y_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -937,27 +937,27 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
     mapu_gpu_sort_one_grid_y_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -979,27 +979,27 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
     mapu_gpu_sort_one_grid_y_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1102,27 +1102,27 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
     mapu_sort_one_grid_x_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1144,27 +1144,27 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
     mapu_sort_one_grid_x_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1268,27 +1268,27 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
     mapu_gpu_sort_one_grid_x_vlo_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1310,27 +1310,27 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
     mapu_gpu_sort_one_grid_x_vlo_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1432,27 +1432,27 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
     mapu_sort_one_grid_z_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1474,27 +1474,27 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
     mapu_sort_one_grid_z_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1597,27 +1597,27 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
     mapu_gpu_sort_one_grid_z_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1639,27 +1639,27 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
     mapu_gpu_sort_one_grid_z_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1762,27 +1762,27 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
     mapu_sort_one_grid_y_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1804,27 +1804,27 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
     mapu_sort_one_grid_y_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1926,27 +1926,27 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
     mapu_gpu_sort_one_grid_y_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -1968,27 +1968,27 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
     mapu_gpu_sort_one_grid_y_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2090,27 +2090,27 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
     mapu_sort_one_grid_x_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2132,27 +2132,27 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
     mapu_sort_one_grid_x_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2254,27 +2254,27 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
     mapu_gpu_sort_one_grid_x_8<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2296,27 +2296,27 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
     mapu_gpu_sort_one_grid_x_8<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2418,27 +2418,27 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
     mapu_sort_one_grid_z_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2460,27 +2460,27 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
     mapu_sort_one_grid_z_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2584,27 +2584,27 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
     mapu_gpu_sort_one_grid_z_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2626,27 +2626,27 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
     mapu_gpu_sort_one_grid_z_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2748,27 +2748,27 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
     mapu_sort_one_grid_y_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2790,27 +2790,27 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
     mapu_sort_one_grid_y_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2914,27 +2914,27 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
     mapu_gpu_sort_one_grid_y_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -2956,27 +2956,27 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
     mapu_gpu_sort_one_grid_y_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3078,27 +3078,27 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
     mapu_sort_one_grid_x_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3120,27 +3120,27 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
     mapu_sort_one_grid_x_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3244,27 +3244,27 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
     mapu_gpu_sort_one_grid_x_vlo_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3286,27 +3286,27 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
     mapu_gpu_sort_one_grid_x_vlo_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3408,27 +3408,27 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
     mapu_sort_one_grid_z_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3450,27 +3450,27 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
     mapu_sort_one_grid_z_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3584,27 +3584,27 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
     mapu_gpu_sort_one_grid_z_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3626,27 +3626,27 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
     mapu_gpu_sort_one_grid_z_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3748,27 +3748,27 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
     mapu_sort_one_grid_y_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3790,27 +3790,27 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
     mapu_sort_one_grid_y_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3912,27 +3912,27 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
     mapu_gpu_sort_one_grid_y_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -3954,27 +3954,27 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
     mapu_gpu_sort_one_grid_y_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -4076,27 +4076,27 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
     mapu_sort_one_grid_x_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -4118,27 +4118,27 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
     mapu_sort_one_grid_x_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -4240,27 +4240,27 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
     mapu_gpu_sort_one_grid_x_6<<<scmc_internal_g_ylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],
@@ -4282,27 +4282,27 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
     mapu_gpu_sort_one_grid_x_6<<<multiylen, scmc_internal_g_xlen>>>(
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->inoutput->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR double *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_cache->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR int *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->cu_xyzw->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((__DDR MAPU_LONG *)({
           uint64_t __d_data_address_tmp2;
-          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &(__d_data_address_tmp2));
+          mapsMemobjGetPhysicalAddress(kerstr->adjoint_vec_pids->d_data, &__d_data_address_tmp2);
           __d_data_address_tmp2;
         })),
         ((MAPU_LONG *)kerstr->XLEN->h_data)[0], ((MAPU_LONG *)kerstr->YLEN->h_data)[0],

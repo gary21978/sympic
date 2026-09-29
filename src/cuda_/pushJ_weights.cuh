@@ -10,26 +10,26 @@ __device__ __noinline__ void eval_f0(v8fp64 rx, v8fp64 dix, v8fp64 f0[5]) {
     f0[i] = vbroadcast(0.0);
   }
   {
-    v8fp64 tmppowvar = (1.0 + (-1.0 * rx));
-    f0[1] = (0.25 * (tmppowvar * tmppowvar));
+    v8fp64 tmppowvar = 1.0 + (-1.0 * rx);
+    f0[1] = 0.25 * (tmppowvar * tmppowvar);
   }
-  f0[0] = (f0[0] * (dix + 1.0) + f0[1] * -(dix));
+  f0[0] = f0[0] * (dix + 1.0) + f0[1] * -(dix);
   {
-    v8fp64 tmppowvar = (1.0 + (-1.0 * rx));
-    f0[2] = (-0.25 * (-1.0 + ((tmppowvar * tmppowvar) + (-2.0 * (1.0 + (-1.0 * rx))))));
+    v8fp64 tmppowvar = 1.0 + (-1.0 * rx);
+    f0[2] = -0.25 * (-1.0 + ((tmppowvar * tmppowvar) + (-2.0 * (1.0 + (-1.0 * rx)))));
   }
-  f0[1] = (f0[1] * (dix + 1.0) + f0[2] * -(dix));
-  {
-    v8fp64 tmppowvar = rx;
-    f0[3] = (-0.25 * (-1.0 + ((-2.0 * rx) + (tmppowvar * tmppowvar))));
-  }
-  f0[2] = (f0[2] * (dix + 1.0) + f0[3] * -(dix));
+  f0[1] = f0[1] * (dix + 1.0) + f0[2] * -(dix);
   {
     v8fp64 tmppowvar = rx;
-    f0[4] = (0.25 * (tmppowvar * tmppowvar));
+    f0[3] = -0.25 * (-1.0 + ((-2.0 * rx) + (tmppowvar * tmppowvar)));
   }
-  f0[3] = (f0[3] * (dix + 1.0) + f0[4] * -(dix));
-  f0[4] = (f0[4] * (dix + 1.0));
+  f0[2] = f0[2] * (dix + 1.0) + f0[3] * -(dix);
+  {
+    v8fp64 tmppowvar = rx;
+    f0[4] = 0.25 * (tmppowvar * tmppowvar);
+  }
+  f0[3] = f0[3] * (dix + 1.0) + f0[4] * -(dix);
+  f0[4] = f0[4] * (dix + 1.0);
 }
 
 __device__ __noinline__ void eval_f1(v8fp64 rx, v8fp64 dix, v8fp64 f1[5]) {
@@ -37,13 +37,13 @@ __device__ __noinline__ void eval_f1(v8fp64 rx, v8fp64 dix, v8fp64 f1[5]) {
   for (i = 0; i < 5; i++) {
     f1[i] = vbroadcast(0.0);
   }
-  f1[1] = (0.5 * (1.0 + (-1.0 * rx)));
-  f1[0] = (f1[0] * (dix + 1.0) + f1[1] * -(dix));
-  f1[2] = ((0.25 * (2.0 + (-2.0 * (1.0 + (-1.0 * rx))))) + (0.5 * (1.0 + (-1.0 * rx))));
-  f1[1] = (f1[1] * (dix + 1.0) + f1[2] * -(dix));
-  f1[3] = (0.5 * rx);
-  f1[2] = (f1[2] * (dix + 1.0) + f1[3] * -(dix));
-  f1[3] = (f1[3] * (dix + 1.0));
+  f1[1] = 0.5 * (1.0 + (-1.0 * rx));
+  f1[0] = f1[0] * (dix + 1.0) + f1[1] * -(dix);
+  f1[2] = (0.25 * (2.0 + (-2.0 * (1.0 + (-1.0 * rx))))) + (0.5 * (1.0 + (-1.0 * rx)));
+  f1[1] = f1[1] * (dix + 1.0) + f1[2] * -(dix);
+  f1[3] = 0.5 * rx;
+  f1[2] = f1[2] * (dix + 1.0) + f1[3] * -(dix);
+  f1[3] = f1[3] * (dix + 1.0);
 }
 
 __device__ __noinline__ void eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
@@ -52,22 +52,22 @@ __device__ __noinline__ void eval_if1(v8fp64 rx, v8fp64 dix, v8fp64 if1[5]) {
   if1[3] = vbroadcast(0.0);
   if1[4] = vbroadcast(0.0);
   {
-    v8fp64 tmppowvar = (1.0 + (-1.0 * rx));
-    if1[1] = (1.0 + (-0.25 * (tmppowvar * tmppowvar)));
+    v8fp64 tmppowvar = 1.0 + (-1.0 * rx);
+    if1[1] = 1.0 + (-0.25 * (tmppowvar * tmppowvar));
   }
-  if1[0] = (if1[0] * (dix + 1.0) + if1[1] * -(dix));
+  if1[0] = if1[0] * (dix + 1.0) + if1[1] * -(dix);
   {
     v8fp64 tmppowvar = rx;
-    if1[2] = ((0.25 * (tmppowvar * tmppowvar)) +
-              (-0.25 * (-1.0 + ((-2.0 * rx) + (tmppowvar * tmppowvar)))));
+    if1[2] = (0.25 * (tmppowvar * tmppowvar)) +
+             (-0.25 * (-1.0 + ((-2.0 * rx) + (tmppowvar * tmppowvar))));
   }
-  if1[1] = (if1[1] * (dix + 1.0) + if1[2] * -(dix));
+  if1[1] = if1[1] * (dix + 1.0) + if1[2] * -(dix);
   {
     v8fp64 tmppowvar = rx;
-    if1[3] = (0.25 * (tmppowvar * tmppowvar));
+    if1[3] = 0.25 * (tmppowvar * tmppowvar);
   }
-  if1[2] = (if1[2] * (dix + 1.0) + if1[3] * -(dix));
-  if1[3] = (if1[3] * (dix + 1.0));
+  if1[2] = if1[2] * (dix + 1.0) + if1[3] * -(dix);
+  if1[3] = if1[3] * (dix + 1.0);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -90,7 +90,7 @@ pushJ_B_integral_comp2_f0z_dif1x_f1y(const double *field, const double *f0z, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 2)] *
+        sum = sum + ((field[(allidx * 3) + 2] *
                       (f0z[xyzz] * (((if1x_hi[xyzx] - if1x_lo[xyzx]) * f1y[xyzy])))));
       }
     }
@@ -106,7 +106,7 @@ pushJ_B_integral_comp0_f0x_dif1y_f1z(const double *field, const double *f0x, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 0)] *
+        sum = sum + ((field[(allidx * 3) + 0] *
                       (f0x[xyzx] * (((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1z[xyzz])))));
       }
     }
@@ -122,7 +122,7 @@ pushJ_B_integral_comp1_f0y_dif1x_f1z(const double *field, const double *f0y, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 1)] *
+        sum = sum + ((field[(allidx * 3) + 1] *
                       (f0y[xyzy] * (((if1x_hi[xyzx] - if1x_lo[xyzx]) * f1z[xyzz])))));
       }
     }
@@ -138,7 +138,7 @@ pushJ_B_integral_comp0_f0x_dif1z_f1y(const double *field, const double *f0x, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 0)] *
+        sum = sum + ((field[(allidx * 3) + 0] *
                       (f0x[xyzx] * (((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1y[xyzy])))));
       }
     }
@@ -154,7 +154,7 @@ pushJ_B_integral_comp1_f0y_dif1z_f1x(const double *field, const double *f0y, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 1)] *
+        sum = sum + ((field[(allidx * 3) + 1] *
                       (f0y[xyzy] * (((if1z_hi[xyzz] - if1z_lo[xyzz]) * f1x[xyzx])))));
       }
     }
@@ -170,7 +170,7 @@ pushJ_B_integral_comp2_f0z_dif1y_f1x(const double *field, const double *f0z, con
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 2)] *
+        sum = sum + ((field[(allidx * 3) + 2] *
                       (f0z[xyzz] * (((if1y_hi[xyzy] - if1y_lo[xyzy]) * f1x[xyzx])))));
       }
     }
@@ -197,8 +197,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1x_f1y(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 2)] *
-                      (wF0z[xyzz] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1y[xyzy])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 2] * (wF0z[xyzz] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1y[xyzy])))));
       }
     }
   }
@@ -222,8 +223,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1y_f1z(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 0)] *
-                      (wF0x[xyzx] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1z[xyzz])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 0] * (wF0x[xyzx] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1z[xyzz])))));
       }
     }
   }
@@ -247,8 +249,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1x_f1z(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 1)] *
-                      (wF0y[xyzy] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1z[xyzz])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 1] * (wF0y[xyzy] * (((wHiX[xyzx] - wLoX[xyzx]) * wF1z[xyzz])))));
       }
     }
   }
@@ -272,8 +275,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp0_f0x_dif1z_f1y(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 0)] *
-                      (wF0x[xyzx] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1y[xyzy])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 0] * (wF0x[xyzx] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1y[xyzy])))));
       }
     }
   }
@@ -297,8 +301,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp1_f0y_dif1z_f1x(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 1)] *
-                      (wF0y[xyzy] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1x[xyzx])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 1] * (wF0y[xyzy] * (((wHiZ[xyzz] - wLoZ[xyzz]) * wF1x[xyzx])))));
       }
     }
   }
@@ -322,8 +327,9 @@ __device__ __noinline__ v8fp64 pushJ_B_integralS_comp2_f0z_dif1y_f1x(
     for (long xyzy = 0; xyzy < 5; xyzy++) {
       for (long xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        sum = sum + ((field[((allidx * 3) + 2)] *
-                      (wF0z[xyzz] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1x[xyzx])))));
+        sum =
+            sum +
+            ((field[(allidx * 3) + 2] * (wF0z[xyzz] * (((wHiY[xyzy] - wLoY[xyzy]) * wF1x[xyzx])))));
       }
     }
   }
@@ -347,9 +353,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ex(v8fp64 *scr, const double *shE0
   for (long idz = 0; idz < 5; idz++) {
     for (long idy = 0; idy < 5; idy++) {
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = (vbroadcast(((shE0)[(0 + (3 * (idx + (5 * (idy + (idz * 5))))))] + 0)) *
-                       ((f1_x1)[idx] * ((f0_y1)[idy] * (f0_z1)[idz])));
-        AllEx = (AllEx + term);
+        v8fp64 term = vbroadcast((shE0[0 + (3 * (idx + (5 * (idy + (idz * 5)))))] + 0)) *
+                      (f1_x1[idx] * (f0_y1[idy] * f0_z1[idz]));
+        AllEx = AllEx + term;
       }
     }
   }
@@ -370,9 +376,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ey(v8fp64 *scr, const double *shE0
   for (long idz = 0; idz < 5; idz++) {
     for (long idy = 0; idy < 5; idy++) {
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = (vbroadcast(((shE0)[(1 + (3 * (idz + (5 * (idx + (idy * 5))))))] + 0)) *
-                       ((f1_y1)[idx] * ((f0_z1)[idy] * (f0_x1)[idz])));
-        AllEy = (AllEy + term);
+        v8fp64 term = vbroadcast((shE0[1 + (3 * (idz + (5 * (idx + (idy * 5)))))] + 0)) *
+                      (f1_y1[idx] * (f0_z1[idy] * f0_x1[idz]));
+        AllEy = AllEy + term;
       }
     }
   }
@@ -393,9 +399,9 @@ __device__ __noinline__ v8fp64 pushJ_E_interp_Ez(v8fp64 *scr, const double *shE0
   for (long idz = 0; idz < 5; idz++) {
     for (long idy = 0; idy < 5; idy++) {
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = (vbroadcast(((shE0)[(2 + (3 * (idy + (5 * (idz + (idx * 5))))))] + 0)) *
-                       ((f1_z1)[idx] * ((f0_x1)[idy] * (f0_y1)[idz])));
-        AllEz = (AllEz + term);
+        v8fp64 term = vbroadcast((shE0[2 + (3 * (idy + (5 * (idz + (idx * 5)))))] + 0)) *
+                      (f1_z1[idx] * (f0_x1[idy] * f0_y1[idz]));
+        AllEz = AllEz + term;
       }
     }
   }

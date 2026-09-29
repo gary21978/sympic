@@ -141,7 +141,7 @@ __global__ void mapu_GEO_YEE_CURL_L(__DDR double *inoutE1, __DDR double *inB0, _
 
   for (long long task_base = base; task_base < total_tasks; task_base += stride) {
     long long task = task_base + tid;
-    bool active = (task < total_tasks);
+    bool active = task < total_tasks;
 
     __mem0__ __fix0__ double b0_cur[TILE_X_PAD] __attribute__((aligned(64)));
     __mem1__ __fix1__ double b1_cur[TILE_X_PAD] __attribute__((aligned(64)));
@@ -363,7 +363,7 @@ __global__ void mapu_YEE_CURL_R(__DDR double *inoutE1, __DDR double *inB0, __DDR
 
   for (long long task_base = base; task_base < total_tasks; task_base += stride) {
     long long task = task_base + tid;
-    bool active = (task < total_tasks);
+    bool active = task < total_tasks;
 
     __mem0__ __fix0__ double b0_cur[TILE_X_PAD] __attribute__((aligned(64)));
     __mem1__ __fix1__ double b1_cur[TILE_X_PAD] __attribute__((aligned(64)));

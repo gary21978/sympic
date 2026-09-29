@@ -33,7 +33,7 @@
 #define MAPU_DDR_PTR(T, PM)                                                                        \
   ((__DDR T *)({                                                                                   \
     uint64_t __mapu_runtime_addr = 0;                                                              \
-    mapsMemobjGetPhysicalAddress((PM)->d_data, &__mapu_runtime_addr);                              \
+    mapsMemobjGetPhysicalAddress(PM->d_data, &__mapu_runtime_addr);                                \
     __mapu_runtime_addr;                                                                           \
   }))
 #else

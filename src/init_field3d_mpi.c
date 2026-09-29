@@ -21,7 +21,7 @@ void init_Field3D_MPI_from_new_num_ele(Field3D_MPI *pthis, Field3D_MPI *f, int n
   // defined from class Field3D_MPI
 
   //====================Field3D_MPI
-  (pthis)[0] = (f)[0];
+  (pthis)[0] = f[0];
   reinit_Field3D_MPI(pthis, new_num_ele);
 }
 void init_Field3D_MPI_from(Field3D_MPI *pthis, Field3D_MPI *f) {
@@ -41,8 +41,8 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
   {
     Field3D_Seq *tmpdata = pthis->data;
 
-    (pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime));
-    (pthis)->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
+    pthis->data = malloc((sizeof(Field3D_Seq) * num_runtime));
+    pthis->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
     if (new_num_ele) {
       {
         long xyzz;
@@ -86,7 +86,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
                     rzlen = zlen;
                   }
 
-                  ((pthis->sync_layer_len)[(0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz))))))] =
+                  ((pthis->sync_layer_len)[0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz)))))] =
                        (rxlen * (rylen * (rzlen * new_num_ele))));
                 }
               }
@@ -100,7 +100,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
       long i;
 
       for (i = 0; i < num_runtime; i++) {
-        (pthis->data)[i] = (tmpdata)[i];
+        (pthis->data)[i] = tmpdata[i];
         if (new_num_ele) {
           ((pthis->data + i))->num_ele = new_num_ele;
         }
@@ -143,16 +143,16 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
                          int adjoint_type, long *tids, int64_t *local_tid_array, int *cd_types,
                          int *dev_nums, int *cd_performances, long num_runtime, PS_MPI_Comm comm,
                          long cur_rank, long num_mpi_process) {
-  (pthis)->num_runtime = num_runtime;
-  (pthis)->comm = comm;
-  (pthis)->cur_rank = cur_rank;
-  (pthis)->num_mpi_process = num_mpi_process;
+  pthis->num_runtime = num_runtime;
+  pthis->comm = comm;
+  pthis->cur_rank = cur_rank;
+  pthis->num_mpi_process = num_mpi_process;
   {
     double G_DAMP_RATIO = call_GET_VAR("DAMP_RATIO");
 
-    (pthis)->damp_vars = G_DAMP_RATIO;
+    pthis->damp_vars = G_DAMP_RATIO;
   }
-  (pthis)->data = malloc((sizeof(Field3D_Seq) * num_runtime));
+  pthis->data = malloc((sizeof(Field3D_Seq) * num_runtime));
   long i = 0;
 
   long onedim_len = (1 << n_hilbert);
@@ -175,7 +175,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
     long g;
 
     for (g = 0; g < ndim; g++) {
-      alllen = (alllen * onen);
+      alllen = alllen * onen;
     }
   }
   size_t *ovvec = malloc((sizeof(size_t) * alllen));
@@ -220,8 +220,8 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
   }
   pthis->rqst = malloc((sizeof(PS_MPI_Request *) * num_runtime));
   for (i = 0; i < num_runtime; i++) {
-    (pthis->data)[i] = (sample_field)[0];
-    ((pthis->data + i))->CD_type = (cd_types)[i];
+    (pthis->data)[i] = sample_field[0];
+    ((pthis->data + i))->CD_type = cd_types[i];
     (((pthis->data + i))->numvec = get_cur_num_tid(((num_runtime * cur_rank) + i), numallthreads,
                                                    (num_runtime * num_mpi_process), tids));
     size_t pelen;
@@ -235,13 +235,13 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
 
     ((pthis->data + i))->pe = malloc(pelen);
 #ifdef SYMPIC_CUDA
-    cuda_pscmc_env_init(((pthis->data + i))->pe, (dev_nums)[i], NULL);
+    cuda_pscmc_env_init(((pthis->data + i))->pe, dev_nums[i], NULL);
 #endif
 #ifdef SYMPIC_MAPU
-    mapu_pscmc_env_init(((pthis->data + i))->pe, (dev_nums)[i], NULL);
+    mapu_pscmc_env_init(((pthis->data + i))->pe, dev_nums[i], NULL);
 #endif
     pthis->data[i].cuda_device = dev_nums[i];
-    ((pthis->data + i))->global_pid = ((cur_rank * num_runtime) + i);
+    ((pthis->data + i))->global_pid = (cur_rank * num_runtime) + i;
     alloc_Field3D_Seq((pthis->data + i), 1);
     pthis->rqst[i] = malloc(sizeof(PS_MPI_Request) * NUM_SYNC_LAYER * pthis->data[i].numvec);
     init_adjoint_relations((pthis->data + i), n_hilbert, ndim, adjoint_type,
@@ -291,7 +291,7 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
                 rzlen = zlen;
               }
 
-              ((pthis->sync_layer_len)[(0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz))))))] =
+              ((pthis->sync_layer_len)[0 + (1 * (xyzx + (3 * (xyzy + (3 * xyzz)))))] =
                    (rxlen * (rylen * (rzlen * num_ele))));
             }
           }
@@ -308,7 +308,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                             double r_y_rat, double r_z_rat, double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -320,9 +320,9 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "E_file";
 
   FILE *fp = fopen(nm, "r");
@@ -381,10 +381,10 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -398,16 +398,16 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -419,64 +419,64 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -548,17 +548,17 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_E(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_E(ks, js, is, l));
                           }
                         }
                       }
@@ -586,7 +586,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                             double r_y_rat, double r_z_rat, double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -598,9 +598,9 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "B_file";
 
   FILE *fp = fopen(nm, "r");
@@ -659,10 +659,10 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -676,16 +676,16 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -697,64 +697,64 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -826,17 +826,17 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_B(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_B(ks, js, is, l));
                           }
                         }
                       }
@@ -864,7 +864,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                              double r_y_rat, double r_z_rat, double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -876,9 +876,9 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "E0_file";
 
   FILE *fp = fopen(nm, "r");
@@ -937,10 +937,10 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -954,16 +954,16 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -975,64 +975,64 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -1104,17 +1104,17 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_E0(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_E0(ks, js, is, l));
                           }
                         }
                       }
@@ -1134,7 +1134,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                              double r_y_rat, double r_z_rat, double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -1146,9 +1146,9 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "B0_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1207,10 +1207,10 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -1224,16 +1224,16 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1245,64 +1245,64 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -1374,17 +1374,17 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_B0(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_B0(ks, js, is, l));
                           }
                         }
                       }
@@ -1405,7 +1405,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                                    double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -1417,9 +1417,9 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "FILTER_E_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1478,10 +1478,10 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -1495,16 +1495,16 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1516,64 +1516,64 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -1645,17 +1645,17 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_FILTER_E(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_FILTER_E(ks, js, is, l));
                           }
                         }
                       }
@@ -1691,7 +1691,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                                    double random_rate) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -1703,9 +1703,9 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
   int reduce_z = (reduce_dim == 3);
 
   double r_r_r[3];
-  (r_r_r)[0] = r_x_rat;
-  (r_r_r)[1] = r_y_rat;
-  (r_r_r)[2] = r_z_rat;
+  r_r_r[0] = r_x_rat;
+  r_r_r[1] = r_y_rat;
+  r_r_r[2] = r_z_rat;
   char *nm = "FILTER_B_file";
 
   FILE *fp = fopen(nm, "r");
@@ -1764,10 +1764,10 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
 
                         long ks = ((global_z_offset)[j] + xyzz);
 
-                        assert(((pgid)->dim == 4));
-                        assert(((pgid)->version == 0));
-                        assert(((pgid)->type == GAPS_IO_FLOAT64));
-                        assert((((pgid)->pdimarray)[0] == num_ele));
+                        assert((pgid->dim == 4));
+                        assert((pgid->version == 0));
+                        assert((pgid->type == GAPS_IO_FLOAT64));
+                        assert(((pgid->pdimarray)[0] == num_ele));
                         long imax = ((pgid)->pdimarray)[1];
 
                         long jmax = ((pgid)->pdimarray)[2];
@@ -1781,16 +1781,16 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                                 (((reduce_y) ? (1) : (jmax)) * ((reduce_z) ? (0) : (ks))))))));
                         GAPS_IO_FRead(
                             pgid,
-                            &(((((double **)((data + i))->main_data))[0])[(
-                                (j * (((data + i))->xblock *
-                                      (((data + i))->yblock *
-                                       (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                (0 +
-                                 (((data + i))->num_ele *
-                                  ((0 + ((data + i))->ovlp) +
-                                   (((data + i))->xblock *
-                                    ((xyzy + ((data + i))->ovlp) +
-                                     (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))]),
+                            &(((((double **)((data + i))->main_data))[0])
+                                  [(j * (((data + i))->xblock *
+                                         (((data + i))->yblock *
+                                          (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                   (0 +
+                                    (((data + i))->num_ele *
+                                     ((0 + ((data + i))->ovlp) +
+                                      (((data + i))->xblock *
+                                       ((xyzy + ((data + i))->ovlp) +
+                                        (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))]),
                             (num_ele * ((reduce_x) ? (1) : (xlen))));
                         if (reduce_dim) {
                           {
@@ -1802,64 +1802,64 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
 
                                 for (l = 0; l < num_ele; l++) {
                                   if ((l < 3)) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         ((r_r_r)[l] *
-                                          ((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))]));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (r_r_r[l] *
+                                              ((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))]));
                                   }
 
                                   if (random_rate) {
-                                    (((((double **)((data + i))->main_data))[0])[(
-                                         (j * (((data + i))->xblock *
-                                               (((data + i))->yblock *
-                                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                         (l + (((data + i))->num_ele *
-                                               ((g + ((data + i))->ovlp) +
-                                                (((data + i))->xblock *
-                                                 ((xyzy + ((data + i))->ovlp) +
-                                                  (((data + i))->yblock *
-                                                   (xyzz + ((data + i))->ovlp))))))))] =
-                                         (((((double **)((data + i))->main_data))[0])[(
-                                              (j *
-                                               (((data + i))->xblock *
+                                    (((((double **)((data + i))->main_data))[0])
+                                         [(j * (((data + i))->xblock *
                                                 (((data + i))->yblock *
                                                  (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                              (l + (((data + i))->num_ele *
-                                                    ((g + ((data + i))->ovlp) +
-                                                     (((data + i))->xblock *
-                                                      ((xyzy + ((data + i))->ovlp) +
-                                                       (((data + i))->yblock *
-                                                        (xyzz + ((data + i))->ovlp))))))))] +
-                                          (((((double **)((data + i))->main_data))[0])[(
-                                               (j * (((data + i))->xblock *
-                                                     (((data + i))->yblock *
-                                                      (((data + i))->zblock *
-                                                       ((data + i))->num_ele)))) +
-                                               (l + (((data + i))->num_ele *
-                                                     ((g + ((data + i))->ovlp) +
-                                                      (((data + i))->xblock *
-                                                       ((xyzy + ((data + i))->ovlp) +
-                                                        (((data + i))->yblock *
-                                                         (xyzz + ((data + i))->ovlp))))))))] *
-                                           (random_rate * rand01(0, 1)))));
+                                          (l + (((data + i))->num_ele *
+                                                ((g + ((data + i))->ovlp) +
+                                                 (((data + i))->xblock *
+                                                  ((xyzy + ((data + i))->ovlp) +
+                                                   (((data + i))->yblock *
+                                                    (xyzz + ((data + i))->ovlp)))))))] =
+                                             (((((double **)((data + i))->main_data))[0])
+                                                  [(j * (((data + i))->xblock *
+                                                         (((data + i))->yblock *
+                                                          (((data + i))->zblock *
+                                                           ((data + i))->num_ele)))) +
+                                                   (l + (((data + i))->num_ele *
+                                                         ((g + ((data + i))->ovlp) +
+                                                          (((data + i))->xblock *
+                                                           ((xyzy + ((data + i))->ovlp) +
+                                                            (((data + i))->yblock *
+                                                             (xyzz + ((data + i))->ovlp)))))))] +
+                                              (((((double **)((data + i))->main_data))[0])
+                                                   [(j * (((data + i))->xblock *
+                                                          (((data + i))->yblock *
+                                                           (((data + i))->zblock *
+                                                            ((data + i))->num_ele)))) +
+                                                    (l + (((data + i))->num_ele *
+                                                          ((g + ((data + i))->ovlp) +
+                                                           (((data + i))->xblock *
+                                                            ((xyzy + ((data + i))->ovlp) +
+                                                             (((data + i))->yblock *
+                                                              (xyzz + ((data + i))->ovlp)))))))] *
+                                               (random_rate * rand01(0, 1)))));
                                   }
                                 }
                               }
@@ -1931,17 +1931,17 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                           long l;
 
                           for (l = 0; l < num_ele; l++) {
-                            (((((double **)((data + i))->main_data))[0])[(
-                                 (j * (((data + i))->xblock *
-                                       (((data + i))->yblock *
-                                        (((data + i))->zblock * ((data + i))->num_ele)))) +
-                                 (l +
-                                  (((data + i))->num_ele *
-                                   ((xyzx + ((data + i))->ovlp) +
-                                    (((data + i))->xblock *
-                                     ((xyzy + ((data + i))->ovlp) +
-                                      (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                                 call_GET_INIT_FILTER_B(ks, js, is, l));
+                            (((((double **)((data + i))->main_data))[0])
+                                 [(j * (((data + i))->xblock *
+                                        (((data + i))->yblock *
+                                         (((data + i))->zblock * ((data + i))->num_ele)))) +
+                                  (l +
+                                   (((data + i))->num_ele *
+                                    ((xyzx + ((data + i))->ovlp) +
+                                     (((data + i))->xblock *
+                                      ((xyzy + ((data + i))->ovlp) +
+                                       (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                                     call_GET_INIT_FILTER_B(ks, js, is, l));
                           }
                         }
                       }
@@ -1976,7 +1976,7 @@ void init_external_field3d_FILTER_B(Field3D_MPI *pthis) {
 int test_set_mainland(Field3D_MPI *pthis, double val) {
 
   // defined from class Field3D_MPI
-  Field3D_Seq *data = (pthis)->data;
+  Field3D_Seq *data = pthis->data;
 
   long num_runtime = (pthis)->num_runtime;
 
@@ -2016,16 +2016,16 @@ int test_set_mainland(Field3D_MPI *pthis, double val) {
                   long l = 0;
 
                   for (l = 0; l < num_ele; l++) {
-                    (((((double **)((data + i))->main_data))[0])[(
-                         (j * (((data + i))->xblock *
-                               (((data + i))->yblock *
-                                (((data + i))->zblock * ((data + i))->num_ele)))) +
-                         (l + (((data + i))->num_ele *
-                               ((xyzx + ((data + i))->ovlp) +
-                                (((data + i))->xblock *
-                                 ((xyzy + ((data + i))->ovlp) +
-                                  (((data + i))->yblock * (xyzz + ((data + i))->ovlp))))))))] =
-                         (val * (1 * (0 == l))));
+                    (((((double **)((data + i))->main_data))[0])
+                         [(j * (((data + i))->xblock *
+                                (((data + i))->yblock *
+                                 (((data + i))->zblock * ((data + i))->num_ele)))) +
+                          (l + (((data + i))->num_ele *
+                                ((xyzx + ((data + i))->ovlp) +
+                                 (((data + i))->xblock *
+                                  ((xyzy + ((data + i))->ovlp) +
+                                   (((data + i))->yblock * (xyzz + ((data + i))->ovlp)))))))] =
+                             (val * (1 * (0 == l))));
                   }
                 }
               }

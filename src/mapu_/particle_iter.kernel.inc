@@ -29,7 +29,7 @@ __device__ static KERNEL_M v8fp64 geo_floor_simd(v8fp64 input) {
   double *pinput = (double *)&(input);
   int g;
   for (g = 0; g < 8; g++) {
-    (pret)[g] = floor((pinput)[g]);
+    pret[g] = floor(pinput[g]);
   }
   return ret;
 }
@@ -86,21 +86,21 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
 
 #endif
   __mem1__ MAPU_LONG numgrid;
-  numgrid = (XLEN * (YLEN * ZLEN));
+  numgrid = XLEN * (YLEN * ZLEN);
   __mem1__ MAPU_LONG numallgrid;
-  numallgrid = ((XLEN + (ovlp + ovlp)) * ((YLEN + (ovlp + ovlp)) * (ZLEN + (ovlp + ovlp))));
+  numallgrid = (XLEN + (ovlp + ovlp)) * ((YLEN + (ovlp + ovlp)) * (ZLEN + (ovlp + ovlp)));
   __mem1__ MAPU_LONG blk_len;
-  blk_len = (numallgrid * num_ele);
+  blk_len = numallgrid * num_ele;
   __mem1__ MAPU_LONG blk_len_x;
-  blk_len_x = (XLEN + (ovlp + ovlp));
+  blk_len_x = XLEN + (ovlp + ovlp);
   __mem1__ MAPU_LONG blk_len_y;
-  blk_len_y = (YLEN + (ovlp + ovlp));
+  blk_len_y = YLEN + (ovlp + ovlp);
   __mem1__ MAPU_LONG blk_len_z;
-  blk_len_z = (ZLEN + (ovlp + ovlp));
+  blk_len_z = ZLEN + (ovlp + ovlp);
   __mem1__ MAPU_LONG numgrid_cu;
-  numgrid_cu = (numgrid * numvec);
+  numgrid_cu = numgrid * numvec;
   __mem1__ MAPU_LONG grid_base_offset;
-  grid_base_offset = (__idy * (numgrid * (grid_cache_len * 6)));
+  grid_base_offset = __idy * (numgrid * (grid_cache_len * 6));
   __shared__ barrier_t cuload_id;
 
   if ((threadIdx.x == 0)) {
@@ -120,7 +120,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
     { 0; }
   }
   __mem1__ int cu_load;
-  cu_load = (cu_xyzw)[(4 * __idy)];
+  cu_load = cu_xyzw[4 * __idy];
   __mem1__ int call_sort;
   call_sort = 1;
   __mem1__ int cr_allgid;
@@ -147,19 +147,19 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
         {
           __mem1__ int Midx;
           Midx =
-              ((use_local_particle_position)
-                   ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]); }))
-                   : (({ mdx; })));
+              (use_local_particle_position)
+                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[0]); }))
+                  : (({ mdx; }));
           __mem1__ int Midy;
           Midy =
-              ((use_local_particle_position)
-                   ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]); }))
-                   : (({ mdy; })));
+              (use_local_particle_position)
+                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[1]); }))
+                  : (({ mdy; }));
           __mem1__ int Midz;
           Midz =
-              ((use_local_particle_position)
-                   ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]); }))
-                   : (({ mdz; })));
+              (use_local_particle_position)
+                  ? (({ floor(((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))))[2]); }))
+                  : (({ mdz; }));
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
@@ -179,18 +179,18 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
           {
             __mem1__ MAPU_LONG g;
             for (g = 0; g < 3; g++) {
-              (enevec)[(g + (3 * __idx))] = 0;
-              (avvvec)[(g + (3 * __idx))] = 0;
+              enevec[g + (3 * __idx)] = 0;
+              avvvec[g + (3 * __idx)] = 0;
             }
           }
-          (numcpvec)[(1 * __idx)] = 0;
+          numcpvec[1 * __idx] = 0;
           for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
-            __mem0__ double a_rva[(64 * 6)];
+            __mem0__ double a_rva[64 * 6];
             __mem1__ int __idx_all_base;
-            __idx_all_base = ((__idx * 64) + lg);
+            __idx_all_base = (__idx * 64) + lg;
             __mem1__ int numcp;
-            numcp = ((((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
-                                                        : (({ 64; })));
+            numcp = (((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
+                                                       : (({ 64; }));
 
             if ((numcp * 6)) {
               {
@@ -202,7 +202,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                     ((__DDR unsigned *)((cu_cache + ((__idy * (6 * cu_cache_length)) + (l1 * 6))) +
                                         (__idx_all_base * 6))),
                     ((uint64_t)(6 * (numcp * data_size))), __pscmc_mapu_internal_barrier__);
-                (__pscmc_mapu_internal_barrier__).arrive_and_wait();
+                __pscmc_mapu_internal_barrier__.arrive_and_wait();
               }
             } else {
               { 0; }
@@ -229,39 +229,39 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                 __mem1__ double vz;
                 vz = ((a_rva + (g * 6)))[5];
                 __mem1__ double curene_x;
-                curene_x = (Mass * (0.5 * +((vx * vx))));
+                curene_x = Mass * (0.5 * +((vx * vx)));
                 __mem1__ double curene_y;
-                curene_y = (Mass * (0.5 * +((vy * vy))));
+                curene_y = Mass * (0.5 * +((vy * vy)));
                 __mem1__ double curene_z;
-                curene_z = (Mass * (0.5 * +((vz * vz))));
-                ene0_x = (ene0_x + curene_x);
-                ene0_y = (ene0_y + curene_y);
-                ene0_z = (ene0_z + curene_z);
-                aver_vx = (aver_vx + vx);
-                aver_vy = (aver_vy + vy);
-                aver_vz = (aver_vz + vz);
+                curene_z = Mass * (0.5 * +((vz * vz)));
+                ene0_x = ene0_x + curene_x;
+                ene0_y = ene0_y + curene_y;
+                ene0_z = ene0_z + curene_z;
+                aver_vx = aver_vx + vx;
+                aver_vy = aver_vy + vy;
+                aver_vz = aver_vz + vz;
               }
             }
-            (enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x);
-            (enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y);
-            (enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z);
-            (avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx);
-            (avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy);
-            (avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz);
-            (numcpvec)[__idx] = ((numcpvec)[__idx] + numcp);
+            enevec[3 * __idx] = enevec[3 * __idx] + ene0_x;
+            enevec[(3 * __idx) + 1] = enevec[(3 * __idx) + 1] + ene0_y;
+            enevec[(3 * __idx) + 2] = enevec[(3 * __idx) + 2] + ene0_z;
+            avvvec[3 * __idx] = avvvec[3 * __idx] + aver_vx;
+            avvvec[(3 * __idx) + 1] = avvvec[(3 * __idx) + 1] + aver_vy;
+            avvvec[(3 * __idx) + 2] = avvvec[(3 * __idx) + 2] + aver_vz;
+            numcpvec[__idx] = numcpvec[__idx] + numcp;
           }
           if ((__idx == 0)) {
             {
               {
                 __mem1__ MAPU_LONG g;
                 for (g = 0; g < __xlen; g++) {
-                  allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
-                  allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
-                  allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
-                  allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]);
-                  allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]);
-                  allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]);
-                  allnumcp = (allnumcp + (numcpvec)[g]);
+                  allene0_x = allene0_x + enevec[(3 * g) + 0];
+                  allene0_y = allene0_y + enevec[(3 * g) + 1];
+                  allene0_z = allene0_z + enevec[(3 * g) + 2];
+                  allavv_x = allavv_x + avvvec[(3 * g) + 0];
+                  allavv_y = allavv_y + avvvec[(3 * g) + 1];
+                  allavv_z = allavv_z + avvvec[(3 * g) + 2];
+                  allnumcp = allnumcp + numcpvec[g];
                 }
               }
               (((FoutEN +
@@ -323,14 +323,14 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
     __mem1__ MAPU_LONG allgid;
     for (allgid = 0; allgid < numgrid; allgid++) {
       __mem1__ int new_load_tmp;
-      new_load_tmp = (xyzw)[(4 * ((__idy * numgrid) + allgid))];
+      new_load_tmp = xyzw[4 * ((__idy * numgrid) + allgid)];
       __mem1__ MAPU_LONG c_gid;
       c_gid = allgid;
       cr_allgid = allgid;
       use_local_particle_position = 0;
-      mdx = (c_gid % XLEN);
-      mdy = ((c_gid / XLEN) % YLEN);
-      mdz = (c_gid / (XLEN * YLEN));
+      mdx = c_gid % XLEN;
+      mdy = (c_gid / XLEN) % YLEN;
+      mdz = c_gid / (XLEN * YLEN);
       __mem1__ int load0;
       load0 = new_load_tmp;
       __mem1__ int new_load;
@@ -340,20 +340,20 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
       if (load0) {
         {
           __mem1__ int Midx;
-          Midx = ((use_local_particle_position) ? (({
+          Midx = (use_local_particle_position) ? (({
             floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[0]);
           }))
-                                                : (({ mdx; })));
+                                               : (({ mdx; }));
           __mem1__ int Midy;
-          Midy = ((use_local_particle_position) ? (({
+          Midy = (use_local_particle_position) ? (({
             floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[1]);
           }))
-                                                : (({ mdy; })));
+                                               : (({ mdy; }));
           __mem1__ int Midz;
-          Midz = ((use_local_particle_position) ? (({
+          Midz = (use_local_particle_position) ? (({
             floor(((inoutput + (grid_base_offset + (6 * (allgid * grid_cache_len)))))[2]);
           }))
-                                                : (({ mdz; })));
+                                               : (({ mdz; }));
           __mem1__ MAPU_LONG lg;
           lg = 0;
           __mem1__ double allene0_x;
@@ -373,18 +373,18 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
           {
             __mem1__ MAPU_LONG g;
             for (g = 0; g < 3; g++) {
-              (enevec)[(g + (3 * __idx))] = 0;
-              (avvvec)[(g + (3 * __idx))] = 0;
+              enevec[g + (3 * __idx)] = 0;
+              avvvec[g + (3 * __idx)] = 0;
             }
           }
-          (numcpvec)[(1 * __idx)] = 0;
+          numcpvec[1 * __idx] = 0;
           for (0; ((__idx * 64) + lg) < load0; lg = (lg + (__xlen * 64))) {
-            __mem0__ double a_rva[(64 * 6)];
+            __mem0__ double a_rva[64 * 6];
             __mem1__ int __idx_all_base;
-            __idx_all_base = ((__idx * 64) + lg);
+            __idx_all_base = (__idx * 64) + lg;
             __mem1__ int numcp;
-            numcp = ((((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
-                                                        : (({ 64; })));
+            numcp = (((__idx_all_base + 64) >= load0)) ? (({ (load0 - __idx_all_base); }))
+                                                       : (({ 64; }));
 
             if ((numcp * 6)) {
               {
@@ -397,7 +397,7 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                                                  (__idx_all_base * 6))),
                              ((uint64_t)(6 * (numcp * data_size))),
                              __pscmc_mapu_internal_barrier__);
-                (__pscmc_mapu_internal_barrier__).arrive_and_wait();
+                __pscmc_mapu_internal_barrier__.arrive_and_wait();
               }
             } else {
               { 0; }
@@ -424,39 +424,39 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
                 __mem1__ double vz;
                 vz = ((a_rva + (g * 6)))[5];
                 __mem1__ double curene_x;
-                curene_x = (Mass * (0.5 * +((vx * vx))));
+                curene_x = Mass * (0.5 * +((vx * vx)));
                 __mem1__ double curene_y;
-                curene_y = (Mass * (0.5 * +((vy * vy))));
+                curene_y = Mass * (0.5 * +((vy * vy)));
                 __mem1__ double curene_z;
-                curene_z = (Mass * (0.5 * +((vz * vz))));
-                ene0_x = (ene0_x + curene_x);
-                ene0_y = (ene0_y + curene_y);
-                ene0_z = (ene0_z + curene_z);
-                aver_vx = (aver_vx + vx);
-                aver_vy = (aver_vy + vy);
-                aver_vz = (aver_vz + vz);
+                curene_z = Mass * (0.5 * +((vz * vz)));
+                ene0_x = ene0_x + curene_x;
+                ene0_y = ene0_y + curene_y;
+                ene0_z = ene0_z + curene_z;
+                aver_vx = aver_vx + vx;
+                aver_vy = aver_vy + vy;
+                aver_vz = aver_vz + vz;
               }
             }
-            (enevec)[(3 * __idx)] = ((enevec)[(3 * __idx)] + ene0_x);
-            (enevec)[((3 * __idx) + 1)] = ((enevec)[((3 * __idx) + 1)] + ene0_y);
-            (enevec)[((3 * __idx) + 2)] = ((enevec)[((3 * __idx) + 2)] + ene0_z);
-            (avvvec)[(3 * __idx)] = ((avvvec)[(3 * __idx)] + aver_vx);
-            (avvvec)[((3 * __idx) + 1)] = ((avvvec)[((3 * __idx) + 1)] + aver_vy);
-            (avvvec)[((3 * __idx) + 2)] = ((avvvec)[((3 * __idx) + 2)] + aver_vz);
-            (numcpvec)[__idx] = ((numcpvec)[__idx] + numcp);
+            enevec[3 * __idx] = enevec[3 * __idx] + ene0_x;
+            enevec[(3 * __idx) + 1] = enevec[(3 * __idx) + 1] + ene0_y;
+            enevec[(3 * __idx) + 2] = enevec[(3 * __idx) + 2] + ene0_z;
+            avvvec[3 * __idx] = avvvec[3 * __idx] + aver_vx;
+            avvvec[(3 * __idx) + 1] = avvvec[(3 * __idx) + 1] + aver_vy;
+            avvvec[(3 * __idx) + 2] = avvvec[(3 * __idx) + 2] + aver_vz;
+            numcpvec[__idx] = numcpvec[__idx] + numcp;
           }
           if ((__idx == 0)) {
             {
               {
                 __mem1__ MAPU_LONG g;
                 for (g = 0; g < __xlen; g++) {
-                  allene0_x = (allene0_x + (enevec)[((3 * g) + 0)]);
-                  allene0_y = (allene0_y + (enevec)[((3 * g) + 1)]);
-                  allene0_z = (allene0_z + (enevec)[((3 * g) + 2)]);
-                  allavv_x = (allavv_x + (avvvec)[((3 * g) + 0)]);
-                  allavv_y = (allavv_y + (avvvec)[((3 * g) + 1)]);
-                  allavv_z = (allavv_z + (avvvec)[((3 * g) + 2)]);
-                  allnumcp = (allnumcp + (numcpvec)[g]);
+                  allene0_x = allene0_x + enevec[(3 * g) + 0];
+                  allene0_y = allene0_y + enevec[(3 * g) + 1];
+                  allene0_z = allene0_z + enevec[(3 * g) + 2];
+                  allavv_x = allavv_x + avvvec[(3 * g) + 0];
+                  allavv_y = allavv_y + avvvec[(3 * g) + 1];
+                  allavv_z = allavv_z + avvvec[(3 * g) + 2];
+                  allnumcp = allnumcp + numcpvec[g];
                 }
               }
               (((FoutEN +
@@ -515,13 +515,13 @@ __global__ void mapu_dump_ene_num(__DDR double *inoutput, __DDR int *xyzw, __DDR
 
       if ((load0 != new_load)) {
         {
-          (xyzw)[(4 * ((__idy * numgrid) + allgid))] = new_load;
+          xyzw[4 * ((__idy * numgrid) + allgid)] = new_load;
         }
       }
     }
   }
 #ifdef __PSCMC_TIMER_PROF
-  __pscmc_clock_default = (__pscmc_clock_default + (clock64() - __pscmc_clock_tmp_default));
+  __pscmc_clock_default = __pscmc_clock_default + (clock64() - __pscmc_clock_tmp_default);
 
 #else
   0;

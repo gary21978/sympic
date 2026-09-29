@@ -8,7 +8,7 @@
 #include "general_partial_sort.kernel.inc"
 
 int mapu_cu_swap_r_8_init(mapu_pscmc_env *pe, mapu_cu_swap_r_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 // void mapu_cu_swap_r_8_get_struct_len(size_t *len) {
@@ -47,7 +47,7 @@ int mapu_cu_swap_r_8_exec(mapu_cu_swap_r_8_struct *kerstr, long scmc_internal_g_
   } else {
     dim3 multiylen = 1;
     multiylen.x = 64;
-    multiylen.y = (scmc_internal_g_ylen / 64);
+    multiylen.y = scmc_internal_g_ylen / 64;
     int rest = (scmc_internal_g_ylen % 64);
 
     if ((rest != 0)) {
@@ -116,7 +116,7 @@ int mapu_cu_swap_r_8_scmc_set_parameter_XYZLEN(mapu_cu_swap_r_8_struct *kerstr,
   return 0;
 }
 int mapu_cu_swap_l_8_init(mapu_pscmc_env *pe, mapu_cu_swap_l_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 // void mapu_cu_swap_l_8_get_struct_len(size_t *len) {
@@ -156,7 +156,7 @@ int mapu_cu_swap_l_8_exec(mapu_cu_swap_l_8_struct *kerstr, long scmc_internal_g_
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -230,7 +230,7 @@ int mapu_cu_swap_l_8_scmc_set_parameter_XYZLEN(mapu_cu_swap_l_8_struct *kerstr,
   return 0;
 }
 int mapu_cu_swap_r_6_init(mapu_pscmc_env *pe, mapu_cu_swap_r_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_cu_swap_r_6_get_struct_len(size_t *len) { ((len)[0] = sizeof(mapu_cu_swap_r_6_struct)); }
@@ -268,7 +268,7 @@ int mapu_cu_swap_r_6_exec(mapu_cu_swap_r_6_struct *kerstr, long scmc_internal_g_
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -342,7 +342,7 @@ int mapu_cu_swap_r_6_scmc_set_parameter_XYZLEN(mapu_cu_swap_r_6_struct *kerstr,
   return 0;
 }
 int mapu_cu_swap_l_6_init(mapu_pscmc_env *pe, mapu_cu_swap_l_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_cu_swap_l_6_get_struct_len(size_t *len) { ((len)[0] = sizeof(mapu_cu_swap_l_6_struct)); }
@@ -380,7 +380,7 @@ int mapu_cu_swap_l_6_exec(mapu_cu_swap_l_6_struct *kerstr, long scmc_internal_g_
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -454,11 +454,11 @@ int mapu_cu_swap_l_6_scmc_set_parameter_XYZLEN(mapu_cu_swap_l_6_struct *kerstr,
   return 0;
 }
 int mapu_sort_one_grid_z_vlo_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_z_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_z_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_z_vlo_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_z_vlo_8_struct);
 }
 int mapu_sort_one_grid_z_vlo_8_get_xlen() { return 1; }
 // int mapu_sort_one_grid_z_vlo_8_get_num_compute_units(
@@ -508,7 +508,7 @@ int mapu_sort_one_grid_z_vlo_8_exec(mapu_sort_one_grid_z_vlo_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -632,11 +632,11 @@ int mapu_sort_one_grid_z_vlo_8_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_z_vlo_8_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_z_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_z_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_z_vlo_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_z_vlo_8_struct);
 }
 int mapu_gpu_sort_one_grid_z_vlo_8_get_xlen() { return 32; }
 // int mapu_gpu_sort_one_grid_z_vlo_8_get_num_compute_units(
@@ -686,7 +686,7 @@ int mapu_gpu_sort_one_grid_z_vlo_8_exec(mapu_gpu_sort_one_grid_z_vlo_8_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -809,11 +809,11 @@ int mapu_gpu_sort_one_grid_z_vlo_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_y_vlo_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_y_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_y_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_y_vlo_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_y_vlo_8_struct);
 }
 int mapu_sort_one_grid_y_vlo_8_get_xlen() { return 1; }
 // int mapu_sort_one_grid_y_vlo_8_get_num_compute_units(
@@ -863,7 +863,7 @@ int mapu_sort_one_grid_y_vlo_8_exec(mapu_sort_one_grid_y_vlo_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -987,11 +987,11 @@ int mapu_sort_one_grid_y_vlo_8_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_y_vlo_8_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_y_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_y_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_y_vlo_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_y_vlo_8_struct);
 }
 int mapu_gpu_sort_one_grid_y_vlo_8_get_xlen() { return 32; }
 // int mapu_gpu_sort_one_grid_y_vlo_8_get_num_compute_units(
@@ -1041,7 +1041,7 @@ int mapu_gpu_sort_one_grid_y_vlo_8_exec(mapu_gpu_sort_one_grid_y_vlo_8_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1164,11 +1164,11 @@ int mapu_gpu_sort_one_grid_y_vlo_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_x_vlo_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_x_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_x_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_x_vlo_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_x_vlo_8_struct);
 }
 int mapu_sort_one_grid_x_vlo_8_get_xlen() { return 1; }
 // int mapu_sort_one_grid_x_vlo_8_get_num_compute_units(
@@ -1218,7 +1218,7 @@ int mapu_sort_one_grid_x_vlo_8_exec(mapu_sort_one_grid_x_vlo_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1342,11 +1342,11 @@ int mapu_sort_one_grid_x_vlo_8_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_x_vlo_8_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_x_vlo_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_x_vlo_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_x_vlo_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_x_vlo_8_struct);
 }
 int mapu_gpu_sort_one_grid_x_vlo_8_get_xlen() { return 32; }
 // int mapu_gpu_sort_one_grid_x_vlo_8_get_num_compute_units(
@@ -1396,7 +1396,7 @@ int mapu_gpu_sort_one_grid_x_vlo_8_exec(mapu_gpu_sort_one_grid_x_vlo_8_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1519,11 +1519,11 @@ int mapu_gpu_sort_one_grid_x_vlo_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_z_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_z_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_z_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_z_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_z_8_struct);
 }
 int mapu_sort_one_grid_z_8_get_xlen() { return 1; }
 int mapu_sort_one_grid_z_8_get_num_compute_units(mapu_sort_one_grid_z_8_struct *kerstr) {
@@ -1572,7 +1572,7 @@ int mapu_sort_one_grid_z_8_exec(mapu_sort_one_grid_z_8_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1695,11 +1695,11 @@ int mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_z_8_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_z_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_z_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_z_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_z_8_struct);
 }
 int mapu_gpu_sort_one_grid_z_8_get_xlen() { return 32; }
 // int mapu_gpu_sort_one_grid_z_8_get_num_compute_units(
@@ -1749,7 +1749,7 @@ int mapu_gpu_sort_one_grid_z_8_exec(mapu_gpu_sort_one_grid_z_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1872,11 +1872,11 @@ int mapu_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_y_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_y_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_y_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_y_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_y_8_struct);
 }
 int mapu_sort_one_grid_y_8_get_xlen() { return 1; }
 // int mapu_sort_one_grid_y_8_get_num_compute_units(
@@ -1926,7 +1926,7 @@ int mapu_sort_one_grid_y_8_exec(mapu_sort_one_grid_y_8_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2049,11 +2049,11 @@ int mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_y_8_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_y_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_y_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_y_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_y_8_struct);
 }
 int mapu_gpu_sort_one_grid_y_8_get_xlen() { return 32; }
 int mapu_gpu_sort_one_grid_y_8_get_num_compute_units(mapu_gpu_sort_one_grid_y_8_struct *kerstr) {
@@ -2102,7 +2102,7 @@ int mapu_gpu_sort_one_grid_y_8_exec(mapu_gpu_sort_one_grid_y_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2225,11 +2225,11 @@ int mapu_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_x_8_init(mapu_pscmc_env *pe, mapu_sort_one_grid_x_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_x_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_x_8_struct);
+  len[0] = sizeof(mapu_sort_one_grid_x_8_struct);
 }
 int mapu_sort_one_grid_x_8_get_xlen() { return 1; }
 int mapu_sort_one_grid_x_8_get_num_compute_units(mapu_sort_one_grid_x_8_struct *kerstr) {
@@ -2278,7 +2278,7 @@ int mapu_sort_one_grid_x_8_exec(mapu_sort_one_grid_x_8_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2401,11 +2401,11 @@ int mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_x_8_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_x_8_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_x_8_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_x_8_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_x_8_struct);
 }
 int mapu_gpu_sort_one_grid_x_8_get_xlen() { return 32; }
 int mapu_gpu_sort_one_grid_x_8_get_num_compute_units(mapu_gpu_sort_one_grid_x_8_struct *kerstr) {
@@ -2454,7 +2454,7 @@ int mapu_gpu_sort_one_grid_x_8_exec(mapu_gpu_sort_one_grid_x_8_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2577,11 +2577,11 @@ int mapu_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_z_vlo_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_z_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_z_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_z_vlo_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_z_vlo_6_struct);
 }
 int mapu_sort_one_grid_z_vlo_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_z_vlo_6_get_num_compute_units(mapu_sort_one_grid_z_vlo_6_struct *kerstr) {
@@ -2630,7 +2630,7 @@ int mapu_sort_one_grid_z_vlo_6_exec(mapu_sort_one_grid_z_vlo_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2754,11 +2754,11 @@ int mapu_sort_one_grid_z_vlo_6_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_z_vlo_6_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_z_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_z_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_z_vlo_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_z_vlo_6_struct);
 }
 int mapu_gpu_sort_one_grid_z_vlo_6_get_xlen() { return 32; }
 int mapu_gpu_sort_one_grid_z_vlo_6_get_num_compute_units(
@@ -2808,7 +2808,7 @@ int mapu_gpu_sort_one_grid_z_vlo_6_exec(mapu_gpu_sort_one_grid_z_vlo_6_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2931,11 +2931,11 @@ int mapu_gpu_sort_one_grid_z_vlo_6_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_y_vlo_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_y_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_y_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_y_vlo_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_y_vlo_6_struct);
 }
 int mapu_sort_one_grid_y_vlo_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_y_vlo_6_get_num_compute_units(mapu_sort_one_grid_y_vlo_6_struct *kerstr) {
@@ -2984,7 +2984,7 @@ int mapu_sort_one_grid_y_vlo_6_exec(mapu_sort_one_grid_y_vlo_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3108,11 +3108,11 @@ int mapu_sort_one_grid_y_vlo_6_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_y_vlo_6_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_y_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_y_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_y_vlo_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_y_vlo_6_struct);
 }
 int mapu_gpu_sort_one_grid_y_vlo_6_get_xlen() { return 32; }
 int mapu_gpu_sort_one_grid_y_vlo_6_get_num_compute_units(
@@ -3162,7 +3162,7 @@ int mapu_gpu_sort_one_grid_y_vlo_6_exec(mapu_gpu_sort_one_grid_y_vlo_6_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3285,11 +3285,11 @@ int mapu_gpu_sort_one_grid_y_vlo_6_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_x_vlo_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_x_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_x_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_x_vlo_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_x_vlo_6_struct);
 }
 int mapu_sort_one_grid_x_vlo_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_x_vlo_6_get_num_compute_units(mapu_sort_one_grid_x_vlo_6_struct *kerstr) {
@@ -3338,7 +3338,7 @@ int mapu_sort_one_grid_x_vlo_6_exec(mapu_sort_one_grid_x_vlo_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3462,11 +3462,11 @@ int mapu_sort_one_grid_x_vlo_6_scmc_set_parameter_cu_cache_length(
 }
 int mapu_gpu_sort_one_grid_x_vlo_6_init(mapu_pscmc_env *pe,
                                         mapu_gpu_sort_one_grid_x_vlo_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_x_vlo_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_x_vlo_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_x_vlo_6_struct);
 }
 int mapu_gpu_sort_one_grid_x_vlo_6_get_xlen() { return 32; }
 int mapu_gpu_sort_one_grid_x_vlo_6_get_num_compute_units(
@@ -3516,7 +3516,7 @@ int mapu_gpu_sort_one_grid_x_vlo_6_exec(mapu_gpu_sort_one_grid_x_vlo_6_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3639,11 +3639,11 @@ int mapu_gpu_sort_one_grid_x_vlo_6_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_z_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_z_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_z_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_z_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_z_6_struct);
 }
 int mapu_sort_one_grid_z_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_z_6_get_num_compute_units(mapu_sort_one_grid_z_6_struct *kerstr) {
@@ -3692,7 +3692,7 @@ int mapu_sort_one_grid_z_6_exec(mapu_sort_one_grid_z_6_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3815,11 +3815,11 @@ int mapu_sort_one_grid_z_6_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_z_6_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_z_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_z_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_z_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_z_6_struct);
 }
 
 #ifndef MAPU_GPU_SORT_ONE_GRID_6_XLEN
@@ -3880,7 +3880,7 @@ int mapu_gpu_sort_one_grid_z_6_exec(mapu_gpu_sort_one_grid_z_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -4003,11 +4003,11 @@ int mapu_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_y_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_y_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_y_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_y_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_y_6_struct);
 }
 int mapu_sort_one_grid_y_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_y_6_get_num_compute_units(mapu_sort_one_grid_y_6_struct *kerstr) {
@@ -4056,7 +4056,7 @@ int mapu_sort_one_grid_y_6_exec(mapu_sort_one_grid_y_6_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -4179,11 +4179,11 @@ int mapu_sort_one_grid_y_6_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_y_6_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_y_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_y_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_y_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_y_6_struct);
 }
 int mapu_gpu_sort_one_grid_y_6_get_xlen() { return mapu_gpu_sort_one_grid_6_runtime_xlen(); }
 int mapu_gpu_sort_one_grid_y_6_get_num_compute_units(mapu_gpu_sort_one_grid_y_6_struct *kerstr) {
@@ -4232,7 +4232,7 @@ int mapu_gpu_sort_one_grid_y_6_exec(mapu_gpu_sort_one_grid_y_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -4355,11 +4355,11 @@ int mapu_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_cache_length(
   return 0;
 }
 int mapu_sort_one_grid_x_6_init(mapu_pscmc_env *pe, mapu_sort_one_grid_x_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sort_one_grid_x_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sort_one_grid_x_6_struct);
+  len[0] = sizeof(mapu_sort_one_grid_x_6_struct);
 }
 int mapu_sort_one_grid_x_6_get_xlen() { return 1; }
 int mapu_sort_one_grid_x_6_get_num_compute_units(mapu_sort_one_grid_x_6_struct *kerstr) {
@@ -4408,7 +4408,7 @@ int mapu_sort_one_grid_x_6_exec(mapu_sort_one_grid_x_6_struct *kerstr, long scmc
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -4531,11 +4531,11 @@ int mapu_sort_one_grid_x_6_scmc_set_parameter_cu_cache_length(mapu_sort_one_grid
   return 0;
 }
 int mapu_gpu_sort_one_grid_x_6_init(mapu_pscmc_env *pe, mapu_gpu_sort_one_grid_x_6_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_gpu_sort_one_grid_x_6_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_gpu_sort_one_grid_x_6_struct);
+  len[0] = sizeof(mapu_gpu_sort_one_grid_x_6_struct);
 }
 int mapu_gpu_sort_one_grid_x_6_get_xlen() { return mapu_gpu_sort_one_grid_6_runtime_xlen(); }
 int mapu_gpu_sort_one_grid_x_6_get_num_compute_units(mapu_gpu_sort_one_grid_x_6_struct *kerstr) {
@@ -4584,7 +4584,7 @@ int mapu_gpu_sort_one_grid_x_6_exec(mapu_gpu_sort_one_grid_x_6_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {

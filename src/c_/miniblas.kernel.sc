@@ -40,8 +40,8 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                 {
                   long inner_g;
                   for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                    ((fast_y)[((inner_step * blk_all_len) + inner_g)] =
-                         ((y + (i * blk_all_len)))[((inner_step * blk_all_len) + inner_g)]);
+                    (fast_y[(inner_step * blk_all_len) + inner_g] =
+                         ((y + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g]);
                   }
                 }
               }
@@ -55,8 +55,8 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                 {
                   long inner_g;
                   for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                    ((fast_x)[((inner_step * blk_all_len) + inner_g)] =
-                         ((x + (i * blk_all_len)))[((inner_step * blk_all_len) + inner_g)]);
+                    (fast_x[(inner_step * blk_all_len) + inner_g] =
+                         ((x + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g]);
                   }
                 }
               }
@@ -74,16 +74,16 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                       {
                         long realidx;
                         for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                          ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp))))))) +
-                                     realidx)] =
-                               ((fast_y)[((0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                         (yb * (xyzz + ovlp))))))) +
-                                          realidx)] +
-                                (a * (fast_x)[(
-                                         (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                        (yb * (xyzz + ovlp))))))) +
-                                         realidx)])));
+                          (fast_y[(0 + (num_ele *
+                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))) +
+                                  realidx] =
+                               (fast_y[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                      (yb * (xyzz + ovlp))))))) +
+                                       realidx] +
+                                (a *
+                                 fast_x[(0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) +
+                                                                       (yb * (xyzz + ovlp))))))) +
+                                        realidx])));
                         }
                       }
                     }
@@ -98,8 +98,8 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
               {
                 long inner_g;
                 for (inner_g = 0; inner_g < blk_all_len; inner_g++) {
-                  (((y + (i * blk_all_len)))[((inner_step * blk_all_len) + inner_g)] =
-                       (fast_y)[((inner_step * blk_all_len) + inner_g)]);
+                  (((y + (i * blk_all_len)))[(inner_step * blk_all_len) + inner_g] =
+                       fast_y[(inner_step * blk_all_len) + inner_g]);
                 }
               }
             }
@@ -118,15 +118,14 @@ void c_blas_axpy_scmc_kernel(double *y, double *x, double a, long y_cpu_core, lo
                     for (xyzx = 0; xyzx < 1; xyzx++) {
                       long blk_offset_t1 = (blk_all_len * i);
                       long blk_offset =
-                          ((blk_all_len * i) +
-                           (0 +
-                            (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))))));
+                          (blk_all_len * i) +
+                          (0 + (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))));
                       {
                         long g = 0;
                         for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
                           long realidx = (__idx + (g * __xlen));
-                          ((y)[(blk_offset + realidx)] =
-                               ((y)[(blk_offset + realidx)] + (a * (x)[(blk_offset + realidx)])));
+                          (y[blk_offset + realidx] =
+                               (y[blk_offset + realidx] + (a * x[blk_offset + realidx])));
                         }
                       }
                     }
@@ -171,7 +170,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
   double zeros[128];
   long lg = 0;
   for (lg = 0; (lg + __idx) < LOCAL_CACHE_LEN; lg = (lg + __xlen)) {
-    (zeros)[(lg + __idx)] = 0;
+    zeros[lg + __idx] = 0;
   }
   {
     long i;
@@ -184,7 +183,7 @@ void c_blas_yiszero_synced_scmc_kernel(double *y, long y_cpu_core, long numvec, 
         {
           long Gll_P9918;
           for (Gll_P9918 = 0; Gll_P9918 < numcp; Gll_P9918++) {
-            ((y + (blk_offset_t1 + j)))[Gll_P9918] = (zeros)[Gll_P9918];
+            ((y + (blk_offset_t1 + j)))[Gll_P9918] = zeros[Gll_P9918];
           }
         }
       }

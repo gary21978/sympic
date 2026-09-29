@@ -1776,7 +1776,7 @@ element *internal_is_greater_than_or_eq(element *arg) {
   element *next;
   prev = car(arg);
   while (!isempty(cdr(arg))) {
-    next = (car(cdr(arg)));
+    next = car(cdr(arg));
     // fprintf(stderr,"%d %d\n",prev->data.intnum,next->data.intnum);
     if (is_greater_than_or_eq(prev, next) == global_true) {
       // fprintf(stderr,"internal ok here\n");
@@ -1794,7 +1794,7 @@ element *internal_is_greater_than(element *arg) {
   element *next;
   prev = car(arg);
   while (!isempty(cdr(arg))) {
-    next = (car(cdr(arg)));
+    next = car(cdr(arg));
     // fprintf(stderr,"%d %d\n",prev->data.intnum,next->data.intnum);
     if (is_greater_than(prev, next) == global_true) {
       // fprintf(stderr,"internal ok here\n");
@@ -1812,7 +1812,7 @@ element *internal_is_less_than_or_eq(element *arg) {
   element *next;
   prev = car(arg);
   while (!isempty(cdr(arg))) {
-    next = (car(cdr(arg)));
+    next = car(cdr(arg));
     // fprintf(stderr,"%d %d\n",prev->data.intnum,next->data.intnum);
     if (is_less_than_or_eq(prev, next) == global_true) {
       // fprintf(stderr,"internal ok here\n");
@@ -1830,7 +1830,7 @@ element *internal_is_less_than(element *arg) {
   element *next;
   prev = car(arg);
   while (!isempty(cdr(arg))) {
-    next = (car(cdr(arg)));
+    next = car(cdr(arg));
     // fprintf(stderr,"%d %d\n",prev->data.intnum,next->data.intnum);
     if (is_less_than(prev, next) == global_true) {
       // fprintf(stderr,"internal ok here\n");
@@ -1848,7 +1848,7 @@ element *internal_is_eq(element *arg) {
   element *next;
   prev = car(arg);
   while (!isempty(cdr(arg))) {
-    next = (car(cdr(arg)));
+    next = car(cdr(arg));
     // fprintf(stderr,"%d %d\n",prev->data.intnum,next->data.intnum);
     if (is_eq(prev, next) == global_true) {
       // fprintf(stderr,"internal ok here\n");
@@ -2453,7 +2453,7 @@ tailcall_opt:
         ret = res;
         goto ret_mark;
       }
-      input = (cdr(input));
+      input = cdr(input);
     }
     input = car(input);
     goto tailcall_opt;

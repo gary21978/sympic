@@ -17,15 +17,15 @@ double wclk_now();
 int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, double Deltat) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
-  Field3D_Seq *pfieldE = (pthis)->pfieldE;
+  Field3D_Seq *pfieldE = pthis->pfieldE;
 
-  Field3D_Seq *pfieldB = (pthis)->pfieldB;
+  Field3D_Seq *pfieldB = pthis->pfieldB;
 
-  Field3D_Seq *pFoutJ = (pthis)->pFoutJ;
+  Field3D_Seq *pFoutJ = pthis->pFoutJ;
 
-  Field3D_Seq *pFoutEN = (pthis)->pFoutEN;
+  Field3D_Seq *pFoutEN = pthis->pFoutEN;
 
   double Mass = (pthis)->Mass;
 
@@ -206,15 +206,15 @@ int cuda_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, do
 int mapu_dump_ene_num(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, double Deltat) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
-  Field3D_Seq *pfieldE = (pthis)->pfieldE;
+  Field3D_Seq *pfieldE = pthis->pfieldE;
 
-  Field3D_Seq *pfieldB = (pthis)->pfieldB;
+  Field3D_Seq *pfieldB = pthis->pfieldB;
 
-  Field3D_Seq *pFoutJ = (pthis)->pFoutJ;
+  Field3D_Seq *pFoutJ = pthis->pFoutJ;
 
-  Field3D_Seq *pFoutEN = (pthis)->pFoutEN;
+  Field3D_Seq *pFoutEN = pthis->pFoutEN;
 
   double Mass = (pthis)->Mass;
 
@@ -412,7 +412,7 @@ int dump_ene_num_all(One_Particle_Collection *pthis, int SPEC, int NUM_SPEC, dou
 int dump_ene_num_mpi(Particle_in_Cell_MPI *pthis, double dt0) {
 
   // defined from class Particle_in_Cell_MPI
-  Field3D_MPI MPI_fieldE = (pthis)->MPI_fieldE;
+  Field3D_MPI MPI_fieldE = pthis->MPI_fieldE;
 
   int *o_particle_type = (pthis)->o_particle_type;
 
@@ -428,7 +428,7 @@ int dump_ene_num_mpi(Particle_in_Cell_MPI *pthis, double dt0) {
       int ptype = (o_particle_type)[(i / num_runtime)];
 
       if ((1 || (ptype == 0))) {
-        dump_ene_num_all(((MPI_fieldE).particles + i), (i / num_runtime), num_spec, dt0);
+        dump_ene_num_all((MPI_fieldE.particles + i), (i / num_runtime), num_spec, dt0);
       }
     }
   }

@@ -7,7 +7,7 @@
 
 #define INIT_PARTICLE_GPU_CHECK(err, msg)                                                          \
   do {                                                                                             \
-    cudaError_t _err = (err);                                                                      \
+    cudaError_t _err = err;                                                                        \
     if (_err != cudaSuccess) {                                                                     \
       fprintf(stderr, "Error:%s\n%s\n", cudaGetErrorString(_err), (msg));                          \
       assert(0);                                                                                   \

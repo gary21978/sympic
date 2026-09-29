@@ -11,7 +11,7 @@ static int dump_kernel_variables = 0;
 extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
 
 int mapu_dump_ene_num_init(mapu_pscmc_env *pe, mapu_dump_ene_num_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_dump_ene_num_get_struct_len(size_t *len) { (len)[0] = sizeof(mapu_dump_ene_num_struct); }
@@ -702,7 +702,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1391,7 +1391,7 @@ int mapu_dump_ene_num_exec(mapu_dump_ene_num_struct *kerstr, long scmc_internal_
   } else {
     { 0; }
   }
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_dump_ene_num_scmc_set_parameter_inoutput(mapu_dump_ene_num_struct *kerstr,

@@ -48,12 +48,12 @@ double TEMPERATURE_DIST_global_procedure(long cursp, double z, double y, double 
     long *pdimarray = (pTEMPERATURE_DIST_gid_global_var)->pdimarray;
 
     long current_cache_pos =
-        (((long)l) +
-         ((pdimarray)[0] *
-          (((long)x) + ((pdimarray)[1] *
-                        (((long)y) + ((pdimarray)[2] *
-                                      (((long)z) + ((pdimarray)[3] *
-                                                    (((long)cursp) + ((pdimarray)[4] * 0))))))))));
+        ((long)l) +
+        (pdimarray[0] *
+         (((long)x) +
+          (pdimarray[1] *
+           (((long)y) + (pdimarray[2] *
+                         (((long)z) + (pdimarray[3] * (((long)cursp) + (pdimarray[4] * 0)))))))));
 
     long offset_pos = (current_cache_pos - TEMPERATURE_DIST_gid_cache_pos);
 
@@ -81,10 +81,10 @@ double DENSITY_DIST_global_procedure(long cursp, double z, double y, double x) {
     long *pdimarray = (pDENSITY_DIST_gid_global_var)->pdimarray;
 
     long current_cache_pos =
-        (((long)x) +
-         ((pdimarray)[0] *
-          (((long)y) + ((pdimarray)[1] *
-                        (((long)z) + ((pdimarray)[2] * (((long)cursp) + ((pdimarray)[3] * 0))))))));
+        ((long)x) +
+        (pdimarray[0] *
+         (((long)y) +
+          (pdimarray[1] * (((long)z) + (pdimarray[2] * (((long)cursp) + (pdimarray[3] * 0)))))));
 
     long offset_pos = (current_cache_pos - DENSITY_DIST_gid_cache_pos);
 
@@ -112,10 +112,10 @@ double V0_x_global_procedure(long cursp, double z, double y, double x) {
     long *pdimarray = (pV0_x_gid_global_var)->pdimarray;
 
     long current_cache_pos =
-        (((long)x) +
-         ((pdimarray)[0] *
-          (((long)y) + ((pdimarray)[1] *
-                        (((long)z) + ((pdimarray)[2] * (((long)cursp) + ((pdimarray)[3] * 0))))))));
+        ((long)x) +
+        (pdimarray[0] *
+         (((long)y) +
+          (pdimarray[1] * (((long)z) + (pdimarray[2] * (((long)cursp) + (pdimarray[3] * 0)))))));
 
     long offset_pos = (current_cache_pos - V0_x_gid_cache_pos);
 
@@ -143,10 +143,10 @@ double V0_y_global_procedure(long cursp, double z, double y, double x) {
     long *pdimarray = (pV0_y_gid_global_var)->pdimarray;
 
     long current_cache_pos =
-        (((long)x) +
-         ((pdimarray)[0] *
-          (((long)y) + ((pdimarray)[1] *
-                        (((long)z) + ((pdimarray)[2] * (((long)cursp) + ((pdimarray)[3] * 0))))))));
+        ((long)x) +
+        (pdimarray[0] *
+         (((long)y) +
+          (pdimarray[1] * (((long)z) + (pdimarray[2] * (((long)cursp) + (pdimarray[3] * 0)))))));
 
     long offset_pos = (current_cache_pos - V0_y_gid_cache_pos);
 
@@ -174,10 +174,10 @@ double V0_z_global_procedure(long cursp, double z, double y, double x) {
     long *pdimarray = (pV0_z_gid_global_var)->pdimarray;
 
     long current_cache_pos =
-        (((long)x) +
-         ((pdimarray)[0] *
-          (((long)y) + ((pdimarray)[1] *
-                        (((long)z) + ((pdimarray)[2] * (((long)cursp) + ((pdimarray)[3] * 0))))))));
+        ((long)x) +
+        (pdimarray[0] *
+         (((long)y) +
+          (pdimarray[1] * (((long)z) + (pdimarray[2] * (((long)cursp) + (pdimarray[3] * 0)))))));
 
     long offset_pos = (current_cache_pos - V0_z_gid_cache_pos);
 
@@ -210,8 +210,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "found %s for input\n", nm);
       pV0_z_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_z_gid_global_var, nm);
-      assert(((pV0_z_gid_global_var)->version == 0));
-      assert(((pV0_z_gid_global_var)->dim == 4));
+      assert((pV0_z_gid_global_var->version == 0));
+      assert((pV0_z_gid_global_var->dim == 4));
       GET_INIT_V0_z_inner_procedure = V0_z_global_procedure;
     }
   }
@@ -224,8 +224,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "found %s for input\n", nm);
       pV0_y_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_y_gid_global_var, nm);
-      assert(((pV0_y_gid_global_var)->version == 0));
-      assert(((pV0_y_gid_global_var)->dim == 4));
+      assert((pV0_y_gid_global_var->version == 0));
+      assert((pV0_y_gid_global_var->dim == 4));
       GET_INIT_V0_y_inner_procedure = V0_y_global_procedure;
     }
   }
@@ -238,8 +238,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "found %s for input\n", nm);
       pV0_x_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pV0_x_gid_global_var, nm);
-      assert(((pV0_x_gid_global_var)->version == 0));
-      assert(((pV0_x_gid_global_var)->dim == 4));
+      assert((pV0_x_gid_global_var->version == 0));
+      assert((pV0_x_gid_global_var->dim == 4));
       GET_INIT_V0_x_inner_procedure = V0_x_global_procedure;
     }
   }
@@ -252,8 +252,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "found %s for input\n", nm);
       pDENSITY_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pDENSITY_DIST_gid_global_var, nm);
-      assert(((pDENSITY_DIST_gid_global_var)->version == 0));
-      assert(((pDENSITY_DIST_gid_global_var)->dim == 4));
+      assert((pDENSITY_DIST_gid_global_var->version == 0));
+      assert((pDENSITY_DIST_gid_global_var->dim == 4));
       GET_INIT_DENSITY_DIST_inner_procedure = DENSITY_DIST_global_procedure;
     }
   }
@@ -266,8 +266,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "found %s for input\n", nm);
       pTEMPERATURE_DIST_gid_global_var = malloc((sizeof(Gaps_IO_DataFile) * 1));
       GAPS_IO_InitIFile(pTEMPERATURE_DIST_gid_global_var, nm);
-      assert(((pTEMPERATURE_DIST_gid_global_var)->version == 0));
-      assert(((pTEMPERATURE_DIST_gid_global_var)->dim == 5));
+      assert((pTEMPERATURE_DIST_gid_global_var->version == 0));
+      assert((pTEMPERATURE_DIST_gid_global_var->dim == 5));
       GET_INIT_TEMPERATURE_DIST_inner_procedure = TEMPERATURE_DIST_global_procedure;
     }
   }
@@ -290,7 +290,7 @@ int main(int argc, char **argv) {
     long g;
 
     for (g = 0; g < NUM_N_HILBERT_DIMENSION; g++) {
-      numt = (numt * len_hilbert);
+      numt = numt * len_hilbert;
     }
   }
   int rank;
@@ -341,7 +341,7 @@ int main(int argc, char **argv) {
     M_DELTA_Z = 1;
   }
 
-  srand_seed = (rank + 1);
+  srand_seed = rank + 1;
   long local_seed = (rank + (1 + ((M_USE_TIME_AS_RANDOM_SEED) ? (time(NULL)) : (M_RAND_SEED))));
 
   if ((!M_USE_SAME_RANDOM_SEED)) {
@@ -395,9 +395,9 @@ int main(int argc, char **argv) {
     long i = 0;
 
     for (i = 0; i < NUM_RUNTIME; i++) {
-      (cd_types)[i] = call_GET_DEV_TYPE(i, rank);
-      (dev_ids)[i] = call_GET_DEV_ID(i, rank);
-      ((cd_performances)[i] =
+      cd_types[i] = call_GET_DEV_TYPE(i, rank);
+      dev_ids[i] = call_GET_DEV_ID(i, rank);
+      (cd_performances[i] =
            ((G_USE_DIFFERENT_DEV_PERFORMANCE) ? (call_CAL_FUN_ONE_PARA("GET_DEV_PERFORMANCE", i))
                                               : (1)));
     }
@@ -437,11 +437,11 @@ int main(int argc, char **argv) {
   long allxyzmax[3];
   set_Field3D_Seq(pfstest, NULL, M_DELTA_X, M_DELTA_Y, M_DELTA_Z, XMAX, YMAX, ZMAX, 2, overlap_len,
                   fieldlen, 0, len_hilbert, len_hilbert, len_hilbert, rank);
-  (allxyzmax)[0] = (len_hilbert * XMAX);
-  (allxyzmax)[1] = (len_hilbert * YMAX);
-  (allxyzmax)[2] = (len_hilbert * ZMAX);
+  allxyzmax[0] = len_hilbert * XMAX;
+  allxyzmax[1] = len_hilbert * YMAX;
+  allxyzmax[2] = len_hilbert * ZMAX;
   fstestSPEC = fstest;
-  (pfstestSPEC)->num_ele = (7 * NUM_SPEC);
+  pfstestSPEC->num_ele = 7 * NUM_SPEC;
   init_Field3D_MPI_ALL(ptestfield, pfstest, n_hilbert, NUM_N_HILBERT_DIMENSION, 0, tids,
                        local_tid_array, cd_types, dev_ids, cd_performances, num_runtime,
                        PS_MPI_COMM_WORLD, rank, n);
@@ -454,7 +454,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (pnpm)[i] = call_GET_NPM(i);
+      pnpm[i] = call_GET_NPM(i);
     }
   }
   double *pchg = malloc((sizeof(double) * NUM_SPEC));
@@ -463,7 +463,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (pchg)[i] = call_GET_CHARGE(i);
+      pchg[i] = call_GET_CHARGE(i);
     }
   }
   double *pmass = malloc((sizeof(double) * NUM_SPEC));
@@ -472,7 +472,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (pmass)[i] = call_GET_MASS(i);
+      pmass[i] = call_GET_MASS(i);
     }
   }
   long *pgcache = malloc((sizeof(long) * NUM_SPEC));
@@ -481,7 +481,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (pgcache)[i] = call_GET_GRID_CACHE_LEN(i);
+      pgcache[i] = call_GET_GRID_CACHE_LEN(i);
     }
   }
   long *pcucache = malloc((sizeof(long) * NUM_SPEC));
@@ -490,7 +490,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (pcucache)[i] = call_GET_CU_CACHE_LEN(i);
+      pcucache[i] = call_GET_CU_CACHE_LEN(i);
     }
   }
   Particle_in_Cell_MPI pis;
@@ -512,7 +512,7 @@ int main(int argc, char **argv) {
     long i;
 
     for (i = 0; i < NUM_SPEC; i++) {
-      (p_particle_type)[i] = 0;
+      p_particle_type[i] = 0;
     }
   }
   init_global_particles(ppis, ptestfield, ptestfield, ptestfieldSPEC, M_USE_SMALL_NUM_GRIDS,
@@ -526,7 +526,7 @@ int main(int argc, char **argv) {
     M_INIT_VMAX = 1;
   }
 
-  init_non_uni_particle_fmpi(&((ppis)->MPI_fieldE), M_INIT_VMAX);
+  init_non_uni_particle_fmpi(&(ppis->MPI_fieldE), M_INIT_VMAX);
 
   blas_yiszero_synced_Field3D_MPI(&(ppis->MPI_FoutJ), &(ppis->MPI_FoutJ));
 
@@ -589,12 +589,12 @@ int main(int argc, char **argv) {
           PS_MPI_Barrier(PS_MPI_COMM_WORLD);
         }
 
-        tbeg = (wclk_now() - tbeg);
+        tbeg = wclk_now() - tbeg;
         if ((rank == 0)) {
           fprintf(stderr, "done, time used=%fs\n", tbeg);
         }
 
-        tsave = (tsave + 1);
+        tsave = tsave + 1;
       }
 
       // set B1=B
@@ -610,13 +610,13 @@ int main(int argc, char **argv) {
       {
 
         // defined from class Particle_in_Cell_MPI
-        Field3D_MPI MPI_fieldE = (ppis)->MPI_fieldE;
+        Field3D_MPI MPI_fieldE = ppis->MPI_fieldE;
 
-        Field3D_MPI MPI_fieldB = (ppis)->MPI_fieldB;
+        Field3D_MPI MPI_fieldB = ppis->MPI_fieldB;
 
-        Field3D_MPI MPI_fieldB1 = (ppis)->MPI_fieldB1;
+        Field3D_MPI MPI_fieldB1 = ppis->MPI_fieldB1;
 
-        Field3D_MPI *pMPI_FoutJ = (ppis)->pMPI_FoutJ;
+        Field3D_MPI *pMPI_FoutJ = ppis->pMPI_FoutJ;
 
         //====================Particle_in_Cell_MPI
         Field3D_MPI *pMPI_fieldE = &(MPI_fieldE);
@@ -683,7 +683,7 @@ int main(int argc, char **argv) {
         long i;
 
         for (i = 0; i < argc; i++) {
-          fprintf(stderr, "%s ", (argv)[i]);
+          fprintf(stderr, "%s ", argv[i]);
         }
       }
       fprintf(stderr, "\n");

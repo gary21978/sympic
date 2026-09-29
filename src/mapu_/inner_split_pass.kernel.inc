@@ -43,20 +43,20 @@ static __device__ KERNEL_M __noinline__ void eval_f0_f1_if1(v8fp64 rx, v8fp64 di
   const v8fp64 f0_b3 = (linear - quarter_rx2);
   const v8fp64 f0_b4 = quarter_rx2;
 
-  f0[0] = (f0_b1 * neg_dix);
+  f0[0] = f0_b1 * neg_dix;
   f0[1] = (f0_b1 * dix_p1) + (f0_b2 * neg_dix);
   f0[2] = (f0_b2 * dix_p1) + (f0_b3 * neg_dix);
   f0[3] = (f0_b3 * dix_p1) + (f0_b4 * neg_dix);
-  f0[4] = (f0_b4 * dix_p1);
+  f0[4] = f0_b4 * dix_p1;
 
   const v8fp64 f1_b1 = (0.5 * omrx);
   const v8fp64 f1_b2 = (0.5 + (v8fp64){});
   const v8fp64 f1_b3 = (0.5 * rx);
 
-  f1[0] = (f1_b1 * neg_dix);
+  f1[0] = f1_b1 * neg_dix;
   f1[1] = (f1_b1 * dix_p1) + (f1_b2 * neg_dix);
   f1[2] = (f1_b2 * dix_p1) + (f1_b3 * neg_dix);
-  f1[3] = (f1_b3 * dix_p1);
+  f1[3] = f1_b3 * dix_p1;
   f1[4] = (v8fp64){};
 
   const v8fp64 if1_b1 = (1.0 - quarter_omrx2);
@@ -66,7 +66,7 @@ static __device__ KERNEL_M __noinline__ void eval_f0_f1_if1(v8fp64 rx, v8fp64 di
   if1[0] = dix_p1 + (if1_b1 * neg_dix);
   if1[1] = (if1_b1 * dix_p1) + (if1_b2 * neg_dix);
   if1[2] = (if1_b2 * dix_p1) + (if1_b3 * neg_dix);
-  if1[3] = (if1_b3 * dix_p1);
+  if1[3] = if1_b3 * dix_p1;
   if1[4] = (v8fp64){};
 }
 
@@ -86,11 +86,11 @@ static __device__ KERNEL_M __noinline__ void eval_f0_if1(v8fp64 rx, v8fp64 dix, 
   const v8fp64 f0_b3 = (linear - quarter_rx2);
   const v8fp64 f0_b4 = quarter_rx2;
 
-  f0[0] = (f0_b1 * neg_dix);
+  f0[0] = f0_b1 * neg_dix;
   f0[1] = (f0_b1 * dix_p1) + (f0_b2 * neg_dix);
   f0[2] = (f0_b2 * dix_p1) + (f0_b3 * neg_dix);
   f0[3] = (f0_b3 * dix_p1) + (f0_b4 * neg_dix);
-  f0[4] = (f0_b4 * dix_p1);
+  f0[4] = f0_b4 * dix_p1;
 
   const v8fp64 if1_b1 = (1.0 - quarter_omrx2);
   const v8fp64 if1_b2 = linear;
@@ -99,7 +99,7 @@ static __device__ KERNEL_M __noinline__ void eval_f0_if1(v8fp64 rx, v8fp64 dix, 
   if1[0] = dix_p1 + (if1_b1 * neg_dix);
   if1[1] = (if1_b1 * dix_p1) + (if1_b2 * neg_dix);
   if1[2] = (if1_b2 * dix_p1) + (if1_b3 * neg_dix);
-  if1[3] = (if1_b3 * dix_p1);
+  if1[3] = if1_b3 * dix_p1;
   if1[4] = (v8fp64){};
 }
 
@@ -116,7 +116,7 @@ static __device__ KERNEL_M __noinline__ void eval_if1(v8fp64 rx, v8fp64 dix, v8f
   if1[0] = dix_p1 + (if1_b1 * neg_dix);
   if1[1] = (if1_b1 * dix_p1) + (if1_b2 * neg_dix);
   if1[2] = (if1_b2 * dix_p1) + (if1_b3 * neg_dix);
-  if1[3] = (if1_b3 * dix_p1);
+  if1[3] = if1_b3 * dix_p1;
   if1[4] = (v8fp64){};
 }
 
@@ -431,9 +431,9 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ex_bank(
       const v8fp64 wyz = ((f0_y1)[idy] * (f0_z1)[idz]);
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = ((((shE0)[(0 + (3 * (idx + (tile_xlen * (idy + (idz * 5))))))] + 0)) *
-                       ((f1_x1)[idx] * wyz));
-        AllEx = (AllEx + term);
+        v8fp64 term =
+            ((shE0[0 + (3 * (idx + (tile_xlen * (idy + (idz * 5)))))] + 0)) * (f1_x1[idx] * wyz);
+        AllEx = AllEx + term;
       }
     }
   }
@@ -451,9 +451,9 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ey_bank(
       const v8fp64 wzx = ((f0_z1)[idy] * (f0_x1)[idz]);
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = ((((shE0)[(1 + (3 * (idz + (tile_xlen * (idx + (idy * 5))))))] + 0)) *
-                       ((f1_y1)[idx] * wzx));
-        AllEy = (AllEy + term);
+        v8fp64 term =
+            ((shE0[1 + (3 * (idz + (tile_xlen * (idx + (idy * 5)))))] + 0)) * (f1_y1[idx] * wzx);
+        AllEy = AllEy + term;
       }
     }
   }
@@ -471,9 +471,9 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_E_interp_Ez_bank(
       const v8fp64 wxy = ((f0_x1)[idy] * (f0_y1)[idz]);
 #pragma clang loop unroll(full)
       for (long idx = 0; idx < 4; idx++) {
-        v8fp64 term = ((((shE0)[(2 + (3 * (idy + (tile_xlen * (idz + (idx * 5))))))] + 0)) *
-                       ((f1_z1)[idx] * wxy));
-        AllEz = (AllEz + term);
+        v8fp64 term =
+            ((shE0[2 + (3 * (idy + (tile_xlen * (idz + (idx * 5)))))] + 0)) * (f1_z1[idx] * wxy);
+        AllEz = AllEz + term;
       }
     }
   }
@@ -528,7 +528,7 @@ pushJ_vlo_ctx_init_const(pushJ_ctx_t *ctx, double DELTA_X, double DELTA_Y, doubl
   const double grid_geo_z = (DELTA_Z / (DELTA_X * DELTA_Y));
 
   ctx->Deltat = Deltat;
-  ctx->TWO_DELTAT = (2.0 * Deltat);
+  ctx->TWO_DELTAT = 2.0 * Deltat;
   ctx->Tori_X0 = Tori_X0;
   ctx->X_PUSH_SCALE = INV_DELTA_X2 * (Deltat * QE_MASS);
   ctx->Y_FORCE_SCALE = TX02 * (QE_MASS * (Deltat * (1.0 / DELTA_Y2)));
@@ -589,13 +589,13 @@ pushJ_vlo_clamp_grid_idx(double *Midx, double *Midy, double *Midz, MAPU_LONG XLE
     *Midz = 0;
   }
   if (*Midx > (XLEN - 1)) {
-    *Midx = (XLEN - 1);
+    *Midx = XLEN - 1;
   }
   if (*Midy > (YLEN - 1)) {
-    *Midy = (YLEN - 1);
+    *Midy = YLEN - 1;
   }
   if (*Midz > (ZLEN - 1)) {
-    *Midz = (ZLEN - 1);
+    *Midz = ZLEN - 1;
   }
 }
 
@@ -641,10 +641,10 @@ pushJ_vlo_deposit_Jx(const pushJ_weight_bank_t *__restrict__ bank, const pushJ_v
 #pragma clang loop unroll(full)
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 accum = shJ_incf[((allidx * 3) + 0)];
+        v8fp64 accum = shJ_incf[(allidx * 3) + 0];
         accum = accum + (pathX12[xyzx] * wyz12);
         accum = accum + (pathX23[xyzx] * wyz23);
-        shJ_incf[((allidx * 3) + 0)] = accum;
+        shJ_incf[(allidx * 3) + 0] = accum;
       }
     }
   }
@@ -692,12 +692,12 @@ pushJ_vlo_deposit_JyJz(const pushJ_weight_bank_t *__restrict__ bank, const pushJ
 #pragma clang loop unroll(full)
       for (xyzx = 0; xyzx < 5; xyzx++) {
         const int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 accum_y = shJ_incf[((allidx * 3) + 1)];
-        v8fp64 accum_z = shJ_incf[((allidx * 3) + 2)];
+        v8fp64 accum_y = shJ_incf[(allidx * 3) + 1];
+        v8fp64 accum_z = shJ_incf[(allidx * 3) + 2];
         accum_y = accum_y + (xFactorY[xyzx] * yzFactorY);
         accum_z = accum_z + (xFactorZ[xyzx] * yzFactorZ);
-        shJ_incf[((allidx * 3) + 1)] = accum_y;
-        shJ_incf[((allidx * 3) + 2)] = accum_z;
+        shJ_incf[(allidx * 3) + 1] = accum_y;
+        shJ_incf[(allidx * 3) + 2] = accum_z;
       }
     }
   }
@@ -707,11 +707,10 @@ static __device__ __attribute__((always_inline)) inline MAPU_LONG
 pushJ_vlo_field_ddr_elem_offset(MAPU_LONG __idy, int bBidx, int bBidy, int bBidz, int xyzy,
                                 int xyzz, MAPU_LONG XLEN, MAPU_LONG YLEN, MAPU_LONG ZLEN, int ovlp,
                                 int num_ele) {
-  return (
-      (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-      (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                         (((xyzy + bBidy) + ovlp) +
-                                          ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp))))))));
+  return (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+         (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                            (((xyzy + bBidy) + ovlp) +
+                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp)))))));
 }
 
 static __device__ __attribute__((always_inline)) inline void pushJ_vlo_K1_load_shared_5x5x5(
@@ -815,7 +814,7 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st
       head_l[4][lane] = particle_dm[4 + 6 * src];
       head_l[5][lane] = particle_dm[5 + 6 * src];
     }
-    st->simd_mask = (1.0 + (v8fp64){});
+    st->simd_mask = 1.0 + (v8fp64){};
   } else {
     for (int f = 0; f < 6; f++) {
 #pragma clang loop unroll(full)
@@ -841,9 +840,9 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st
   st->vy0 = head[4];
   st->vz0 = head[5];
 
-  st->xx0 = (st->xx1 - (ctx->Deltat * st->vx0));
-  st->xy0 = (st->xy1 - (ctx->Deltat * st->vy0));
-  st->xz0 = (st->xz1 - (ctx->Deltat * st->vz0));
+  st->xx0 = st->xx1 - (ctx->Deltat * st->vx0);
+  st->xy0 = st->xy1 - (ctx->Deltat * st->vy0);
+  st->xz0 = st->xz1 - (ctx->Deltat * st->vz0);
 
   v8fp64 Midx0 = geo_floor_simd(st->xx0);
   v8fp64 Midx1 = geo_floor_simd(st->xx1);
@@ -852,18 +851,18 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_weight_bank_t *bank, pushJ_vlo_state_t *st
   v8fp64 Midz0 = geo_floor_simd(st->xz0);
   v8fp64 Midz1 = geo_floor_simd(st->xz1);
 
-  st->s_rx0x = (st->xx0 - Midx0);
-  st->s_rx0y = (st->xy0 - Midy0);
-  st->s_rx0z = (st->xz0 - Midz0);
-  st->s_rx1x = (st->xx1 - Midx1);
-  st->s_rx1y = (st->xy1 - Midy1);
-  st->s_rx1z = (st->xz1 - Midz1);
-  st->s_dix0x = (Midx0 - (ctx->Midx));
-  st->s_dix0y = (Midy0 - (ctx->Midy));
-  st->s_dix0z = (Midz0 - (ctx->Midz));
-  st->s_dix1x = (Midx1 - (ctx->Midx));
-  st->s_dix1y = (Midy1 - (ctx->Midy));
-  st->s_dix1z = (Midz1 - (ctx->Midz));
+  st->s_rx0x = st->xx0 - Midx0;
+  st->s_rx0y = st->xy0 - Midy0;
+  st->s_rx0z = st->xz0 - Midz0;
+  st->s_rx1x = st->xx1 - Midx1;
+  st->s_rx1y = st->xy1 - Midy1;
+  st->s_rx1z = st->xz1 - Midz1;
+  st->s_dix0x = Midx0 - (ctx->Midx);
+  st->s_dix0y = Midy0 - (ctx->Midy);
+  st->s_dix0z = Midz0 - (ctx->Midz);
+  st->s_dix1x = Midx1 - (ctx->Midx);
+  st->s_dix1y = Midy1 - (ctx->Midy);
+  st->s_dix1z = Midz1 - (ctx->Midz);
 
   /* Position 0 only feeds f0_x0, if1_x0 and if1_y0 downstream.  Keep the
    * state layout and coordinate setup unchanged, but avoid building the six
@@ -889,8 +888,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_x2(pushJ_vlo_stat
   /* Evaluate floor once and reuse the identical value for rx/dix. */
   const v8fp64 x2_rel = (st->x2 - ctx->XO);
   const v8fp64 x2_floor = geo_floor_simd(x2_rel);
-  st->s_rx2x = (x2_rel - x2_floor);
-  st->s_dix2x = (x2_floor - ctx->Midx);
+  st->s_rx2x = x2_rel - x2_floor;
+  st->s_dix2x = x2_floor - ctx->Midx;
 }
 
 static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0,
@@ -915,7 +914,7 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_stat
   const v8fp64 metric_x0 = (tx0_plus_x0 * tx0_plus_x0);
   const v8fp64 metric_x2 = (tx0_plus_x2 * tx0_plus_x2);
   const v8fp64 G = (1.0 / metric_x2);
-  st->vy0 = (cy_scale * G);
+  st->vy0 = cy_scale * G;
 
   const v8fp64 advect = y1 + ((metric_x0 * G) * (y1 - y0));
   const v8fp64 force = st->vy0 * (allincfvy - iBy);
@@ -923,8 +922,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_stat
 
   const v8fp64 y2_rel = (st->y2 - ctx->YO);
   const v8fp64 y2_floor = geo_floor_simd(y2_rel);
-  st->s_rx2y = (y2_rel - y2_floor);
-  st->s_dix2y = (y2_floor - ctx->Midy);
+  st->s_rx2y = y2_rel - y2_floor;
+  st->s_dix2y = y2_floor - ctx->Midy;
 }
 
 static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st,
@@ -936,8 +935,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_s
 
   const v8fp64 z2_rel = (st->z2 - (ctx->ZO - ctx->zmid));
   const v8fp64 z2_floor = geo_floor_simd(z2_rel);
-  st->s_rx2z = (z2_rel - z2_floor);
-  st->s_dix2z = (z2_floor - ctx->Midz);
+  st->s_rx2z = z2_rel - z2_floor;
+  st->s_dix2z = z2_floor - ctx->Midz;
 
   /* Theory Eq. (63): the second-stage z subflow has no field term.  This is
    * structural and remains valid when fieldB/fieldB1 contain external B. */
@@ -945,8 +944,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_s
 
   const v8fp64 z3_rel = (st->z3 - (ctx->ZO - ctx->zmid));
   const v8fp64 z3_floor = geo_floor_simd(z3_rel);
-  st->s_rx3z = (z3_rel - z3_floor);
-  st->s_dix3z = (z3_floor - ctx->Midz);
+  st->s_rx3z = z3_rel - z3_floor;
+  st->s_dix3z = z3_floor - ctx->Midz;
 }
 
 static __device__ KERNEL_M __noinline__ void
@@ -957,8 +956,8 @@ pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1, v8fp64 iBy, const pushJ_c
 
   const v8fp64 y3_rel = (st->y3 - ctx->YO);
   const v8fp64 y3_floor = geo_floor_simd(y3_rel);
-  st->s_rx3y = (y3_rel - y3_floor);
-  st->s_dix3y = (y3_floor - ctx->Midy);
+  st->s_rx3y = y3_rel - y3_floor;
+  st->s_dix3y = y3_floor - ctx->Midy;
 }
 
 static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1,
@@ -979,8 +978,8 @@ static __device__ KERNEL_M __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_stat
 
   const v8fp64 x3_rel = (st->x3 - ctx->XO);
   const v8fp64 x3_floor = geo_floor_simd(x3_rel);
-  st->s_rx3x = (x3_rel - x3_floor);
-  st->s_dix3x = (x3_floor - ctx->Midx);
+  st->s_rx3x = x3_rel - x3_floor;
+  st->s_dix3x = x3_floor - ctx->Midx;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -992,7 +991,7 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_vlo_K2_compute_iBy(
     const pushJ_weight_bank_t *bank, const double *shB0, const double *shB1, int tile_xlen) {
   v8fp64 iBy_term0, iBy_term1;
   pushJ_B_fused_iBy_bank(bank, shB0, shB1, tile_xlen, &iBy_term0, &iBy_term1);
-  return (iBy_term0 + iBy_term1);
+  return iBy_term0 + iBy_term1;
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64 pushJ_vlo_K2_compute_iBz(
@@ -1002,21 +1001,21 @@ static __device__ KERNEL_M __noinline__ v8fp64 pushJ_vlo_K2_compute_iBz(
                               tile_xlen, &iBz_term1, &iBz_term2);
   pushJ_B_fused_iBz_pair_bank(bank, shB1, 2, pushJ_path_y12_c(bank), pushJ_path_x12_c(bank),
                               tile_xlen, &iBz_term3, &iBz_term4);
-  return ((iBz_term1 - iBz_term2) + (iBz_term3 - iBz_term4));
+  return (iBz_term1 - iBz_term2) + (iBz_term3 - iBz_term4);
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64
 pushJ_vlo_K2_compute_iBy23(const pushJ_weight_bank_t *bank, const double *shB1, int tile_xlen) {
   v8fp64 t0, t1;
   pushJ_B_fused_iBy23_bank(bank, shB1, tile_xlen, &t0, &t1);
-  return (-1.0 * (t0 + t1));
+  return -1.0 * (t0 + t1);
 }
 
 static __device__ KERNEL_M __noinline__ v8fp64
 pushJ_vlo_K2_compute_iBx(const pushJ_weight_bank_t *bank, const double *shB1, int tile_xlen) {
   v8fp64 z12, z23, y12, y23;
   pushJ_B_fused_iBx_bank(bank, shB1, tile_xlen, &z12, &z23, &y12, &y23);
-  return ((z12 + z23) - (y12 + y23));
+  return (z12 + z23) - (y12 + y23);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1030,9 +1029,9 @@ pushJ_vlo_K2_stage1a_E(const pushJ_weight_bank_t *bank, const double *shE0, cons
   const v8fp64 AllEx = pushJ_E_interp_Ex_bank(bank, shE0, tile_xlen);
   const v8fp64 AllEy = pushJ_E_interp_Ey_bank(bank, shE0, tile_xlen);
   const v8fp64 AllEz = pushJ_E_interp_Ez_bank(bank, shE0, tile_xlen);
-  *allincfvx_out = (ctx->TWO_DELTAT * AllEx);
-  *allincfvy_out = (ctx->TWO_DELTAT * AllEy);
-  *allincfvz_out = (ctx->TWO_DELTAT * AllEz);
+  *allincfvx_out = ctx->TWO_DELTAT * AllEx;
+  *allincfvy_out = ctx->TWO_DELTAT * AllEy;
+  *allincfvz_out = ctx->TWO_DELTAT * AllEz;
 }
 
 static __device__ KERNEL_M __attribute__((always_inline)) inline void
@@ -1150,15 +1149,15 @@ __device__ KERNEL_M __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
   double *newxx_l = (double *)newxx;
   double *newxy_l = (double *)newxy;
   double *newxz_l = (double *)newxz;
-  newvx[0] = ((st->x3 - st->x2) / ctx->Deltat);
-  newvy[0] = ((st->y3 - st->y2) / ctx->Deltat);
-  newvz[0] = ((st->z3 - st->z2) / ctx->Deltat);
-  newxx[0] = (st->x3 - ctx->XO);
-  newxy[0] = (st->y3 - ctx->YO);
-  newxz[0] = ((st->z3 + ctx->zmid) - ctx->ZO);
-  newxx[0] = (newxx[0] + 0.5);
-  newxy[0] = (newxy[0] + 0.5);
-  newxz[0] = (newxz[0] + 0.5);
+  newvx[0] = (st->x3 - st->x2) / ctx->Deltat;
+  newvy[0] = (st->y3 - st->y2) / ctx->Deltat;
+  newvz[0] = (st->z3 - st->z2) / ctx->Deltat;
+  newxx[0] = st->x3 - ctx->XO;
+  newxy[0] = st->y3 - ctx->YO;
+  newxz[0] = (st->z3 + ctx->zmid) - ctx->ZO;
+  newxx[0] = newxx[0] + 0.5;
+  newxy[0] = newxy[0] + 0.5;
+  newxz[0] = newxz[0] + 0.5;
   if (full_batch) {
     /* opt_stage51-2 full batch: fixed six-field scatter, no bounds check and
      * no six-way field branch. */
@@ -1436,9 +1435,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
   // __aurora_s_fenceI();
   // __aurora_s_startCounter(f_Clear);
 
-  MAPU_LONG numgrid = (XLEN * (YLEN * ZLEN));
+  MAPU_LONG numgrid = XLEN * (YLEN * ZLEN);
 
-  MAPU_LONG grid_base_offset = (__idy * (numgrid * (grid_cache_len * 6)));
+  MAPU_LONG grid_base_offset = __idy * (numgrid * (grid_cache_len * 6));
 
   int cu_load = (cu_xyzw)[(4 * __idy)];
 
@@ -1521,9 +1520,9 @@ __global__ void mapu_geo_nr_Bfield_pushJ_vlo(
       const MAPU_LONG c_gid = allgid;
 
       use_local_particle_position = 0;
-      mdx = (c_gid % XLEN);
-      mdy = ((c_gid / XLEN) % YLEN);
-      mdz = (c_gid / (XLEN * YLEN));
+      mdx = c_gid % XLEN;
+      mdy = (c_gid / XLEN) % YLEN;
+      mdz = c_gid / (XLEN * YLEN);
       const int load0 = new_load_tmp;
 
       /* Accuracy-first supertile: reuse only immutable field inputs.  Each

@@ -8,46 +8,46 @@ int hilbert_curve_3d_core(long *modifiedid, long *ori_id, long xlen, long ylen, 
   if ((s == 1)) {
     long rid = (x + (xlen * (y + (ylen * z))));
 
-    (modifiedid)[rid] = cid;
-    (ori_id)[cid] = rid;
-    cid = (cid + 1);
+    modifiedid[rid] = cid;
+    ori_id[cid] = rid;
+    cid = cid + 1;
 
   } else {
-    s = (s / 2);
+    s = s / 2;
     if ((dx < 0)) {
-      x = (x - (s * dx));
+      x = x - (s * dx);
     }
 
     if ((dy < 0)) {
-      y = (y - (s * dy));
+      y = y - (s * dy);
     }
 
     if ((dz < 0)) {
-      z = (z - (s * dz));
+      z = z - (s * dz);
     }
 
     if ((dx2 < 0)) {
-      x = (x - (s * dx2));
+      x = x - (s * dx2);
     }
 
     if ((dy2 < 0)) {
-      y = (y - (s * dy2));
+      y = y - (s * dy2);
     }
 
     if ((dz2 < 0)) {
-      z = (z - (s * dz2));
+      z = z - (s * dz2);
     }
 
     if ((dx3 < 0)) {
-      x = (x - (s * dx3));
+      x = x - (s * dx3);
     }
 
     if ((dy3 < 0)) {
-      y = (y - (s * dy3));
+      y = y - (s * dy3);
     }
 
     if ((dz3 < 0)) {
-      z = (z - (s * dz3));
+      z = z - (s * dz3);
     }
 
     hilbert_curve_3d_core(modifiedid, ori_id, xlen, ylen, s, x, y, z, dx2, dy2, dz2, dx3, dy3, dz3,
@@ -85,14 +85,14 @@ int hilbert_curve_2d_core(long *modifiedid, long *ori_id, int n, long x, long y,
 
     long rid = (realx + (xlen * realy));
 
-    (modifiedid)[rid] = cid;
-    (ori_id)[cid] = rid;
+    modifiedid[rid] = cid;
+    ori_id[cid] = rid;
     cid++;
 
   } else {
-    n = (n - 1);
-    x = (x * 2);
-    y = (y * 2);
+    n = n - 1;
+    x = x * 2;
+    y = y * 2;
     hilbert_curve_2d_core(modifiedid, ori_id, n, x, y, yi, yj, xi, xj, xlen);
     hilbert_curve_2d_core(modifiedid, ori_id, n, (x + xi), (y + xj), xi, xj, yi, yj, xlen);
     hilbert_curve_2d_core(modifiedid, ori_id, n, ((x + xi) + yi), (y + (xj + yj)), xi, xj, yi, yj,
@@ -117,8 +117,8 @@ int sp_fill_curve_1d(long *modifiedid, long *ori_id, int m) {
     long i;
 
     for (i = 0; i < m; i++) {
-      (modifiedid)[i] = i;
-      (ori_id)[i] = i;
+      modifiedid[i] = i;
+      ori_id[i] = i;
     }
   }
   return 0;

@@ -12,7 +12,7 @@ static int dump_kernel_variables = 0;
 extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
 
 int mapu_YEE_CURL_R_init(mapu_pscmc_env *pe, mapu_YEE_CURL_R_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_YEE_CURL_R_get_struct_len(size_t *len) { ((len)[0] = sizeof(mapu_YEE_CURL_R_struct)); }
@@ -68,7 +68,7 @@ int mapu_YEE_CURL_R_exec(mapu_YEE_CURL_R_struct *kerstr, long scmc_internal_g_xl
       (((MAPU_LONG *)kerstr->zblock->h_data))[0], (((int *)kerstr->num_ele->h_data))[0],
       (((double *)kerstr->DT->h_data))[0]);
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_YEE_CURL_R_scmc_set_parameter_inoutE1(mapu_YEE_CURL_R_struct *kerstr, mapu_pscmc_mem *pm) {
@@ -154,11 +154,11 @@ int mapu_YEE_CURL_R_scmc_set_parameter_DT(mapu_YEE_CURL_R_struct *kerstr, mapu_p
 }
 
 int mapu_GEO_YEE_CURL_L_init(mapu_pscmc_env *pe, mapu_GEO_YEE_CURL_L_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_GEO_YEE_CURL_L_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_GEO_YEE_CURL_L_struct);
+  len[0] = sizeof(mapu_GEO_YEE_CURL_L_struct);
 }
 int mapu_GEO_YEE_CURL_L_get_xlen() { return 1; }
 int mapu_GEO_YEE_CURL_L_get_num_compute_units(mapu_GEO_YEE_CURL_L_struct *kerstr) { return 4; }
@@ -213,7 +213,7 @@ int mapu_GEO_YEE_CURL_L_exec(mapu_GEO_YEE_CURL_L_struct *kerstr, long scmc_inter
       (((double *)kerstr->DELTA_Y->h_data))[0], (((double *)kerstr->DELTA_X->h_data))[0],
       (((double *)kerstr->x0->h_data))[0]);
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_GEO_YEE_CURL_L_scmc_set_parameter_inoutE1(mapu_GEO_YEE_CURL_L_struct *kerstr,

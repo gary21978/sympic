@@ -45,8 +45,8 @@ int cuda_blas_yisax_enlarge_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, doub
 
   long y_cpu_core = numvec;
 
-  cuda_blas_yisax_enlarge_scmc_set_parameter_x(blas_yisax_enlarge_kernel, (x)->main_data);
-  cuda_blas_yisax_enlarge_scmc_set_parameter_y(blas_yisax_enlarge_kernel, (y)->main_data);
+  cuda_blas_yisax_enlarge_scmc_set_parameter_x(blas_yisax_enlarge_kernel, x->main_data);
+  cuda_blas_yisax_enlarge_scmc_set_parameter_y(blas_yisax_enlarge_kernel, y->main_data);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -174,8 +174,8 @@ int cuda_blas_axpy_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Fie
 
   long y_cpu_core = numvec;
 
-  cuda_blas_axpy_scmc_set_parameter_x(blas_axpy_kernel, (x)->main_data);
-  cuda_blas_axpy_scmc_set_parameter_y(blas_axpy_kernel, (y)->main_data);
+  cuda_blas_axpy_scmc_set_parameter_x(blas_axpy_kernel, x->main_data);
+  cuda_blas_axpy_scmc_set_parameter_y(blas_axpy_kernel, y->main_data);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -293,8 +293,8 @@ int cuda_blas_yisax_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Fi
 
   long y_cpu_core = numvec;
 
-  cuda_blas_yisax_scmc_set_parameter_x(blas_yisax_kernel, (x)->main_data);
-  cuda_blas_yisax_scmc_set_parameter_y(blas_yisax_kernel, (y)->main_data);
+  cuda_blas_yisax_scmc_set_parameter_x(blas_yisax_kernel, x->main_data);
+  cuda_blas_yisax_scmc_set_parameter_y(blas_yisax_kernel, y->main_data);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -413,7 +413,7 @@ int cuda_blas_yiszero_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
 
   long y_cpu_core = numvec;
 
-  cuda_blas_yiszero_scmc_set_parameter_y(blas_yiszero_kernel, (y)->main_data);
+  cuda_blas_yiszero_scmc_set_parameter_y(blas_yiszero_kernel, y->main_data);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);
@@ -527,7 +527,7 @@ int cuda_blas_yiszero_synced_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
 
   long y_cpu_core = numvec;
 
-  cuda_blas_yiszero_synced_scmc_set_parameter_y(blas_yiszero_synced_kernel, (y)->main_data);
+  cuda_blas_yiszero_synced_scmc_set_parameter_y(blas_yiszero_synced_kernel, y->main_data);
   cuda_pscmc_mem cuda_alloc_prefix_num_ele;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_num_ele), PS_INT_NUM, 0);

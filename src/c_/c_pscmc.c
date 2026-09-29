@@ -59,27 +59,27 @@ int c_pscmc_mem_init(c_pscmc_env *pe, c_pscmc_mem *pm, int type, size_t len) {
   size_t datasize;
 
   if ((type == PS_INT_NUM)) {
-    datasize = (len * sizeof(int));
+    datasize = len * sizeof(int);
   } else {
 
     if ((type == PS_LONG_NUM)) {
-      datasize = (len * sizeof(long));
+      datasize = len * sizeof(long);
     } else {
 
       if ((type == PS_FLOAT_NUM)) {
-        datasize = (len * sizeof(float));
+        datasize = len * sizeof(float);
       } else {
 
         if ((type == PS_DOUBLE_NUM)) {
-          datasize = (len * sizeof(double));
+          datasize = len * sizeof(double);
         } else {
 
           if ((type == PS_SHORT_NUM)) {
-            datasize = (len * sizeof(short));
+            datasize = len * sizeof(short);
           } else {
 
             if ((type == PS_CHAR)) {
-              datasize = (len * sizeof(char));
+              datasize = len * sizeof(char);
             } else {
               fprintf(stderr, "Error: unknown type in init_pscmc_mem: type=%d\n", type);
             }
@@ -97,7 +97,7 @@ void *c_pscmc_get_h_data(c_pscmc_mem *pm, void **h_data) {
 
   if ((h_data != NULL)) {
     {
-      (h_data)[0] = pm->h_data;
+      h_data[0] = pm->h_data;
     }
   } else {
     { 0; }
@@ -105,7 +105,7 @@ void *c_pscmc_get_h_data(c_pscmc_mem *pm, void **h_data) {
   return pm->h_data;
 }
 int c_pscmc_get_env_len(size_t *l) {
-  (l)[0] = sizeof(c_pscmc_env);
+  l[0] = sizeof(c_pscmc_env);
   return 0;
 }
 int c_pscmc_get_local_len() { return 1; }

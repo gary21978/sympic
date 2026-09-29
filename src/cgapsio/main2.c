@@ -21,8 +21,8 @@ int read_file(void **pptr, int64_t *plen, char *name) {
   }
   fseek(fp, 0, SEEK_END);
   long l = ftell(fp);
-  (pptr)[0] = malloc(l);
-  (plen)[0] = l;
+  pptr[0] = malloc(l);
+  plen[0] = l;
   fseek(fp, 0, SEEK_SET);
   size_t ret = fread((pptr)[0], 1, l, fp);
   return 0;
@@ -30,8 +30,8 @@ int read_file(void **pptr, int64_t *plen, char *name) {
 int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int64_t ts,
                          int64_t num_blocks_one_step_this_file, int64_t bid) {
   FILE *fp = fopen(file_name, "r");
-  int64_t blk_len = ((pgid)->block_len * GAPS_IO_GetTypeLen((pgid)->type));
-  int64_t offset_zero = (sizeof(int64_t) * (3 + ((pgid)->dim * 2)));
+  int64_t blk_len = pgid->block_len * GAPS_IO_GetTypeLen(pgid->type);
+  int64_t offset_zero = sizeof(int64_t) * (3 + (pgid->dim * 2));
   fseek(fp, (offset_zero + (blk_len * (bid + (num_blocks_one_step_this_file * ts)))), SEEK_SET);
   size_t nread = fread(ptr, 1, blk_len, fp);
   fclose(fp);
@@ -40,8 +40,8 @@ int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int
 int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   int alllen = strlen(pNameAll);
   int l;
-  for (l = (alllen - 1); l >= 0; l--) {
-    if (((pNameAll)[l] == '_')) {
+  for (l = alllen - 1; l >= 0; l--) {
+    if ((pNameAll[l] == '_')) {
       break;
     } else {
     }
@@ -49,10 +49,10 @@ int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
   {
     long i;
     for (i = 0; i < (l - 5); i++) {
-      (pName)[i] = (pNameAll)[i];
+      pName[i] = pNameAll[i];
     }
   }
-  (pName)[(l - 5)] = 0;
+  pName[l - 5] = 0;
   sscanf((pNameAll + (l + 1)), "%d", prank);
   return 0;
 }
@@ -63,19 +63,19 @@ int main(int argc, char **argv) {
   Gaps_IO_DataFile go;
   Gaps_IO_DataFile *pgo = &(go);
   if ((argc < 3)) {
-    fprintf(stderr, "Usage: %s infile(s) outfile\n", (argv)[0]);
+    fprintf(stderr, "Usage: %s infile(s) outfile\n", argv[0]);
     return 0;
   } else {
   }
-  (pgi)->version = 2;
+  pgi->version = 2;
   char oriname[512];
   {
     int rank;
-    obtain_pname_and_rank(oriname, &(rank), (argv)[1]);
+    obtain_pname_and_rank(oriname, &(rank), argv[1]);
     GAPS_IO_InitIFileV2(pgi, oriname, "", rank);
   }
-  if ((2 != (pgi)->version)) {
-    fprintf(stderr, "File %s is not version 2\n", (argv)[1]);
+  if ((2 != pgi->version)) {
+    fprintf(stderr, "File %s is not version 2\n", argv[1]);
   } else {
   }
   int64_t version = pgi->version;
@@ -91,9 +91,9 @@ int main(int argc, char **argv) {
   {
     long g;
     for (g = 0; g < dim; g++) {
-      (poutlen)[g] = ((pdimarray)[g] * (pblockarray)[g]);
-      oneblock_len = (oneblock_len * (pdimarray)[g]);
-      numblocks = (numblocks * (pblockarray)[g]);
+      poutlen[g] = pdimarray[g] * pblockarray[g];
+      oneblock_len = oneblock_len * pdimarray[g];
+      numblocks = numblocks * pblockarray[g];
     }
   }
   int num_files = (argc - 2);
@@ -105,16 +105,16 @@ int main(int argc, char **argv) {
     long i;
     for (i = 1; i < (argc - 1); i++) {
       long cur_i = (i - 1);
-      fprintf(stderr, "Checking %s\n", (argv)[i]);
+      fprintf(stderr, "Checking %s\n", argv[i]);
       char meta_file_name[512];
-      strncpy(meta_file_name, (argv)[i], 512);
+      strncpy(meta_file_name, argv[i], 512);
       int l = strlen(meta_file_name);
       int sj = 0;
       {
         long j;
         for (j = 0; j < l; j++) {
-          if (((meta_file_name)[(l - (1 + j))] == '_')) {
-            sj = ((l - (1 + j)) - 4);
+          if ((meta_file_name[l - (1 + j)] == '_')) {
+            sj = (l - (1 + j)) - 4;
             break;
           } else {
           }
@@ -122,13 +122,13 @@ int main(int argc, char **argv) {
       }
       memcpy((meta_file_name + sj), "META", 4);
       read_file((void **)(meta_data + cur_i), (meta_data_len + cur_i), meta_file_name);
-      (meta_data_len)[cur_i] = ((meta_data_len)[cur_i] / sizeof(int64_t));
+      meta_data_len[cur_i] = meta_data_len[cur_i] / sizeof(int64_t);
       {
         long j;
-        for (j = 0; j < (meta_data_len)[cur_i]; j++) {
-          int64_t local_id_m = ((meta_data)[cur_i])[j];
-          (file_id)[local_id_m] = cur_i;
-          (local_block_id)[local_id_m] = j;
+        for (j = 0; j < meta_data_len[cur_i]; j++) {
+          int64_t local_id_m = (meta_data[cur_i])[j];
+          file_id[local_id_m] = cur_i;
+          local_block_id[local_id_m] = j;
         }
       }
     }
@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
     exit(0);
   } else {
   }
-  t_min = ((t_min + numsteps) % numsteps);
+  t_min = (t_min + numsteps) % numsteps;
   if (max_numt) {
     sscanf(max_numt, "%ld", &(t_max));
   } else {
@@ -171,20 +171,20 @@ int main(int argc, char **argv) {
     sscanf(output_offset_numt, "%ld", &(t_opt_offset));
   } else {
   }
-  t_max = (((t_max + (numsteps + -1)) % numsteps) + 1);
+  t_max = ((t_max + (numsteps + -1)) % numsteps) + 1;
   fprintf(stderr, "tmin=%ld tmax=%ld topt=%ld\n", t_min, t_max, t_opt_offset);
   GAPS_IO_InitDataInfo(pgo, type, dim, poutlen);
-  GAPS_IO_InitOFile_with_TimeStep(pgo, (argv)[(argc - 1)],
+  GAPS_IO_InitOFile_with_TimeStep(pgo, argv[argc - 1],
                                   (((t_min - t_opt_offset == 0)) ? (-1) : (t_min - t_opt_offset)));
   int64_t opt_write_block = 1;
   int64_t opt_read_block = oneblock_len;
   int dim_current = 0;
   for (; dim_current < dim; dim_current++) {
-    opt_write_block = (opt_write_block * (poutlen)[dim_current]);
-    opt_read_block = (opt_read_block * (pblockarray)[dim_current]);
+    opt_write_block = opt_write_block * poutlen[dim_current];
+    opt_read_block = opt_read_block * pblockarray[dim_current];
     if ((opt_read_block > BLOCK_THREH)) {
-      opt_write_block = (opt_write_block / (poutlen)[dim_current]);
-      opt_read_block = (opt_read_block / (pblockarray)[dim_current]);
+      opt_write_block = opt_write_block / poutlen[dim_current];
+      opt_read_block = opt_read_block / pblockarray[dim_current];
       break;
     } else {
     }
@@ -193,14 +193,14 @@ int main(int argc, char **argv) {
   {
     long i;
     for (i = 0; i < dim_current; i++) {
-      one_write_offset = (one_write_offset * (poutlen)[i]);
+      one_write_offset = one_write_offset * poutlen[i];
     }
   }
   int64_t one_write_stride_num =
-      one_write_offset * (((dim_current < dim)) ? ((pdimarray)[dim_current]) : (1));
-  int64_t num_reads_per_step = ((pgo)->numperstep / opt_read_block);
-  int64_t num_blocks_per_read = (opt_read_block / oneblock_len);
-  int64_t num_writes_per_read = (opt_read_block / opt_write_block);
+      one_write_offset * (((dim_current < dim)) ? (pdimarray[dim_current]) : (1));
+  int64_t num_reads_per_step = pgo->numperstep / opt_read_block;
+  int64_t num_blocks_per_read = opt_read_block / oneblock_len;
+  int64_t num_writes_per_read = opt_read_block / opt_write_block;
   char *read_block_buffer = malloc((opt_read_block * typelen));
   char *read_one_block_buffer = malloc((oneblock_len * typelen));
   int64_t *pblkid = malloc((sizeof(int64_t) * dim));
@@ -219,16 +219,16 @@ int main(int argc, char **argv) {
           {
             long r_rd;
             for (r_rd = 0; r_rd < num_blocks_per_read; r_rd++) {
-              int64_t bid_all = (r_rd + (num_blocks_per_read * b_rd));
-              read_one_block_stdio(pgi, read_one_block_buffer, (argv)[(1 + (file_id)[bid_all])], t,
-                                   (meta_data_len)[(file_id)[bid_all]], (local_block_id)[bid_all]);
+              int64_t bid_all = r_rd + (num_blocks_per_read * b_rd);
+              read_one_block_stdio(pgi, read_one_block_buffer, argv[1 + file_id[bid_all]], t,
+                                   meta_data_len[file_id[bid_all]], local_block_id[bid_all]);
               {
                 int64_t gid = bid_all;
                 {
                   long tmpids;
                   for (tmpids = 0; tmpids < dim; tmpids++) {
-                    (pblkid)[tmpids] = (gid % (pblockarray)[tmpids]);
-                    gid = (gid / (pblockarray)[tmpids]);
+                    pblkid[tmpids] = gid % pblockarray[tmpids];
+                    gid = gid / pblockarray[tmpids];
                   }
                 }
               }
@@ -240,22 +240,21 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for (tmpids = 0; tmpids < dim; tmpids++) {
-                        (plocalid)[tmpids] = (gid % (pdimarray)[tmpids]);
-                        gid = (gid / (pdimarray)[tmpids]);
+                        plocalid[tmpids] = gid % pdimarray[tmpids];
+                        gid = gid / pdimarray[tmpids];
                       }
                     }
                   }
                   {
                     long a;
                     for (a = 0; a < dim; a++) {
-                      (pallid)[a] = ((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a]));
-                      (palldim)[a] = ((pdimarray)[a] * (pblockarray)[a]);
-                      ((pallid_local)[a] =
-                           (((a < dim_current)) ? (((plocalid)[a] + ((pdimarray)[a] * (pblkid)[a])))
-                                                : ((plocalid)[a])));
-                      ((palldim_local)[a] =
-                           (((a < dim_current)) ? (((pdimarray)[a] * (pblockarray)[a]))
-                                                : ((pdimarray)[a])));
+                      pallid[a] = plocalid[a] + (pdimarray[a] * pblkid[a]);
+                      palldim[a] = pdimarray[a] * pblockarray[a];
+                      (pallid_local[a] =
+                           (((a < dim_current)) ? ((plocalid[a] + (pdimarray[a] * pblkid[a])))
+                                                : (plocalid[a])));
+                      (palldim_local[a] = (((a < dim_current)) ? ((pdimarray[a] * pblockarray[a]))
+                                                               : (pdimarray[a])));
                     }
                   }
                   int64_t global_id_out = ({
@@ -264,8 +263,8 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for (tmpids = 0; tmpids < dim; tmpids++) {
-                        gid = (gid + ((pallid)[tmpids] * stride_len));
-                        stride_len = (stride_len * (palldim)[tmpids]);
+                        gid = gid + (pallid[tmpids] * stride_len);
+                        stride_len = stride_len * palldim[tmpids];
                       }
                     }
                     gid;
@@ -280,8 +279,8 @@ int main(int argc, char **argv) {
                     {
                       long tmpids;
                       for (tmpids = 0; tmpids < dim; tmpids++) {
-                        gid = (gid + ((pallid_local)[tmpids] * stride_len));
-                        stride_len = (stride_len * (palldim_local)[tmpids]);
+                        gid = gid + (pallid_local[tmpids] * stride_len);
+                        stride_len = stride_len * palldim_local[tmpids];
                       }
                     }
                     gid;
@@ -296,7 +295,7 @@ int main(int argc, char **argv) {
           {
             long w_rd;
             for (w_rd = 0; w_rd < num_writes_per_read; w_rd++) {
-              int64_t offset = (global_offset_new + (w_rd * one_write_offset));
+              int64_t offset = global_offset_new + (w_rd * one_write_offset);
               GAPS_IO_DataSeek(pgo, (t - t_opt_offset), offset);
               GAPS_IO_FWrite(pgo, (read_block_buffer + (w_rd * (opt_write_block * typelen))),
                              opt_write_block);

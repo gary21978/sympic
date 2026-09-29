@@ -47,7 +47,7 @@ static void sympic_particle_shift(One_Particle_Collection *particles, long numve
 int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -92,12 +92,11 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_inoutput((sort_kernel)[0], inoutput);
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_xyzw((sort_kernel)[0], xyzw);
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_cache((sort_kernel)[0], cu_cache);
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_xyzw((sort_kernel)[0], cu_xyzw);
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[0],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_inoutput(sort_kernel[0], inoutput);
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_xyzw(sort_kernel[0], xyzw);
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_cache(sort_kernel[0], cu_cache);
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_xyzw(sort_kernel[0], cu_xyzw);
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_adjoint_vec_pids(sort_kernel[0], adjoint_vec_pids);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   cuda_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -108,41 +107,40 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_XLEN((sort_kernel)[0], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_XLEN(sort_kernel[0], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_YLEN((sort_kernel)[0], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_YLEN(sort_kernel[0], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ZLEN((sort_kernel)[0], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ZLEN(sort_kernel[0], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ovlp((sort_kernel)[0], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_ovlp(sort_kernel[0], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_numvec((sort_kernel)[0],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_numvec(sort_kernel[0], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_grid_cache_len((sort_kernel)[0],
+  cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_grid_cache_len(sort_kernel[0],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_x_6_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[0], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_x_6_exec((sort_kernel)[0], cuda_gpu_sort_one_grid_x_6_get_xlen(), numvec);
+      sort_kernel[0], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_x_6_exec(sort_kernel[0], cuda_gpu_sort_one_grid_x_6_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -206,7 +204,7 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -251,12 +249,11 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_inoutput((sort_kernel)[1], inoutput);
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_xyzw((sort_kernel)[1], xyzw);
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_cache((sort_kernel)[1], cu_cache);
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_xyzw((sort_kernel)[1], cu_xyzw);
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[1],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_inoutput(sort_kernel[1], inoutput);
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_xyzw(sort_kernel[1], xyzw);
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_cache(sort_kernel[1], cu_cache);
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_xyzw(sort_kernel[1], cu_xyzw);
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_adjoint_vec_pids(sort_kernel[1], adjoint_vec_pids);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   cuda_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -267,41 +264,40 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_XLEN((sort_kernel)[1], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_XLEN(sort_kernel[1], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_YLEN((sort_kernel)[1], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_YLEN(sort_kernel[1], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ZLEN((sort_kernel)[1], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ZLEN(sort_kernel[1], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ovlp((sort_kernel)[1], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_ovlp(sort_kernel[1], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_numvec((sort_kernel)[1],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_numvec(sort_kernel[1], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_grid_cache_len((sort_kernel)[1],
+  cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_grid_cache_len(sort_kernel[1],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_y_6_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[1], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_y_6_exec((sort_kernel)[1], cuda_gpu_sort_one_grid_y_6_get_xlen(), numvec);
+      sort_kernel[1], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_y_6_exec(sort_kernel[1], cuda_gpu_sort_one_grid_y_6_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -365,7 +361,7 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -410,12 +406,11 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_inoutput((sort_kernel)[2], inoutput);
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_xyzw((sort_kernel)[2], xyzw);
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_cache((sort_kernel)[2], cu_cache);
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_xyzw((sort_kernel)[2], cu_xyzw);
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[2],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_inoutput(sort_kernel[2], inoutput);
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_xyzw(sort_kernel[2], xyzw);
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_cache(sort_kernel[2], cu_cache);
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_xyzw(sort_kernel[2], cu_xyzw);
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_adjoint_vec_pids(sort_kernel[2], adjoint_vec_pids);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   cuda_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   cuda_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -426,41 +421,40 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_XLEN((sort_kernel)[2], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_XLEN(sort_kernel[2], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_YLEN((sort_kernel)[2], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_YLEN(sort_kernel[2], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ZLEN((sort_kernel)[2], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ZLEN(sort_kernel[2], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ovlp((sort_kernel)[2], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_ovlp(sort_kernel[2], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_numvec((sort_kernel)[2],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_numvec(sort_kernel[2], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_grid_cache_len((sort_kernel)[2],
+  cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_grid_cache_len(sort_kernel[2],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_z_6_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[2], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_z_6_exec((sort_kernel)[2], cuda_gpu_sort_one_grid_z_6_get_xlen(), numvec);
+      sort_kernel[2], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_z_6_exec(sort_kernel[2], cuda_gpu_sort_one_grid_z_6_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -524,7 +518,7 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -573,12 +567,11 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_inoutput((sort_kernel)[6], inoutput);
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_xyzw((sort_kernel)[6], xyzw);
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_cache((sort_kernel)[6], cu_cache);
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_xyzw((sort_kernel)[6], cu_xyzw);
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[6],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_inoutput(sort_kernel[6], inoutput);
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_xyzw(sort_kernel[6], xyzw);
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_cache(sort_kernel[6], cu_cache);
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_xyzw(sort_kernel[6], cu_xyzw);
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[6], adjoint_vec_pids);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   cuda_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -589,41 +582,40 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_XLEN((sort_kernel)[6], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_XLEN(sort_kernel[6], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_YLEN((sort_kernel)[6], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_YLEN(sort_kernel[6], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ZLEN((sort_kernel)[6], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ZLEN(sort_kernel[6], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ovlp((sort_kernel)[6], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_ovlp(sort_kernel[6], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_numvec((sort_kernel)[6],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_numvec(sort_kernel[6], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len((sort_kernel)[6],
+  cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len(sort_kernel[6],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[6], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_x_8_exec((sort_kernel)[6], cuda_gpu_sort_one_grid_x_8_get_xlen(), numvec);
+      sort_kernel[6], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_x_8_exec(sort_kernel[6], cuda_gpu_sort_one_grid_x_8_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -687,7 +679,7 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -736,12 +728,11 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_inoutput((sort_kernel)[7], inoutput);
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_xyzw((sort_kernel)[7], xyzw);
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_cache((sort_kernel)[7], cu_cache);
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_xyzw((sort_kernel)[7], cu_xyzw);
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[7],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_inoutput(sort_kernel[7], inoutput);
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_xyzw(sort_kernel[7], xyzw);
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_cache(sort_kernel[7], cu_cache);
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_xyzw(sort_kernel[7], cu_xyzw);
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[7], adjoint_vec_pids);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   cuda_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -752,41 +743,40 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_XLEN((sort_kernel)[7], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_XLEN(sort_kernel[7], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_YLEN((sort_kernel)[7], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_YLEN(sort_kernel[7], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ZLEN((sort_kernel)[7], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ZLEN(sort_kernel[7], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ovlp((sort_kernel)[7], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_ovlp(sort_kernel[7], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_numvec((sort_kernel)[7],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_numvec(sort_kernel[7], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len((sort_kernel)[7],
+  cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len(sort_kernel[7],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[7], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_y_8_exec((sort_kernel)[7], cuda_gpu_sort_one_grid_y_8_get_xlen(), numvec);
+      sort_kernel[7], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_y_8_exec(sort_kernel[7], cuda_gpu_sort_one_grid_y_8_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -850,7 +840,7 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void **sort_kernel = (pthis)->sort_kernel;
 
@@ -899,12 +889,11 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 
   long ZLEN = zlen;
 
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_inoutput((sort_kernel)[8], inoutput);
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_xyzw((sort_kernel)[8], xyzw);
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_cache((sort_kernel)[8], cu_cache);
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_xyzw((sort_kernel)[8], cu_xyzw);
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[8],
-                                                                 adjoint_vec_pids);
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_inoutput(sort_kernel[8], inoutput);
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_xyzw(sort_kernel[8], xyzw);
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_cache(sort_kernel[8], cu_cache);
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_xyzw(sort_kernel[8], cu_xyzw);
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[8], adjoint_vec_pids);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   cuda_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   cuda_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -915,41 +904,40 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_XLEN((sort_kernel)[8], &(cuda_alloc_prefix_XLEN));
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_XLEN(sort_kernel[8], &(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem cuda_alloc_prefix_YLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_YLEN((sort_kernel)[8], &(cuda_alloc_prefix_YLEN));
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_YLEN(sort_kernel[8], &(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ZLEN;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ZLEN((sort_kernel)[8], &(cuda_alloc_prefix_ZLEN));
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ZLEN(sort_kernel[8], &(cuda_alloc_prefix_ZLEN));
   cuda_pscmc_mem cuda_alloc_prefix_ovlp;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(cuda_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ovlp((sort_kernel)[8], &(cuda_alloc_prefix_ovlp));
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_ovlp(sort_kernel[8], &(cuda_alloc_prefix_ovlp));
   cuda_pscmc_mem cuda_alloc_prefix_numvec;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_numvec).h_data))[0] = numvec;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_numvec((sort_kernel)[8],
-                                                       &(cuda_alloc_prefix_numvec));
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_numvec(sort_kernel[8], &(cuda_alloc_prefix_numvec));
   cuda_pscmc_mem cuda_alloc_prefix_grid_cache_len;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len((sort_kernel)[8],
+  cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len(sort_kernel[8],
                                                                &(cuda_alloc_prefix_grid_cache_len));
   cuda_pscmc_mem cuda_alloc_prefix_cu_cache_length;
 
   cuda_pscmc_mem_init(pe, &(cuda_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(cuda_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
   cuda_gpu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length(
-      (sort_kernel)[8], &(cuda_alloc_prefix_cu_cache_length));
-  cuda_gpu_sort_one_grid_z_8_exec((sort_kernel)[8], cuda_gpu_sort_one_grid_z_8_get_xlen(), numvec);
+      sort_kernel[8], &(cuda_alloc_prefix_cu_cache_length));
+  cuda_gpu_sort_one_grid_z_8_exec(sort_kernel[8], cuda_gpu_sort_one_grid_z_8_get_xlen(), numvec);
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_XLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_YLEN));
   cuda_pscmc_mem_destroy(&(cuda_alloc_prefix_ZLEN));
@@ -1013,7 +1001,7 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 int cuda_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void *move_back_kernel_6_kernel = (pthis)->move_back_kernel_6_kernel;
 
@@ -1097,7 +1085,7 @@ int cuda_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
 int cuda_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
 
   void *move_back_kernel_8_kernel = (pthis)->move_back_kernel_8_kernel;
 
@@ -1184,7 +1172,7 @@ int cuda_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
   void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
@@ -1211,11 +1199,11 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  MAPU_SORT_ONE_GRID_X6_SET_INOUTPUT((sort_kernel)[0], inoutput);
-  MAPU_SORT_ONE_GRID_X6_SET_XYZW((sort_kernel)[0], xyzw);
-  MAPU_SORT_ONE_GRID_X6_SET_CU_CACHE((sort_kernel)[0], cu_cache);
-  MAPU_SORT_ONE_GRID_X6_SET_CU_XYZW((sort_kernel)[0], cu_xyzw);
-  MAPU_SORT_ONE_GRID_X6_SET_ADJOINT((sort_kernel)[0], adjoint_vec_pids);
+  MAPU_SORT_ONE_GRID_X6_SET_INOUTPUT(sort_kernel[0], inoutput);
+  MAPU_SORT_ONE_GRID_X6_SET_XYZW(sort_kernel[0], xyzw);
+  MAPU_SORT_ONE_GRID_X6_SET_CU_CACHE(sort_kernel[0], cu_cache);
+  MAPU_SORT_ONE_GRID_X6_SET_CU_XYZW(sort_kernel[0], cu_xyzw);
+  MAPU_SORT_ONE_GRID_X6_SET_ADJOINT(sort_kernel[0], adjoint_vec_pids);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   mapu_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -1225,33 +1213,33 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  MAPU_SORT_ONE_GRID_X6_SET_XLEN((sort_kernel)[0], &(mapu_alloc_prefix_XLEN));
+  MAPU_SORT_ONE_GRID_X6_SET_XLEN(sort_kernel[0], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  MAPU_SORT_ONE_GRID_X6_SET_YLEN((sort_kernel)[0], &(mapu_alloc_prefix_YLEN));
+  MAPU_SORT_ONE_GRID_X6_SET_YLEN(sort_kernel[0], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  MAPU_SORT_ONE_GRID_X6_SET_ZLEN((sort_kernel)[0], &(mapu_alloc_prefix_ZLEN));
+  MAPU_SORT_ONE_GRID_X6_SET_ZLEN(sort_kernel[0], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  MAPU_SORT_ONE_GRID_X6_SET_OVLP((sort_kernel)[0], &(mapu_alloc_prefix_ovlp));
+  MAPU_SORT_ONE_GRID_X6_SET_OVLP(sort_kernel[0], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  MAPU_SORT_ONE_GRID_X6_SET_NUMVEC((sort_kernel)[0], &(mapu_alloc_prefix_numvec));
+  MAPU_SORT_ONE_GRID_X6_SET_NUMVEC(sort_kernel[0], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  MAPU_SORT_ONE_GRID_X6_SET_GRID_CACHE_LEN((sort_kernel)[0], &(mapu_alloc_prefix_grid_cache_len));
+  MAPU_SORT_ONE_GRID_X6_SET_GRID_CACHE_LEN(sort_kernel[0], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  MAPU_SORT_ONE_GRID_X6_SET_CU_CACHE_LENGTH((sort_kernel)[0], &(mapu_alloc_prefix_cu_cache_length));
+  MAPU_SORT_ONE_GRID_X6_SET_CU_CACHE_LENGTH(sort_kernel[0], &(mapu_alloc_prefix_cu_cache_length));
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_X6_GET_XLEN();
-  MAPU_SORT_ONE_GRID_X6_EXEC((sort_kernel)[0], sort_one_grid_xlen, numvec);
+  MAPU_SORT_ONE_GRID_X6_EXEC(sort_kernel[0], sort_one_grid_xlen, numvec);
 
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
@@ -1310,7 +1298,7 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
   void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
@@ -1337,11 +1325,11 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  MAPU_SORT_ONE_GRID_Y6_SET_INOUTPUT((sort_kernel)[1], inoutput);
-  MAPU_SORT_ONE_GRID_Y6_SET_XYZW((sort_kernel)[1], xyzw);
-  MAPU_SORT_ONE_GRID_Y6_SET_CU_CACHE((sort_kernel)[1], cu_cache);
-  MAPU_SORT_ONE_GRID_Y6_SET_CU_XYZW((sort_kernel)[1], cu_xyzw);
-  MAPU_SORT_ONE_GRID_Y6_SET_ADJOINT((sort_kernel)[1], adjoint_vec_pids);
+  MAPU_SORT_ONE_GRID_Y6_SET_INOUTPUT(sort_kernel[1], inoutput);
+  MAPU_SORT_ONE_GRID_Y6_SET_XYZW(sort_kernel[1], xyzw);
+  MAPU_SORT_ONE_GRID_Y6_SET_CU_CACHE(sort_kernel[1], cu_cache);
+  MAPU_SORT_ONE_GRID_Y6_SET_CU_XYZW(sort_kernel[1], cu_xyzw);
+  MAPU_SORT_ONE_GRID_Y6_SET_ADJOINT(sort_kernel[1], adjoint_vec_pids);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   mapu_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -1351,33 +1339,33 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  MAPU_SORT_ONE_GRID_Y6_SET_XLEN((sort_kernel)[1], &(mapu_alloc_prefix_XLEN));
+  MAPU_SORT_ONE_GRID_Y6_SET_XLEN(sort_kernel[1], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  MAPU_SORT_ONE_GRID_Y6_SET_YLEN((sort_kernel)[1], &(mapu_alloc_prefix_YLEN));
+  MAPU_SORT_ONE_GRID_Y6_SET_YLEN(sort_kernel[1], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  MAPU_SORT_ONE_GRID_Y6_SET_ZLEN((sort_kernel)[1], &(mapu_alloc_prefix_ZLEN));
+  MAPU_SORT_ONE_GRID_Y6_SET_ZLEN(sort_kernel[1], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  MAPU_SORT_ONE_GRID_Y6_SET_OVLP((sort_kernel)[1], &(mapu_alloc_prefix_ovlp));
+  MAPU_SORT_ONE_GRID_Y6_SET_OVLP(sort_kernel[1], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  MAPU_SORT_ONE_GRID_Y6_SET_NUMVEC((sort_kernel)[1], &(mapu_alloc_prefix_numvec));
+  MAPU_SORT_ONE_GRID_Y6_SET_NUMVEC(sort_kernel[1], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  MAPU_SORT_ONE_GRID_Y6_SET_GRID_CACHE_LEN((sort_kernel)[1], &(mapu_alloc_prefix_grid_cache_len));
+  MAPU_SORT_ONE_GRID_Y6_SET_GRID_CACHE_LEN(sort_kernel[1], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  MAPU_SORT_ONE_GRID_Y6_SET_CU_CACHE_LENGTH((sort_kernel)[1], &(mapu_alloc_prefix_cu_cache_length));
+  MAPU_SORT_ONE_GRID_Y6_SET_CU_CACHE_LENGTH(sort_kernel[1], &(mapu_alloc_prefix_cu_cache_length));
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_Y6_GET_XLEN();
-  MAPU_SORT_ONE_GRID_Y6_EXEC((sort_kernel)[1], sort_one_grid_xlen, numvec);
+  MAPU_SORT_ONE_GRID_Y6_EXEC(sort_kernel[1], sort_one_grid_xlen, numvec);
 
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
@@ -1436,7 +1424,7 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
   void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
@@ -1463,11 +1451,11 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  MAPU_SORT_ONE_GRID_Z6_SET_INOUTPUT((sort_kernel)[2], inoutput);
-  MAPU_SORT_ONE_GRID_Z6_SET_XYZW((sort_kernel)[2], xyzw);
-  MAPU_SORT_ONE_GRID_Z6_SET_CU_CACHE((sort_kernel)[2], cu_cache);
-  MAPU_SORT_ONE_GRID_Z6_SET_CU_XYZW((sort_kernel)[2], cu_xyzw);
-  MAPU_SORT_ONE_GRID_Z6_SET_ADJOINT((sort_kernel)[2], adjoint_vec_pids);
+  MAPU_SORT_ONE_GRID_Z6_SET_INOUTPUT(sort_kernel[2], inoutput);
+  MAPU_SORT_ONE_GRID_Z6_SET_XYZW(sort_kernel[2], xyzw);
+  MAPU_SORT_ONE_GRID_Z6_SET_CU_CACHE(sort_kernel[2], cu_cache);
+  MAPU_SORT_ONE_GRID_Z6_SET_CU_XYZW(sort_kernel[2], cu_xyzw);
+  MAPU_SORT_ONE_GRID_Z6_SET_ADJOINT(sort_kernel[2], adjoint_vec_pids);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_cache(cu_swap_l_6_kernel, cu_cache);
   mapu_cu_swap_r_6_scmc_set_parameter_cu_cache(cu_swap_r_6_kernel, cu_cache);
   mapu_cu_swap_l_6_scmc_set_parameter_cu_xyzw(cu_swap_l_6_kernel, cu_xyzw);
@@ -1477,34 +1465,34 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  MAPU_SORT_ONE_GRID_Z6_SET_XLEN((sort_kernel)[2], &(mapu_alloc_prefix_XLEN));
+  MAPU_SORT_ONE_GRID_Z6_SET_XLEN(sort_kernel[2], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  MAPU_SORT_ONE_GRID_Z6_SET_YLEN((sort_kernel)[2], &(mapu_alloc_prefix_YLEN));
+  MAPU_SORT_ONE_GRID_Z6_SET_YLEN(sort_kernel[2], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  MAPU_SORT_ONE_GRID_Z6_SET_ZLEN((sort_kernel)[2], &(mapu_alloc_prefix_ZLEN));
+  MAPU_SORT_ONE_GRID_Z6_SET_ZLEN(sort_kernel[2], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  MAPU_SORT_ONE_GRID_Z6_SET_OVLP((sort_kernel)[2], &(mapu_alloc_prefix_ovlp));
+  MAPU_SORT_ONE_GRID_Z6_SET_OVLP(sort_kernel[2], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  MAPU_SORT_ONE_GRID_Z6_SET_NUMVEC((sort_kernel)[2], &(mapu_alloc_prefix_numvec));
+  MAPU_SORT_ONE_GRID_Z6_SET_NUMVEC(sort_kernel[2], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  MAPU_SORT_ONE_GRID_Z6_SET_GRID_CACHE_LEN((sort_kernel)[2], &(mapu_alloc_prefix_grid_cache_len));
+  MAPU_SORT_ONE_GRID_Z6_SET_GRID_CACHE_LEN(sort_kernel[2], &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  MAPU_SORT_ONE_GRID_Z6_SET_CU_CACHE_LENGTH((sort_kernel)[2], &(mapu_alloc_prefix_cu_cache_length));
+  MAPU_SORT_ONE_GRID_Z6_SET_CU_CACHE_LENGTH(sort_kernel[2], &(mapu_alloc_prefix_cu_cache_length));
 
   long sort_one_grid_xlen = MAPU_SORT_ONE_GRID_Z6_GET_XLEN();
-  MAPU_SORT_ONE_GRID_Z6_EXEC((sort_kernel)[2], sort_one_grid_xlen, numvec);
+  MAPU_SORT_ONE_GRID_Z6_EXEC(sort_kernel[2], sort_one_grid_xlen, numvec);
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_ZLEN));
@@ -1562,7 +1550,7 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
   void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
@@ -1588,11 +1576,11 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_inoutput((sort_kernel)[6], inoutput);
-  mapu_sort_one_grid_x_8_scmc_set_parameter_xyzw((sort_kernel)[6], xyzw);
-  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache((sort_kernel)[6], cu_cache);
-  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_xyzw((sort_kernel)[6], cu_xyzw);
-  mapu_sort_one_grid_x_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[6], adjoint_vec_pids);
+  mapu_sort_one_grid_x_8_scmc_set_parameter_inoutput(sort_kernel[6], inoutput);
+  mapu_sort_one_grid_x_8_scmc_set_parameter_xyzw(sort_kernel[6], xyzw);
+  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache(sort_kernel[6], cu_cache);
+  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_xyzw(sort_kernel[6], cu_xyzw);
+  mapu_sort_one_grid_x_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[6], adjoint_vec_pids);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   mapu_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -1602,34 +1590,34 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_XLEN((sort_kernel)[6], &(mapu_alloc_prefix_XLEN));
+  mapu_sort_one_grid_x_8_scmc_set_parameter_XLEN(sort_kernel[6], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_YLEN((sort_kernel)[6], &(mapu_alloc_prefix_YLEN));
+  mapu_sort_one_grid_x_8_scmc_set_parameter_YLEN(sort_kernel[6], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_ZLEN((sort_kernel)[6], &(mapu_alloc_prefix_ZLEN));
+  mapu_sort_one_grid_x_8_scmc_set_parameter_ZLEN(sort_kernel[6], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_ovlp((sort_kernel)[6], &(mapu_alloc_prefix_ovlp));
+  mapu_sort_one_grid_x_8_scmc_set_parameter_ovlp(sort_kernel[6], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_numvec((sort_kernel)[6], &(mapu_alloc_prefix_numvec));
+  mapu_sort_one_grid_x_8_scmc_set_parameter_numvec(sort_kernel[6], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len((sort_kernel)[6],
+  mapu_sort_one_grid_x_8_scmc_set_parameter_grid_cache_len(sort_kernel[6],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length((sort_kernel)[6],
+  mapu_sort_one_grid_x_8_scmc_set_parameter_cu_cache_length(sort_kernel[6],
                                                             &(mapu_alloc_prefix_cu_cache_length));
-  mapu_sort_one_grid_x_8_exec((sort_kernel)[6], mapu_sort_one_grid_x_8_get_xlen(), numvec);
+  mapu_sort_one_grid_x_8_exec(sort_kernel[6], mapu_sort_one_grid_x_8_get_xlen(), numvec);
 
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
@@ -1688,7 +1676,7 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
   void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
@@ -1714,11 +1702,11 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_inoutput((sort_kernel)[7], inoutput);
-  mapu_sort_one_grid_y_8_scmc_set_parameter_xyzw((sort_kernel)[7], xyzw);
-  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache((sort_kernel)[7], cu_cache);
-  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_xyzw((sort_kernel)[7], cu_xyzw);
-  mapu_sort_one_grid_y_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[7], adjoint_vec_pids);
+  mapu_sort_one_grid_y_8_scmc_set_parameter_inoutput(sort_kernel[7], inoutput);
+  mapu_sort_one_grid_y_8_scmc_set_parameter_xyzw(sort_kernel[7], xyzw);
+  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache(sort_kernel[7], cu_cache);
+  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_xyzw(sort_kernel[7], cu_xyzw);
+  mapu_sort_one_grid_y_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[7], adjoint_vec_pids);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   mapu_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -1728,34 +1716,34 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_XLEN((sort_kernel)[7], &(mapu_alloc_prefix_XLEN));
+  mapu_sort_one_grid_y_8_scmc_set_parameter_XLEN(sort_kernel[7], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_YLEN((sort_kernel)[7], &(mapu_alloc_prefix_YLEN));
+  mapu_sort_one_grid_y_8_scmc_set_parameter_YLEN(sort_kernel[7], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_ZLEN((sort_kernel)[7], &(mapu_alloc_prefix_ZLEN));
+  mapu_sort_one_grid_y_8_scmc_set_parameter_ZLEN(sort_kernel[7], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_ovlp((sort_kernel)[7], &(mapu_alloc_prefix_ovlp));
+  mapu_sort_one_grid_y_8_scmc_set_parameter_ovlp(sort_kernel[7], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_numvec((sort_kernel)[7], &(mapu_alloc_prefix_numvec));
+  mapu_sort_one_grid_y_8_scmc_set_parameter_numvec(sort_kernel[7], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len((sort_kernel)[7],
+  mapu_sort_one_grid_y_8_scmc_set_parameter_grid_cache_len(sort_kernel[7],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length((sort_kernel)[7],
+  mapu_sort_one_grid_y_8_scmc_set_parameter_cu_cache_length(sort_kernel[7],
                                                             &(mapu_alloc_prefix_cu_cache_length));
-  mapu_sort_one_grid_y_8_exec((sort_kernel)[7], mapu_sort_one_grid_y_8_get_xlen(), numvec);
+  mapu_sort_one_grid_y_8_exec(sort_kernel[7], mapu_sort_one_grid_y_8_get_xlen(), numvec);
 
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
@@ -1814,7 +1802,7 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void **sort_kernel = (pthis)->sort_kernel;
   void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
   void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
@@ -1840,11 +1828,11 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   long XLEN = xlen;
   long YLEN = ylen;
   long ZLEN = zlen;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_inoutput((sort_kernel)[8], inoutput);
-  mapu_sort_one_grid_z_8_scmc_set_parameter_xyzw((sort_kernel)[8], xyzw);
-  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache((sort_kernel)[8], cu_cache);
-  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_xyzw((sort_kernel)[8], cu_xyzw);
-  mapu_sort_one_grid_z_8_scmc_set_parameter_adjoint_vec_pids((sort_kernel)[8], adjoint_vec_pids);
+  mapu_sort_one_grid_z_8_scmc_set_parameter_inoutput(sort_kernel[8], inoutput);
+  mapu_sort_one_grid_z_8_scmc_set_parameter_xyzw(sort_kernel[8], xyzw);
+  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache(sort_kernel[8], cu_cache);
+  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_xyzw(sort_kernel[8], cu_xyzw);
+  mapu_sort_one_grid_z_8_scmc_set_parameter_adjoint_vec_pids(sort_kernel[8], adjoint_vec_pids);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_cache(cu_swap_l_8_kernel, cu_cache);
   mapu_cu_swap_r_8_scmc_set_parameter_cu_cache(cu_swap_r_8_kernel, cu_cache);
   mapu_cu_swap_l_8_scmc_set_parameter_cu_xyzw(cu_swap_l_8_kernel, cu_xyzw);
@@ -1854,34 +1842,34 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   mapu_pscmc_mem mapu_alloc_prefix_XLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_XLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_XLEN).h_data))[0] = XLEN;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_XLEN((sort_kernel)[8], &(mapu_alloc_prefix_XLEN));
+  mapu_sort_one_grid_z_8_scmc_set_parameter_XLEN(sort_kernel[8], &(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem mapu_alloc_prefix_YLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_YLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_YLEN).h_data))[0] = YLEN;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_YLEN((sort_kernel)[8], &(mapu_alloc_prefix_YLEN));
+  mapu_sort_one_grid_z_8_scmc_set_parameter_YLEN(sort_kernel[8], &(mapu_alloc_prefix_YLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ZLEN;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ZLEN), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_ZLEN).h_data))[0] = ZLEN;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_ZLEN((sort_kernel)[8], &(mapu_alloc_prefix_ZLEN));
+  mapu_sort_one_grid_z_8_scmc_set_parameter_ZLEN(sort_kernel[8], &(mapu_alloc_prefix_ZLEN));
   mapu_pscmc_mem mapu_alloc_prefix_ovlp;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_ovlp), PS_INT_NUM, 0);
   (((int *)(mapu_alloc_prefix_ovlp).h_data))[0] = ovlp;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_ovlp((sort_kernel)[8], &(mapu_alloc_prefix_ovlp));
+  mapu_sort_one_grid_z_8_scmc_set_parameter_ovlp(sort_kernel[8], &(mapu_alloc_prefix_ovlp));
   mapu_pscmc_mem mapu_alloc_prefix_numvec;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_numvec), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_numvec).h_data))[0] = numvec;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_numvec((sort_kernel)[8], &(mapu_alloc_prefix_numvec));
+  mapu_sort_one_grid_z_8_scmc_set_parameter_numvec(sort_kernel[8], &(mapu_alloc_prefix_numvec));
   mapu_pscmc_mem mapu_alloc_prefix_grid_cache_len;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_grid_cache_len), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_grid_cache_len).h_data))[0] = grid_cache_len;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len((sort_kernel)[8],
+  mapu_sort_one_grid_z_8_scmc_set_parameter_grid_cache_len(sort_kernel[8],
                                                            &(mapu_alloc_prefix_grid_cache_len));
   mapu_pscmc_mem mapu_alloc_prefix_cu_cache_length;
   mapu_pscmc_mem_init(pe, &(mapu_alloc_prefix_cu_cache_length), PS_LONG_NUM, 0);
   (((long *)(mapu_alloc_prefix_cu_cache_length).h_data))[0] = cu_cache_length;
-  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length((sort_kernel)[8],
+  mapu_sort_one_grid_z_8_scmc_set_parameter_cu_cache_length(sort_kernel[8],
                                                             &(mapu_alloc_prefix_cu_cache_length));
-  mapu_sort_one_grid_z_8_exec((sort_kernel)[8], mapu_sort_one_grid_z_8_get_xlen(), numvec);
+  mapu_sort_one_grid_z_8_exec(sort_kernel[8], mapu_sort_one_grid_z_8_get_xlen(), numvec);
 
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_XLEN));
   mapu_pscmc_mem_destroy(&(mapu_alloc_prefix_YLEN));
@@ -1940,7 +1928,7 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 int mapu_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void *move_back_kernel_6_kernel = (pthis)->move_back_kernel_6_kernel;
   long grid_cache_len = (pthis)->grid_cache_len;
   long cu_cache_length = (pthis)->cu_cache_length;
@@ -2006,7 +1994,7 @@ int mapu_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
 int mapu_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
-  Field3D_Seq *pfield = (pthis)->pfield;
+  Field3D_Seq *pfield = pthis->pfield;
   void *move_back_kernel_8_kernel = (pthis)->move_back_kernel_8_kernel;
   long grid_cache_len = (pthis)->grid_cache_len;
   long cu_cache_length = (pthis)->cu_cache_length;
@@ -2685,13 +2673,13 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
 
   long num_runtime = (pthis)->num_runtime;
-  One_Particle_Collection *particles = (pthis)->particles;
+  One_Particle_Collection *particles = pthis->particles;
   int num_spec = (pthis)->num_spec;
 
   {
     long xyzx;
     for (xyzx = 0; xyzx < num_spec; xyzx++) {
-      One_Particle_Collection *particle_spec_1 = (particles + (xyzx * num_runtime));
+      One_Particle_Collection *particle_spec_1 = particles + (xyzx * num_runtime);
       int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[xyzx];
       int ptlen = ((ptype & 2) ? 8 : 6);
       long i, j;
@@ -3012,7 +3000,7 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
 
   long num_runtime = (pthis)->num_runtime;
 
-  One_Particle_Collection *particles = (pthis)->particles;
+  One_Particle_Collection *particles = pthis->particles;
 
   int num_spec = (pthis)->num_spec;
 

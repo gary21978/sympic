@@ -8,11 +8,11 @@ static int dump_kernel_variables = 0;
 
 extern long _pscmc_mapu_global_dump_kernel_variables, _pscmc_mapu_global_dump_times;
 int mapu_merge_ovlp_m2o_once_init(mapu_pscmc_env *pe, mapu_merge_ovlp_m2o_once_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_m2o_once_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_m2o_once_struct);
+  len[0] = sizeof(mapu_merge_ovlp_m2o_once_struct);
 }
 int mapu_merge_ovlp_m2o_once_get_xlen() { return 1; }
 int mapu_merge_ovlp_m2o_once_get_num_compute_units(mapu_merge_ovlp_m2o_once_struct *kerstr) {
@@ -832,7 +832,7 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -1651,17 +1651,17 @@ int mapu_merge_ovlp_m2o_once_exec(mapu_merge_ovlp_m2o_once_struct *kerstr,
     }
   }
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 
 int mapu_merge_ovlp_m2o_all_in_one_init(mapu_pscmc_env *pe,
                                         mapu_merge_ovlp_m2o_all_in_one_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_m2o_all_in_one_struct);
+  len[0] = sizeof(mapu_merge_ovlp_m2o_all_in_one_struct);
 }
 int mapu_merge_ovlp_m2o_all_in_one_get_xlen() { return 1; }
 
@@ -1844,7 +1844,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2036,7 +2036,7 @@ int mapu_merge_ovlp_m2o_all_in_one_exec(mapu_merge_ovlp_m2o_all_in_one_struct *k
     }
   }
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 
@@ -2089,19 +2089,19 @@ int mapu_merge_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
   return 0;
 }
 int mapu_merge_ovlp_m2o_init(mapu_pscmc_env *pe, mapu_merge_ovlp_m2o_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_m2o_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_m2o_struct);
+  len[0] = sizeof(mapu_merge_ovlp_m2o_struct);
 }
 
 int mapu_merge_ovlp_o2m_once_init(mapu_pscmc_env *pe, mapu_merge_ovlp_o2m_once_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_o2m_once_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_o2m_once_struct);
+  len[0] = sizeof(mapu_merge_ovlp_o2m_once_struct);
 }
 
 int mapu_merge_ovlp_o2m_once_scmc_set_parameter_yblock(mapu_merge_ovlp_o2m_once_struct *kerstr,
@@ -2119,11 +2119,11 @@ int mapu_merge_ovlp_o2m_once_scmc_set_parameter_zblock(mapu_merge_ovlp_o2m_once_
 
 int mapu_merge_ovlp_o2m_all_in_one_init(mapu_pscmc_env *pe,
                                         mapu_merge_ovlp_o2m_all_in_one_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_o2m_all_in_one_struct);
+  len[0] = sizeof(mapu_merge_ovlp_o2m_all_in_one_struct);
 }
 int mapu_merge_ovlp_o2m_all_in_one_get_xlen() { return 1; }
 
@@ -2316,7 +2316,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2510,7 +2510,7 @@ int mapu_merge_ovlp_o2m_all_in_one_exec(mapu_merge_ovlp_o2m_all_in_one_struct *k
     }
   }
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
@@ -2562,28 +2562,28 @@ int mapu_merge_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
   return 0;
 }
 int mapu_merge_ovlp_o2m_init(mapu_pscmc_env *pe, mapu_merge_ovlp_o2m_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_merge_ovlp_o2m_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_merge_ovlp_o2m_struct);
+  len[0] = sizeof(mapu_merge_ovlp_o2m_struct);
 }
 
 int mapu_sync_ovlp_m2o_once_init(mapu_pscmc_env *pe, mapu_sync_ovlp_m2o_once_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sync_ovlp_m2o_once_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_m2o_once_struct);
+  len[0] = sizeof(mapu_sync_ovlp_m2o_once_struct);
 }
 
 int mapu_sync_ovlp_m2o_all_in_one_init(mapu_pscmc_env *pe,
                                        mapu_sync_ovlp_m2o_all_in_one_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sync_ovlp_m2o_all_in_one_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_m2o_all_in_one_struct);
+  len[0] = sizeof(mapu_sync_ovlp_m2o_all_in_one_struct);
 }
 int mapu_sync_ovlp_m2o_all_in_one_get_xlen() { return 1; }
 
@@ -2776,7 +2776,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -2970,7 +2970,7 @@ int mapu_sync_ovlp_m2o_all_in_one_exec(mapu_sync_ovlp_m2o_all_in_one_struct *ker
     }
   }
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_vecmain(
@@ -3022,28 +3022,26 @@ int mapu_sync_ovlp_m2o_all_in_one_scmc_set_parameter_ovlp(
   return 0;
 }
 int mapu_sync_ovlp_m2o_init(mapu_pscmc_env *pe, mapu_sync_ovlp_m2o_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
-void mapu_sync_ovlp_m2o_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_m2o_struct);
-}
+void mapu_sync_ovlp_m2o_get_struct_len(size_t *len) { len[0] = sizeof(mapu_sync_ovlp_m2o_struct); }
 
 int mapu_sync_ovlp_o2m_once_init(mapu_pscmc_env *pe, mapu_sync_ovlp_o2m_once_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sync_ovlp_o2m_once_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_o2m_once_struct);
+  len[0] = sizeof(mapu_sync_ovlp_o2m_once_struct);
 }
 
 int mapu_sync_ovlp_o2m_all_in_one_init(mapu_pscmc_env *pe,
                                        mapu_sync_ovlp_o2m_all_in_one_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
 void mapu_sync_ovlp_o2m_all_in_one_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_o2m_all_in_one_struct);
+  len[0] = sizeof(mapu_sync_ovlp_o2m_all_in_one_struct);
 }
 int mapu_sync_ovlp_o2m_all_in_one_get_xlen() { return 1; }
 
@@ -3236,7 +3234,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
     {
       dim3 multiylen = 1;
       multiylen.x = 64;
-      multiylen.y = (scmc_internal_g_ylen / 64);
+      multiylen.y = scmc_internal_g_ylen / 64;
       int rest = (scmc_internal_g_ylen % 64);
 
       if ((rest != 0)) {
@@ -3430,7 +3428,7 @@ int mapu_sync_ovlp_o2m_all_in_one_exec(mapu_sync_ovlp_o2m_all_in_one_struct *ker
     }
   }
 
-  _pscmc_mapu_global_dump_times = (_pscmc_mapu_global_dump_times + 1);
+  _pscmc_mapu_global_dump_times = _pscmc_mapu_global_dump_times + 1;
   return 0;
 }
 int mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_vecmain(
@@ -3482,9 +3480,7 @@ int mapu_sync_ovlp_o2m_all_in_one_scmc_set_parameter_ovlp(
   return 0;
 }
 int mapu_sync_ovlp_o2m_init(mapu_pscmc_env *pe, mapu_sync_ovlp_o2m_struct *kerstr) {
-  (kerstr)->pe = pe;
+  kerstr->pe = pe;
   return 0;
 }
-void mapu_sync_ovlp_o2m_get_struct_len(size_t *len) {
-  (len)[0] = sizeof(mapu_sync_ovlp_o2m_struct);
-}
+void mapu_sync_ovlp_o2m_get_struct_len(size_t *len) { len[0] = sizeof(mapu_sync_ovlp_o2m_struct); }

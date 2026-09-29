@@ -48,10 +48,9 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx12(v8fp64 *scr, v8fp64 r
       long xyzx;
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 Jtmp =
-            simd_mask * (((if1_x2)[xyzx] - (if1_x1)[xyzx]) * ((f0_y1)[xyzy] * (f0_z1)[xyzz]));
-        shJ_incf[((allidx * 3) + 0)] =
-            shJ_incf[((allidx * 3) + 0)] +
+        v8fp64 Jtmp = simd_mask * ((if1_x2[xyzx] - if1_x1[xyzx]) * (f0_y1[xyzy] * f0_z1[xyzz]));
+        shJ_incf[(allidx * 3) + 0] =
+            shJ_incf[(allidx * 3) + 0] +
             (grid_geo_x * ((Tori_X0 / (Tori_X0 + (XO + (bBidx + xyzx)))) * Charge0)) * Jtmp;
       }
     }
@@ -79,10 +78,9 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy12(v8fp64 *scr, v8fp64 r
       long xyzx;
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 Jtmp =
-            simd_mask * (((if1_y2)[xyzy] - (if1_y1)[xyzy]) * ((f0_x2)[xyzx] * (f0_z1)[xyzz]));
-        shJ_incf[((allidx * 3) + 1)] =
-            shJ_incf[((allidx * 3) + 1)] +
+        v8fp64 Jtmp = simd_mask * ((if1_y2[xyzy] - if1_y1[xyzy]) * (f0_x2[xyzx] * f0_z1[xyzz]));
+        shJ_incf[(allidx * 3) + 1] =
+            shJ_incf[(allidx * 3) + 1] +
             (grid_geo_y * (((Tori_X0 + (XO + (bBidx + xyzx))) / Tori_X0) * Charge0)) * Jtmp;
       }
     }
@@ -110,10 +108,9 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jz13(v8fp64 *scr, v8fp64 r
       long xyzx;
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 Jtmp =
-            simd_mask * (((if1_z3)[xyzz] - (if1_z1)[xyzz]) * ((f0_x2)[xyzx] * (f0_y2)[xyzy]));
-        shJ_incf[((allidx * 3) + 2)] =
-            shJ_incf[((allidx * 3) + 2)] +
+        v8fp64 Jtmp = simd_mask * ((if1_z3[xyzz] - if1_z1[xyzz]) * (f0_x2[xyzx] * f0_y2[xyzy]));
+        shJ_incf[(allidx * 3) + 2] =
+            shJ_incf[(allidx * 3) + 2] +
             (grid_geo_z * ((Tori_X0 / (Tori_X0 + (XO + (bBidx + xyzx)))) * Charge0)) * Jtmp;
       }
     }
@@ -141,10 +138,9 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jy23(v8fp64 *scr, v8fp64 r
       long xyzx;
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 Jtmp =
-            simd_mask * (((if1_y3)[xyzy] - (if1_y2)[xyzy]) * ((f0_x2)[xyzx] * (f0_z3)[xyzz]));
-        shJ_incf[((allidx * 3) + 1)] =
-            shJ_incf[((allidx * 3) + 1)] +
+        v8fp64 Jtmp = simd_mask * ((if1_y3[xyzy] - if1_y2[xyzy]) * (f0_x2[xyzx] * f0_z3[xyzz]));
+        shJ_incf[(allidx * 3) + 1] =
+            shJ_incf[(allidx * 3) + 1] +
             (grid_geo_y * (((Tori_X0 + (XO + (bBidx + xyzx))) / Tori_X0) * Charge0)) * Jtmp;
       }
     }
@@ -172,10 +168,9 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx23(v8fp64 *scr, v8fp64 r
       long xyzx;
       for (xyzx = 0; xyzx < 5; xyzx++) {
         int allidx = (xyzx + (5 * (xyzy + (5 * xyzz))));
-        v8fp64 Jtmp =
-            simd_mask * (((if1_x3)[xyzx] - (if1_x2)[xyzx]) * ((f0_y3)[xyzy] * (f0_z3)[xyzz]));
-        shJ_incf[((allidx * 3) + 0)] =
-            shJ_incf[((allidx * 3) + 0)] +
+        v8fp64 Jtmp = simd_mask * ((if1_x3[xyzx] - if1_x2[xyzx]) * (f0_y3[xyzy] * f0_z3[xyzz]));
+        shJ_incf[(allidx * 3) + 0] =
+            shJ_incf[(allidx * 3) + 0] +
             (grid_geo_x * ((Tori_X0 / (Tori_X0 + (XO + (bBidx + xyzx)))) * Charge0)) * Jtmp;
       }
     }
@@ -184,11 +179,10 @@ static __device__ __noinline__ void pushJ_vlo_deposit_Jx23(v8fp64 *scr, v8fp64 r
 static __device__ __forceinline__ long
 pushJ_vlo_field_ddr_elem_offset(long __idy, int bBidx, int bBidy, int bBidz, int xyzy, int xyzz,
                                 long XLEN, long YLEN, long ZLEN, int ovlp, int num_ele) {
-  return (
-      (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
-      (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
-                                         (((xyzy + bBidy) + ovlp) +
-                                          ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp))))))));
+  return (num_ele * (__idy * ((XLEN + (2 * ovlp)) * ((YLEN + (2 * ovlp)) * (ZLEN + (2 * ovlp)))))) +
+         (0 + (num_ele * ((bBidx + ovlp) + ((XLEN + (2 * ovlp)) *
+                                            (((xyzy + bBidy) + ovlp) +
+                                             ((YLEN + (2 * ovlp)) * ((xyzz + bBidz) + ovlp)))))));
 }
 
 static __device__ __forceinline__ void
@@ -239,9 +233,9 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_vlo_state_t *st, double *particle_buf, int
   st->vy0 = head[4];
   st->vz0 = head[5];
 
-  st->xx0 = (st->xx1 - (Deltat * st->vx0));
-  st->xy0 = (st->xy1 - (Deltat * st->vy0));
-  st->xz0 = (st->xz1 - (Deltat * st->vz0));
+  st->xx0 = st->xx1 - (Deltat * st->vx0);
+  st->xy0 = st->xy1 - (Deltat * st->vy0);
+  st->xz0 = st->xz1 - (Deltat * st->vz0);
 
   v8fp64 Midx0 = geo_floor_simd(st->xx0);
   v8fp64 Midx1 = geo_floor_simd(st->xx1);
@@ -250,18 +244,18 @@ pushJ_vlo_K1_setup_weights_x0x1(pushJ_vlo_state_t *st, double *particle_buf, int
   v8fp64 Midz0 = geo_floor_simd(st->xz0);
   v8fp64 Midz1 = geo_floor_simd(st->xz1);
 
-  st->s_rx0x = (st->xx0 - Midx0);
-  st->s_rx0y = (st->xy0 - Midy0);
-  st->s_rx0z = (st->xz0 - Midz0);
-  st->s_rx1x = (st->xx1 - Midx1);
-  st->s_rx1y = (st->xy1 - Midy1);
-  st->s_rx1z = (st->xz1 - Midz1);
-  st->s_dix0x = (Midx0 - vbroadcast(Midx));
-  st->s_dix0y = (Midy0 - vbroadcast(Midy));
-  st->s_dix0z = (Midz0 - vbroadcast(Midz));
-  st->s_dix1x = (Midx1 - vbroadcast(Midx));
-  st->s_dix1y = (Midy1 - vbroadcast(Midy));
-  st->s_dix1z = (Midz1 - vbroadcast(Midz));
+  st->s_rx0x = st->xx0 - Midx0;
+  st->s_rx0y = st->xy0 - Midy0;
+  st->s_rx0z = st->xz0 - Midz0;
+  st->s_rx1x = st->xx1 - Midx1;
+  st->s_rx1y = st->xy1 - Midy1;
+  st->s_rx1z = st->xz1 - Midz1;
+  st->s_dix0x = Midx0 - vbroadcast(Midx);
+  st->s_dix0y = Midy0 - vbroadcast(Midy);
+  st->s_dix0z = Midz0 - vbroadcast(Midz);
+  st->s_dix1x = Midx1 - vbroadcast(Midx);
+  st->s_dix1y = Midy1 - vbroadcast(Midy);
+  st->s_dix1z = Midz1 - vbroadcast(Midz);
 }
 /* -------------------------------------------------------------------------- */
 /* K2 push split helpers (Step C) */
@@ -271,14 +265,14 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_x2(pushJ_vlo_state_t *st, 
                                                          v8fp64 x1, v8fp64 allincfvx,
                                                          double DELTA_X, double Deltat,
                                                          double QE_MASS, double XO, double Midx) {
-  st->x2 = (((-1.0 * x0) + (2.0 * x1)) + ((1.0 / ({
-                                             v8fp64 tmppowvar = vbroadcast(DELTA_X);
-                                             tmppowvar *tmppowvar;
-                                           })) *
-                                          (QE_MASS * (Deltat * (allincfvx + (-1.0 * 0.0))))));
+  st->x2 = ((-1.0 * x0) + (2.0 * x1)) + ((1.0 / ({
+                                            v8fp64 tmppowvar = vbroadcast(DELTA_X);
+                                            tmppowvar *tmppowvar;
+                                          })) *
+                                         (QE_MASS * (Deltat * (allincfvx + (-1.0 * 0.0)))));
 
-  st->s_rx2x = ((st->x2 - vbroadcast(XO)) - geo_floor_simd(st->x2 - vbroadcast(XO)));
-  st->s_dix2x = (geo_floor_simd(st->x2 - vbroadcast(XO)) - vbroadcast(Midx));
+  st->s_rx2x = (st->x2 - vbroadcast(XO)) - geo_floor_simd(st->x2 - vbroadcast(XO));
+  st->s_dix2x = geo_floor_simd(st->x2 - vbroadcast(XO)) - vbroadcast(Midx);
 }
 
 static __device__ __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, v8fp64 x0,
@@ -286,71 +280,71 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_y2(pushJ_vlo_state_t *st, 
                                                          v8fp64 allincfvy, double TX0,
                                                          double DELTA_Y, double Deltat,
                                                          double QE_MASS, double YO, double Midy) {
-  st->y2 = (((1.0 / ({
-                v8fp64 tmppowvar = ((({
-                                       v8fp64 tmppowvar = vbroadcast(TX0);
-                                       tmppowvar *tmppowvar;
-                                     }) +
-                                     ((2.0 * (TX0 * st->x2)) + ({
-                                        v8fp64 tmppowvar = st->x2;
-                                        tmppowvar *tmppowvar;
-                                      }))));
-                tmppowvar;
-              })) *
-             ((((-1.0 * ({
+  st->y2 = ((1.0 / ({
+               v8fp64 tmppowvar = ({
+                                    v8fp64 tmppowvar = vbroadcast(TX0);
+                                    tmppowvar *tmppowvar;
+                                  }) +
+                                  ((2.0 * (TX0 * st->x2)) + ({
+                                     v8fp64 tmppowvar = st->x2;
+                                     tmppowvar *tmppowvar;
+                                   }));
+               tmppowvar;
+             })) *
+            ((((-1.0 * ({
+                 v8fp64 tmppowvar = vbroadcast(TX0);
+                 tmppowvar *tmppowvar;
+               })) +
+               ((-2.0 * (TX0 * x0)) + (-1.0 * ({
+                  v8fp64 tmppowvar = x0;
+                  tmppowvar *tmppowvar;
+                })))) *
+              y0) +
+             (((2.0 * ({
                   v8fp64 tmppowvar = vbroadcast(TX0);
                   tmppowvar *tmppowvar;
                 })) +
-                ((-2.0 * (TX0 * x0)) + (-1.0 * ({
-                   v8fp64 tmppowvar = x0;
-                   tmppowvar *tmppowvar;
-                 })))) *
-               y0) +
-              (((2.0 * ({
-                   v8fp64 tmppowvar = vbroadcast(TX0);
-                   tmppowvar *tmppowvar;
-                 })) +
-                ((2.0 * (TX0 * x0)) + (({
-                                         v8fp64 tmppowvar = x0;
-                                         tmppowvar *tmppowvar;
-                                       }) +
-                                       ((2.0 * (TX0 * st->x2)) + ({
-                                          v8fp64 tmppowvar = st->x2;
-                                          tmppowvar *tmppowvar;
-                                        }))))) *
-               y1))) +
-            (({
-               v8fp64 tmppowvar = vbroadcast(TX0);
-               tmppowvar *tmppowvar;
-             }) *
-             ((QE_MASS * (Deltat * (allincfvy + (-1.0 * iBy)))) *
-              (1.0 / ({
-                 v8fp64 tmppowvar = ((({
-                                        v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+               ((2.0 * (TX0 * x0)) + (({
+                                        v8fp64 tmppowvar = x0;
                                         tmppowvar *tmppowvar;
-                                      }) *
-                                      ({
-                                        v8fp64 tmppowvar = vbroadcast(TX0);
-                                        tmppowvar *tmppowvar;
-                                      })) +
-                                     ((2.0 * (({
-                                                v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                                tmppowvar *tmppowvar;
-                                              }) *
-                                              (TX0 * st->x2))) +
-                                      (({
-                                         v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                         tmppowvar *tmppowvar;
-                                       }) *
-                                       ({
+                                      }) +
+                                      ((2.0 * (TX0 * st->x2)) + ({
                                          v8fp64 tmppowvar = st->x2;
                                          tmppowvar *tmppowvar;
-                                       }))));
-                 tmppowvar;
-               })))));
+                                       }))))) *
+              y1))) +
+           (({
+              v8fp64 tmppowvar = vbroadcast(TX0);
+              tmppowvar *tmppowvar;
+            }) *
+            ((QE_MASS * (Deltat * (allincfvy + (-1.0 * iBy)))) *
+             (1.0 / ({
+                v8fp64 tmppowvar = (({
+                                      v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                      tmppowvar *tmppowvar;
+                                    }) *
+                                    ({
+                                      v8fp64 tmppowvar = vbroadcast(TX0);
+                                      tmppowvar *tmppowvar;
+                                    })) +
+                                   ((2.0 * (({
+                                              v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                              tmppowvar *tmppowvar;
+                                            }) *
+                                            (TX0 * st->x2))) +
+                                    (({
+                                       v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                       tmppowvar *tmppowvar;
+                                     }) *
+                                     ({
+                                       v8fp64 tmppowvar = st->x2;
+                                       tmppowvar *tmppowvar;
+                                     })));
+                tmppowvar;
+              }))));
 
-  st->s_rx2y = ((st->y2 - vbroadcast(YO)) - geo_floor_simd(st->y2 - vbroadcast(YO)));
-  st->s_dix2y = (geo_floor_simd(st->y2 - vbroadcast(YO)) - vbroadcast(Midy));
+  st->s_rx2y = (st->y2 - vbroadcast(YO)) - geo_floor_simd(st->y2 - vbroadcast(YO));
+  st->s_dix2y = geo_floor_simd(st->y2 - vbroadcast(YO)) - vbroadcast(Midy);
 }
 
 static __device__ __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *st, v8fp64 z0,
@@ -358,63 +352,64 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_z2_z3(pushJ_vlo_state_t *s
                                                             double DELTA_Z, double Deltat,
                                                             double QE_MASS, double ZO, double zmid,
                                                             double Midz) {
-  st->z2 = (((-1.0 * z0) + (2.0 * z1)) + ((1.0 / ({
-                                             v8fp64 tmppowvar = vbroadcast(DELTA_Z);
-                                             tmppowvar *tmppowvar;
-                                           })) *
-                                          (QE_MASS * (Deltat * (allincfvz + (-1.0 * iBz))))));
+  st->z2 = ((-1.0 * z0) + (2.0 * z1)) + ((1.0 / ({
+                                            v8fp64 tmppowvar = vbroadcast(DELTA_Z);
+                                            tmppowvar *tmppowvar;
+                                          })) *
+                                         (QE_MASS * (Deltat * (allincfvz + (-1.0 * iBz)))));
 
-  st->s_rx2z = ((st->z2 - vbroadcast(ZO - zmid)) - geo_floor_simd(st->z2 - vbroadcast(ZO - zmid)));
-  st->s_dix2z = (geo_floor_simd(st->z2 - vbroadcast(ZO - zmid)) - vbroadcast(Midz));
+  st->s_rx2z = (st->z2 - vbroadcast(ZO - zmid)) - geo_floor_simd(st->z2 - vbroadcast(ZO - zmid));
+  st->s_dix2z = geo_floor_simd(st->z2 - vbroadcast(ZO - zmid)) - vbroadcast(Midz);
 
   /* Keep historical behavior: iBz is zeroed before z3 */
-  st->z3 = (((-1.0 * z1) + (2.0 * st->z2)) + ((1.0 / ({
-                                                 v8fp64 tmppowvar = vbroadcast(DELTA_Z);
-                                                 tmppowvar *tmppowvar;
-                                               })) *
-                                              (-1 * (Deltat * (QE_MASS * 0.0)))));
+  st->z3 = ((-1.0 * z1) + (2.0 * st->z2)) + ((1.0 / ({
+                                                v8fp64 tmppowvar = vbroadcast(DELTA_Z);
+                                                tmppowvar *tmppowvar;
+                                              })) *
+                                             (-1 * (Deltat * (QE_MASS * 0.0))));
 
-  st->s_rx3z = ((st->z3 - vbroadcast(ZO - zmid)) - geo_floor_simd(st->z3 - vbroadcast(ZO - zmid)));
-  st->s_dix3z = (geo_floor_simd(st->z3 - vbroadcast(ZO - zmid)) - vbroadcast(Midz));
+  st->s_rx3z = (st->z3 - vbroadcast(ZO - zmid)) - geo_floor_simd(st->z3 - vbroadcast(ZO - zmid));
+  st->s_dix3z = geo_floor_simd(st->z3 - vbroadcast(ZO - zmid)) - vbroadcast(Midz);
 }
 
 static __device__ __noinline__ void pushJ_vlo_K2_push_y3(pushJ_vlo_state_t *st, v8fp64 y1,
                                                          v8fp64 iBy, double TX0, double DELTA_Y,
                                                          double Deltat, double QE_MASS, double YO,
                                                          double Midy) {
-  st->y3 = (((-1.0 * y1) + (2.0 * st->y2)) +
-            (({
-               v8fp64 tmppowvar = vbroadcast(TX0);
-               tmppowvar *tmppowvar;
-             }) *
-             ((-1 * (Deltat * (QE_MASS * iBy))) *
-              (1.0 / ({
-                 v8fp64 tmppowvar = ((({
-                                        v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                        tmppowvar *tmppowvar;
-                                      }) *
-                                      ({
-                                        v8fp64 tmppowvar = vbroadcast(TX0);
-                                        tmppowvar *tmppowvar;
-                                      })) +
-                                     ((2.0 * (({
-                                                v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                                tmppowvar *tmppowvar;
-                                              }) *
-                                              (TX0 * st->x2))) +
-                                      (({
-                                         v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                         tmppowvar *tmppowvar;
-                                       }) *
-                                       ({
-                                         v8fp64 tmppowvar = st->x2;
-                                         tmppowvar *tmppowvar;
-                                       }))));
-                 tmppowvar;
-               })))));
+  st->y3 = ((-1.0 * y1) + (2.0 * st->y2)) +
+           (({
+              v8fp64 tmppowvar = vbroadcast(TX0);
+              tmppowvar *tmppowvar;
+            }) *
+            ((-1 * (Deltat * (QE_MASS * iBy))) * (1.0 / ({
+                                                    v8fp64 tmppowvar =
+                                                        (({
+                                                           v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                                           tmppowvar *tmppowvar;
+                                                         }) *
+                                                         ({
+                                                           v8fp64 tmppowvar = vbroadcast(TX0);
+                                                           tmppowvar *tmppowvar;
+                                                         })) +
+                                                        ((2.0 * (({
+                                                                   v8fp64 tmppowvar =
+                                                                       vbroadcast(DELTA_Y);
+                                                                   tmppowvar *tmppowvar;
+                                                                 }) *
+                                                                 (TX0 * st->x2))) +
+                                                         (({
+                                                            v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                                            tmppowvar *tmppowvar;
+                                                          }) *
+                                                          ({
+                                                            v8fp64 tmppowvar = st->x2;
+                                                            tmppowvar *tmppowvar;
+                                                          })));
+                                                    tmppowvar;
+                                                  }))));
 
-  st->s_rx3y = ((st->y3 - vbroadcast(YO)) - geo_floor_simd(st->y3 - vbroadcast(YO)));
-  st->s_dix3y = (geo_floor_simd(st->y3 - vbroadcast(YO)) - vbroadcast(Midy));
+  st->s_rx3y = (st->y3 - vbroadcast(YO)) - geo_floor_simd(st->y3 - vbroadcast(YO));
+  st->s_dix3y = geo_floor_simd(st->y3 - vbroadcast(YO)) - vbroadcast(Midy);
 }
 
 static __device__ __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, v8fp64 x1,
@@ -422,104 +417,104 @@ static __device__ __noinline__ void pushJ_vlo_K2_push_x3(pushJ_vlo_state_t *st, 
                                                          double DELTA_X, double DELTA_Y,
                                                          double Deltat, double QE_MASS, double XO,
                                                          double Midx) {
-  st->x3 = (((1.0 / ({
-                v8fp64 tmppowvar = vbroadcast(DELTA_X);
-                tmppowvar *tmppowvar;
-              })) *
-             ((1.0 / ({
-                 v8fp64 tmppowvar = vbroadcast(TX0);
-                 tmppowvar *tmppowvar;
-               })) *
-              ((-1.0 * (({
-                          v8fp64 tmppowvar = vbroadcast(DELTA_X);
-                          tmppowvar *tmppowvar;
-                        }) *
-                        (({
-                           v8fp64 tmppowvar = vbroadcast(TX0);
-                           tmppowvar *tmppowvar;
-                         }) *
-                         x1))) +
-               ((2.0 * (({
-                          v8fp64 tmppowvar = vbroadcast(DELTA_X);
-                          tmppowvar *tmppowvar;
-                        }) *
-                        (({
-                           v8fp64 tmppowvar = vbroadcast(TX0);
-                           tmppowvar *tmppowvar;
-                         }) *
-                         st->x2))) +
-                ((((({
-                      v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                      tmppowvar *tmppowvar;
-                    }) *
-                    TX0) +
-                   (({
-                      v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                      tmppowvar *tmppowvar;
-                    }) *
-                    st->x2)) *
-                  ({
-                    v8fp64 tmppowvar = y1;
-                    tmppowvar *tmppowvar;
-                  })) +
-                 ((((-2.0 * (({
-                               v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                               tmppowvar *tmppowvar;
-                             }) *
-                             TX0)) +
-                    (-2.0 * (({
-                               v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                               tmppowvar *tmppowvar;
-                             }) *
-                             st->x2))) *
-                   (y1 * st->y2)) +
-                  ((((2.0 * (({
-                               v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                               tmppowvar *tmppowvar;
-                             }) *
-                             TX0)) +
-                     (2.0 * (({
-                               v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                               tmppowvar *tmppowvar;
-                             }) *
-                             st->x2))) *
-                    ({
-                      v8fp64 tmppowvar = st->y2;
-                      tmppowvar *tmppowvar;
-                    })) +
-                   ((((-2.0 * (({
-                                 v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                 tmppowvar *tmppowvar;
-                               }) *
-                               TX0)) +
-                      (-2.0 * (({
-                                 v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                                 tmppowvar *tmppowvar;
-                               }) *
-                               st->x2))) *
-                     (st->y2 * st->y3)) +
-                    (((({
-                         v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                         tmppowvar *tmppowvar;
-                       }) *
-                       TX0) +
-                      (({
-                         v8fp64 tmppowvar = vbroadcast(DELTA_Y);
-                         tmppowvar *tmppowvar;
-                       }) *
-                       st->x2)) *
-                     ({
-                       v8fp64 tmppowvar = st->y3;
-                       tmppowvar *tmppowvar;
-                     })))))))))) +
+  st->x3 = ((1.0 / ({
+               v8fp64 tmppowvar = vbroadcast(DELTA_X);
+               tmppowvar *tmppowvar;
+             })) *
             ((1.0 / ({
-                v8fp64 tmppowvar = vbroadcast(DELTA_X);
+                v8fp64 tmppowvar = vbroadcast(TX0);
                 tmppowvar *tmppowvar;
               })) *
-             (-1 * (Deltat * (QE_MASS * iBx)))));
+             ((-1.0 * (({
+                         v8fp64 tmppowvar = vbroadcast(DELTA_X);
+                         tmppowvar *tmppowvar;
+                       }) *
+                       (({
+                          v8fp64 tmppowvar = vbroadcast(TX0);
+                          tmppowvar *tmppowvar;
+                        }) *
+                        x1))) +
+              ((2.0 * (({
+                         v8fp64 tmppowvar = vbroadcast(DELTA_X);
+                         tmppowvar *tmppowvar;
+                       }) *
+                       (({
+                          v8fp64 tmppowvar = vbroadcast(TX0);
+                          tmppowvar *tmppowvar;
+                        }) *
+                        st->x2))) +
+               ((((({
+                     v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                     tmppowvar *tmppowvar;
+                   }) *
+                   TX0) +
+                  (({
+                     v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                     tmppowvar *tmppowvar;
+                   }) *
+                   st->x2)) *
+                 ({
+                   v8fp64 tmppowvar = y1;
+                   tmppowvar *tmppowvar;
+                 })) +
+                ((((-2.0 * (({
+                              v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                              tmppowvar *tmppowvar;
+                            }) *
+                            TX0)) +
+                   (-2.0 * (({
+                              v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                              tmppowvar *tmppowvar;
+                            }) *
+                            st->x2))) *
+                  (y1 * st->y2)) +
+                 ((((2.0 * (({
+                              v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                              tmppowvar *tmppowvar;
+                            }) *
+                            TX0)) +
+                    (2.0 * (({
+                              v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                              tmppowvar *tmppowvar;
+                            }) *
+                            st->x2))) *
+                   ({
+                     v8fp64 tmppowvar = st->y2;
+                     tmppowvar *tmppowvar;
+                   })) +
+                  ((((-2.0 * (({
+                                v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                tmppowvar *tmppowvar;
+                              }) *
+                              TX0)) +
+                     (-2.0 * (({
+                                v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                                tmppowvar *tmppowvar;
+                              }) *
+                              st->x2))) *
+                    (st->y2 * st->y3)) +
+                   (((({
+                        v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                        tmppowvar *tmppowvar;
+                      }) *
+                      TX0) +
+                     (({
+                        v8fp64 tmppowvar = vbroadcast(DELTA_Y);
+                        tmppowvar *tmppowvar;
+                      }) *
+                      st->x2)) *
+                    ({
+                      v8fp64 tmppowvar = st->y3;
+                      tmppowvar *tmppowvar;
+                    })))))))))) +
+           ((1.0 / ({
+               v8fp64 tmppowvar = vbroadcast(DELTA_X);
+               tmppowvar *tmppowvar;
+             })) *
+            (-1 * (Deltat * (QE_MASS * iBx))));
 
-  st->s_rx3x = ((st->x3 - vbroadcast(XO)) - geo_floor_simd(st->x3 - vbroadcast(XO)));
-  st->s_dix3x = (geo_floor_simd(st->x3 - vbroadcast(XO)) - vbroadcast(Midx));
+  st->s_rx3x = (st->x3 - vbroadcast(XO)) - geo_floor_simd(st->x3 - vbroadcast(XO));
+  st->s_dix3x = geo_floor_simd(st->x3 - vbroadcast(XO)) - vbroadcast(Midx);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -537,7 +532,7 @@ static __device__ __noinline__ v8fp64 pushJ_vlo_K2_compute_iBy(v8fp64 *scr,
   v8fp64 iBy_term1 = pushJ_B_integralS_comp2_f0z_dif1x_f1y(scr, shB1, st->s_rx1z, st->s_dix1z,
                                                            st->s_rx2x, st->s_dix2x, st->s_rx1x,
                                                            st->s_dix1x, st->s_rx1y, st->s_dix1y);
-  return (iBy_term0 + iBy_term1);
+  return iBy_term0 + iBy_term1;
 }
 
 static __device__ __noinline__ v8fp64 pushJ_vlo_K2_compute_iBz(v8fp64 *scr,
@@ -556,36 +551,36 @@ static __device__ __noinline__ v8fp64 pushJ_vlo_K2_compute_iBz(v8fp64 *scr,
   v8fp64 iBz_term4 = pushJ_B_integralS_comp1_f0y_dif1x_f1z(scr, shB1, st->s_rx1y, st->s_dix1y,
                                                            st->s_rx2x, st->s_dix2x, st->s_rx1x,
                                                            st->s_dix1x, st->s_rx1z, st->s_dix1z);
-  v8fp64 inner = ((-1.0 * iBz_term1) + iBz_term2 + (-1.0 * iBz_term3) + iBz_term4);
-  return (-1.0 * inner);
+  v8fp64 inner = (-1.0 * iBz_term1) + iBz_term2 + (-1.0 * iBz_term3) + iBz_term4;
+  return -1.0 * inner;
 }
 
 static __device__ __noinline__ v8fp64 pushJ_vlo_K2_compute_iBy23(v8fp64 *scr,
                                                                  const pushJ_vlo_state_t *st,
                                                                  const double *shB1) {
-  return ((-1.0 * pushJ_B_integralS_comp0_f0x_dif1z_f1y(scr, shB1, st->s_rx2x, st->s_dix2x,
-                                                        st->s_rx2z, st->s_dix2z, st->s_rx1z,
-                                                        st->s_dix1z, st->s_rx2y, st->s_dix2y)) +
-          (-1.0 * pushJ_B_integralS_comp0_f0x_dif1z_f1y(scr, shB1, st->s_rx2x, st->s_dix2x,
-                                                        st->s_rx3z, st->s_dix3z, st->s_rx2z,
-                                                        st->s_dix2z, st->s_rx2y, st->s_dix2y)));
+  return (-1.0 * pushJ_B_integralS_comp0_f0x_dif1z_f1y(scr, shB1, st->s_rx2x, st->s_dix2x,
+                                                       st->s_rx2z, st->s_dix2z, st->s_rx1z,
+                                                       st->s_dix1z, st->s_rx2y, st->s_dix2y)) +
+         (-1.0 * pushJ_B_integralS_comp0_f0x_dif1z_f1y(scr, shB1, st->s_rx2x, st->s_dix2x,
+                                                       st->s_rx3z, st->s_dix3z, st->s_rx2z,
+                                                       st->s_dix2z, st->s_rx2y, st->s_dix2y));
 }
 
 static __device__ __noinline__ v8fp64 pushJ_vlo_K2_compute_iBx(v8fp64 *scr,
                                                                const pushJ_vlo_state_t *st,
                                                                const double *shB1) {
-  return (pushJ_B_integralS_comp1_f0y_dif1z_f1x(scr, shB1, st->s_rx2y, st->s_dix2y, st->s_rx2z,
-                                                st->s_dix2z, st->s_rx1z, st->s_dix1z, st->s_rx2x,
-                                                st->s_dix2x) +
-          pushJ_B_integralS_comp1_f0y_dif1z_f1x(scr, shB1, st->s_rx2y, st->s_dix2y, st->s_rx3z,
-                                                st->s_dix3z, st->s_rx2z, st->s_dix2z, st->s_rx2x,
-                                                st->s_dix2x) +
-          (-1.0) * pushJ_B_integralS_comp2_f0z_dif1y_f1x(scr, shB1, st->s_rx1z, st->s_dix1z,
-                                                         st->s_rx2y, st->s_dix2y, st->s_rx1y,
-                                                         st->s_dix1y, st->s_rx2x, st->s_dix2x) +
-          (-1.0) * pushJ_B_integralS_comp2_f0z_dif1y_f1x(scr, shB1, st->s_rx3z, st->s_dix3z,
-                                                         st->s_rx3y, st->s_dix3y, st->s_rx2y,
-                                                         st->s_dix2y, st->s_rx2x, st->s_dix2x));
+  return pushJ_B_integralS_comp1_f0y_dif1z_f1x(scr, shB1, st->s_rx2y, st->s_dix2y, st->s_rx2z,
+                                               st->s_dix2z, st->s_rx1z, st->s_dix1z, st->s_rx2x,
+                                               st->s_dix2x) +
+         pushJ_B_integralS_comp1_f0y_dif1z_f1x(scr, shB1, st->s_rx2y, st->s_dix2y, st->s_rx3z,
+                                               st->s_dix3z, st->s_rx2z, st->s_dix2z, st->s_rx2x,
+                                               st->s_dix2x) +
+         (-1.0) * pushJ_B_integralS_comp2_f0z_dif1y_f1x(scr, shB1, st->s_rx1z, st->s_dix1z,
+                                                        st->s_rx2y, st->s_dix2y, st->s_rx1y,
+                                                        st->s_dix1y, st->s_rx2x, st->s_dix2x) +
+         (-1.0) * pushJ_B_integralS_comp2_f0z_dif1y_f1x(scr, shB1, st->s_rx3z, st->s_dix3z,
+                                                        st->s_rx3y, st->s_dix3y, st->s_rx2y,
+                                                        st->s_dix2y, st->s_rx2x, st->s_dix2x);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -601,9 +596,9 @@ pushJ_vlo_K2_stage1a_E(v8fp64 *scr, const pushJ_vlo_state_t *st, const double *s
                                          st->s_dix1y, st->s_rx1z, st->s_dix1z);
   const v8fp64 AllEz = pushJ_E_interp_Ez(scr, shE0, st->s_rx1x, st->s_dix1x, st->s_rx1y,
                                          st->s_dix1y, st->s_rx1z, st->s_dix1z);
-  *allincfvx_out = (2.0 * (Deltat * AllEx));
-  *allincfvy_out = (2.0 * (Deltat * AllEy));
-  *allincfvz_out = (2.0 * (Deltat * AllEz));
+  *allincfvx_out = 2.0 * (Deltat * AllEx);
+  *allincfvy_out = 2.0 * (Deltat * AllEy);
+  *allincfvz_out = 2.0 * (Deltat * AllEz);
 }
 
 static __device__ __noinline__ void
@@ -709,15 +704,15 @@ static __device__ __noinline__ void pushJ_vlo_K3_deposit_writeback_particle(
                          st->s_dix3y, st->s_rx3z, st->s_dix3z, st->simd_mask, shJ_incf, grid_geo_x,
                          Charge0, Tori_X0, XO, bBidx);
 
-  v8fp64 newvx = ((st->x3 - st->x2) / Deltat);
-  v8fp64 newvy = ((st->y3 - st->y2) / Deltat);
-  v8fp64 newvz = ((st->z3 - st->z2) / Deltat);
-  v8fp64 newxx = (st->x3 - vbroadcast(XO));
-  v8fp64 newxy = (st->y3 - vbroadcast(YO));
-  v8fp64 newxz = ((st->z3 + vbroadcast(zmid)) - vbroadcast(ZO));
-  newxx = (newxx + vbroadcast(0.5));
-  newxy = (newxy + vbroadcast(0.5));
-  newxz = (newxz + vbroadcast(0.5));
+  v8fp64 newvx = (st->x3 - st->x2) / Deltat;
+  v8fp64 newvy = (st->y3 - st->y2) / Deltat;
+  v8fp64 newvz = (st->z3 - st->z2) / Deltat;
+  v8fp64 newxx = st->x3 - vbroadcast(XO);
+  v8fp64 newxy = st->y3 - vbroadcast(YO);
+  v8fp64 newxz = (st->z3 + vbroadcast(zmid)) - vbroadcast(ZO);
+  newxx = newxx + vbroadcast(0.5);
+  newxy = newxy + vbroadcast(0.5);
+  newxz = newxz + vbroadcast(0.5);
   {
     long stmpg1;
     for (stmpg1 = 0; stmpg1 < 6; stmpg1++) {

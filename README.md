@@ -72,20 +72,35 @@ NVScale 只验证源码兼容性和数值结果，不模拟 Aurora 的 DM 分区
 
 # 2. 运行算例
 
-单 rank 运行：
+`run.sh` 运行算例并生成合并后的 GAPSIO 文件。默认使用单个 MPI rank：
+
 ```bash
-./run.sh (算例名称)
+./run.sh [case]
 ```
 
 双 rank 运行：
 
 ```bash
-./run.sh (算例名称) --np 2
+./run.sh [case] --np 2
 ```
 
-使用run.sh运行脚本的时候在`build/test/`目录中会生成结果目录`test_npy/`,如果case中缺少对应的参考结果，可将cuda模式下生成的结果目录`test_npy/`，改名为`result_npy`,放到对应的case目录下面。如果case目录下面已经有了结果`result_npy`，可使用脚本
+## 2.1 参考结果
+
+参考结果放在每个算例的 `result_gapsio/` 目录中。
+
+## 2.2 回归比较
+
+先构建比较器：
 
 ```bash
-./compare.sh (算例名称)
+cmake -S . -B build
+cmake --build build --target compare_gapsio -j
 ```
-它会先调用`run.sh`跑出结果`test_npy`，然后与`result_npy`做数值对比，输出比对结果。
+
+然后运行回归测试：
+
+```bash
+./compare.sh [case1] [case2] ... [caseN] --build-dir build
+```
+
+`compare.sh` 会重新运行算例、合并文件，再和参考文件比较。

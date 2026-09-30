@@ -430,10 +430,6 @@ int main(int argc, char **argv) {
     overlap_len = G_OVERLAP_LEN;
   }
 
-  if (rank == 0) {
-    fprintf(stderr, "overlap=%d\n", overlap_len);
-  }
-
   long allxyzmax[3];
   set_Field3D_Seq(pfstest, NULL, M_DELTA_X, M_DELTA_Y, M_DELTA_Z, XMAX, YMAX, ZMAX, 2, overlap_len,
                   fieldlen, 0, len_hilbert, len_hilbert, len_hilbert, rank);

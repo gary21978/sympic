@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
   GAPS_IO_DataNumStepsAndResidue(pgi, &numsteps, &numresd);
   char *display_steps = "GAPS_IO_DISPLAY_NUM_STEPS";
   char *uds = getenv(display_steps);
-  fprintf(stderr, "0x%p 0x%p\n", display_steps, uds);
+  //fprintf(stderr, "0x%p 0x%p\n", display_steps, uds);
   if (uds && (strcmp(uds, "1") == 0)) {
     fprintf(stdout, "%ld\n", numsteps);
     exit(0);

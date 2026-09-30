@@ -556,11 +556,11 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
   //====================One_Particle_Collection
   if (init_particle_gpu_fast_enabled()) {
     if (ptlen != 6) {
-      fprintf(stderr, "info init_non_uni_particle_opc: GPU fast path skipped for ptlen=%d\n",
+      fprintf(stderr, "GPU fast path skipped for ptlen=%d\n",
               ptlen);
     } else if (tgrid_load > pthis->grid_cache_len) {
       fprintf(stderr,
-              "info init_non_uni_particle_opc: GPU fast path skipped, grid_load=%d "
+              "GPU fast path skipped, grid_load=%d "
               "grid_cache_len=%ld\n",
               tgrid_load, pthis->grid_cache_len);
     } else {
@@ -598,14 +598,10 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
           ((mapu_pscmc_env *)pfield->pe)->device_id);
 #endif
       if (launch_rc == 0) {
-        fprintf(stderr,
-                "info init_non_uni_particle_opc: GPU fast path enabled spec=%d grid_load=%d "
-                "assume uniform density/temp/v0\n",
-                cur_sp, tgrid_load);
+        fprintf(stderr, "GPU fast path enabled\n");
         return 0;
       }
-      fprintf(stderr,
-              "info init_non_uni_particle_opc: GPU fast path unavailable, fallback to host init\n");
+      fprintf(stderr, "GPU fast path unavailable\n");
     }
   }
   {
@@ -772,7 +768,7 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
     int ptlen = ((ptype & 2) ? (8) : (6));
 
     if ((((Particle_in_Cell_MPI *)pthis)->o_particle_type)[i] != 1) {
-      fprintf(stderr, "info init_non_uni_particle_fmpi: spec=%d\n", i);
+      //fprintf(stderr, "info init_non_uni_particle_fmpi: spec=%d\n", i);
       for (j = 0; j < num_runtime; j++) {
         init_non_uni_particle_opc((pthis->particles + ((i * num_runtime) + j)),
                                   call_GET_INIT_LOAD(i), i, call_GET_INIT_VT(i), vmax, ptlen);

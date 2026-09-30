@@ -755,11 +755,11 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = global_x_offset[j] + xyzx;
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = global_y_offset[j] + xyzy;
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = global_z_offset[j] + xyzz;
 
                 {
                   long l;

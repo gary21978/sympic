@@ -24,21 +24,10 @@
 #endif
 
 /*
- * Default path follows the generated MAPU runtime style: d_data is treated as a
- * MAPS memory object and converted to a physical DDR address before being passed
- * into the __global__ kernel.  For unit tests that put a raw mapsMalloc pointer
- * directly in d_data, compile this file with -DMAPU_RUNTIME_USE_DIRECT_D_DATA.
+ * d_data holds a raw mapsMalloc pointer that the kernel dereferences
+ * directly; no virtual/physical address distinction is needed anymore.
  */
-#ifndef MAPU_RUNTIME_USE_DIRECT_D_DATA
-#define MAPU_DDR_PTR(T, PM)                                                                        \
-  ((__DDR T *)({                                                                                   \
-    uint64_t __mapu_runtime_addr = 0;                                                              \
-    mapsMemobjGetPhysicalAddress(PM->d_data, &__mapu_runtime_addr);                                \
-    __mapu_runtime_addr;                                                                           \
-  }))
-#else
 #define MAPU_DDR_PTR(T, PM) ((__DDR T *)((PM)->d_data))
-#endif
 
 #define MAPU_HVAL(T, PM) (((T *)((PM)->h_data))[0])
 #define MAPU_HVAL_OR(T, PM, DEFAULT_VALUE) ((PM) ? MAPU_HVAL(T, (PM)) : (T)(DEFAULT_VALUE))

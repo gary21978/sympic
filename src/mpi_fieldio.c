@@ -15,7 +15,7 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   PS_MPI_Comm comm = pthis->comm;
 
@@ -26,22 +26,22 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
     // defined from class Field3D_Seq
 
-    long xlen = (data)->xlen;
+    long xlen = data->xlen;
 
-    long ylen = (data)->ylen;
+    long ylen = data->ylen;
 
-    long zlen = (data)->zlen;
+    long zlen = data->zlen;
 
-    long x_num_thread_block = (data)->x_num_thread_block;
+    long x_num_thread_block = data->x_num_thread_block;
 
-    long y_num_thread_block = (data)->y_num_thread_block;
+    long y_num_thread_block = data->y_num_thread_block;
 
-    long z_num_thread_block = (data)->z_num_thread_block;
+    long z_num_thread_block = data->z_num_thread_block;
 
-    int num_ele = (data)->num_ele;
+    int num_ele = data->num_ele;
 
     //====================Field3D_Seq
-    (pdimarr)[0] = num_ele;
+    pdimarr[0] = num_ele;
     pdimarr[1] = xlen * x_num_thread_block;
     pdimarr[2] = ylen * y_num_thread_block;
     pdimarr[3] = zlen * z_num_thread_block;
@@ -50,19 +50,19 @@ int init_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid,
 
     // defined from class Field3D_Seq
 
-    long xlen = (data)->xlen;
+    long xlen = data->xlen;
 
-    long ylen = (data)->ylen;
+    long ylen = data->ylen;
 
-    long zlen = (data)->zlen;
+    long zlen = data->zlen;
 
-    long x_num_thread_block = (data)->x_num_thread_block;
+    long x_num_thread_block = data->x_num_thread_block;
 
-    long y_num_thread_block = (data)->y_num_thread_block;
+    long y_num_thread_block = data->y_num_thread_block;
 
-    long z_num_thread_block = (data)->z_num_thread_block;
+    long z_num_thread_block = data->z_num_thread_block;
 
-    int num_ele = (data)->num_ele;
+    int num_ele = data->num_ele;
 
     //====================Field3D_Seq
     pdimarr[0] = num_ele;
@@ -165,9 +165,9 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
-  long cur_rank = (pthis)->cur_rank;
+  long cur_rank = pthis->cur_rank;
 
   //====================Field3D_MPI
   long i = 0;
@@ -333,11 +333,11 @@ int write_parallel_file_for_mpi_fields(Field3D_MPI *pthis, Gaps_IO_DataFile *gid
       if (gid->cur_rank != gid->send_to_proc) {
 
       } else {
-        int cur_rank = (gid)->cur_rank;
+        int cur_rank = gid->cur_rank;
 
-        int num_reduce_proc = (gid)->num_reduce_proc;
+        int num_reduce_proc = gid->num_reduce_proc;
 
-        int real_rank = (gid)->real_rank;
+        int real_rank = gid->real_rank;
 
         {
           long n;

@@ -55,7 +55,7 @@ ln -sf "$SCRIPT_DIR/src/stdlib.scm" "$TEST/stdlib.scm"
 cd "$TEST"
 export STDLIB="$TEST/stdlib.scm"
 export OMP_NUM_THREADS=1
-export SYMPIC_INIT_PARTICLE_GPU_FAST=1
+export INIT_FAST=1
 
 mpirun --allow-run-as-root --oversubscribe \
   -n "$MPI_RANKS" "$TEST/sympic" test.ss

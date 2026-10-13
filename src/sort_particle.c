@@ -49,40 +49,40 @@ int cuda_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -206,40 +206,40 @@ int cuda_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -363,40 +363,40 @@ int cuda_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -520,44 +520,44 @@ int cuda_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
 
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -681,44 +681,44 @@ int cuda_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
 
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -842,44 +842,44 @@ int cuda_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void **sort_kernel = (pthis)->sort_kernel;
+  void **sort_kernel = pthis->sort_kernel;
 
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
 
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
 
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
 
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
-  int ovlp = (pfield)->ovlp;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
 
@@ -1003,32 +1003,32 @@ int cuda_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void *move_back_kernel_6_kernel = (pthis)->move_back_kernel_6_kernel;
+  void *move_back_kernel_6_kernel = pthis->move_back_kernel_6_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1087,32 +1087,32 @@ int cuda_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
 
-  void *move_back_kernel_8_kernel = (pthis)->move_back_kernel_8_kernel;
+  void *move_back_kernel_8_kernel = pthis->move_back_kernel_8_kernel;
 
-  long grid_cache_len = (pthis)->grid_cache_len;
+  long grid_cache_len = pthis->grid_cache_len;
 
-  long cu_cache_length = (pthis)->cu_cache_length;
+  long cu_cache_length = pthis->cu_cache_length;
 
-  void *inoutput = (pthis)->inoutput;
+  void *inoutput = pthis->inoutput;
 
-  void *xyzw = (pthis)->xyzw;
+  void *xyzw = pthis->xyzw;
 
-  void *cu_cache = (pthis)->cu_cache;
+  void *cu_cache = pthis->cu_cache;
 
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
+  void *pe = pfield->pe;
 
-  long xlen = (pfield)->xlen;
+  long xlen = pfield->xlen;
 
-  long ylen = (pfield)->ylen;
+  long ylen = pfield->ylen;
 
-  long zlen = (pfield)->zlen;
+  long zlen = pfield->zlen;
 
-  long numvec = (pfield)->numvec;
+  long numvec = pfield->numvec;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1173,26 +1173,26 @@ int mapu_call_particle_sort_single_x_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long the_xlen = mapu_pscmc_get_local_len();
@@ -1299,26 +1299,26 @@ int mapu_call_particle_sort_single_y_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long the_xlen = mapu_pscmc_get_local_len();
@@ -1425,26 +1425,26 @@ int mapu_call_particle_sort_single_z_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_6_kernel = (pthis)->cu_swap_l_6_kernel;
-  void *cu_swap_r_6_kernel = (pthis)->cu_swap_r_6_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_6_kernel = pthis->cu_swap_l_6_kernel;
+  void *cu_swap_r_6_kernel = pthis->cu_swap_r_6_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long the_xlen = mapu_pscmc_get_local_len();
@@ -1551,26 +1551,26 @@ int mapu_call_particle_sort_single_x_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1677,26 +1677,26 @@ int mapu_call_particle_sort_single_y_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1803,26 +1803,26 @@ int mapu_call_particle_sort_single_z_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void **sort_kernel = (pthis)->sort_kernel;
-  void *cu_swap_l_8_kernel = (pthis)->cu_swap_l_8_kernel;
-  void *cu_swap_r_8_kernel = (pthis)->cu_swap_r_8_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
-  void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+  void **sort_kernel = pthis->sort_kernel;
+  void *cu_swap_l_8_kernel = pthis->cu_swap_l_8_kernel;
+  void *cu_swap_r_8_kernel = pthis->cu_swap_r_8_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
+  void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
-  int ovlp = (pfield)->ovlp;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
+  int ovlp = pfield->ovlp;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1929,22 +1929,22 @@ int mapu_call_move_back_kernel_single_6(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void *move_back_kernel_6_kernel = (pthis)->move_back_kernel_6_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *move_back_kernel_6_kernel = pthis->move_back_kernel_6_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -1995,22 +1995,22 @@ int mapu_call_move_back_kernel_single_8(One_Particle_Collection *pthis) {
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void *move_back_kernel_8_kernel = (pthis)->move_back_kernel_8_kernel;
-  long grid_cache_len = (pthis)->grid_cache_len;
-  long cu_cache_length = (pthis)->cu_cache_length;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_cache = (pthis)->cu_cache;
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *move_back_kernel_8_kernel = pthis->move_back_kernel_8_kernel;
+  long grid_cache_len = pthis->grid_cache_len;
+  long cu_cache_length = pthis->cu_cache_length;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_cache = pthis->cu_cache;
+  void *cu_xyzw = pthis->cu_xyzw;
 
   //====================One_Particle_Collection
 
   // defined from class Field3D_Seq
-  void *pe = (pfield)->pe;
-  long xlen = (pfield)->xlen;
-  long ylen = (pfield)->ylen;
-  long zlen = (pfield)->zlen;
-  long numvec = (pfield)->numvec;
+  void *pe = pfield->pe;
+  long xlen = pfield->xlen;
+  long ylen = pfield->ylen;
+  long zlen = pfield->zlen;
+  long numvec = pfield->numvec;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -2672,9 +2672,9 @@ int swap_particle_sort_host_l(Field3D_MPI *pthis, int dir, int mask) {
 
 int swap_particle_sort_host_r(Field3D_MPI *pthis, int dir, int mask) {
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
   One_Particle_Collection *particles = pthis->particles;
-  int num_spec = (pthis)->num_spec;
+  int num_spec = pthis->num_spec;
 
   {
     long xyzx;
@@ -2998,17 +2998,17 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
 
   // defined from class Field3D_MPI
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   One_Particle_Collection *particles = pthis->particles;
 
-  int num_spec = (pthis)->num_spec;
+  int num_spec = pthis->num_spec;
 
   //====================Field3D_MPI
   long i = 0;
 
   for (i = 0; i < (num_spec * num_runtime); i++) {
-    int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[(i / num_runtime)];
+    int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[i / num_runtime];
 
     int ptlen = ((ptype & 2) ? (8) : (6));
 
@@ -3020,7 +3020,7 @@ int call_particle_sort_mpi_mask(Field3D_MPI *pthis, int dir, int use_vlo, int ma
   swap_particle_sort_host_r(pthis, dir, mask);
   for (i = 0; i < (num_runtime * num_spec); i++) {
 
-    int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[(i / num_runtime)];
+    int ptype = (((Particle_in_Cell_MPI *)pthis)->o_particle_type)[i / num_runtime];
 
     int ptlen = ((ptype & 2) ? (8) : (6));
 

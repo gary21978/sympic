@@ -14,27 +14,27 @@ int cuda_blas_yisax_enlarge_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, doub
                                         Field3D_Seq *x) {
 
   // defined from class Field3D_Seq
-  void *pe = (pthis)->pe;
+  void *pe = pthis->pe;
 
-  long xlen = (pthis)->xlen;
+  long xlen = pthis->xlen;
 
-  long ylen = (pthis)->ylen;
+  long ylen = pthis->ylen;
 
-  long zlen = (pthis)->zlen;
+  long zlen = pthis->zlen;
 
-  long xblock = (pthis)->xblock;
+  long xblock = pthis->xblock;
 
-  long yblock = (pthis)->yblock;
+  long yblock = pthis->yblock;
 
-  long zblock = (pthis)->zblock;
+  long zblock = pthis->zblock;
 
-  long numvec = (pthis)->numvec;
+  long numvec = pthis->numvec;
 
-  int ovlp = (pthis)->ovlp;
+  int ovlp = pthis->ovlp;
 
-  int num_ele = (pthis)->num_ele;
+  int num_ele = pthis->num_ele;
 
-  void *blas_yisax_enlarge_kernel = (pthis)->blas_yisax_enlarge_kernel;
+  void *blas_yisax_enlarge_kernel = pthis->blas_yisax_enlarge_kernel;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -143,27 +143,27 @@ int blas_yisax_enlarge_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a,
 int cuda_blas_axpy_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Field3D_Seq *x) {
 
   // defined from class Field3D_Seq
-  void *pe = (pthis)->pe;
+  void *pe = pthis->pe;
 
-  long xlen = (pthis)->xlen;
+  long xlen = pthis->xlen;
 
-  long ylen = (pthis)->ylen;
+  long ylen = pthis->ylen;
 
-  long zlen = (pthis)->zlen;
+  long zlen = pthis->zlen;
 
-  long xblock = (pthis)->xblock;
+  long xblock = pthis->xblock;
 
-  long yblock = (pthis)->yblock;
+  long yblock = pthis->yblock;
 
-  long zblock = (pthis)->zblock;
+  long zblock = pthis->zblock;
 
-  long numvec = (pthis)->numvec;
+  long numvec = pthis->numvec;
 
-  int ovlp = (pthis)->ovlp;
+  int ovlp = pthis->ovlp;
 
-  int num_ele = (pthis)->num_ele;
+  int num_ele = pthis->num_ele;
 
-  void *blas_axpy_kernel = (pthis)->blas_axpy_kernel;
+  void *blas_axpy_kernel = pthis->blas_axpy_kernel;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -262,27 +262,27 @@ int blas_axpy_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a, Field3D_
 int cuda_blas_yisax_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y, double a, Field3D_Seq *x) {
 
   // defined from class Field3D_Seq
-  void *pe = (pthis)->pe;
+  void *pe = pthis->pe;
 
-  long xlen = (pthis)->xlen;
+  long xlen = pthis->xlen;
 
-  long ylen = (pthis)->ylen;
+  long ylen = pthis->ylen;
 
-  long zlen = (pthis)->zlen;
+  long zlen = pthis->zlen;
 
-  long xblock = (pthis)->xblock;
+  long xblock = pthis->xblock;
 
-  long yblock = (pthis)->yblock;
+  long yblock = pthis->yblock;
 
-  long zblock = (pthis)->zblock;
+  long zblock = pthis->zblock;
 
-  long numvec = (pthis)->numvec;
+  long numvec = pthis->numvec;
 
-  int ovlp = (pthis)->ovlp;
+  int ovlp = pthis->ovlp;
 
-  int num_ele = (pthis)->num_ele;
+  int num_ele = pthis->num_ele;
 
-  void *blas_yisax_kernel = (pthis)->blas_yisax_kernel;
+  void *blas_yisax_kernel = pthis->blas_yisax_kernel;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -382,27 +382,27 @@ int blas_yisax_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y, double a, Field3D
 int cuda_blas_yiszero_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
 
   // defined from class Field3D_Seq
-  void *pe = (pthis)->pe;
+  void *pe = pthis->pe;
 
-  long xlen = (pthis)->xlen;
+  long xlen = pthis->xlen;
 
-  long ylen = (pthis)->ylen;
+  long ylen = pthis->ylen;
 
-  long zlen = (pthis)->zlen;
+  long zlen = pthis->zlen;
 
-  long xblock = (pthis)->xblock;
+  long xblock = pthis->xblock;
 
-  long yblock = (pthis)->yblock;
+  long yblock = pthis->yblock;
 
-  long zblock = (pthis)->zblock;
+  long zblock = pthis->zblock;
 
-  long numvec = (pthis)->numvec;
+  long numvec = pthis->numvec;
 
-  int ovlp = (pthis)->ovlp;
+  int ovlp = pthis->ovlp;
 
-  int num_ele = (pthis)->num_ele;
+  int num_ele = pthis->num_ele;
 
-  void *blas_yiszero_kernel = (pthis)->blas_yiszero_kernel;
+  void *blas_yiszero_kernel = pthis->blas_yiszero_kernel;
 
   //====================Field3D_Seq
   long XLEN = xlen;
@@ -496,27 +496,27 @@ int blas_yiszero_Field3D_MPI(Field3D_MPI *pthis, Field3D_MPI *y) {
 int cuda_blas_yiszero_synced_Field3D_Seq(Field3D_Seq *pthis, Field3D_Seq *y) {
 
   // defined from class Field3D_Seq
-  void *pe = (pthis)->pe;
+  void *pe = pthis->pe;
 
-  long xlen = (pthis)->xlen;
+  long xlen = pthis->xlen;
 
-  long ylen = (pthis)->ylen;
+  long ylen = pthis->ylen;
 
-  long zlen = (pthis)->zlen;
+  long zlen = pthis->zlen;
 
-  long xblock = (pthis)->xblock;
+  long xblock = pthis->xblock;
 
-  long yblock = (pthis)->yblock;
+  long yblock = pthis->yblock;
 
-  long zblock = (pthis)->zblock;
+  long zblock = pthis->zblock;
 
-  long numvec = (pthis)->numvec;
+  long numvec = pthis->numvec;
 
-  int ovlp = (pthis)->ovlp;
+  int ovlp = pthis->ovlp;
 
-  int num_ele = (pthis)->num_ele;
+  int num_ele = pthis->num_ele;
 
-  void *blas_yiszero_synced_kernel = (pthis)->blas_yiszero_synced_kernel;
+  void *blas_yiszero_synced_kernel = pthis->blas_yiszero_synced_kernel;
 
   //====================Field3D_Seq
   long XLEN = xlen;

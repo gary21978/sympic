@@ -21,7 +21,7 @@ void init_Field3D_MPI_from_new_num_ele(Field3D_MPI *pthis, Field3D_MPI *f, int n
   // defined from class Field3D_MPI
 
   //====================Field3D_MPI
-  (pthis)[0] = f[0];
+  pthis[0] = f[0];
   reinit_Field3D_MPI(pthis, new_num_ele);
 }
 void init_Field3D_MPI_from(Field3D_MPI *pthis, Field3D_MPI *f) {
@@ -35,7 +35,7 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
 
   // defined from class Field3D_MPI
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   {
@@ -56,13 +56,13 @@ void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele) {
 
             // defined from class Field3D_Seq
 
-            long xlen = (tmpdata)->xlen;
+            long xlen = tmpdata->xlen;
 
-            long ylen = (tmpdata)->ylen;
+            long ylen = tmpdata->ylen;
 
-            long zlen = (tmpdata)->zlen;
+            long zlen = tmpdata->zlen;
 
-            int ovlp = (tmpdata)->ovlp;
+            int ovlp = tmpdata->ovlp;
 
             //====================Field3D_Seq
             long rxlen = ovlp;
@@ -252,15 +252,15 @@ int init_Field3D_MPI_ALL(Field3D_MPI *pthis, Field3D_Seq *sample_field, long n_h
 
           // defined from class Field3D_Seq
 
-          long xlen = (sample_field)->xlen;
+          long xlen = sample_field->xlen;
 
-          long ylen = (sample_field)->ylen;
+          long ylen = sample_field->ylen;
 
-          long zlen = (sample_field)->zlen;
+          long zlen = sample_field->zlen;
 
-          int ovlp = (sample_field)->ovlp;
+          int ovlp = sample_field->ovlp;
 
-          int num_ele = (sample_field)->num_ele;
+          int num_ele = sample_field->num_ele;
 
           //====================Field3D_Seq
           long rxlen = ovlp;
@@ -298,7 +298,7 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -370,9 +370,9 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -504,11 +504,11 @@ void init_external_field3d_E_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = (global_x_offset[j] + xyzx);
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = (global_y_offset[j] + xyzy);
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = (global_z_offset[j] + xyzz);
 
                 {
                   long l;
@@ -549,7 +549,7 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -621,9 +621,9 @@ void init_external_field3d_B_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim, 
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -800,7 +800,7 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -872,9 +872,9 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -1006,11 +1006,11 @@ void init_external_field3d_E0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = (global_x_offset[j] + xyzx);
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = (global_y_offset[j] + xyzy);
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = (global_z_offset[j] + xyzz);
 
                 {
                   long l;
@@ -1043,7 +1043,7 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -1115,9 +1115,9 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -1249,11 +1249,11 @@ void init_external_field3d_B0_2d_extend_rand(Field3D_MPI *pthis, int reduce_dim,
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = (global_x_offset[j] + xyzx);
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = (global_y_offset[j] + xyzy);
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = (global_z_offset[j] + xyzz);
 
                 {
                   long l;
@@ -1287,7 +1287,7 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -1359,9 +1359,9 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -1493,11 +1493,11 @@ void init_external_field3d_FILTER_E_2d_extend_rand(Field3D_MPI *pthis, int reduc
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = (global_x_offset[j] + xyzx);
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = (global_y_offset[j] + xyzy);
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = (global_z_offset[j] + xyzz);
 
                 {
                   long l;
@@ -1546,7 +1546,7 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   int reduce_x = (reduce_dim == 1);
@@ -1618,9 +1618,9 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
                   assert(pgid->version == 0);
                   assert(pgid->type == GAPS_IO_FLOAT64);
                   assert((pgid->pdimarray)[0] == num_ele);
-                  long imax = ((pgid)->pdimarray)[1];
+                  long imax = (pgid->pdimarray)[1];
 
-                  long jmax = ((pgid)->pdimarray)[2];
+                  long jmax = (pgid->pdimarray)[2];
 
                   GAPS_IO_DataSeek(
                       pgid, 0,
@@ -1752,11 +1752,11 @@ void init_external_field3d_FILTER_B_2d_extend_rand(Field3D_MPI *pthis, int reduc
               long xyzx;
 
               for (xyzx = -(ovlp); xyzx < (xlen + ovlp); xyzx++) {
-                long is = ((global_x_offset)[j] + xyzx);
+                long is = (global_x_offset[j] + xyzx);
 
-                long js = ((global_y_offset)[j] + xyzy);
+                long js = (global_y_offset[j] + xyzy);
 
-                long ks = ((global_z_offset)[j] + xyzz);
+                long ks = (global_z_offset[j] + xyzz);
 
                 {
                   long l;
@@ -1804,7 +1804,7 @@ int test_set_mainland(Field3D_MPI *pthis, double val) {
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   long i = 0;

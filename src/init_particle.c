@@ -20,12 +20,12 @@
 extern long srand_seed;
 
 static int init_particle_gpu_fast_enabled(void) {
-  const char *env = getenv("SYMPIC_INIT_PARTICLE_GPU_FAST");
+  const char *env = getenv("INIT_FAST");
   return !(env &&
            (strcmp(env, "0") == 0 || strcmp(env, "false") == 0 || strcmp(env, "FALSE") == 0));
 }
 long find_vec_id(long id, long *adj_ids, long numvec) {
-  long num_id_min = (adj_ids)[(NUM_SYNC_LAYER / 2)];
+  long num_id_min = adj_ids[NUM_SYNC_LAYER / 2];
 
   long num_id_max = (num_id_min + (numvec - 1));
 
@@ -55,23 +55,23 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
   {
 
     // defined from class Field3D_Seq
-    void *pe = (pfield)->pe;
+    void *pe = pfield->pe;
 
-    long xlen = (pfield)->xlen;
+    long xlen = pfield->xlen;
 
-    long ylen = (pfield)->ylen;
+    long ylen = pfield->ylen;
 
-    long zlen = (pfield)->zlen;
+    long zlen = pfield->zlen;
 
-    long numvec = (pfield)->numvec;
+    long numvec = pfield->numvec;
 
-    long *adj_ids = (pfield)->adj_ids;
+    long *adj_ids = pfield->adj_ids;
 
     //====================Field3D_Seq
-    void **sort_kernel = (pthis)->sort_kernel;
+    void **sort_kernel = pthis->sort_kernel;
 
 #ifdef SYMPIC_CUDA
-    (pthis)->inoutput = malloc(sizeof(cuda_pscmc_mem));
+    pthis->inoutput = malloc(sizeof(cuda_pscmc_mem));
     pthis->xyzw = malloc(sizeof(cuda_pscmc_mem));
     pthis->cu_cache = malloc(sizeof(cuda_pscmc_mem));
     pthis->cu_xyzw = malloc(sizeof(cuda_pscmc_mem));
@@ -253,7 +253,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
     }
 #endif
 #ifdef SYMPIC_MAPU
-    (pthis)->inoutput = malloc(sizeof(mapu_pscmc_mem));
+    pthis->inoutput = malloc(sizeof(mapu_pscmc_mem));
     pthis->xyzw = malloc(sizeof(mapu_pscmc_mem));
     pthis->cu_cache = malloc(sizeof(mapu_pscmc_mem));
     pthis->cu_xyzw = malloc(sizeof(mapu_pscmc_mem));
@@ -438,7 +438,7 @@ int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Ma
 
       // defined from class One_Particle_Collection
 
-      void *adjoint_vec_pids = (pthis)->adjoint_vec_pids;
+      void *adjoint_vec_pids = pthis->adjoint_vec_pids;
 
       //====================One_Particle_Collection
       long *adjoint_vec_pids_host = ((long **)adjoint_vec_pids)[0];
@@ -486,7 +486,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                       double *Number_particle_per_marker, long *grid_cache_len,
                       long *cu_cache_length) {
   pthis->num_spec = num_spec;
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   pthis->particles = calloc((size_t)(num_spec * num_runtime), sizeof(One_Particle_Collection));
   int i;
@@ -498,9 +498,9 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
 
       // defined from class Field3D_Seq
 
-      long numvec = ((pthis)->data + j)->numvec;
+      long numvec = (pthis->data + j)->numvec;
 
-      long *global_id = ((pthis)->data + j)->global_id;
+      long *global_id = (pthis->data + j)->global_id;
 
       //====================Field3D_Seq
       init_particle((pthis->particles + ((i * num_runtime) + j)), (pthis->data + j), Mass[i],
@@ -512,7 +512,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                          long k;
 
                          for (k = 0; k < numvec; k++) {
-                           double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, (global_id)[k]);
+                           double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, global_id[k]);
 
                            if (new_cplx > cplx) {
                              cplx = new_cplx;
@@ -529,7 +529,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
                          long k;
 
                          for (k = 0; k < numvec; k++) {
-                           double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, (global_id)[k]);
+                           double new_cplx = call_GET_NON_UNI_CACHE_DIST(i, global_id[k]);
 
                            if (new_cplx > cplx) {
                              cplx = new_cplx;
@@ -549,9 +549,9 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
 
   // defined from class One_Particle_Collection
   Field3D_Seq *pfield = pthis->pfield;
-  void *inoutput = (pthis)->inoutput;
-  void *xyzw = (pthis)->xyzw;
-  void *cu_xyzw = (pthis)->cu_xyzw;
+  void *inoutput = pthis->inoutput;
+  void *xyzw = pthis->xyzw;
+  void *cu_xyzw = pthis->cu_xyzw;
 
   //====================One_Particle_Collection
   if (init_particle_gpu_fast_enabled()) {
@@ -607,20 +607,20 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
   {
     // defined from class One_Particle_Collection
     Field3D_Seq *pfield = pthis->pfield;
-    long grid_cache_len = (pthis)->grid_cache_len;
-    void *inoutput = (pthis)->inoutput;
-    void *xyzw = (pthis)->xyzw;
+    long grid_cache_len = pthis->grid_cache_len;
+    void *inoutput = pthis->inoutput;
+    void *xyzw = pthis->xyzw;
 
     //====================One_Particle_Collection
     // defined from class Field3D_Seq
-    long xlen = (pfield)->xlen;
-    long ylen = (pfield)->ylen;
-    long zlen = (pfield)->zlen;
-    long numvec = (pfield)->numvec;
-    long *global_x_offset = (pfield)->global_x_offset;
-    long *global_y_offset = (pfield)->global_y_offset;
-    long *global_z_offset = (pfield)->global_z_offset;
-    long *global_id = (pfield)->global_id;
+    long xlen = pfield->xlen;
+    long ylen = pfield->ylen;
+    long zlen = pfield->zlen;
+    long numvec = pfield->numvec;
+    long *global_x_offset = pfield->global_x_offset;
+    long *global_y_offset = pfield->global_y_offset;
+    long *global_z_offset = pfield->global_z_offset;
+    long *global_id = pfield->global_id;
 
     //====================Field3D_Seq
     long alllenoff = (xlen * (ylen * zlen));
@@ -710,11 +710,11 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
                 xyzvs[3] = maxwell_dist(vx_ijk, (tempx * VT));
                 xyzvs[4] = maxwell_dist(vy_ijk, (tempy * VT));
                 xyzvs[5] = maxwell_dist(vz_ijk, (tempz * VT));
-                double vx = (xyzvs)[3];
+                double vx = xyzvs[3];
 
-                double vy = (xyzvs)[4];
+                double vy = xyzvs[4];
 
-                double vz = (xyzvs)[5];
+                double vz = xyzvs[5];
 
                 if ((((vx * vx) + (vy * vy)) + (vz * vz)) >= vmax) {
                   goto befmaxinit;
@@ -728,7 +728,7 @@ int init_non_uni_particle_opc(One_Particle_Collection *pthis, int tgrid_load, in
   }
   {
     // defined from class Field3D_Seq
-    long numvec = (pfield)->numvec;
+    long numvec = pfield->numvec;
 
     //====================Field3D_Seq
     memset(((int **)cu_xyzw)[0], 0, (4 * (sizeof(int) * numvec)));
@@ -749,9 +749,9 @@ int init_non_uni_particle_fmpi(Field3D_MPI *pthis, double vmax) {
 
   // defined from class Field3D_MPI
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
-  int num_spec = (pthis)->num_spec;
+  int num_spec = pthis->num_spec;
 
   //====================Field3D_MPI
   int i;
@@ -788,7 +788,7 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
 
   // defined from class Particle_in_Cell_MPI
 
-  int use_rel_ncr = (pthis)->use_rel_ncr;
+  int use_rel_ncr = pthis->use_rel_ncr;
 
   //====================Particle_in_Cell_MPI
   init_Field3D_MPI_from(&pthis->MPI_fieldE, fE);
@@ -895,7 +895,7 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
   pthis->pMPI_FoutJ = &pthis->MPI_FoutJ;
   init_particle_mpi(&pthis->MPI_fieldE, num_spec, massp, chargep, npm, grid_cache_len,
                     cu_cache_len);
-  int num_runtime = ((pthis)->MPI_fieldE).num_runtime;
+  int num_runtime = (pthis->MPI_fieldE).num_runtime;
 
   {
     long i;

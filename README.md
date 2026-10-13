@@ -104,3 +104,15 @@ cmake --build build --target compare_gapsio -j
 ```
 
 `compare.sh` 会重新运行算例、合并文件，再和参考文件比较。
+
+## 2.3 服务器部署与验证
+
+在虚拟机内执行：
+
+```bash
+cd /path/to/sympic
+./deploy.sh
+cd /home/emu/dist
+./simulation.sh 2 test.ss
+./verify.sh
+```

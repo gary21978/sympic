@@ -351,7 +351,7 @@ int main(int argc, char **argv) {
     srand_seed = local_seed;
   }
 
-  long tids[(num_runtime * n)];
+  long tids[num_runtime * n];
   int64_t *local_tid_array = malloc(sizeof(int64_t) * numt);
 
   Field3D_MPI testfield = {0};

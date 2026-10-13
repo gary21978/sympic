@@ -540,9 +540,9 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
-  long *sync_layer_len = (pthis)->sync_layer_len;
+  long *sync_layer_len = pthis->sync_layer_len;
 
   long i = 0;
 
@@ -565,8 +565,8 @@ int merge_ovlp_mpi_field(Field3D_MPI *pthis) {
     long numvec = (data + i)->numvec;
     int num_ele = (data + i)->num_ele;
 
-    (all_sync_len[i] =
-         (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
+    all_sync_len[i] = numvec * num_ele *
+                      (xblock * yblock * zblock - xlen * ylen * zlen);
   }
 
   /* nruntime>1: local-recv kernels read the peer runtimes' sync buffers via
@@ -609,9 +609,9 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
 
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
-  long *sync_layer_len = (pthis)->sync_layer_len;
+  long *sync_layer_len = pthis->sync_layer_len;
 
   long i = 0;
 
@@ -634,8 +634,8 @@ int sync_ovlp_mpi_field(Field3D_MPI *pthis) {
     long numvec = (data + i)->numvec;
     int num_ele = (data + i)->num_ele;
 
-    (all_sync_len[i] =
-         (numvec * (num_ele * ((xblock * (yblock * zblock)) - (xlen * (ylen * zlen))))));
+    all_sync_len[i] = numvec * num_ele *
+                      (xblock * yblock * zblock - xlen * ylen * zlen);
   }
 
   /* nruntime>1: local-recv kernels read the peer runtimes' sync buffers via
@@ -678,7 +678,7 @@ int sync_main_data_d2h(Field3D_MPI *pthis) {
 
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
   //====================Field3D_MPI
   long i = 0;
 
@@ -702,7 +702,7 @@ int sync_main_data_h2d(Field3D_MPI *pthis) {
   // defined from class Field3D_MPI
   Field3D_Seq *data = pthis->data;
 
-  long num_runtime = (pthis)->num_runtime;
+  long num_runtime = pthis->num_runtime;
 
   //====================Field3D_MPI
   long i = 0;

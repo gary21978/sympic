@@ -17,24 +17,24 @@ endif()
 
 file(GLOB MAPU_RUNTIME_SRC CONFIGURE_DEPENDS *.kernel_runtime.sc)
 if(SYMPIC_NVSCALE)
-  nvscale_add_scale_library(mapu_yeefdtd
+  nvscale_add_scale_library(sympic_mapu_backend
     SOURCES ${MAPU_RUNTIME_SRC}
     INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/.."
     LIBRARIES mapu_pscmc
     COMPILE_OPTIONS -Xcompiler=-fPIC -w -O2
   )
 else()
-  add_library(mapu_yeefdtd SHARED ${MAPU_RUNTIME_SRC})
+  add_library(sympic_mapu_backend OBJECT ${MAPU_RUNTIME_SRC})
 
-target_link_libraries(mapu_yeefdtd PUBLIC
+target_link_libraries(sympic_mapu_backend PUBLIC
 	mapu_pscmc
 )
 
-set_target_properties(mapu_yeefdtd PROPERTIES LINKER_LANGUAGE "SCALE")
-target_link_options(mapu_yeefdtd PRIVATE --scale-link -L${SCALE_TOOLCHAIN_PATH}/lib)
+set_target_properties(sympic_mapu_backend PROPERTIES LINKER_LANGUAGE "SCALE")
+target_link_options(sympic_mapu_backend PRIVATE --scale-link -L${SCALE_TOOLCHAIN_PATH}/lib)
 
 
-target_compile_options(mapu_yeefdtd PRIVATE
+target_compile_options(sympic_mapu_backend PRIVATE
 	-fPIC
   -w
 	-O2

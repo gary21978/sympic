@@ -24,15 +24,23 @@ file(GLOB HOST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 
 add_executable(sympic ${HOST_SOURCES})
 
+if(SYMPIC_MAPU)
+    target_sources(sympic PRIVATE $<TARGET_OBJECTS:sympic_mapu_backend>)
+    set_target_properties(sympic PROPERTIES LINKER_LANGUAGE SCALE)
+    target_link_options(sympic PRIVATE --scale-link -L${SCALE_TOOLCHAIN_PATH}/lib)
+endif()
+
 set(SYMPIC_LINK_LIBS
     cgapsio
     cscheme
     smallmpi
-    ${SYMPIC_BACKEND_LIB}
     MPI::MPI_C
 )
 if(SYMPIC_CUDA OR SYMPIC_NVSCALE)
     list(APPEND SYMPIC_LINK_LIBS CUDA::cudart CUDA::cuda_driver ${NCCL_LIBRARY})
+    # The generated CUDA/NVScale host stubs are provided by the backend
+    # archive. Keep it on the final link line so cuda_* symbols resolve.
+    list(APPEND SYMPIC_LINK_LIBS ${SYMPIC_BACKEND_LIB})
 elseif(SYMPIC_MAPU)
     target_include_directories(sympic PRIVATE
         ${MAPS_INCLUDE_DIR}
@@ -64,4 +72,8 @@ elseif(SYMPIC_MAPU)
 endif()
 
 target_link_libraries(sympic PRIVATE ${SYMPIC_LINK_LIBS})
+
+if(SYMPIC_MAPU)
+    target_link_libraries(sympic PRIVATE mapu_pscmc)
+endif()
 

@@ -129,7 +129,8 @@ MODE="$1"
 case "${MODE}" in
     cuda)
         BUILD_DIR="${SCRIPT_DIR}/build-cuda"
-        CMAKE_FLAGS="-DSYMPIC_CUDA=ON -DSYMPIC_MAPU=OFF"
+        CUDA_ARCH="${CUDA_ARCH:-sm_90}"
+        CMAKE_FLAGS="-DSYMPIC_CUDA=ON -DSYMPIC_MAPU=OFF -DCUDA_ARCH=${CUDA_ARCH}"
         ;;
     mapu)
         BUILD_DIR="${SCRIPT_DIR}/build-mapu"

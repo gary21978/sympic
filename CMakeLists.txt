@@ -148,13 +148,13 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--gc-sections")
 # ============================================================
 if(SYMPIC_CUDA)
     add_compile_definitions(SYMPIC_CUDA)
-    set(SYMPIC_BACKEND_LIB cuda_yeefdtd)
+    set(SYMPIC_BACKEND_LIB sympic_cuda_backend)
     set(SYMPIC_BACKEND_DIR cuda_)
 else()
     # SYMPIC_MAPU 与 SYMPIC_NVSCALE 共用 mapu_ 源码：NVScale 在 CUDA 上验证
     # MaPU kernel（保持 MAPU 侧源码接口，提供 CUDA/NCCL 后端的 MAPS/MACCL shim）
     add_compile_definitions(SYMPIC_MAPU)
-    set(SYMPIC_BACKEND_LIB mapu_yeefdtd)
+    set(SYMPIC_BACKEND_LIB sympic_mapu_backend)
     set(SYMPIC_BACKEND_DIR mapu_)
 endif()
 

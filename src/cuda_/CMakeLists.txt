@@ -1,16 +1,16 @@
 file(GLOB CUDA_RUNTIME_SRC CONFIGURE_DEPENDS *.kernel_runtime.cu)
 set(CUDA_PSCMC_SRC cuda_pscmc.c)
 
-add_library(cuda_yeefdtd STATIC
+add_library(sympic_cuda_backend STATIC
     ${CUDA_RUNTIME_SRC}
     ${CUDA_PSCMC_SRC}
 )
-set_target_properties(cuda_yeefdtd PROPERTIES
+set_target_properties(sympic_cuda_backend PROPERTIES
     CUDA_SEPARABLE_COMPILATION OFF
     POSITION_INDEPENDENT_CODE ON
 )
 
-target_link_libraries(cuda_yeefdtd PRIVATE CUDA::cudart)
+target_link_libraries(sympic_cuda_backend PRIVATE CUDA::cudart)
 
 # ============================================================
 # cubin dump 支持

@@ -225,6 +225,11 @@ static inline void sympic_comm_group_end(void) {
 
 static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
                                          SymPIC_Device_UniqueId id, int rank) {
+  /* Self-neighbor copies use local halo/sort paths and need no communicator. */
+  if (nranks == 1) {
+    *comm = NULL;
+    return;
+  }
 #ifdef SYMPIC_CUDA
   ncclCommInitRank(comm, nranks, id, rank);
 #elif defined(SYMPIC_MAPU)
@@ -233,6 +238,8 @@ static inline void sympic_comm_init_rank(SymPIC_Device_Comm *comm, int nranks,
 }
 
 static inline void sympic_comm_destroy(SymPIC_Device_Comm comm) {
+  if (!comm)
+    return;
 #ifdef SYMPIC_CUDA
   ncclCommDestroy(comm);
 #elif defined(SYMPIC_MAPU)

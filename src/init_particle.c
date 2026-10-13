@@ -488,7 +488,7 @@ int init_particle_mpi(Field3D_MPI *pthis, int num_spec, double *Mass, double *Ch
   pthis->num_spec = num_spec;
   long num_runtime = (pthis)->num_runtime;
 
-  pthis->particles = malloc(sizeof(One_Particle_Collection) * (num_spec * num_runtime));
+  pthis->particles = calloc((size_t)(num_spec * num_runtime), sizeof(One_Particle_Collection));
   int i;
 
   int j;
@@ -913,4 +913,75 @@ void init_global_particles(Particle_in_Cell_MPI *pthis, Field3D_MPI *fE, Field3D
     }
   }
   pthis->dt = deltat;
+}
+
+static void destroy_mem(void *mem) {
+  if (!mem)
+    return;
+#ifdef SYMPIC_CUDA
+  cuda_pscmc_mem_destroy(mem);
+#elif defined(SYMPIC_MAPU)
+  mapu_pscmc_mem_destroy(mem);
+#endif
+  free(mem);
+}
+
+static void free_device(void *ptr) {
+  if (ptr)
+    sympic_device_free(ptr);
+}
+
+static void destroy_particle(One_Particle_Collection *p) {
+  sympic_set_device(p->pfield->cuda_device);
+  destroy_mem(p->inoutput);
+  destroy_mem(p->xyzw);
+  destroy_mem(p->cu_cache);
+  destroy_mem(p->cu_xyzw);
+  destroy_mem(p->adjoint_vec_pids);
+  destroy_mem(p->swap_len_buf);
+  for (int dir = 0; dir < 3; ++dir)
+    for (int side = 0; side < 2; ++side) {
+      free(p->sort_send_ord[dir][side]);
+      free(p->sort_send_peer[dir][side]);
+      free(p->sort_recv_ord[dir][side]);
+      free(p->sort_recv_peer[dir][side]);
+    }
+  free_device(p->sort_plan_src_d);
+  free_device(p->sort_plan_dst_d);
+  free_device(p->sort_plan_len_d);
+  free_device(p->sort_meta_send_buf);
+  free_device(p->sort_meta_recv_buf);
+  free_device(p->sort_data_send_buf);
+  free_device(p->sort_data_recv_buf);
+  for (int i = 0; i < 24; ++i)
+    free(p->sort_kernel[i]);
+  free(p->nonrel_test_kernel[0]);
+  free(p->cu_swap_l_6_kernel);
+  free(p->cu_swap_r_6_kernel);
+  free(p->move_back_kernel_6_kernel);
+  free(p->cu_swap_l_8_kernel);
+  free(p->cu_swap_r_8_kernel);
+  free(p->move_back_kernel_8_kernel);
+  free(p->dump_ene_num_kernel);
+  memset(p, 0, sizeof(*p));
+}
+
+void destroy_Particle_in_Cell_MPI(Particle_in_Cell_MPI *pic) {
+  Field3D_MPI *e = &pic->MPI_fieldE;
+  if (e->particles) {
+    for (long i = 0; i < e->num_spec * e->num_runtime; ++i)
+      destroy_particle(&e->particles[i]);
+    free(e->particles);
+    e->particles = NULL;
+  }
+  Field3D_MPI *fields[] = {
+      &pic->MPI_fieldE, &pic->MPI_fieldB, &pic->MPI_fieldB1,
+      &pic->MPI_FoutJ, &pic->MPI_FoutJtmp, &pic->MPI_LFoutJ,
+      &pic->MPI_fieldEtmp, &pic->MPI_fieldBtmp, &pic->MPI_fieldEtmp1,
+      &pic->MPI_fieldEtmp2, &pic->MPI_fieldE1, &pic->MPI_fieldBtmp1,
+      &pic->MPI_fieldPMLB, &pic->MPI_fieldPMLE, &pic->MPI_fieldE_ext,
+      &pic->MPI_fieldB_ext, &pic->MPI_fieldE_filter, &pic->MPI_fieldB_filter,
+      &pic->MPI_fieldE01_2x, &pic->MPI_fieldB0_2x};
+  for (size_t i = 0; i < sizeof(fields) / sizeof(fields[0]); ++i)
+    destroy_Field3D_MPI(fields[i], 0);
 }

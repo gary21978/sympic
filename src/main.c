@@ -354,11 +354,11 @@ int main(int argc, char **argv) {
   long tids[(num_runtime * n)];
   int64_t *local_tid_array = malloc(sizeof(int64_t) * numt);
 
-  Field3D_MPI testfield;
+  Field3D_MPI testfield = {0};
 
   Field3D_MPI *ptestfield = &testfield;
 
-  Field3D_MPI testfieldSPEC;
+  Field3D_MPI testfieldSPEC = {0};
 
   Field3D_MPI *ptestfieldSPEC = &testfieldSPEC;
 
@@ -489,7 +489,7 @@ int main(int argc, char **argv) {
       pcucache[i] = call_GET_CU_CACHE_LEN(i);
     }
   }
-  Particle_in_Cell_MPI pis;
+  Particle_in_Cell_MPI pis = {0};
 
   Particle_in_Cell_MPI *ppis = &pis;
 
@@ -670,6 +670,8 @@ int main(int argc, char **argv) {
       }
     }
     GAPS_IO_DeleteDataInfo(pgid);
+    GAPS_IO_DeleteDataInfo(pgidj);
+    GAPS_IO_DeleteDataInfo(pgide);
     if (rank == 0) {
       fprintf(stderr, "task complete: ");
       {
@@ -686,6 +688,20 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Calling Finalize\n");
   }
 
+  for (long ri = 0; ri < NUM_RUNTIME; ri++) {
+    sympic_set_device(dev_ids[ri]);
+    sympic_device_synchronize();
+  }
+  destroy_Particle_in_Cell_MPI(ppis);
+  destroy_Field3D_MPI(ptestfieldSPEC, 0);
+  destroy_Field3D_MPI(ptestfield, 1);
+  free(local_tid_array);
+  free(pnpm);
+  free(pchg);
+  free(pmass);
+  free(pgcache);
+  free(pcucache);
+  free(p_particle_type);
   for (long ri = 0; ri < NUM_RUNTIME; ri++) {
     sympic_set_device(dev_ids[ri]);
     sympic_comm_destroy(device_comms[ri]);

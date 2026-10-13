@@ -1856,3 +1856,123 @@ int test_set_mainland(Field3D_MPI *pthis, double val) {
   }
   return 0;
 }
+
+static void destroy_mem(void *mem) {
+  if (!mem)
+    return;
+#ifdef SYMPIC_CUDA
+  cuda_pscmc_mem_destroy(mem);
+#elif defined(SYMPIC_MAPU)
+  mapu_pscmc_mem_destroy(mem);
+#endif
+  free(mem);
+}
+
+static void free_device(void *ptr) {
+  if (ptr)
+    sympic_device_free(ptr);
+}
+
+static void destroy_field_seq(Field3D_Seq *f, int owns_shared) {
+  sympic_set_device(f->cuda_device);
+  /* Only 0 (packed halo) and 13 (main field) own data. The other wrappers
+     describe views, and main_data aliases sync_layer_pscmc[13]. */
+  for (int i = 0; i < NUM_SYNC_LAYER; ++i) {
+    if (i == 0 || i == NUM_SYNC_LAYER / 2) {
+      destroy_mem(f->sync_layer_pscmc[i]);
+      destroy_mem(f->swap_layer_pscmc[i]);
+    } else {
+      free(f->sync_layer_pscmc[i]);
+      free(f->swap_layer_pscmc[i]);
+    }
+    free(f->local_recv_tid[i]);
+    free(f->local_recv_src[i]);
+    free(f->local_recv_peer[i]);
+    free(f->local_recv_base[i]);
+    free(f->remote_send_tid[i]);
+    free(f->remote_recv_tid[i]);
+    free_device(f->local_recv_tid_d[i]);
+    free_device(f->local_recv_src_d[i]);
+    free_device(f->local_recv_base_d[i]);
+  }
+  destroy_mem(f->rdcd);
+  free(f->global_id);
+  free(f->global_x_offset);
+  free(f->global_y_offset);
+  free(f->global_z_offset);
+  free(f->adj_ids);
+  free(f->adj_processes);
+  free(f->adj_local_tid);
+  free_device(f->field_halo_send_src_d);
+  free_device(f->field_halo_send_dst_d);
+  free_device(f->field_halo_send_len_d);
+  free_device(f->field_halo_recv_src_d);
+  free_device(f->field_halo_recv_dst_d);
+  free_device(f->field_halo_recv_len_d);
+  free_device(f->field_halo_send_buf);
+  free_device(f->field_halo_recv_buf);
+  free(f->field_halo_send_peer);
+  free(f->field_halo_recv_peer);
+  free(f->field_halo_send_peer_offset);
+  free(f->field_halo_recv_peer_offset);
+  free(f->field_halo_send_peer_count_elems);
+  free(f->field_halo_recv_peer_count_elems);
+  if (owns_shared) {
+    destroy_mem(f->cur_rankx_pscmc);
+    destroy_mem(f->cur_ranky_pscmc);
+    destroy_mem(f->cur_rankz_pscmc);
+    destroy_mem(f->xoffset);
+    destroy_mem(f->yoffset);
+    destroy_mem(f->zoffset);
+    for (int i = 0; i < NUM_SYNC_KERNEL; ++i)
+      free(f->sync_kernels[i]);
+    for (int i = 0; i < 2; ++i)
+      free(f->geo_yeefdtd_kernels[i]);
+#define FREE_KERNEL(name) free(f->name)
+    FREE_KERNEL(blas_yiszero_synced_kernel);
+    FREE_KERNEL(blas_mulxy_numele3_kernel);
+    FREE_KERNEL(blas_yiszero_kernel);
+    FREE_KERNEL(blas_yiszero_full_block_kernel);
+    FREE_KERNEL(blas_yisconst_kernel);
+    FREE_KERNEL(blas_yisconst_full_block_kernel);
+    FREE_KERNEL(blas_get_ITG_Potential_kernel);
+    FREE_KERNEL(blas_get_ITG_Potential_full_block_kernel);
+    FREE_KERNEL(blas_invy_kernel);
+    FREE_KERNEL(blas_invy_full_block_kernel);
+    FREE_KERNEL(blas_axpby_kernel);
+    FREE_KERNEL(blas_axpby_full_block_kernel);
+    FREE_KERNEL(blas_axpy_kernel);
+    FREE_KERNEL(blas_axpy_full_block_kernel);
+    FREE_KERNEL(blas_yisax_kernel);
+    FREE_KERNEL(blas_yisax_full_block_kernel);
+    FREE_KERNEL(blas_mulxy_kernel);
+    FREE_KERNEL(blas_mulxy_full_block_kernel);
+    FREE_KERNEL(blas_findmax_kernel);
+    FREE_KERNEL(blas_findmax_full_block_kernel);
+    FREE_KERNEL(blas_dot_kernel);
+    FREE_KERNEL(blas_dot_full_block_kernel);
+    FREE_KERNEL(blas_sum_kernel);
+    FREE_KERNEL(blas_sum_full_block_kernel);
+    FREE_KERNEL(blas_yisax_shrink_kernel);
+    FREE_KERNEL(blas_yisax_enlarge_kernel);
+    FREE_KERNEL(blas_axpy_shrink_kernel);
+    FREE_KERNEL(blas_axpy_enlarge_kernel);
+    FREE_KERNEL(blas_axpby_shrink_kernel);
+    FREE_KERNEL(blas_axpby_enlarge_kernel);
+#undef FREE_KERNEL
+    free(f->pe);
+  }
+  memset(f, 0, sizeof(*f));
+}
+
+void destroy_Field3D_MPI(Field3D_MPI *field, int owns_shared_resources) {
+  if (!field->data)
+    return;
+  for (long i = 0; i < field->num_runtime; ++i) {
+    destroy_field_seq(&field->data[i], owns_shared_resources);
+    free(field->rqst[i]);
+  }
+  free(field->rqst);
+  free(field->data);
+  memset(field, 0, sizeof(*field));
+}

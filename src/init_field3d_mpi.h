@@ -1,5 +1,8 @@
 #include "pubdefs.h"
 
+/* Destroy derived fields first; only the base field owns shared resources. */
+void destroy_Field3D_MPI(Field3D_MPI *field, int owns_shared_resources);
+
 void init_Field3D_MPI_from_new_num_ele(Field3D_MPI *pthis, Field3D_MPI *f, int new_num_ele);
 void init_Field3D_MPI_from(Field3D_MPI *pthis, Field3D_MPI *f);
 void reinit_Field3D_MPI(Field3D_MPI *pthis, int new_num_ele);

@@ -64,8 +64,7 @@ mpirun --allow-run-as-root --oversubscribe \
 for var in tmpEB tmpEN tmpJ; do
   if compgen -G "${var}_PROC_*" >/dev/null; then
     rm -f "$var"
-    mpirun --allow-run-as-root --oversubscribe \
-      -n 1 "$TEST/gapsio2to0" ${var}_PROC_* "$var"
+    "$TEST/gapsio2to0" ${var}_PROC_* "$var"
   fi
 done
 

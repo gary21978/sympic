@@ -1,5 +1,7 @@
 #include "pubdefs.h"
 
+void destroy_Particle_in_Cell_MPI(Particle_in_Cell_MPI *pic);
+
 long find_vec_id(long id, long *adj_ids, long numvec);
 int init_particle(One_Particle_Collection *pthis, Field3D_Seq *pfield, double Mass, double Charge,
                   double Number_particle_per_marker, long grid_cache_len, long cu_cache_length);

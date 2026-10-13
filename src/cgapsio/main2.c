@@ -3,58 +3,202 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <mpi.h>
 #include <cgapsio.h>
 
 #define BLOCK_THREH (1 << 30)
 
-int read_file(void **pptr, int64_t *plen, char *name) {
-  static FILE *fp = NULL;
-  static char *old_fname = NULL;
-  if (name != old_fname) {
-    if (fp) {
-      fclose(fp);
-    }
-    (fp = fopen(name, "r"));
+static const int gaps_type_len[] = {4, 8, 2, 4, 8, 2, 4, 8, 16, 16, 16, 1, 1};
+
+static int serial_type_len(int type) {
+  if (type < 0 || type >= (int)(sizeof(gaps_type_len) / sizeof(gaps_type_len[0]))) {
+    fprintf(stderr, "Unsupported GAPSIO type %d\n", type);
+    exit(1);
   }
-  fseek(fp, 0, SEEK_END);
+  return gaps_type_len[type];
+}
+
+static void serial_init_input(Gaps_IO_DataFile *data, const char *filename) {
+  memset(data, 0, sizeof(*data));
+  data->pfile = fopen(filename, "rb");
+  if (!data->pfile) {
+    perror(filename);
+    exit(1);
+  }
+  if (fread(&data->version, sizeof(int64_t), 1, data->pfile) != 1 ||
+      fread(&data->type, sizeof(int64_t), 1, data->pfile) != 1 ||
+      fread(&data->dim, sizeof(int64_t), 1, data->pfile) != 1 || data->version != 2 ||
+      data->dim <= 0) {
+    fprintf(stderr, "Invalid GAPSIO v2 header in %s\n", filename);
+    exit(1);
+  }
+  data->pdimarray = malloc((size_t)data->dim * sizeof(int64_t));
+  data->pblockarray = malloc((size_t)data->dim * sizeof(int64_t));
+  if (!data->pdimarray || !data->pblockarray ||
+      fread(data->pdimarray, sizeof(int64_t), (size_t)data->dim, data->pfile) !=
+          (size_t)data->dim ||
+      fread(data->pblockarray, sizeof(int64_t), (size_t)data->dim, data->pfile) !=
+          (size_t)data->dim) {
+    fprintf(stderr, "Incomplete GAPSIO v2 header in %s\n", filename);
+    exit(1);
+  }
+  data->numperstep = 1;
+  data->block_len = 1;
+  for (int64_t i = 0; i < data->dim; ++i) {
+    data->numperstep *= data->pdimarray[i] * data->pblockarray[i];
+    data->block_len *= data->pdimarray[i];
+  }
+  data->time_step_current = 0;
+}
+
+static int64_t serial_num_steps(Gaps_IO_DataFile *data) {
+  long current = ftell(data->pfile);
+  if (fseek(data->pfile, 0, SEEK_END) != 0) {
+    perror("fseek input");
+    exit(1);
+  }
+  long end = ftell(data->pfile);
+  if (current < 0 || end < 0 || fseek(data->pfile, current, SEEK_SET) != 0) {
+    perror("measure input");
+    exit(1);
+  }
+  int64_t header_bytes = (3 + 2 * data->dim) * (int64_t)sizeof(int64_t);
+  int64_t elements_per_step = data->num_block_current_proc * data->block_len;
+  int64_t element_bytes = serial_type_len((int)data->type);
+  int64_t payload = (int64_t)end - header_bytes;
+  if (payload < 0 || elements_per_step <= 0 ||
+      payload % (elements_per_step * element_bytes) != 0) {
+    fprintf(stderr, "Invalid GAPSIO v2 payload size in input shard\n");
+    exit(1);
+  }
+  return payload / (elements_per_step * element_bytes);
+}
+
+static void serial_init_output(Gaps_IO_DataFile *data, const char *filename, int64_t type,
+                               int64_t dim, const int64_t *dimensions, int64_t timestep) {
+  memset(data, 0, sizeof(*data));
+  data->version = 0;
+  data->type = type;
+  data->dim = dim;
+  data->pdimarray = malloc((size_t)dim * sizeof(int64_t));
+  data->pblockarray = malloc((size_t)dim * sizeof(int64_t));
+  if (!data->pdimarray || !data->pblockarray) {
+    fprintf(stderr, "Unable to allocate output dimensions\n");
+    exit(1);
+  }
+  memcpy(data->pdimarray, dimensions, (size_t)dim * sizeof(int64_t));
+  data->numperstep = 1;
+  for (int64_t i = 0; i < dim; ++i) {
+    data->pblockarray[i] = 1;
+    data->numperstep *= dimensions[i];
+  }
+  data->pfile = fopen(filename, (timestep == -1) ? "wb+" : "r+b");
+  if (!data->pfile) {
+    perror(filename);
+    exit(1);
+  }
+  if (timestep == -1) {
+    if (fwrite(&data->version, sizeof(int64_t), 1, data->pfile) != 1 ||
+        fwrite(&data->type, sizeof(int64_t), 1, data->pfile) != 1 ||
+        fwrite(&data->dim, sizeof(int64_t), 1, data->pfile) != 1 ||
+        fwrite(data->pdimarray, sizeof(int64_t), (size_t)dim, data->pfile) != (size_t)dim) {
+      fprintf(stderr, "Unable to write GAPSIO v0 header to %s\n", filename);
+      exit(1);
+    }
+  } else {
+    int64_t header[3];
+    if (fread(header, sizeof(int64_t), 3, data->pfile) != 3 || header[0] != 0 ||
+        header[1] != type || header[2] != dim) {
+      fprintf(stderr, "Existing output %s has an incompatible GAPSIO header\n", filename);
+      exit(1);
+    }
+    for (int64_t i = 0; i < dim; ++i) {
+      int64_t existing_dim;
+      if (fread(&existing_dim, sizeof(int64_t), 1, data->pfile) != 1 ||
+          existing_dim != dimensions[i]) {
+        fprintf(stderr, "Existing output %s has incompatible dimensions\n", filename);
+        exit(1);
+      }
+    }
+  }
+}
+
+static void serial_seek_output(Gaps_IO_DataFile *data, int64_t step, int64_t offset) {
+  int64_t header_bytes = (3 + data->dim) * (int64_t)sizeof(int64_t);
+  int64_t byte_offset = header_bytes +
+                        (step * data->numperstep + offset) * serial_type_len((int)data->type);
+  if (fseek(data->pfile, (long)byte_offset, SEEK_SET) != 0) {
+    perror("fseek output");
+    exit(1);
+  }
+}
+
+static void serial_write_output(Gaps_IO_DataFile *data, const void *buffer, int64_t elements) {
+  if (fwrite(buffer, (size_t)serial_type_len((int)data->type), (size_t)elements,
+             data->pfile) != (size_t)elements) {
+    perror("write output");
+    exit(1);
+  }
+}
+
+static void serial_delete_data(Gaps_IO_DataFile *data) {
+  if (data->pfile) fclose(data->pfile);
+  free(data->pdimarray);
+  free(data->pblockarray);
+  free(data->locations);
+}
+
+int read_file(void **pptr, int64_t *plen, char *name) {
+  FILE *fp = fopen(name, "rb");
+  if (!fp) {
+    perror(name);
+    exit(1);
+  }
+  if (fseek(fp, 0, SEEK_END) != 0) {
+    perror("seek metadata");
+    exit(1);
+  }
   long l = ftell(fp);
-  pptr[0] = malloc(l);
+  if (l < 0 || fseek(fp, 0, SEEK_SET) != 0) {
+    perror("read metadata size");
+    exit(1);
+  }
+  pptr[0] = malloc((size_t)l);
+  if (!pptr[0] && l != 0) {
+    fprintf(stderr, "Unable to allocate metadata buffer for %s\n", name);
+    exit(1);
+  }
   plen[0] = l;
-  fseek(fp, 0, SEEK_SET);
-  size_t ret = fread((pptr)[0], 1, l, fp);
+  if (fread(pptr[0], 1, (size_t)l, fp) != (size_t)l) {
+    fprintf(stderr, "Short read from metadata file %s\n", name);
+    fclose(fp);
+    exit(1);
+  }
+  fclose(fp);
   return 0;
 }
 int read_one_block_stdio(Gaps_IO_DataFile *pgid, void *ptr, char *file_name, int64_t ts,
                          int64_t num_blocks_one_step_this_file, int64_t bid) {
-  FILE *fp = fopen(file_name, "r");
-  int64_t blk_len = pgid->block_len * GAPS_IO_GetTypeLen(pgid->type);
+  FILE *fp = fopen(file_name, "rb");
+  if (!fp) {
+    perror(file_name);
+    exit(1);
+  }
+  int64_t blk_len = pgid->block_len * serial_type_len((int)pgid->type);
   int64_t offset_zero = sizeof(int64_t) * (3 + (pgid->dim * 2));
-  fseek(fp, (offset_zero + (blk_len * (bid + (num_blocks_one_step_this_file * ts)))), SEEK_SET);
+  if (fseek(fp, (long)(offset_zero + (blk_len * (bid + (num_blocks_one_step_this_file * ts)))),
+            SEEK_SET) != 0) {
+    perror("seek input block");
+    exit(1);
+  }
   size_t nread = fread(ptr, 1, blk_len, fp);
+  if (nread != (size_t)blk_len) {
+    fprintf(stderr, "Short read from %s\n", file_name);
+    exit(1);
+  }
   fclose(fp);
   return 0;
 }
-int obtain_pname_and_rank(char *pName, int *prank, char *pNameAll) {
-  int alllen = strlen(pNameAll);
-  int l;
-  for (l = alllen - 1; l >= 0; l--) {
-    if (pNameAll[l] == '_') {
-      break;
-    }
-  }
-  {
-    long i;
-    for (i = 0; i < (l - 5); i++) {
-      pName[i] = pNameAll[i];
-    }
-  }
-  pName[l - 5] = 0;
-  sscanf((pNameAll + (l + 1)), "%d", prank);
-  return 0;
-}
 int main(int argc, char **argv) {
-  MPI_Init(&argc, &argv);
   Gaps_IO_DataFile gi;
   Gaps_IO_DataFile *pgi = &gi;
   Gaps_IO_DataFile go;
@@ -64,22 +208,16 @@ int main(int argc, char **argv) {
     return 0;
   }
   pgi->version = 2;
-  char oriname[512];
-  {
-    int rank;
-    obtain_pname_and_rank(oriname, &rank, argv[1]);
-    GAPS_IO_InitIFileV2(pgi, oriname, "", rank);
-  }
+  serial_init_input(pgi, argv[1]);
   if (2 != pgi->version) {
     fprintf(stderr, "File %s is not version 2\n", argv[1]);
   }
-  int64_t version = pgi->version;
   int64_t type = pgi->type;
   int64_t dim = pgi->dim;
   int64_t *pdimarray = pgi->pdimarray;
   int64_t *pblockarray = pgi->pblockarray;
   int64_t numperstep = pgi->numperstep;
-  int typelen = GAPS_IO_GetTypeLen(type);
+  int typelen = serial_type_len((int)type);
   int64_t *poutlen = malloc(sizeof(int64_t) * dim);
   int64_t oneblock_len = 1;
   int64_t numblocks = 1;
@@ -128,8 +266,9 @@ int main(int argc, char **argv) {
     }
   }
   int64_t numsteps = 0;
-  int64_t numresd = 0;
-  GAPS_IO_DataNumStepsAndResidue(pgi, &numsteps, &numresd);
+  pgi->num_block_current_proc = meta_data_len[0];
+  pgi->num_block_all_reduce_group = pgi->num_block_current_proc;
+  numsteps = serial_num_steps(pgi);
   char *display_steps = "GAPS_IO_DISPLAY_NUM_STEPS";
   char *uds = getenv(display_steps);
   //fprintf(stderr, "0x%p 0x%p\n", display_steps, uds);
@@ -162,9 +301,8 @@ int main(int argc, char **argv) {
   }
   t_max = ((t_max + (numsteps + -1)) % numsteps) + 1;
   fprintf(stderr, "tmin=%ld tmax=%ld topt=%ld\n", t_min, t_max, t_opt_offset);
-  GAPS_IO_InitDataInfo(pgo, type, dim, poutlen);
-  GAPS_IO_InitOFile_with_TimeStep(pgo, argv[argc - 1],
-                                  ((t_min - t_opt_offset == 0) ? (-1) : (t_min - t_opt_offset)));
+  serial_init_output(pgo, argv[argc - 1], type, dim, poutlen,
+                     ((t_min - t_opt_offset == 0) ? (-1) : (t_min - t_opt_offset)));
   int64_t opt_write_block = 1;
   int64_t opt_read_block = oneblock_len;
   int dim_current = 0;
@@ -283,9 +421,9 @@ int main(int argc, char **argv) {
             long w_rd;
             for (w_rd = 0; w_rd < num_writes_per_read; w_rd++) {
               int64_t offset = global_offset_new + (w_rd * one_write_offset);
-              GAPS_IO_DataSeek(pgo, (t - t_opt_offset), offset);
-              GAPS_IO_FWrite(pgo, (read_block_buffer + (w_rd * (opt_write_block * typelen))),
-                             opt_write_block);
+              serial_seek_output(pgo, (t - t_opt_offset), offset);
+              serial_write_output(pgo, (read_block_buffer + (w_rd * (opt_write_block * typelen))),
+                                  opt_write_block);
             }
           }
         }
@@ -301,7 +439,7 @@ int main(int argc, char **argv) {
   free(palldim_local);
   free(read_block_buffer);
   free(read_one_block_buffer);
-  GAPS_IO_DeleteDataInfo(pgo);
-  GAPS_IO_DeleteDataInfo(pgi);
-  MPI_Finalize();
+  serial_delete_data(pgo);
+  serial_delete_data(pgi);
+  return 0;
 }

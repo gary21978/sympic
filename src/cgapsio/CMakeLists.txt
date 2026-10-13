@@ -4,6 +4,5 @@ target_compile_options(cgapsio PRIVATE -O2 -fPIC -std=c89 -UNDEBUG)
 target_link_libraries(cgapsio PRIVATE MPI::MPI_C)
 
 add_executable(gapsio2to0 main2.c)
-target_link_libraries(gapsio2to0 PRIVATE cgapsio MPI::MPI_C)
 add_executable(compare_gapsio compare_gapsio.c)
 target_link_libraries(compare_gapsio PRIVATE m)

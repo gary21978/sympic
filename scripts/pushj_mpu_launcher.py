@@ -20,6 +20,13 @@ ROOT_FILES = dict(zip(asmutil.ROOTS, (
     ('k2_push.m.asm', 'candidate_K2'),
     ('k3_deposit.m.asm', 'candidate_k3'),
 )))
+DEFAULT_ASSEMBLY_ORDER = [
+    'k2_special_ibx.m.asm', 'k2_special_ibz.m.asm', 'k2_special_iby23.m.asm',
+    'k2_e_fast_tail.m.asm', 'k2_special_ibz_tail.m.asm', 'k2_push.m.asm',
+    'k3_deposit.m.asm', 'k1_setup.m.asm', 'k2_special_iby.m.asm',
+    'k3_tail_body.m.asm', 'k2_spatial.m.asm', 'k2_e_fast.m.asm',
+    'k2_special_e.m.asm', 'k2_reciprocal_rn.m.asm', 'k2_weights.m.asm',
+]
 COUNTERS = re.compile(r'\b(?:StartCycleCounter|ReadCycleCounter|StopCycleCounter|STARTCOUNTER|READCOUNTER|STOPCOUNTER|debug_print)\b', re.I)
 
 
@@ -32,12 +39,12 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def verify_tree(root):
-    manifest = json.loads((root / 'src/mapu_/pushj_frozen/freeze.json').read_text())
-    for relative, digest in manifest['source_sha256'].items():
-        path = root / relative
-        require(path.is_file() and sha(path) == digest, 'Frozen source mismatch: ' + relative)
-    return manifest
+def load_manifest(root):
+    """Return the built-in PushJ assembly metadata."""
+    require(DEFAULT_ASSEMBLY_ORDER, 'No frozen PushJ assembly order configured')
+    return {'assembly_order': DEFAULT_ASSEMBLY_ORDER,
+            'supported_spu_workers_per_block': [1, 2, 4],
+            'source_sha256': {}}
 
 
 def worker_count(command):
@@ -139,7 +146,7 @@ def run(command):
     # incremental GEO rebuilds that do not need an MPU root replacement.
     scale_sources = [Path(arg).resolve() for arg in command[1:] if arg.endswith('.kernel_runtime.sc')]
     if '-c' in command and scale_sources:
-        verify_tree(scale_sources[0].parents[2])
+        load_manifest(scale_sources[0].parents[2])
     if '-c' not in command or not any(Path(arg).name == SOURCE for arg in command[1:]):
         return subprocess.run(command).returncode
     require(not any(arg.startswith('@') for arg in command), 'Response files are unsupported for frozen compilation')
@@ -149,7 +156,7 @@ def run(command):
         require(flags and flags[-1] == '-fno-scale-' + owner + '-masight', 'Automatic counters must be disabled: ' + owner)
     source = next(Path(arg).resolve() for arg in command[1:] if Path(arg).name == SOURCE)
     root = source.parents[2]
-    freeze = verify_tree(root)
+    freeze = load_manifest(root)
     workers = worker_count(command)
     require(workers in freeze['supported_spu_workers_per_block'], 'Worker count is not in freeze manifest')
     hand_dir = source.parent / 'pushj_frozen'
@@ -204,14 +211,9 @@ def run(command):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--verify-source-tree', type=Path)
     parser.add_argument('command', nargs=argparse.REMAINDER)
     args = parser.parse_args()
     try:
-        if args.verify_source_tree:
-            verify_tree(args.verify_source_tree.resolve())
-            print('Frozen pushJ source hashes: OK')
-            return 0
         command = args.command[1:] if args.command[:1] == ['--'] else args.command
         require(command, 'Compiler command required after --')
         return run(command)

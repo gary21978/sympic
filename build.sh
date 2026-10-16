@@ -108,14 +108,15 @@ if ! command -v mpicc >/dev/null 2>&1; then
     apt-get -o Acquire::Retries=3 update
     apt-get -o Acquire::Retries=3 install -y openmpi-bin libopenmpi-dev
 fi
-cd /home/emu/Projects/sympic-merged
+cd @@GUEST_REPO_DIR@@
 export SCALE_TOOLCHAIN_ROOT=/opt/maps/toolchain
 export TOOLCHAIN_DIR=/opt/maps/toolchain
 export MACCL_ROOT=/opt/maps
 bash build.sh @@BUILD_MODE@@
 EOF
 )
-    guest_cmd="${guest_cmd/@@BUILD_MODE@@/${guest_build_mode}}"
+guest_cmd="${guest_cmd/@@BUILD_MODE@@/${guest_build_mode}}"
+guest_cmd="${guest_cmd/@@GUEST_REPO_DIR@@/${guest_repo_dir}}"
 
     wait_guest_ssh_login "${ssh_port}"
     run_guest_build_over_ssh "${ssh_port}" "${guest_cmd}"

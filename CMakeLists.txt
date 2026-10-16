@@ -5,7 +5,16 @@ cmake_minimum_required(VERSION 3.18)
 # ============================================================
 option(SYMPIC_CUDA "Use CUDA backend" OFF)
 option(SYMPIC_MAPU "Use MAPU backend" OFF)
-option(SYMPIC_NVSCALE "Build the MAPU backend through NVScale/CUDA" OFF)
+option(SYMPIC_NVSCALE "Build the MAPU backend through NVScale" OFF)
+option(SYMPIC_MICROCODE "Use PushJ microcode for the MAPU backend" OFF)
+set(SYMPIC_PUSHJ_WORKERS "4" CACHE STRING "PushJ SPU workers per block (1, 2 or 4)")
+set_property(CACHE SYMPIC_PUSHJ_WORKERS PROPERTY STRINGS 1 2 4)
+if(NOT SYMPIC_PUSHJ_WORKERS MATCHES "^(1|2|4)$")
+    message(FATAL_ERROR "SYMPIC_PUSHJ_WORKERS must be 1, 2 or 4")
+endif()
+if(SYMPIC_MICROCODE AND NOT SYMPIC_MAPU)
+    message(FATAL_ERROR "SYMPIC_MICROCODE requires SYMPIC_MAPU=ON")
+endif()
 
 
 set(SYMPIC_BACKEND_COUNT 0)

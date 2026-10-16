@@ -1,0 +1,120 @@
+{
+  "version": "pushj-r61b-mt4-20261012",
+  "origin": "r61b bounded field staging; same 15 hand schedules as the 20261010 SPU delivery",
+  "origin_source": "sympic-mapu-dev_neiwang/measurements/pushj-r61b-bounds-20261010/source-spu",
+  "assembly_order": [
+    "k2_special_ibx.m.asm",
+    "k2_special_ibz.m.asm",
+    "k2_special_iby23.m.asm",
+    "k2_e_fast_tail.m.asm",
+    "k2_special_ibz_tail.m.asm",
+    "k2_push.m.asm",
+    "k3_deposit.m.asm",
+    "k1_setup.m.asm",
+    "k2_special_iby.m.asm",
+    "k3_tail_body.m.asm",
+    "k2_spatial.m.asm",
+    "k2_e_fast.m.asm",
+    "k2_special_e.m.asm",
+    "k2_reciprocal_rn.m.asm",
+    "k2_weights.m.asm"
+  ],
+  "assembly_origins": {
+    "k2_special_ibx.m.asm": {
+      "original": "k2_special_ibx.m.asm",
+      "sha256": "053f2418bb90c18f73871e7163d3d4483f70692b342f1f06996bc0b7165d9d8d"
+    },
+    "k2_special_ibz.m.asm": {
+      "original": "k2_special_ibz.m.asm",
+      "sha256": "a178f1a17599db0de086b30781dd20079798252fb5865e071e4c748f978a51fa"
+    },
+    "k2_special_iby23.m.asm": {
+      "original": "k2_special_iby23.m.asm",
+      "sha256": "a4c85703d0128f6f113c69492e798f523b64836d6fc67cd2dbb9aeaa557eab95"
+    },
+    "k2_e_fast_tail.m.asm": {
+      "original": "k2_e_fast_tail.m.asm",
+      "sha256": "90722ab737e315c4beef4b703aa86f66ddcc567a0678b0b5278974a608e50554"
+    },
+    "k2_special_ibz_tail.m.asm": {
+      "original": "k2_special_ibz_tail.m.asm",
+      "sha256": "25dd97d0ff7fcc45da039226297d0f006a3e17d1df265c5d848a0d1119fc7735"
+    },
+    "k2_push.m.asm": {
+      "original": "candidate_root.m.asm",
+      "sha256": "a1faf7ee4a9af02642f758b13872a45415213f051db696f65ddfd1146a4df6fb"
+    },
+    "k3_deposit.m.asm": {
+      "original": "candidate_k3.m.asm",
+      "sha256": "c2f2f5d95d4365a98928b9ab0eb42d735a88b24dfb49dadf7e273ccb5e661a96"
+    },
+    "k1_setup.m.asm": {
+      "original": "candidate_k1.m.asm",
+      "sha256": "709bdb64d38475793a55028294807b35df6a80e80efd41724b79a45809cbba56"
+    },
+    "k2_special_iby.m.asm": {
+      "original": "k2_special_iby.m.asm",
+      "sha256": "aea7f7549d0852ee398f556fb76af8c79dfabcfdf0dd14dc19e204fb862a52d0"
+    },
+    "k3_tail_body.m.asm": {
+      "original": "k3_tail_body.m.asm",
+      "sha256": "5824164d88394cd86db02648f83b4dc8e744f91cb884749634bc185b1931db66"
+    },
+    "k2_spatial.m.asm": {
+      "original": "k2_spatial.m.asm",
+      "sha256": "a740b00fb4b2d35fd1c0e8197149a19d2a9201670d0027d917671aca62feccfc"
+    },
+    "k2_e_fast.m.asm": {
+      "original": "k2_e_fast.m.asm",
+      "sha256": "9f6d9f8cf3ccfe94ca85d854c0e0b518f2968929ed32de50131acadaeeb5265d"
+    },
+    "k2_special_e.m.asm": {
+      "original": "k2_special_e.m.asm",
+      "sha256": "72260d6addbb36e1196e51fa86496becc716dea6a426e411d7ee09742bfbadc2"
+    },
+    "k2_reciprocal_rn.m.asm": {
+      "original": "k2_reciprocal_rn.m.asm",
+      "sha256": "889d53b0a2beea020894086dbb207fbe96e6abbd2630dc1ee8a1e874d0a7a20a"
+    },
+    "k2_weights.m.asm": {
+      "original": "k2_weights.m.asm",
+      "sha256": "19549deb5d5f09e0fca25e89a70c82ddfced8d96f82c2ad22e6d8aa174b8d3d0"
+    }
+  },
+  "particle_simd_width": 8,
+  "runtime_counters": false,
+  "code_size_acceptance": "not implied by source freeze; physical cache/load audit remains separate",
+  "source_sha256": {
+    "scripts/pushj_mpu_launcher.py": "5c985d864cda9a8a677ccb148f6b8750d3d99efb00614f79174dbf36dda423a9",
+    "scripts/pushj_asm.py": "58a25339527efce9579ca7811eac1294d6b467dd85e66139e9c96f08e12d1a70",
+    "src/mapu_/CMakeLists.txt": "14d0ff6ae306b81b8066f714e648707230da23f8553fb6cf9ff044435e660bab",
+    "src/mapu_/inner_split_pass.kernel.inc": "f8d0d3ce82053a3557a7049620aef0b3e7e75da226478afa920a644edf344420",
+    "src/mapu_/inner_split_pass.kernel_runtime.sc": "bcd06ecff351ad8940c960bb77386d93fe0c29f317db122f9e7f5f1cfa5c057b",
+    "src/mapu_/inner_split_pass.kernel_runtime.h": "1f443cea309cf63ddefd2aae641073316fb495c3d3c655fdf5045856b033a94a",
+    "src/mapu_/local_header.h": "c433edb40ceae3d1ed32b9d59dd59b29fe44ced5dbeb0a16a470985532a01c25",
+    "src/mapu_/mapu_pscmc.h": "2bfee6555a71605f1c6790b0e2e054d664dc2c6840d5e526ec377dc095f2556f",
+    "src/mapu_/geo_yeefdtd.kernel.inc": "b5cad5c0fb00b78bcb0ee2b325e112cf1ee0e4b26e1ad9a9a289ee31ee5d0bfb",
+    "src/mapu_/pushj_frozen/k2_special_ibx.m.asm": "053f2418bb90c18f73871e7163d3d4483f70692b342f1f06996bc0b7165d9d8d",
+    "src/mapu_/pushj_frozen/k2_special_ibz.m.asm": "a178f1a17599db0de086b30781dd20079798252fb5865e071e4c748f978a51fa",
+    "src/mapu_/pushj_frozen/k2_special_iby23.m.asm": "a4c85703d0128f6f113c69492e798f523b64836d6fc67cd2dbb9aeaa557eab95",
+    "src/mapu_/pushj_frozen/k2_e_fast_tail.m.asm": "90722ab737e315c4beef4b703aa86f66ddcc567a0678b0b5278974a608e50554",
+    "src/mapu_/pushj_frozen/k2_special_ibz_tail.m.asm": "25dd97d0ff7fcc45da039226297d0f006a3e17d1df265c5d848a0d1119fc7735",
+    "src/mapu_/pushj_frozen/k2_push.m.asm": "a1faf7ee4a9af02642f758b13872a45415213f051db696f65ddfd1146a4df6fb",
+    "src/mapu_/pushj_frozen/k3_deposit.m.asm": "c2f2f5d95d4365a98928b9ab0eb42d735a88b24dfb49dadf7e273ccb5e661a96",
+    "src/mapu_/pushj_frozen/k1_setup.m.asm": "709bdb64d38475793a55028294807b35df6a80e80efd41724b79a45809cbba56",
+    "src/mapu_/pushj_frozen/k2_special_iby.m.asm": "aea7f7549d0852ee398f556fb76af8c79dfabcfdf0dd14dc19e204fb862a52d0",
+    "src/mapu_/pushj_frozen/k3_tail_body.m.asm": "5824164d88394cd86db02648f83b4dc8e744f91cb884749634bc185b1931db66",
+    "src/mapu_/pushj_frozen/k2_spatial.m.asm": "a740b00fb4b2d35fd1c0e8197149a19d2a9201670d0027d917671aca62feccfc",
+    "src/mapu_/pushj_frozen/k2_e_fast.m.asm": "9f6d9f8cf3ccfe94ca85d854c0e0b518f2968929ed32de50131acadaeeb5265d",
+    "src/mapu_/pushj_frozen/k2_special_e.m.asm": "72260d6addbb36e1196e51fa86496becc716dea6a426e411d7ee09742bfbadc2",
+    "src/mapu_/pushj_frozen/k2_reciprocal_rn.m.asm": "889d53b0a2beea020894086dbb207fbe96e6abbd2630dc1ee8a1e874d0a7a20a",
+    "src/mapu_/pushj_frozen/k2_weights.m.asm": "19549deb5d5f09e0fca25e89a70c82ddfced8d96f82c2ad22e6d8aa174b8d3d0",
+    "src/mapu_/mapu_sort_one_grid_6_dispatch.h": "d47f5ce8f415cb016d5b5fb7966af7a6eccf7dfae1bd5090febb9e4e41b1fdca"
+  },
+  "default_spu_workers_per_block": 4,
+  "supported_spu_workers_per_block": [
+    1,
+    2,
+    4
+  ]
+}

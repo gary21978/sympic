@@ -7,19 +7,19 @@ __global__ void cuda_blas_yiszero_synced(double *y, long y_cpu_core, long numvec
                                          long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                          long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
   const long LOCAL_CACHE_LEN = 128;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -27,7 +27,7 @@ __global__ void cuda_blas_yiszero_synced(double *y, long y_cpu_core, long numvec
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -36,25 +36,25 @@ __global__ void cuda_blas_yiszero_synced(double *y, long y_cpu_core, long numvec
   __shared__ double zeros[128];
   long lg = 0;
 
-  for (lg = 0; (lg + __idx) < LOCAL_CACHE_LEN; lg = (lg + __xlen)) {
+  for (lg = 0; lg + __idx < LOCAL_CACHE_LEN; lg = lg + __xlen) {
     zeros[lg + __idx] = 0;
   }
   {
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      long blk_offset_t1 = (blk_all_len * i);
+      long blk_offset_t1 = blk_all_len * i;
 
       long j = 0;
 
-      for (j = 0; j < blk_all_len; j = (j + LOCAL_CACHE_LEN)) {
-        int numcp = ((j + LOCAL_CACHE_LEN) < blk_all_len) ? (LOCAL_CACHE_LEN) : (blk_all_len - j);
+      for (j = 0; j < blk_all_len; j = j + LOCAL_CACHE_LEN) {
+        int numcp = j + LOCAL_CACHE_LEN < blk_all_len ? LOCAL_CACHE_LEN : blk_all_len - j;
 
         {
           long lgGG817621_1 = 0;
 
-          for (; lgGG817621_1 < numcp; lgGG817621_1 = (lgGG817621_1 + __xlen)) {
-            int ridx = (lgGG817621_1 + __idx);
+          for (; lgGG817621_1 < numcp; lgGG817621_1 = lgGG817621_1 + __xlen) {
+            int ridx = lgGG817621_1 + __idx;
 
             if (ridx < numcp) {
               (y + (blk_offset_t1 + j))[ridx] = zeros[ridx];
@@ -69,17 +69,17 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
                                         long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                         long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -87,9 +87,9 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
 
   long zb = zblock;
 
-  long blk_all_len_0 = (xb * (yb * (zb * num_ele)));
+  long blk_all_len_0 = xb * yb * zb * num_ele;
 
-  long blk_all_len_1 = (xb * (yb * (zb * 3)));
+  long blk_all_len_1 = xb * yb * zb * 3;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -108,25 +108,25 @@ __global__ void cuda_blas_mulxy_numele3(double *y, double *x, long y_cpu_core, l
           long xyzx;
 
           for (xyzx = 0; xyzx < 1; xyzx++) {
-            long blk_offset_0 = (blk_all_len_0 * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+            long blk_offset_0 =
+                blk_all_len_0 * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
             long blk_offset_1 =
-                (blk_all_len_1 * i) + (3 * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+                blk_all_len_1 * i + 3 * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
             {
               long g = 0;
 
-              for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                long realidx = (__idx + (g * __xlen));
+              for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                long realidx = __idx + g * __xlen;
 
-                int cur_id = (realidx % num_ele);
+                int cur_id = realidx % num_ele;
 
-                int realidx_1 = (cur_id + (3 * (realidx / num_ele)));
+                int realidx_1 = cur_id + 3 * (realidx / num_ele);
 
                 if (cur_id < 3) {
-                  (y[blk_offset_0 + realidx] =
-                       (y[blk_offset_0 + realidx] * x[blk_offset_1 + realidx_1]));
+                  y[blk_offset_0 + realidx] =
+                      y[blk_offset_0 + realidx] * x[blk_offset_1 + realidx_1];
                 }
               }
             }
@@ -140,17 +140,17 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
                                   long ZLEN, int ovlp, long xblock, long yblock, long zblock,
                                   int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -158,7 +158,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -168,7 +168,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -177,7 +177,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -193,9 +193,8 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] = 0);
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] = 0;
                 }
               }
             }
@@ -208,7 +207,7 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -223,14 +222,14 @@ __global__ void cuda_blas_yiszero(double *y, long y_cpu_core, long numvec, long 
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
                   y[blk_offset + realidx] = 0;
                 }
@@ -246,17 +245,17 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
                                              long YLEN, long ZLEN, int ovlp, long xblock,
                                              long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -264,7 +263,7 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -276,8 +275,8 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN11 = 0;
 
-      for (; (gMYGEN11 + __idx) < blk_all_len; gMYGEN11 = (gMYGEN11 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN11);
+      for (; gMYGEN11 + __idx < blk_all_len; gMYGEN11 = gMYGEN11 + __xlen) {
+        long iba_tmp = __idx + gMYGEN11;
 
         long numcp = 1;
 
@@ -289,8 +288,7 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -302,20 +300,13 @@ __global__ void cuda_blas_yiszero_full_block(double *y, long y_cpu_core, long nu
           }
         }
         {
-          long g;
-
-          for (g = 0; g < numcp; g++) {
-          }
-        }
-        {
           long inner_step;
 
           for (inner_step = 0; inner_step < numcp; inner_step++) {
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -327,17 +318,17 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
                                    long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                    long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -345,7 +336,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -355,7 +346,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -364,7 +355,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -380,9 +371,8 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] = a);
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] = a;
                 }
               }
             }
@@ -395,7 +385,7 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -410,14 +400,14 @@ __global__ void cuda_blas_yisconst(double *y, double a, long y_cpu_core, long nu
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
                   y[blk_offset + realidx] = a;
                 }
@@ -433,17 +423,17 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
                                               long XLEN, long YLEN, long ZLEN, int ovlp,
                                               long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -451,7 +441,7 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -463,8 +453,8 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN16 = 0;
 
-      for (; (gMYGEN16 + __idx) < blk_all_len; gMYGEN16 = (gMYGEN16 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN16);
+      for (; gMYGEN16 + __idx < blk_all_len; gMYGEN16 = gMYGEN16 + __xlen) {
+        long iba_tmp = __idx + gMYGEN16;
 
         long numcp = 1;
 
@@ -476,8 +466,7 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -489,20 +478,13 @@ __global__ void cuda_blas_yisconst_full_block(double *y, double a, long y_cpu_co
           }
         }
         {
-          long g;
-
-          for (g = 0; g < numcp; g++) {
-          }
-        }
-        {
           long inner_step;
 
           for (inner_step = 0; inner_step < numcp; inner_step++) {
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -515,17 +497,17 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
                                             long ZLEN, int ovlp, long xblock, long yblock,
                                             long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -533,7 +515,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -543,7 +525,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -552,7 +534,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -564,7 +546,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -576,7 +558,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_u[inner_step + inner_g] = (u + (i * blk_all_len))[inner_step + inner_g]);
+              fast_u[inner_step + inner_g] = (u + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -592,27 +574,23 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  if ((fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                              realidx] > 0) &&
-                      (fast_u[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                              realidx] > 0)) {
-                    (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                            realidx] =
-                         (minus_over_q_e *
-                          (fast_x[(num_ele *
-                                   (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                  realidx] *
-                           log(fast_y[(num_ele *
-                                       (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                      realidx] /
-                               fast_u[(num_ele *
-                                       (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                      realidx]))));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  if (fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] >
+                          0 &&
+                      fast_u[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] >
+                          0) {
+                    fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                        minus_over_q_e *
+                        (fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                realidx] *
+                         log(fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                    realidx] /
+                             fast_u[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                    realidx]));
 
                   } else {
-                    (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                            realidx] = 0);
+                    fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                        0;
                   }
                 }
               }
@@ -626,7 +604,7 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -641,19 +619,19 @@ __global__ void cuda_blas_get_ITG_Potential(double *y, double *x, double *u, dou
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  if ((y[blk_offset + realidx] > 0) && (u[blk_offset + realidx] > 0)) {
-                    (y[blk_offset + realidx] = (minus_over_q_e * (x[blk_offset + realidx] *
-                                                                  log(y[blk_offset + realidx] /
-                                                                      u[blk_offset + realidx]))));
+                  if (y[blk_offset + realidx] > 0 && u[blk_offset + realidx] > 0) {
+                    y[blk_offset + realidx] =
+                        minus_over_q_e * (x[blk_offset + realidx] *
+                                          log(y[blk_offset + realidx] / u[blk_offset + realidx]));
 
                   } else {
                     y[blk_offset + realidx] = 0;
@@ -673,17 +651,17 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
                                                        int ovlp, long xblock, long yblock,
                                                        long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -691,7 +669,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -703,8 +681,8 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN21 = 0;
 
-      for (; (gMYGEN21 + __idx) < blk_all_len; gMYGEN21 = (gMYGEN21 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN21);
+      for (; gMYGEN21 + __idx < blk_all_len; gMYGEN21 = gMYGEN21 + __xlen) {
+        long iba_tmp = __idx + gMYGEN21;
 
         long numcp = 1;
 
@@ -716,8 +694,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -729,8 +706,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -742,8 +718,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_u[inner_step + inner_g] =
-                   ((u + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_u[inner_step + inner_g] = (u + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -751,9 +726,9 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
           long g;
 
           for (g = 0; g < numcp; g++) {
-            if (((fast_y + g)[0] > 0) && ((fast_u + g)[0] > 0)) {
-              ((fast_y + g)[0] =
-                   (minus_over_q_e * ((fast_x + g)[0] * log((fast_y + g)[0] / (fast_u + g)[0]))));
+            if ((fast_y + g)[0] > 0 && (fast_u + g)[0] > 0) {
+              (fast_y + g)[0] =
+                  minus_over_q_e * ((fast_x + g)[0] * log((fast_y + g)[0] / (fast_u + g)[0]));
 
             } else {
               (fast_y + g)[0] = 0;
@@ -773,8 +748,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -785,8 +759,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -797,8 +770,7 @@ __global__ void cuda_blas_get_ITG_Potential_full_block(double *y, double *x, dou
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((u + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_u[inner_step + inner_g]);
+              (u + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_u[inner_step + inner_g];
             }
           }
         }
@@ -810,17 +782,17 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
                                long ZLEN, int ovlp, long xblock, long yblock, long zblock,
                                int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -828,7 +800,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -838,7 +810,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -847,7 +819,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -863,14 +835,12 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  if (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  if (fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
                              realidx] != 0) {
-                    (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                            realidx] =
-                         (1.0 / fast_y[(num_ele *
-                                        (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                       realidx]));
+                    fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                        1.0 / fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                     realidx];
                   }
                 }
               }
@@ -884,7 +854,7 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -899,14 +869,14 @@ __global__ void cuda_blas_invy(double *y, long y_cpu_core, long numvec, long XLE
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
                   if (y[blk_offset + realidx] != 0) {
                     y[blk_offset + realidx] = 1.0 / y[blk_offset + realidx];
@@ -924,17 +894,17 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
                                           long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                           long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -942,7 +912,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -954,8 +924,8 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN30 = 0;
 
-      for (; (gMYGEN30 + __idx) < blk_all_len; gMYGEN30 = (gMYGEN30 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN30);
+      for (; gMYGEN30 + __idx < blk_all_len; gMYGEN30 = gMYGEN30 + __xlen) {
+        long iba_tmp = __idx + gMYGEN30;
 
         long numcp = 1;
 
@@ -967,8 +937,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -994,8 +963,7 @@ __global__ void cuda_blas_invy_full_block(double *y, long y_cpu_core, long numve
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1007,17 +975,17 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
                                 long XLEN, long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                 long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1025,7 +993,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1035,7 +1003,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -1044,7 +1012,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1056,7 +1024,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1072,12 +1040,10 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] =
-                       (a *
-                        fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                               realidx]));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                      a *
+                      fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx];
                 }
               }
             }
@@ -1090,7 +1056,7 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1105,14 +1071,14 @@ __global__ void cuda_blas_yisax(double *y, double *x, double a, long y_cpu_core,
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
                   y[blk_offset + realidx] = a * x[blk_offset + realidx];
                 }
@@ -1128,17 +1094,17 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
                                            long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                            long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1146,7 +1112,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1158,8 +1124,8 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN35 = 0;
 
-      for (; (gMYGEN35 + __idx) < blk_all_len; gMYGEN35 = (gMYGEN35 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN35);
+      for (; gMYGEN35 + __idx < blk_all_len; gMYGEN35 = gMYGEN35 + __xlen) {
+        long iba_tmp = __idx + gMYGEN35;
 
         long numcp = 1;
 
@@ -1171,8 +1137,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1184,8 +1149,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1209,8 +1173,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1221,8 +1184,7 @@ __global__ void cuda_blas_yisax_full_block(double *y, double *x, double a, long 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -1234,17 +1196,17 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
                                long XLEN, long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1252,7 +1214,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1262,7 +1224,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -1271,7 +1233,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1283,7 +1245,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1299,14 +1261,11 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] =
-                       (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                               realidx] +
-                        (a *
-                         fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                realidx])));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                      fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] +
+                      a * fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                 realidx];
                 }
               }
             }
@@ -1319,7 +1278,7 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1334,17 +1293,16 @@ __global__ void cuda_blas_axpy(double *y, double *x, double a, long y_cpu_core, 
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  (y[blk_offset + realidx] =
-                       (y[blk_offset + realidx] + (a * x[blk_offset + realidx])));
+                  y[blk_offset + realidx] = y[blk_offset + realidx] + a * x[blk_offset + realidx];
                 }
               }
             }
@@ -1358,17 +1316,17 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
                                           long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                           long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1376,7 +1334,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1388,8 +1346,8 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN42 = 0;
 
-      for (; (gMYGEN42 + __idx) < blk_all_len; gMYGEN42 = (gMYGEN42 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN42);
+      for (; gMYGEN42 + __idx < blk_all_len; gMYGEN42 = gMYGEN42 + __xlen) {
+        long iba_tmp = __idx + gMYGEN42;
 
         long numcp = 1;
 
@@ -1401,8 +1359,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1414,8 +1371,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1423,7 +1379,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
           long g;
 
           for (g = 0; g < numcp; g++) {
-            (fast_y + g)[0] = (fast_y + g)[0] + (a * (fast_x + g)[0]);
+            (fast_y + g)[0] = (fast_y + g)[0] + a * (fast_x + g)[0];
           }
         }
         {
@@ -1439,8 +1395,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1451,8 +1406,7 @@ __global__ void cuda_blas_axpy_full_block(double *y, double *x, double a, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -1464,17 +1418,17 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
                                 long numvec, long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                 long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1482,7 +1436,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1492,7 +1446,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -1501,7 +1455,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1513,7 +1467,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1529,15 +1483,12 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] =
-                       ((a *
-                         fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                realidx]) +
-                        (b *
-                         fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                realidx])));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                      a * fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                 realidx] +
+                      b * fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                 realidx];
                 }
               }
             }
@@ -1550,7 +1501,7 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1565,17 +1516,17 @@ __global__ void cuda_blas_axpby(double *y, double *x, double a, double b, long y
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  (y[blk_offset + realidx] =
-                       ((a * x[blk_offset + realidx]) + (b * y[blk_offset + realidx])));
+                  y[blk_offset + realidx] =
+                      a * x[blk_offset + realidx] + b * y[blk_offset + realidx];
                 }
               }
             }
@@ -1590,17 +1541,17 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
                                            long ZLEN, int ovlp, long xblock, long yblock,
                                            long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1608,7 +1559,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1620,8 +1571,8 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN49 = 0;
 
-      for (; (gMYGEN49 + __idx) < blk_all_len; gMYGEN49 = (gMYGEN49 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN49);
+      for (; gMYGEN49 + __idx < blk_all_len; gMYGEN49 = gMYGEN49 + __xlen) {
+        long iba_tmp = __idx + gMYGEN49;
 
         long numcp = 1;
 
@@ -1633,8 +1584,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1646,8 +1596,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1655,7 +1604,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
           long g;
 
           for (g = 0; g < numcp; g++) {
-            ((fast_y + g)[0] = ((a * (fast_x + g)[0]) + (b * (fast_y + g)[0])));
+            (fast_y + g)[0] = a * (fast_x + g)[0] + b * (fast_y + g)[0];
           }
         }
         {
@@ -1671,8 +1620,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1683,8 +1631,7 @@ __global__ void cuda_blas_axpby_full_block(double *y, double *x, double a, doubl
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -1696,17 +1643,17 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
                                 long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                                 long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1714,7 +1661,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1724,7 +1671,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -1733,7 +1680,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1745,7 +1692,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1761,13 +1708,10 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                          realidx] =
-                       (fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                               realidx] *
-                        fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                               realidx]));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] =
+                      fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] *
+                      fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx];
                 }
               }
             }
@@ -1780,7 +1724,7 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              ((y + (i * blk_all_len))[inner_step + inner_g] = fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1795,16 +1739,16 @@ __global__ void cuda_blas_mulxy(double *y, double *x, long y_cpu_core, long numv
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  (y[blk_offset + realidx] = (x[blk_offset + realidx] * y[blk_offset + realidx]));
+                  y[blk_offset + realidx] = x[blk_offset + realidx] * y[blk_offset + realidx];
                 }
               }
             }
@@ -1818,17 +1762,17 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
                                            long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                            long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ymin = __idy * local_ynum;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1836,7 +1780,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1848,8 +1792,8 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN56 = 0;
 
-      for (; (gMYGEN56 + __idx) < blk_all_len; gMYGEN56 = (gMYGEN56 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN56);
+      for (; gMYGEN56 + __idx < blk_all_len; gMYGEN56 = gMYGEN56 + __xlen) {
+        long iba_tmp = __idx + gMYGEN56;
 
         long numcp = 1;
 
@@ -1861,8 +1805,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1874,8 +1817,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -1899,8 +1841,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -1911,8 +1852,7 @@ __global__ void cuda_blas_mulxy_full_block(double *y, double *x, long y_cpu_core
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -1924,17 +1864,20 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
                                   long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                   long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -1942,7 +1885,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -1955,7 +1898,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -1964,7 +1907,7 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -1980,15 +1923,13 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (reduce_tmp =
-                       ((fabs(fast_y[(num_ele *
-                                      (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                     realidx]) > reduce_tmp)
-                            ? (fabs(fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) +
-                                                                     (yb * (xyzz + ovlp)))))) +
-                                           realidx]))
-                            : (reduce_tmp)));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  reduce_tmp =
+                      fabs(fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                  realidx]) > reduce_tmp
+                          ? fabs(fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                        realidx])
+                          : reduce_tmp;
                 }
               }
             }
@@ -2005,18 +1946,18 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  (reduce_tmp = ((fabs(y[blk_offset + realidx]) > reduce_tmp)
-                                     ? (fabs(y[blk_offset + realidx]))
-                                     : (reduce_tmp)));
+                  reduce_tmp = fabs(y[blk_offset + realidx]) > reduce_tmp
+                                   ? fabs(y[blk_offset + realidx])
+                                   : reduce_tmp;
                 }
               }
             }
@@ -2031,9 +1972,8 @@ __global__ void cuda_blas_findmax(double *y, double *rdcd_max, long y_cpu_core, 
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        (reduce_tmp =
-             ((fabs(reduce_tmp_arr[i1]) > reduce_tmp) ? (fabs(reduce_tmp_arr[i1])) : (reduce_tmp)));
+      for (i1 = 1; i1 < __xlen; i1++) {
+        reduce_tmp = fabs(reduce_tmp_arr[i1]) > reduce_tmp ? fabs(reduce_tmp_arr[i1]) : reduce_tmp;
       }
     }
     rdcd_max[__idy] = reduce_tmp;
@@ -2043,17 +1983,20 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
                                              long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                              long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -2061,7 +2004,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -2076,8 +2019,8 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN63 = 0;
 
-      for (; (gMYGEN63 + __idx) < blk_all_len; gMYGEN63 = (gMYGEN63 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN63);
+      for (; gMYGEN63 + __idx < blk_all_len; gMYGEN63 = gMYGEN63 + __xlen) {
+        long iba_tmp = __idx + gMYGEN63;
 
         long numcp = 1;
 
@@ -2089,8 +2032,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -2098,8 +2040,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
           long g;
 
           for (g = 0; g < numcp; g++) {
-            (reduce_tmp =
-                 ((fabs((fast_y + g)[0]) > reduce_tmp) ? (fabs((fast_y + g)[0])) : (reduce_tmp)));
+            reduce_tmp = fabs((fast_y + g)[0]) > reduce_tmp ? fabs((fast_y + g)[0]) : reduce_tmp;
           }
         }
         {
@@ -2115,8 +2056,7 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -2129,9 +2069,8 @@ __global__ void cuda_blas_findmax_full_block(double *y, double *rdcd_max, long y
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
-        (reduce_tmp =
-             ((fabs(reduce_tmp_arr[i1]) > reduce_tmp) ? (fabs(reduce_tmp_arr[i1])) : (reduce_tmp)));
+      for (i1 = 1; i1 < __xlen; i1++) {
+        reduce_tmp = fabs(reduce_tmp_arr[i1]) > reduce_tmp ? fabs(reduce_tmp_arr[i1]) : reduce_tmp;
       }
     }
     rdcd_max[__idy] = reduce_tmp;
@@ -2141,17 +2080,20 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
                               long XLEN, long YLEN, long ZLEN, int ovlp, long xblock, long yblock,
                               long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -2159,7 +2101,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -2172,7 +2114,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -2181,7 +2123,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -2193,7 +2135,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] = (x + (i * blk_all_len))[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -2209,13 +2151,12 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (reduce_tmp =
-                       (reduce_tmp +
-                        (fast_x[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                realidx] *
-                         fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                                realidx])));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  reduce_tmp =
+                      reduce_tmp +
+                      fast_x[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx] *
+                          fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) +
+                                 realidx];
                 }
               }
             }
@@ -2232,16 +2173,16 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
-                  (reduce_tmp = (reduce_tmp + (x[blk_offset + realidx] * y[blk_offset + realidx])));
+                  reduce_tmp = reduce_tmp + x[blk_offset + realidx] * y[blk_offset + realidx];
                 }
               }
             }
@@ -2256,7 +2197,7 @@ __global__ void cuda_blas_dot(double *y, double *x, double *rdcd_sum, long y_cpu
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
+      for (i1 = 1; i1 < __xlen; i1++) {
         reduce_tmp += reduce_tmp_arr[i1];
       }
     }
@@ -2267,17 +2208,20 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
                                          long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                          long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -2285,7 +2229,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -2300,8 +2244,8 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN68 = 0;
 
-      for (; (gMYGEN68 + __idx) < blk_all_len; gMYGEN68 = (gMYGEN68 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN68);
+      for (; gMYGEN68 + __idx < blk_all_len; gMYGEN68 = gMYGEN68 + __xlen) {
+        long iba_tmp = __idx + gMYGEN68;
 
         long numcp = 1;
 
@@ -2313,8 +2257,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -2326,8 +2269,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_x[inner_step + inner_g] =
-                   ((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_x[inner_step + inner_g] = (x + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -2335,7 +2277,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
           long g;
 
           for (g = 0; g < numcp; g++) {
-            reduce_tmp += ((fast_x + g)[0] * (fast_y + g)[0]);
+            reduce_tmp += (fast_x + g)[0] * (fast_y + g)[0];
           }
         }
         {
@@ -2351,8 +2293,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -2363,8 +2304,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((x + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_x[inner_step + inner_g]);
+              (x + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_x[inner_step + inner_g];
             }
           }
         }
@@ -2377,7 +2317,7 @@ __global__ void cuda_blas_dot_full_block(double *y, double *x, double *rdcd_sum,
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
+      for (i1 = 1; i1 < __xlen; i1++) {
         reduce_tmp += reduce_tmp_arr[i1];
       }
     }
@@ -2388,17 +2328,20 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
                               long YLEN, long ZLEN, int ovlp, long xblock, long yblock, long zblock,
                               int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -2406,7 +2349,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -2419,7 +2362,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
     long i;
 
     for (i = local_ymin; i < local_ymax; i++) {
-      if (blk_all_len <= 1) {
+      if (blk_all_len <= 1 && __xlen == 1) {
         double fast_y[1];
         {
           long inner_step;
@@ -2428,7 +2371,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] = (y + (i * blk_all_len))[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len)[inner_step + inner_g];
             }
           }
         }
@@ -2444,11 +2387,10 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
               for (xyzx = 0; xyzx < 1; xyzx++) {
                 long realidx;
 
-                for (realidx = 0; realidx < (num_ele * XLEN); realidx++) {
-                  (reduce_tmp =
-                       (reduce_tmp +
-                        fast_y[(num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))) +
-                               realidx]));
+                for (realidx = 0; realidx < num_ele * XLEN; realidx++) {
+                  reduce_tmp =
+                      reduce_tmp +
+                      fast_y[num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp))) + realidx];
                 }
               }
             }
@@ -2465,14 +2407,14 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
 
             for (xyzx = 0; xyzx < 1; xyzx++) {
 
-              long blk_offset = (blk_all_len * i) +
-                                (num_ele * (ovlp + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp))))));
+              long blk_offset =
+                  blk_all_len * i + num_ele * (ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)));
 
               {
                 long g = 0;
 
-                for (g = 0; (__idx + (g * __xlen)) < (XLEN * num_ele); g++) {
-                  long realidx = (__idx + (g * __xlen));
+                for (g = 0; __idx + g * __xlen < XLEN * num_ele; g++) {
+                  long realidx = __idx + g * __xlen;
 
                   reduce_tmp += y[blk_offset + realidx];
                 }
@@ -2489,7 +2431,7 @@ __global__ void cuda_blas_sum(double *y, double *rdcd_sum, long y_cpu_core, long
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
+      for (i1 = 1; i1 < __xlen; i1++) {
         reduce_tmp += reduce_tmp_arr[i1];
       }
     }
@@ -2500,17 +2442,20 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
                                          long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                          long yblock, long zblock, int num_ele) {
 
-  const long __idx = (threadIdx.x + (threadIdx.y * blockDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  const long __xlen = (blockDim.x * blockDim.y);
+  if (__idy >= y_cpu_core)
+    return;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymin = (__idy * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
 
   long xb = xblock;
 
@@ -2518,7 +2463,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
   if (local_ymax >= numvec) {
     local_ymax = numvec;
@@ -2533,8 +2478,8 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
     for (i = local_ymin; i < local_ymax; i++) {
       long gMYGEN75 = 0;
 
-      for (; (gMYGEN75 + __idx) < blk_all_len; gMYGEN75 = (gMYGEN75 + __xlen)) {
-        long iba_tmp = (__idx + gMYGEN75);
+      for (; gMYGEN75 + __idx < blk_all_len; gMYGEN75 = gMYGEN75 + __xlen) {
+        long iba_tmp = __idx + gMYGEN75;
 
         long numcp = 1;
 
@@ -2546,8 +2491,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (fast_y[inner_step + inner_g] =
-                   ((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g]);
+              fast_y[inner_step + inner_g] = (y + i * blk_all_len + iba_tmp)[inner_step + inner_g];
             }
           }
         }
@@ -2571,8 +2515,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
             long inner_g;
 
             for (inner_g = 0; inner_g < 1; inner_g++) {
-              (((y + (i * blk_all_len)) + iba_tmp)[inner_step + inner_g] =
-                   fast_y[inner_step + inner_g]);
+              (y + i * blk_all_len + iba_tmp)[inner_step + inner_g] = fast_y[inner_step + inner_g];
             }
           }
         }
@@ -2585,7 +2528,7 @@ __global__ void cuda_blas_sum_full_block(double *y, double *rdcd_sum, long y_cpu
     {
       long i1;
 
-      for (i1 = 1; i1 < IDX_OPT_MAX; i1++) {
+      for (i1 = 1; i1 < __xlen; i1++) {
         reduce_tmp += reduce_tmp_arr[i1];
       }
     }
@@ -2596,13 +2539,21 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a, long y_cp
                                        long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                        long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -2610,15 +2561,15 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a, long y_cp
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -2635,39 +2586,36 @@ __global__ void cuda_blas_yisax_shrink(double *y, double *x, double a, long y_cp
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
-              (y[(blk_all_len * i) +
-                 (realidx +
-                  (num_ele * ((xyzx + ovlp) + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))] =
-                   (a * ({
-                      double ret = 0;
+            for (realidx = __idx; realidx < num_ele; realidx = realidx + __xlen) {
+              y[blk_all_len * i + realidx +
+                num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))] =
+                  a * ({
+                    double ret = 0;
 
-                      {
-                        long gz;
+                    {
+                      long gz;
 
-                        for (gz = 0; gz < 2; gz++) {
-                          long gy;
+                      for (gz = 0; gz < 2; gz++) {
+                        long gy;
 
-                          for (gy = 0; gy < 2; gy++) {
-                            long gx;
+                        for (gy = 0; gy < 2; gy++) {
+                          long gx;
 
-                            for (gx = 0; gx < 2; gx++) {
-                              (ret = (ret +
-                                      (0.125 *
-                                       x[(blk_all_len_2x * i) +
-                                         (realidx +
-                                          (num_ele *
-                                           ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                            (xb_2x *
-                                             (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                              (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                      ovlp))))))))])));
-                            }
+                          for (gx = 0; gx < 2; gx++) {
+                            ret =
+                                ret +
+                                0.125 *
+                                    x[blk_all_len_2x * i + realidx +
+                                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) +
+                                                                   ovlp)))];
                           }
                         }
                       }
-                      ret;
-                    })));
+                    }
+                    ret;
+                  });
             }
           }
         }
@@ -2679,13 +2627,21 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a, long y_c
                                         long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                         long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -2693,15 +2649,15 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a, long y_c
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -2718,7 +2674,7 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a, long y_c
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
+            for (realidx = __idx; realidx < num_ele; realidx += __xlen) {
               long gz;
 
               for (gz = 0; gz < 2; gz++) {
@@ -2728,17 +2684,13 @@ __global__ void cuda_blas_yisax_enlarge(double *y, double *x, double a, long y_c
                   long gx;
 
                   for (gx = 0; gx < 2; gx++) {
-                    (y[(blk_all_len_2x * i) +
-                       (realidx +
-                        (num_ele * ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                    (xb_2x * (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                              (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                      ovlp))))))))] =
-                         (a * (0.125 *
-                               x[(blk_all_len * i) +
-                                 (realidx +
-                                  (num_ele * ((xyzx + ovlp) +
-                                              (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))])));
+                    y[blk_all_len_2x * i + realidx +
+                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) + ovlp)))] =
+                        a * (0.125 *
+                             x[blk_all_len * i + realidx +
+                               num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))]);
                   }
                 }
               }
@@ -2753,13 +2705,21 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a, long y_cpu
                                       long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                       long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -2767,15 +2727,15 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a, long y_cpu
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -2792,42 +2752,38 @@ __global__ void cuda_blas_axpy_shrink(double *y, double *x, double a, long y_cpu
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
-              (y[(blk_all_len * i) +
-                 (realidx +
-                  (num_ele * ((xyzx + ovlp) + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))] =
-                   (y[(blk_all_len * i) +
-                      (realidx + (num_ele * ((xyzx + ovlp) +
-                                             (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))] +
-                    (a * ({
-                       double ret = 0;
+            for (realidx = __idx; realidx < num_ele; realidx += __xlen) {
+              y[blk_all_len * i + realidx +
+                num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))] =
+                  y[blk_all_len * i + realidx +
+                    num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))] +
+                  a * ({
+                    double ret = 0;
 
-                       {
-                         long gz;
+                    {
+                      long gz;
 
-                         for (gz = 0; gz < 2; gz++) {
-                           long gy;
+                      for (gz = 0; gz < 2; gz++) {
+                        long gy;
 
-                           for (gy = 0; gy < 2; gy++) {
-                             long gx;
+                        for (gy = 0; gy < 2; gy++) {
+                          long gx;
 
-                             for (gx = 0; gx < 2; gx++) {
-                               (ret = (ret +
-                                       (0.125 *
-                                        x[(blk_all_len_2x * i) +
-                                          (realidx +
-                                           (num_ele *
-                                            ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                             (xb_2x *
-                                              (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                               (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                       ovlp))))))))])));
-                             }
-                           }
-                         }
-                       }
-                       ret;
-                     }))));
+                          for (gx = 0; gx < 2; gx++) {
+                            ret =
+                                ret +
+                                0.125 *
+                                    x[blk_all_len_2x * i + realidx +
+                                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) +
+                                                                   ovlp)))];
+                          }
+                        }
+                      }
+                    }
+                    ret;
+                  });
             }
           }
         }
@@ -2839,13 +2795,21 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a, long y_cp
                                        long XLEN, long YLEN, long ZLEN, int ovlp, long xblock,
                                        long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -2853,15 +2817,15 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a, long y_cp
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -2878,7 +2842,7 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a, long y_cp
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
+            for (realidx = __idx; realidx < num_ele; realidx += __xlen) {
               long gz;
 
               for (gz = 0; gz < 2; gz++) {
@@ -2888,24 +2852,17 @@ __global__ void cuda_blas_axpy_enlarge(double *y, double *x, double a, long y_cp
                   long gx;
 
                   for (gx = 0; gx < 2; gx++) {
-                    (y[(blk_all_len_2x * i) +
-                       (realidx +
-                        (num_ele * ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                    (xb_2x * (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                              (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                      ovlp))))))))] =
-                         (y[(blk_all_len_2x * i) +
-                            (realidx +
-                             (num_ele *
-                              ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                               (xb_2x * (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                         (yb_2x * ((2 * xyzz) +
-                                                   (((ZLEN == 1) ? (0) : (gz)) + ovlp))))))))] +
-                          (a *
-                           (0.125 * x[(blk_all_len * i) +
-                                      (realidx + (num_ele * ((xyzx + ovlp) +
-                                                             (xb * ((xyzy + ovlp) +
-                                                                    (yb * (xyzz + ovlp)))))))]))));
+                    y[blk_all_len_2x * i + realidx +
+                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) + ovlp)))] =
+                        y[blk_all_len_2x * i + realidx +
+                          num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                     xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                              yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) + ovlp)))] +
+                        a * (0.125 *
+                             x[blk_all_len * i + realidx +
+                               num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))]);
                   }
                 }
               }
@@ -2920,13 +2877,21 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
                                        long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                        long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -2934,15 +2899,15 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -2959,43 +2924,38 @@ __global__ void cuda_blas_axpby_shrink(double *y, double *x, double a, double b,
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
-              (y[(blk_all_len * i) +
-                 (realidx +
-                  (num_ele * ((xyzx + ovlp) + (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))] =
-                   ((a * ({
-                       double ret = 0;
+            for (realidx = __idx; realidx < num_ele; realidx = realidx + __xlen) {
+              y[blk_all_len * i + realidx +
+                num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))] =
+                  a * ({
+                    double ret = 0;
 
-                       {
-                         long gz;
+                    {
+                      long gz;
 
-                         for (gz = 0; gz < 2; gz++) {
-                           long gy;
+                      for (gz = 0; gz < 2; gz++) {
+                        long gy;
 
-                           for (gy = 0; gy < 2; gy++) {
-                             long gx;
+                        for (gy = 0; gy < 2; gy++) {
+                          long gx;
 
-                             for (gx = 0; gx < 2; gx++) {
-                               (ret = (ret +
-                                       (0.125 *
-                                        x[(blk_all_len_2x * i) +
-                                          (realidx +
-                                           (num_ele *
-                                            ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                             (xb_2x *
-                                              (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                               (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                       ovlp))))))))])));
-                             }
-                           }
-                         }
-                       }
-                       ret;
-                     })) +
-                    (b *
-                     y[(blk_all_len * i) +
-                       (realidx + (num_ele * ((xyzx + ovlp) +
-                                              (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))])));
+                          for (gx = 0; gx < 2; gx++) {
+                            ret =
+                                ret +
+                                0.125 *
+                                    x[blk_all_len_2x * i + realidx +
+                                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) +
+                                                                   ovlp)))];
+                          }
+                        }
+                      }
+                    }
+                    ret;
+                  }) +
+                  b * y[blk_all_len * i + realidx +
+                        num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))];
             }
           }
         }
@@ -3007,13 +2967,21 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a, double b
                                         long numvec, long XLEN, long YLEN, long ZLEN, int ovlp,
                                         long xblock, long yblock, long zblock, int num_ele) {
 
-  const long __idy = (blockIdx.x + (blockIdx.y * gridDim.x));
+  const long __idx = threadIdx.x + threadIdx.y * blockDim.x;
 
-  long local_ynum = (((numvec - 1) / y_cpu_core) + 1);
+  const long __idy = blockIdx.x + blockIdx.y * gridDim.x;
 
-  long local_ymin = (__idy * local_ynum);
+  const long __xlen = blockDim.x * blockDim.y;
 
-  long local_ymax = ((1 + __idy) * local_ynum);
+  long local_ynum = (numvec - 1) / y_cpu_core + 1;
+
+  long local_ymin = __idy * local_ynum;
+
+  long local_ymax = (1 + __idy) * local_ynum;
+
+  if (local_ymax > numvec) {
+    local_ymax = numvec;
+  }
 
   long xb = xblock;
 
@@ -3021,15 +2989,15 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a, double b
 
   long zb = zblock;
 
-  long blk_all_len = (xb * (yb * (zb * num_ele)));
+  long blk_all_len = xb * yb * zb * num_ele;
 
-  long xb_2x = ((2 * ovlp) + ((XLEN == 1) ? (XLEN) : (XLEN * 2)));
+  long xb_2x = 2 * ovlp + (XLEN == 1 ? XLEN : XLEN * 2);
 
-  long yb_2x = ((2 * ovlp) + ((YLEN == 1) ? (YLEN) : (YLEN * 2)));
+  long yb_2x = 2 * ovlp + (YLEN == 1 ? YLEN : YLEN * 2);
 
-  long zb_2x = ((2 * ovlp) + ((ZLEN == 1) ? (ZLEN) : (ZLEN * 2)));
+  long zb_2x = 2 * ovlp + (ZLEN == 1 ? ZLEN : ZLEN * 2);
 
-  long blk_all_len_2x = (xb_2x * (yb_2x * (zb_2x * num_ele)));
+  long blk_all_len_2x = xb_2x * yb_2x * zb_2x * num_ele;
 
   {
     long i;
@@ -3046,7 +3014,7 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a, double b
           for (xyzx = 0; xyzx < XLEN; xyzx++) {
             long realidx;
 
-            for (realidx = 0; realidx < num_ele; realidx++) {
+            for (realidx = __idx; realidx < num_ele; realidx = realidx + __xlen) {
               long gz;
 
               for (gz = 0; gz < 2; gz++) {
@@ -3056,24 +3024,18 @@ __global__ void cuda_blas_axpby_enlarge(double *y, double *x, double a, double b
                   long gx;
 
                   for (gx = 0; gx < 2; gx++) {
-                    (y[(blk_all_len_2x * i) +
-                       (realidx +
-                        (num_ele * ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                    (xb_2x * (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                              (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                      ovlp))))))))] =
-                         ((a * (0.125 *
-                                x[(blk_all_len * i) +
-                                  (realidx +
-                                   (num_ele * ((xyzx + ovlp) +
-                                               (xb * ((xyzy + ovlp) + (yb * (xyzz + ovlp)))))))])) +
-                          (b * y[(blk_all_len_2x * i) +
-                                 (realidx +
-                                  (num_ele *
-                                   ((ovlp + ((2 * xyzx) + ((XLEN == 1) ? (0) : (gx)))) +
-                                    (xb_2x * (((2 * xyzy) + (ovlp + ((YLEN == 1) ? (0) : (gy)))) +
-                                              (yb_2x * ((2 * xyzz) + (((ZLEN == 1) ? (0) : (gz)) +
-                                                                      ovlp))))))))])));
+                    y[blk_all_len_2x * i + realidx +
+                      num_ele * (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                 xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                          yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) + ovlp)))] =
+                        a * (0.125 *
+                             x[blk_all_len * i + realidx +
+                               num_ele * (xyzx + ovlp + xb * (xyzy + ovlp + yb * (xyzz + ovlp)))]) +
+                        b * y[blk_all_len_2x * i + realidx +
+                              num_ele *
+                                  (ovlp + 2 * xyzx + (XLEN == 1 ? 0 : gx) +
+                                   xb_2x * (2 * xyzy + ovlp + (YLEN == 1 ? 0 : gy) +
+                                            yb_2x * (2 * xyzz + (ZLEN == 1 ? 0 : gz) + ovlp)))];
                   }
                 }
               }

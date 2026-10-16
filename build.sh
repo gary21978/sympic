@@ -1,6 +1,6 @@
 #!/bin/bash
 # build.sh — 创建/清空对应后端 build 目录并编译
-# 用法: bash build.sh [cuda|mapu|simulator|nvscale]
+# 用法: bash build.sh [cuda|mapu|mapu-pushj|simulator|nvscale]
 
 
 
@@ -8,7 +8,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 usage() {
-    echo "usage: bash $0 [cuda|mapu|simulator|nvscale]"
+    echo "usage: bash $0 [cuda|mapu|mapu-pushj|simulator|nvscale]"
 }
 
 qemu_guest_ssh_port() {
@@ -62,10 +62,11 @@ wait_guest_ssh_login() {
 }
 
 build_in_simulator_guest() {
-    local maps_driver_root="${MAPS_DRIVER_ROOT:-/home/cheney/Projects/MaPU/maps-driver}"
+    local maps_driver_root="${MAPS_DRIVER_ROOT:-$HOME/driver}"
     local pciemu_release_dir="${maps_driver_root}/pciemu/release"
     local config_file="${pciemu_release_dir}/config"
-    local guest_repo_dir="${GUEST_REPO_DIR:-/home/emu/Projects/sympic-mapu}"
+    local guest_repo_dir="${GUEST_REPO_DIR:-/home/emu/Projects/sympic-merged}"
+    local guest_build_mode="${SIMULATOR_BUILD_MODE:-mapu}"
     local ssh_port
 
     if [[ ! -x "${pciemu_release_dir}/start_emu.sh" ]]; then
@@ -77,10 +78,11 @@ build_in_simulator_guest() {
         exit 1
     fi
 
-    ssh_port="$(qemu_guest_ssh_port "${config_file}")"
+    ssh_port="${SIMULATOR_SSH_PORT:-$(qemu_guest_ssh_port "${config_file}")}"
     if qemu_guest_ready "${ssh_port}"; then
         echo "=== simulator guest already reachable on SSH port ${ssh_port}; skip start_emu.sh ==="
     else
+        [[ -z "${SIMULATOR_SSH_PORT:-}" ]] || { echo "[fatal] configured SIMULATOR_SSH_PORT ${ssh_port} is not reachable"; exit 1; }
         echo "=== start simulator guest: ${pciemu_release_dir}/start_emu.sh -T ==="
         (cd "${pciemu_release_dir}" && ./start_emu.sh -T -d disable)
         ssh_port="$(qemu_guest_ssh_port "${config_file}")"
@@ -106,13 +108,14 @@ if ! command -v mpicc >/dev/null 2>&1; then
     apt-get -o Acquire::Retries=3 update
     apt-get -o Acquire::Retries=3 install -y openmpi-bin libopenmpi-dev
 fi
-cd /home/emu/Projects/sympic-mapu
+cd /home/emu/Projects/sympic-merged
 export SCALE_TOOLCHAIN_ROOT=/opt/maps/toolchain
 export TOOLCHAIN_DIR=/opt/maps/toolchain
 export MACCL_ROOT=/opt/maps
-bash build.sh mapu
+bash build.sh @@BUILD_MODE@@
 EOF
 )
+    guest_cmd="${guest_cmd/@@BUILD_MODE@@/${guest_build_mode}}"
 
     wait_guest_ssh_login "${ssh_port}"
     run_guest_build_over_ssh "${ssh_port}" "${guest_cmd}"
@@ -130,15 +133,27 @@ case "${MODE}" in
     cuda)
         BUILD_DIR="${SCRIPT_DIR}/build-cuda"
         CUDA_ARCH="${CUDA_ARCH:-sm_90}"
-        CMAKE_FLAGS="-DSYMPIC_CUDA=ON -DSYMPIC_MAPU=OFF -DCUDA_ARCH=${CUDA_ARCH}"
+        # Pass the architecture to CMake's compiler-id probe as well.  Recent
+        # CUDA toolchains no longer ship ptxas support for CMake's default
+        # sm_52 probe, so setting only the project CUDA_ARCH is too late.
+        CMAKE_FLAGS="-DSYMPIC_CUDA=ON -DSYMPIC_MAPU=OFF -DCUDA_ARCH=${CUDA_ARCH} -DCMAKE_CUDA_FLAGS=-arch=${CUDA_ARCH}"
         ;;
-    mapu)
-        BUILD_DIR="${SCRIPT_DIR}/build-mapu"
+    mapu|mapu-baseline)
+        BUILD_DIR="${SCRIPT_DIR}/build-mapu-baseline"
         default_toolchain="/opt/maps/toolchain"
         [[ -d "${default_toolchain}" ]] || default_toolchain="/home/cheney/Projects/MaPU/toolchain"
         export SCALE_TOOLCHAIN_ROOT="${SCALE_TOOLCHAIN_ROOT:-${default_toolchain}}"
+        export MACCL_ROOT="${MACCL_ROOT:-/opt/maps}"
         CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=ON"
 
+        ;;
+    mapu-pushj)
+        BUILD_DIR="${SCRIPT_DIR}/build-mapu-pushj"
+        default_toolchain="/opt/maps/toolchain"
+        [[ -d "${default_toolchain}" ]] || default_toolchain="/home/cheney/Projects/MaPU/toolchain"
+        export SCALE_TOOLCHAIN_ROOT="${SCALE_TOOLCHAIN_ROOT:-${default_toolchain}}"
+        export MACCL_ROOT="${MACCL_ROOT:-/opt/maps}"
+        CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=ON -DSYMPIC_MICROCODE=ON -DSYMPIC_PUSHJ_WORKERS=${SYMPIC_PUSHJ_WORKERS:-4}"
         ;;
     simulator)
         build_in_simulator_guest
@@ -148,7 +163,7 @@ case "${MODE}" in
         BUILD_DIR="${SCRIPT_DIR}/build-nvscale"
         NVSCALE_ROOT="${NVSCALE_ROOT:-/home/cheney/Projects/MaPU/toolchain/nvscale}"
         NVSCALE_CUDA_ARCH="${NVSCALE_CUDA_ARCH:-89}"
-        CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=OFF -DSYMPIC_NVSCALE=ON -DNVSCALE_ROOT=${NVSCALE_ROOT} -DNVSCALE_CUDA_ARCH=${NVSCALE_CUDA_ARCH} -DCUDA_ARCH=sm_${NVSCALE_CUDA_ARCH}"
+        CMAKE_FLAGS="-DSYMPIC_CUDA=OFF -DSYMPIC_MAPU=OFF -DSYMPIC_NVSCALE=ON -DNVSCALE_ROOT=${NVSCALE_ROOT} -DNVSCALE_CUDA_ARCH=${NVSCALE_CUDA_ARCH} -DCUDA_ARCH=sm_${NVSCALE_CUDA_ARCH} -DCMAKE_CUDA_FLAGS=-arch=sm_${NVSCALE_CUDA_ARCH}"
         ;;
     *)
         echo "[fatal] unknown build mode: ${MODE}"
@@ -158,7 +173,7 @@ case "${MODE}" in
 esac
 
 echo "===构建模式: ${MODE} ==="
-if [[ "${MODE}" == "mapu" ]]; then
+if [[ "${MODE}" == mapu* ]]; then
     echo "===SCALE_TOOLCHAIN_ROOT: ${SCALE_TOOLCHAIN_ROOT} ==="
     echo "===MACCL_ROOT: ${MACCL_ROOT:-} ==="
 fi

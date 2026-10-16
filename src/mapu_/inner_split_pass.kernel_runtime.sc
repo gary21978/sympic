@@ -10,14 +10,17 @@
 #include "local_header.h"
 #include "inner_split_pass.kernel_runtime.h"
 
+#if defined(MICROCODE)
+#include "inner_split_pass.kernel.inc"
+#else
 #ifndef PUSHJ_VLO_REAL_PARALLEL_N
 #define PUSHJ_VLO_REAL_PARALLEL_N 1
 #endif
 #if (PUSHJ_VLO_REAL_PARALLEL_N < 1) || (PUSHJ_VLO_REAL_PARALLEL_N > 4)
 #error "multi supports 1 to 4 threads per block"
 #endif
-
-#include "inner_split_pass.kernel.inc"
+#include "inner_split_pass.baseline.kernel.inc"
+#endif
 
 #ifndef MAPU_LONG
 #define MAPU_LONG long

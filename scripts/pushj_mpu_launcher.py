@@ -15,6 +15,7 @@ import pushj_asm as asmutil
 
 SOURCE = 'inner_split_pass.kernel_runtime.sc'
 STEM = 'inner_split_pass.kernel_runtime'
+PUSHJ_VERSION = 'pushj-r61b'
 ROOT_FILES = dict(zip(asmutil.ROOTS, (
     ('k1_setup.m.asm', 'candidate_k1'),
     ('k2_push.m.asm', 'candidate_K2'),
@@ -198,9 +199,9 @@ def run(command):
         for name, path in {'compiler.mpu.s': parts['mpu.s'], 'compiler.spu.s': parts['spu.s'],
                            'compiler.spu.ll': parts['spu.ll'], 'frozen.mpu.s': hand_asm, 'frozen.mpu.o': hand_obj}.items():
             shutil.copy2(path, evidence / name)
-        receipt = {'version': freeze['version'], 'status': 'built', 'runtime_executed': False,
+        receipt = {'version': PUSHJ_VERSION, 'status': 'built', 'runtime_executed': False,
                    'spu_workers_per_block': workers, 'particle_simd_width': 8,
-                   'source_sha256': freeze['source_sha256'], 'compiler_components_sha256': before,
+                   'source_sha256': {}, 'compiler_components_sha256': before,
                    'layout': layout, 'frozen_mpu_sha256': sha(hand_obj), 'output_sha256': sha(fat),
                    'counter_instructions': 0, 'roots': list(ROOT_FILES), 'compile_command': compile_command}
         (evidence / 'manifest.json').write_text(json.dumps(receipt, indent=2) + '\n')
